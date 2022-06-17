@@ -9,18 +9,7 @@ import Common from "../components/Common.js";
 
 const require = createRequire(import.meta.url);
 
-let cfgMap = {
-  "角色": "char.char",
-  "面板": "char.profile",
-  "老婆": "char.wife",
-  "查他人": "char.queryOther",
-  "图鉴": "wiki.wiki",
-  "图片": "wiki.pic",
-  "深渊": "wiki.abyss",
-  "渲染": "sys.scale",
-  "帮助": "sys.help",
-};
-let sysCfgReg = `^#喵喵设置\s*(${lodash.keys(cfgMap).join("|")})?\s*(.*)$`;
+
 export const rule = {
   updateRes: {
     hashMark: true,
@@ -32,16 +21,12 @@ export const rule = {
     reg: "^#图鉴(强制)?更新",
     describe: "【#管理】图鉴更新",
   },
-  // sysCfg: {
-  //   hashMark: true,
-  //   reg: sysCfgReg,
-  //   describe: "【#管理】系统设置"
-  // }
+ 
 };
 
 
 const _path = process.cwd();
-const resPath = `${_path}/plugins/miao-plugin/resources/`;
+const resPath = `${_path}/plugins/cvs-plugin/resources/`;
 const plusPath = `${resPath}/res-plus/`;
 
 const checkAuth = async function (e) {
@@ -51,54 +36,6 @@ const checkAuth = async function (e) {
     (*/ω＼*)`
   });
 }
-
-export async function sysCfg(e, { render }) {
-  if (!await checkAuth(e)) {
-    return true;
-  }
-
-  let cfgReg = new RegExp(sysCfgReg);
-  let regRet = cfgReg.exec(e.msg);
-
-  if (!regRet) {
-    return true;
-  }
-
-  if (regRet[1]) {
-    // 设置模式
-    let val = regRet[2] || "";
-
-    let cfgKey = cfgMap[regRet[1]];
-    if (cfgKey === "sys.scale") {
-      val = Math.min(200, Math.max(50, val * 1 || 100));
-    } else {
-      val = !/关闭/.test(val);
-    }
-
-    if (cfgKey) {
-      Cfg.set(cfgKey, val);
-    }
-  }
-
-  let cfg = {
-    chars: getStatus("char.char"),
-    profile: getStatus("char.profile"),
-    wife: getStatus("char.wife"),
-    other: getStatus("char.queryOther"),
-    wiki: getStatus("wiki.wiki"),
-    pic: getStatus("wiki.pic"),
-    abyss: getStatus("wiki.abyss"),
-    imgPlus: fs.existsSync(plusPath),
-    help: getStatus("sys.help", false),
-    scale: Cfg.get("sys.scale", 100)
-  }
-
-  //渲染图像
-  return await Common.render("admin/index", {
-    ...cfg,
-  }, { e, render, scale: 1.4 });
-}
-
 const getStatus = function (rote, def = true) {
   if (Cfg.get(rote, def)) {
     return `<div class="cfg-status" >已开启</div>`;
@@ -113,10 +50,10 @@ export async function updateRes(e) {
     return true;
   }
   let command = "";
-  if (fs.existsSync(`${resPath}/miao-res-plus/`)) {
+  if (fs.existsSync(`${resPath}/res-plus/`)) {
     e.reply("开始尝试更新，请耐心等待~");
     command = `git pull`;
-    exec(command, { cwd: `${resPath}/miao-res-plus/` }, function (error, stdout, stderr) {
+    exec(command, { cwd: `${resPath}/res-plus/` }, function (error, stdout, stderr) {
       //console.log(stdout);
       if (/Already up to date/.test(stdout)) {
         e.reply("目前所有图片都已经是最新了~");
@@ -134,7 +71,7 @@ export async function updateRes(e) {
       }
     });
   } else {
-    command = `git clone https://gitee.com/yoimiya-kokomi/miao-res-plus.git "${resPath}/miao-res-plus/"`;
+    command = `git clone https://gitee.com/leiyilu/image.git "${resPath}/res-plus/"`;
     e.reply("开始尝试安装图片加量包，可能会需要一段时间，请耐心等待~");
     exec(command, function (error, stdout, stderr) {
       if (error) {
@@ -161,7 +98,7 @@ export async function updateMiaoPlugin(e) {
   } else {
     e.reply("正在执行更新操作，请稍等");
   }
-  exec(command, { cwd: `${_path}/plugins/miao-plugin/` }, function (error, stdout, stderr) {
+  exec(command, { cwd: `${_path}/plugins/cvs-plugin/` }, function (error, stdout, stderr) {
     //console.log(stdout);
     if (/Already up to date/.test(stdout)) {
       e.reply("目前已经是最新版喵喵了~");

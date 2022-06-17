@@ -1,63 +1,51 @@
-// import {
-//   character,
-//   getProfile,
-//   wife,
-//   wifeReg,
-//   enemyLv,
-//   getArtis,
-//   getProfileAll,
-//   profileHelp
-// } from "./apps/character.js";
-// import { consStat, abyssPct, abyssTeam } from "./apps/stat.js";
-// import { wiki, calendar } from "./apps/wiki.js";
-// import { help, versionInfo } from "./apps/help.js";
-// import lodash from "lodash";
-// import common from "../../lib/common.js";
-// import { rule as adminRule, updateRes, sysCfg, updateMiaoPlugin } from "./apps/admin.js";
-// import { currentVersion } from "./components/Changelog.js";
-
-// export {
-//   character,
-//   wife,
-//   consStat,
-//   abyssPct,
-//   abyssTeam,
-//   wiki,
-//   updateRes,
-//   updateMiaoPlugin,
-//   sysCfg,
-//   help,
-//   versionInfo,
-//   getProfile,
-//   enemyLv,
-//   getArtis,
-//   getProfileAll,
-//   profileHelp,
-//   calendar
-// };
+import lodash from "lodash";
+import {
+	roleInfo,weaponInfo
+} from "./apps/xiaoyao_image.js"
+import {
+	rule as adminRule,
+	updateRes,
+	updateMiaoPlugin
+} from "./apps/admin.js";
+export {
+	updateRes,
+	roleInfo,weaponInfo
+};
 
 
-// let rule = {
-//   versionInfo: {
-//     reg: "^#图鉴版本$",
-//     describe: "【#帮助】 喵喵版本介绍",
-//   },
-//   calendar: {
-//     reg: "^#图鉴列表$",
-//     describe: "【#日历】 活动日历",
-//   },
-//   ...adminRule
-// };
+let rule = {
+	versionInfo: {
+		reg: "^#图鉴版本$",
+		describe: "【#帮助】 喵喵版本介绍",
+	},
+	calendar: {
+		reg: "^#图鉴列表$",
+		describe: "【#日历】 活动日历",
+	},
+	roleInfo: {
+		reg: "#*(.*)(信息|图鉴|命座|天赋|突破|材料|素材)$", //匹配消息正则，命令正则
+		priority: 900, //优先级，越小优先度越高
+		describe: "【刻晴信息、刻晴图鉴、刻晴突破、刻晴命座】角色信息图鉴", //【命令】功能说明
+	},
+	weaponInfo: {
+		reg: "", //匹配消息正则，命令正则
+		priority: 900, //优先级，越小优先度越高
+		describe: "【刻晴信息、刻晴图鉴、刻晴突破、刻晴命座】角色信息图鉴", //【命令】功能说明
+	},
+	...adminRule
+};
 
-// lodash.forEach(rule, (r) => {
-//   r.priority = r.priority || 50;
-//   r.prehash = true;
-//   r.hashMark = true;
-// });
+lodash.forEach(rule, (r) => {
+	r.priority = r.priority || 50;
+	r.prehash = true;
+	r.hashMark = true;
+});
 
-// export { rule };
+export {
+	rule
+};
 
-// console.log(`图鉴${currentVersion}初始化~`);
+console.log(`图鉴初始化~`);
 
 // setTimeout(async function () {
 //   let msgStr = await redis.get("miao:restart-msg");
