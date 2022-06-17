@@ -1,5 +1,5 @@
 # cvs-plugin
-genshin-image
+
 介绍
 原神图鉴分类管理仓库。
 
