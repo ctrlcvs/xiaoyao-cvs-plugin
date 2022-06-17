@@ -1,12 +1,13 @@
-<<<<<<< HEAD
-# genshin-image
-
 #### 介绍
-=======
 # cvs-plugin
 
 介绍
->>>>>>> b86b60eace7bda4f73816896045225af3fd548a0
+# genshin-image
+
+#### 介绍
+# cvs-plugin
+
+介绍
 原神图鉴分类管理仓库。
 
 #### 软件架构
