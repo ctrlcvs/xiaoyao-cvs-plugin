@@ -18,7 +18,7 @@
 
 #### 安装教程
 
-1.  git clone https://gitee.com/leiyilu/cvs-plugin ./plugins/genshin-image-plugin/
+1.  git clone https://gitee.com/leiyilu/xiaoyao-cvs-plugin ./plugins/genshin-image-plugin/
 
 
 #### 使用说明
