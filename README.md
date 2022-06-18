@@ -1,12 +1,12 @@
 #### 介绍
-# cvs-plugin
+# xiaoyao-cvs-plugin
 
 介绍
-
+由逍遥佬提供素材图片，本人负责插件编辑
 
 #### 介绍
 
-# cvs-plugin
+# xiaoyao-cvs-plugin
 
 介绍
 
@@ -18,7 +18,7 @@
 
 #### 安装教程
 
-1.  git clone https://gitee.com/leiyilu/xiaoyao-cvs-plugin ./plugins/genshin-image-plugin/
+1.  git clone https://gitee.com/leiyilu/xiaoyao-cvs-plugin ./plugins/xiaoyao-cvs-plugin/
 
 
 #### 使用说明
