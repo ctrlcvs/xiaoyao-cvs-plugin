@@ -23,9 +23,9 @@ export async function roleInfo(e) {
 		name = YunzaiApps.mysInfo.roleIdToName(id, true);
 		if (!name) return false;
 	}
-	console.log(name)
+	// console.log(name)
 	
-	send_Msg(e,"image","爆炒肉片")
+	send_Msg(e,"jiaose_tujian",name)
 	return true;
 }
 
@@ -82,3 +82,33 @@ export async function weaponInfo(e) {
 
   return false;
 }
+
+export async function monsterInfo(e) {
+
+  let msg = e.msg || '';
+
+  if(e.atBot){
+    msg = "#" + msg.replace("#", "");
+  }
+  
+  if(!/(#*食物(.*)|#(.*))$/.test(msg)) return;
+
+  let name = weapon.get(msg.replace(/#|＃|信息|图鉴|突破|食物/g, ""));
+
+  if (name) {
+
+    Bot.logger.mark(`[${e.group_name}] ${e.msg}:weaponInfo`);
+
+    let path = `${_path}/resources/weaponInfo_xiaoyao/${name}.png`
+
+    if (!fs.existsSync(path)) {
+      return true;
+    }
+
+    e.reply(segment.image(`file:///${path}`));
+    return true;
+  }
+
+  return false;
+}
+
