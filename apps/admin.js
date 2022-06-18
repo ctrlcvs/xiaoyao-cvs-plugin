@@ -27,7 +27,7 @@ export const rule = {
 
 const _path = process.cwd();
 const resPath = `${_path}/plugins/cvs-plugin/resources/`;
-const plusPath = `${resPath}/res-plus/`;
+const plusPath = `${resPath}/xiaoyao-plus/`;
 
 const checkAuth = async function (e) {
   return await e.checkAuth({
@@ -53,7 +53,7 @@ export async function updateRes(e) {
   if (fs.existsSync(`${resPath}/res-plus/`)) {
     e.reply("开始尝试更新，请耐心等待~");
     command = `git pull`;
-    exec(command, { cwd: `${resPath}/res-plus/` }, function (error, stdout, stderr) {
+    exec(command, { cwd: `${resPath}/xiaoyao-plus/` }, function (error, stdout, stderr) {
       //console.log(stdout);
       if (/Already up to date/.test(stdout)) {
         e.reply("目前所有图片都已经是最新了~");
@@ -71,7 +71,7 @@ export async function updateRes(e) {
       }
     });
   } else {
-    command = `git clone https://gitee.com/leiyilu/image.git "${resPath}/res-plus/"`;
+    command = `git clone https://gitee.com/xiao-_-yao/image.git "${resPath}/xiaoyao-plus/"`;
     e.reply("开始尝试安装图片加量包，可能会需要一段时间，请耐心等待~");
     exec(command, function (error, stdout, stderr) {
       if (error) {

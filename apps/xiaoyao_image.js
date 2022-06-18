@@ -24,12 +24,12 @@ export async function roleInfo(e) {
 		if (!name) return false;
 	}
 	// console.log(name)
-	
-	send_Msg(e,"jiaose_tujian",name)
+
+	send_Msg(e, "juese_tujian", name)
 	return true;
 }
 
-const send_Msg=function(e,type,name){
+const send_Msg = function(e, type, name) {
 	let path = `${_path}/plugins/cvs-plugin/resources/res-plus/${type}/${name}.png`
 	if (!fs.existsSync(path)) {
 		return true;
@@ -40,75 +40,64 @@ let weapon = new Map();
 let weaponFile = [];
 await init();
 export async function init(isUpdate = false) {
-  let weaponJson = JSON.parse(fs.readFileSync("./config/genshin/weapon.json", "utf8"));
-  for (let i in weaponJson) {
-    for (let val of weaponJson[i]) {
-      weapon.set(val, i);
-    }
-  }
+	let weaponJson = JSON.parse(fs.readFileSync("./config/genshin/weapon.json", "utf8"));
+	for (let i in weaponJson) {
+		for (let val of weaponJson[i]) {
+			weapon.set(val, i);
+		}
+	}
 
-  weaponFile = fs.readdirSync("./resources/weaponInfo_xiaoyao");
-  for (let val of weaponFile) {
-    let name = val.replace(".png", "");
-    weapon.set(name, name);
-  }
+	weaponFile = fs.readdirSync("./resources/weaponInfo_xiaoyao");
+	for (let val of weaponFile) {
+		let name = val.replace(".png", "");
+		weapon.set(name, name);
+	}
 }
 
 export async function weaponInfo(e) {
 
-  let msg = e.msg || '';
+	let msg = e.msg || '';
+	if (e.atBot) {
+		msg = "#" + msg.replace("#", "");
+	}
+	if (!/(#*(.*)(信息|图鉴|突破)|#(.*))$/.test(msg)) return;
 
-  if(e.atBot){
-    msg = "#" + msg.replace("#", "");
-  }
-  
-  if(!/(#*(.*)(信息|图鉴|突破)|#(.*))$/.test(msg)) return;
+	let name = weapon.get(msg.replace(/#|＃|信息|图鉴|突破/g, ""));
 
-  let name = weapon.get(msg.replace(/#|＃|信息|图鉴|突破/g, ""));
+	if (name) {
+		send_Msg(e, "wuqi_tujian", name)
+		return true;
+	}
 
-  if (name) {
-
-    Bot.logger.mark(`[${e.group_name}] ${e.msg}:weaponInfo`);
-
-    let path = `${_path}/resources/weaponInfo_xiaoyao/${name}.png`
-
-    if (!fs.existsSync(path)) {
-      return true;
-    }
-
-    e.reply(segment.image(`file:///${path}`));
-    return true;
-  }
-
-  return false;
+	return false;
 }
 
 export async function monsterInfo(e) {
 
-  let msg = e.msg || '';
+	let msg = e.msg || '';
 
-  if(e.atBot){
-    msg = "#" + msg.replace("#", "");
-  }
-  
-  if(!/(#*食物(.*)|#(.*))$/.test(msg)) return;
-
-  let name = weapon.get(msg.replace(/#|＃|信息|图鉴|突破|食物/g, ""));
-
-  if (name) {
-
-    Bot.logger.mark(`[${e.group_name}] ${e.msg}:weaponInfo`);
-
-    let path = `${_path}/resources/weaponInfo_xiaoyao/${name}.png`
-
-    if (!fs.existsSync(path)) {
-      return true;
-    }
-
-    e.reply(segment.image(`file:///${path}`));
-    return true;
-  }
-
-  return false;
+	if (e.atBot) {
+		msg = "#" + msg.replace("#", "");
+	}
+	if (!/(#*食物(.*)|#(.*))$/.test(msg)) return;
+	let name = msg.replace(/#|＃|信息|图鉴|突破|食物/g, "");
+	if (name) {
+		send_Msg(e, "shiwu_tujian", name)
+		return true;
+	}
+	return false;
 }
 
+export async function RelicsInfo(e) {
+	let msg = e.msg || '';
+	if (e.atBot) {
+		msg = "#" + msg.replace("#", "");
+	}
+	if (!/(#*圣遗物(.*)|#(.*))$/.test(msg)) return;
+	let name = msg.replace(/#|＃|信息|副本|本/g, "");
+	if (name) {
+		send_Msg(e, "shengyiwu_tujian", name)
+		return true;
+	}
+	return false;
+}

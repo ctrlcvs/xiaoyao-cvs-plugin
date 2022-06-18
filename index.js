@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import {
-	roleInfo,weaponInfo
+	roleInfo,weaponInfo,monsterInfo,RelicsInfo
 } from "./apps/xiaoyao_image.js"
 import {
 	rule as adminRule,
@@ -9,7 +9,7 @@ import {
 } from "./apps/admin.js";
 export {
 	updateRes,
-	roleInfo,weaponInfo
+	roleInfo,weaponInfo,monsterInfo
 };
 
 
@@ -24,13 +24,21 @@ let rule = {
 	},
 	roleInfo: {
 		reg: "#*(.*)(信息|图鉴|命座|天赋|突破|材料|素材)$", //匹配消息正则，命令正则
-		priority: 900, //优先级，越小优先度越高
+		priority: 200, //优先级，越小优先度越高
 		describe: "【刻晴信息、刻晴图鉴、刻晴突破、刻晴命座】角色信息图鉴", //【命令】功能说明
 	},
 	weaponInfo: {
 		reg: "", //匹配消息正则，命令正则
-		priority: 900, //优先级，越小优先度越高
+		priority: 200, //优先级，越小优先度越高
 		describe: "【刻晴信息、刻晴图鉴、刻晴突破、刻晴命座】角色信息图鉴", //【命令】功能说明
+	},
+	monsterInfo:{
+		reg: "#*食物(.*)$", //匹配消息正则，命令正则
+		describe: "食物图鉴", //【命令】功能说明
+	},
+	RelicsInfo:{
+		reg: "#*圣遗物(.*)$", //匹配消息正则，命令正则
+		describe: "圣遗物图鉴", //【命令】功能说明
 	},
 	...adminRule
 };
