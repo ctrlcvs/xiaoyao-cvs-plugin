@@ -80,9 +80,9 @@ export async function weaponInfo(e) {
 	if (e.atBot) {
 		msg = "#" + msg.replace("#", "");
 	}
-	if (!/(#*(.*)(信息|图鉴|突破)|#(.*))$/.test(msg)) return;
+	if (!/(#*(.*)(信息|图鉴|突破|武器|材料)|#(.*))$/.test(msg)) return;
 
-	let name = weapon.get(msg.replace(/#|＃|信息|图鉴|突破/g, ""));
+	let name = weapon.get(msg.replace(/#|＃|信息|图鉴|突破|武器|材料/g, ""));
 
 	if (name) {
 		send_Msg(e, "wuqi_tujian", name)
@@ -130,7 +130,6 @@ export async function monsterInfo(e) {
 	}
 	if (!/(#*(原魔|怪物)(.*)|#(.*))$/.test(msg)) return;
 	let name = msg.replace(/#|＃|信息|副本|本|图鉴|数据|原魔/g, "");
-	console.log(name)
 	if (name) {
 		send_Msg(e, "yuanmo_tujian", name)
 		return true;
