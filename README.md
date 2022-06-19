@@ -18,7 +18,7 @@
 
 #### 安装教程
 
-1.  git clone https://gitee.com/leiyilu/xiaoyao-cvs-plugin ./plugins/xiaoyao-cvs-plugin/
+1.  git clone https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cvs-plugin/
 
 
 #### 使用说明
@@ -28,6 +28,6 @@
 
 
 #### 命令说明
-
-1. 发送 #业务类型业务具体名称 进行触发，例如发送 #食物蒙德往事.png，即可返回对应的图片信息。
-2. 发送 #图鉴更新 获取最新的图鉴记录。
+1. 发送 #图鉴更新 获取最新的图鉴记录。(必须)
+2. 发送 #业务类型业务具体名称 进行触发，例如发送 #食物蒙德往事.png，即可返回对应的图片信息。
+ 
