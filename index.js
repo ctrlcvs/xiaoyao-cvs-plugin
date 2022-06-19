@@ -8,7 +8,7 @@ import {
 	updateMiaoPlugin
 } from "./apps/admin.js";
 export {
-	updateRes,
+	updateRes,updateMiaoPlugin,
 	roleInfo,weaponInfo,monsterInfo,foodInfo,RelicsInfo
 };
 
