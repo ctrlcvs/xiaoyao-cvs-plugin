@@ -18,7 +18,7 @@ export const rule = {
   },
   updateMiaoPlugin: {
     hashMark: true,
-    reg: "^#图鉴(强制)?更新",
+    reg: "^#逍遥插件(强制)?更新",
     describe: "【#管理】图鉴更新",
   },
  
@@ -26,7 +26,7 @@ export const rule = {
 
 
 const _path = process.cwd();
-const resPath = `${_path}/plugins/cvs-plugin/resources/`;
+const resPath = `${_path}/plugins/xiaoyao-cvs-plugin/resources/`;
 const plusPath = `${resPath}/xiaoyao-plus/`;
 
 const checkAuth = async function (e) {
@@ -71,13 +71,13 @@ export async function updateRes(e) {
       }
     });
   } else {
-    command = `git clone https://gitee.com/xiao-_-yao/image.git "${resPath}/xiaoyao-plus/"`;
-    e.reply("开始尝试安装图片加量包，可能会需要一段时间，请耐心等待~");
+    command = `git clone https://github.com/ctrlcvs/xiaoyao_plus.git "${resPath}/xiaoyao-plus/"`;
+    e.reply("开始尝试安装图片加量包，可能会需要一段时间，请耐心等待~\n此链接为github图床,如异常请请求多次");
     exec(command, function (error, stdout, stderr) {
       if (error) {
         e.reply("角色图片加量包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。");
       } else {
-        e.reply("角色图片加量包安装成功！您后续也可以通过 #喵喵更新图像 命令来更新图像");
+        e.reply("角色图片加量包安装成功！您后续也可以通过 #图鉴更新 命令来更新图像");
       }
     });
   }
@@ -98,7 +98,7 @@ export async function updateMiaoPlugin(e) {
   } else {
     e.reply("正在执行更新操作，请稍等");
   }
-  exec(command, { cwd: `${_path}/plugins/cvs-plugin/` }, function (error, stdout, stderr) {
+  exec(command, { cwd: `${_path}/plugins/xiaoyao-cvs-plugin/` }, function (error, stdout, stderr) {
     //console.log(stdout);
     if (/Already up to date/.test(stdout)) {
       e.reply("目前已经是最新版喵喵了~");
@@ -110,7 +110,7 @@ export async function updateMiaoPlugin(e) {
     }
     e.reply("喵喵更新成功，尝试重新启动Yunzai以应用更新...");
     timer && clearTimeout(timer);
-    redis.set("miao:restart-msg", JSON.stringify({
+    redis.set("xiaoyao:restart-msg", JSON.stringify({
       msg: "重启成功，新版喵喵已经生效",
       qq: e.user_id
     }), { EX: 30 });

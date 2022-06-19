@@ -10,7 +10,6 @@ const __dirname = path.resolve();
 export async function roleInfo(e) {
 	// let msg=e.msg.replace(/#|图鉴/g,"");
 	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破/g, "");
-
 	let id = YunzaiApps.mysInfo.roleIdToName(msg);
 	let name;
 	if (["10000005", "10000007", "20000000"].includes(id)) {
@@ -23,18 +22,40 @@ export async function roleInfo(e) {
 		name = YunzaiApps.mysInfo.roleIdToName(id, true);
 		if (!name) return false;
 	}
-	// console.log(name)
-
 	send_Msg(e, "juese_tujian", name)
 	return true;
 }
 
 const send_Msg = function(e, type, name) {
-	let path = `${_path}/plugins/cvs-plugin/resources/res-plus/${type}/${name}.png`
+	let path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${type}/${name}.png`
 	if (!fs.existsSync(path)) {
+		// 异步读取上级目录下的所有文件
+		fs.readdir(`${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${type}`, function(err, files) {
+			if (err) {
+				e.reply("出问题了呢建议检查/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/" + type + "有没有")
+				return true
+			} else {
+				let new_files = [];
+				for (let i = 0; i < files.length; i++) {
+					for (var j = 0; j < name.length; j++) {
+						if (files[i].indexOf(name[j]) >= 0) {
+							new_files.push(files[i])
+							break;
+						}
+					}
+				}
+				if (new_files.length == 0) {
+					e.reply("刻晴没有找到你想要的" + name+ "哦")
+					return true;
+				}
+				e.reply("没有找到指定文件呢，您要找的是否是这些：\n"+new_files.join(",").replace(/,/g, ',\n').replace(/(.amr|.mp3|.mp4|.jpg|.png)/g,""))
+				return true;
+			}
+		});
 		return true;
 	}
 	e.reply(segment.image(`file:///${path}`));
+	return true;
 }
 let weapon = new Map();
 let weaponFile = [];
@@ -46,7 +67,6 @@ export async function init(isUpdate = false) {
 			weapon.set(val, i);
 		}
 	}
-
 	weaponFile = fs.readdirSync("./resources/weaponInfo_xiaoyao");
 	for (let val of weaponFile) {
 		let name = val.replace(".png", "");
@@ -72,7 +92,7 @@ export async function weaponInfo(e) {
 	return false;
 }
 
-export async function monsterInfo(e) {
+export async function foodInfo(e) {
 
 	let msg = e.msg || '';
 
@@ -80,7 +100,7 @@ export async function monsterInfo(e) {
 		msg = "#" + msg.replace("#", "");
 	}
 	if (!/(#*食物(.*)|#(.*))$/.test(msg)) return;
-	let name = msg.replace(/#|＃|信息|图鉴|突破|食物/g, "");
+	let name = msg.replace(/#|＃|信息|图鉴|食物/g, "");
 	if (name) {
 		send_Msg(e, "shiwu_tujian", name)
 		return true;
@@ -94,9 +114,25 @@ export async function RelicsInfo(e) {
 		msg = "#" + msg.replace("#", "");
 	}
 	if (!/(#*圣遗物(.*)|#(.*))$/.test(msg)) return;
-	let name = msg.replace(/#|＃|信息|副本|本/g, "");
+	let name = msg.replace(/#|＃|信息|副本|本|圣遗物/g, "");
 	if (name) {
 		send_Msg(e, "shengyiwu_tujian", name)
+		return true;
+	}
+	return false;
+}
+
+
+export async function monsterInfo(e) {
+	let msg = e.msg || '';
+	if (e.atBot) {
+		msg = "#" + msg.replace("#", "");
+	}
+	if (!/(#*(原魔|怪物)(.*)|#(.*))$/.test(msg)) return;
+	let name = msg.replace(/#|＃|信息|副本|本|图鉴|数据|原魔/g, "");
+	console.log(name)
+	if (name) {
+		send_Msg(e, "yuanmo_tujian", name)
 		return true;
 	}
 	return false;
