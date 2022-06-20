@@ -2,10 +2,23 @@ import {
 	segment
 } from "oicq";
 import fs from "fs";
-
+import Data from "../components/Data.js"
 import path from 'path';
+import fetch from "node-fetch";
 const _path = process.cwd();
 const __dirname = path.resolve();
+
+const list = ["shiwu_tujian", "yuanmo_tujian"]
+export async function AtlasAlias(e) {
+	if (await roleInfo(e)) return true;
+	if (await weaponInfo(e)) return true;
+	// if (await foodInfo(e)) return true;
+	if (await RelicsInfo(e)) return true;
+	// if (await monsterInfo(e)) return true;
+	var name = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破|圣遗物|原魔|食物|食材|的|特殊|材|料|特色|料理|理|色/g, "");
+	send_Msg(e, "all", name)
+}
+
 
 export async function roleInfo(e) {
 	// let msg=e.msg.replace(/#|图鉴/g,"");
@@ -27,31 +40,19 @@ export async function roleInfo(e) {
 }
 
 const send_Msg = function(e, type, name) {
+	if (type == "all") {
+		for (let val of list) {
+			let new_name = info_img(e, Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`,
+				val), name)
+			if (new_name) {
+				name = new_name
+				type = val;
+				break;
+			}
+		}
+	}
 	let path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${type}/${name}.png`
 	if (!fs.existsSync(path)) {
-		// 异步读取上级目录下的所有文件
-		fs.readdir(`${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${type}`, function(err, files) {
-			if (err) {
-				e.reply("出问题了呢建议检查/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/" + type + "有没有")
-				return true
-			} else {
-				let new_files = [];
-				for (let i = 0; i < files.length; i++) {
-					for (var j = 0; j < name.length; j++) {
-						if (files[i].indexOf(name[j]) >= 0) {
-							new_files.push(files[i])
-							break;
-						}
-					}
-				}
-				if (new_files.length == 0) {
-					e.reply("刻晴没有找到你想要的" + name+ "哦")
-					return true;
-				}
-				e.reply("没有找到指定文件呢，您要找的是否是这些：\n"+new_files.join(",").replace(/,/g, ',\n').replace(/(.amr|.mp3|.mp4|.jpg|.png)/g,""))
-				return true;
-			}
-		});
 		return true;
 	}
 	e.reply(segment.image(`file:///${path}`));
@@ -92,47 +93,29 @@ export async function weaponInfo(e) {
 	return false;
 }
 
-export async function foodInfo(e) {
-
-	let msg = e.msg || '';
-
-	if (e.atBot) {
-		msg = "#" + msg.replace("#", "");
-	}
-	if (!/(#*食物(.*)|#(.*))$/.test(msg)) return;
-	let name = msg.replace(/#|＃|信息|图鉴|食物/g, "");
-	if (name) {
-		send_Msg(e, "shiwu_tujian", name)
-		return true;
-	}
-	return false;
-}
-
 export async function RelicsInfo(e) {
 	let msg = e.msg || '';
 	if (e.atBot) {
 		msg = "#" + msg.replace("#", "");
 	}
-	if (!/(#*圣遗物(.*)|#(.*))$/.test(msg)) return;
-	let name = msg.replace(/#|＃|信息|副本|本|圣遗物/g, "");
+	// if (!/(#*圣遗物(.*)|#(.*))$/.test(msg)) return;
+	let name = msg.replace(/#|＃|信息|副本|本|圣遗物|图鉴/g, "");
+	let response = await fetch(`https://info.minigg.cn/artifacts?query=${encodeURIComponent(name)}`);
+	let res = await response.json();
+	if (res?.errcode == "10006") return false;
+	name = res["name"];
 	if (name) {
 		send_Msg(e, "shengyiwu_tujian", name)
 		return true;
 	}
 	return false;
 }
-
-
-export async function monsterInfo(e) {
-	let msg = e.msg || '';
-	if (e.atBot) {
-		msg = "#" + msg.replace("#", "");
+const info_img = function(e, list, name) {
+	for (let i in list) {
+		for (let val of list[i]) {
+			if (val == name) {
+				return i;
+			}
+		}
 	}
-	if (!/(#*(原魔|怪物)(.*)|#(.*))$/.test(msg)) return;
-	let name = msg.replace(/#|＃|信息|副本|本|图鉴|数据|原魔/g, "");
-	if (name) {
-		send_Msg(e, "yuanmo_tujian", name)
-		return true;
-	}
-	return false;
 }
