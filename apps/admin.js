@@ -50,7 +50,7 @@ export async function updateRes(e) {
     return true;
   }
   let command = "";
-  if (fs.existsSync(`${resPath}/res-plus/`)) {
+  if (fs.existsSync(`${resPath}/xiaoyao-plus/`)) {
     e.reply("开始尝试更新，请耐心等待~");
     command = `git pull`;
     exec(command, { cwd: `${resPath}/xiaoyao-plus/` }, function (error, stdout, stderr) {
