@@ -69,7 +69,7 @@ export async function init(isUpdate = false) {
 			weapon.set(val, i);
 		}
 	}
-	weaponFile = fs.readdirSync("./resources/weaponInfo_xiaoyao");
+	weaponFile = fs.readdirSync("./plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/wuqi_tujian");
 	for (let val of weaponFile) {
 		let name = val.replace(".png", "");
 		weapon.set(name, name);
@@ -114,7 +114,7 @@ export async function RelicsInfo(e) {
 const info_img = function(e, list, name) {
 	for (let i in list) {
 		for (let val of list[i]) {
-			if (val == name) {
+			if (val == name||i==name) {
 				return i;
 			}
 		}
