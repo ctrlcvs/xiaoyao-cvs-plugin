@@ -18,7 +18,7 @@ export const rule = {
   },
   updateMiaoPlugin: {
     hashMark: true,
-    reg: "^#逍遥插件(强制)?更新",
+    reg: "^#图鉴插件(强制)?更新",
     describe: "【#管理】图鉴更新",
   },
  
@@ -103,17 +103,17 @@ export async function updateMiaoPlugin(e) {
   exec(command, { cwd: `${_path}/plugins/xiaoyao-cvs-plugin/` }, function (error, stdout, stderr) {
     //console.log(stdout);
     if (/Already up to date/.test(stdout)) {
-      e.reply("目前已经是最新版逍遥插件了~");
+      e.reply("目前已经是最新版图鉴插件了~");
       return true;
     }
     if (error) {
-      e.reply("逍遥插件更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。");
+      e.reply("图鉴插件更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。");
       return true;
     }
-    e.reply("逍遥插件更新成功，尝试重新启动Yunzai以应用更新...");
+    e.reply("图鉴插件更新成功，尝试重新启动Yunzai以应用更新...");
     timer && clearTimeout(timer);
     redis.set("xiaoyao:restart-msg", JSON.stringify({
-      msg: "重启成功，新版逍遥插件已经生效",
+      msg: "重启成功，新版图鉴插件已经生效",
       qq: e.user_id
     }), { EX: 30 });
     timer = setTimeout(function () {
@@ -121,7 +121,7 @@ export async function updateMiaoPlugin(e) {
       exec(command, function (error, stdout, stderr) {
         if (error) {
           if (/Yunzai not found/.test(error)) {
-            e.reply("自动重启失败，请手动重启以应用新版逍遥插件。请使用 npm run start 命令启动Yunzai-Bot");
+            e.reply("自动重启失败，请手动重启以应用新版图鉴插件。请使用 npm run start 命令启动Yunzai-Bot");
           } else {
             e.reply("重启失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。");
           }
