@@ -69,7 +69,11 @@ export async function init(isUpdate = false) {
 			weapon.set(val, i);
 		}
 	}
-	weaponFile = fs.readdirSync("./plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/wuqi_tujian");
+	let paths="./plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/wuqi_tujian";
+	if (!fs.existsSync(paths)) {
+		return true;
+	}
+	weaponFile = fs.readdirSync(paths);
 	for (let val of weaponFile) {
 		let name = val.replace(".png", "");
 		weapon.set(name, name);
