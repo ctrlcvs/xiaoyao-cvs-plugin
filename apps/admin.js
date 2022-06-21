@@ -71,8 +71,10 @@ export async function updateRes(e) {
       }
     });
   } else {
-    command = `git clone https://github.com/ctrlcvs/xiaoyao_plus.git "${resPath}/xiaoyao-plus/"`;
-    e.reply("开始尝试安装图片加量包，可能会需要一段时间，请耐心等待~\n此链接为github图床,如异常请请求多次");
+	  //gitee图床
+	command =`git clone https://gitee.com/Ctrlcvs/xiaoyao-plus.git "${resPath}/xiaoyao-plus/"`
+    // command = `git clone https://github.com/ctrlcvs/xiaoyao_plus.git "${resPath}/xiaoyao-plus/"`;\n此链接为github图床,如异常请请求多次
+    e.reply("开始尝试安装图鉴加量包，可能会需要一段时间，请耐心等待~");
     exec(command, function (error, stdout, stderr) {
       if (error) {
         e.reply("角色图片加量包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。");
