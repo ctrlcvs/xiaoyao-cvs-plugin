@@ -17,7 +17,9 @@ import {
 	init
 } from "../apps/xiaoyao_image.js"
 
-const require = createRequire(import.meta.url);
+
+const require = createRequire(
+	import.meta.url);
 
 
 export const rule = {
