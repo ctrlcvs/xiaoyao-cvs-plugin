@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<link rel="shortcut icon" href="#" />
+		<link rel="stylesheet" type="text/css" href="{{_res_path}}dailyNote/dailyNote.css?v=1.0" />
+		<link rel="preload" href="{{_res_path}}font/tttgbnumber.ttf" as="font">
+	</head>
+	<body>
+		<div class="container" id="container"
+			style=" background-image: url({{_res_path}}/dailyNote/background_image/{{imgs}});">
+			<div class="title">
+				<div class="id">
+					<span>{{uid}}</span>
+				</div>
+				<div class="day">
+					<span>{{day}}</span>
+				</div>
+			</div>
+			<div class="item" style="padding-top: 185px;">
+				<div class="top">
+					<span>{{current_resin}}/{{max_resin}}</span>
+				</div>
+				<div class="main">
+					<div class="time">
+						{{if resinMaxTime}}
+						将于{{resinMaxTime}} 全部恢复
+						{{else}}树脂已完全恢复{{/if}}
+					</div>
+				</div>
+
+			</div>
+			<div class="item">
+				<div class="main">
+					<div class="top">
+						<span>{{finished_task_num}}/{{total_task_num}}</span>
+					</div>
+					<div class="info">
+						<div class="time">今日委托奖励{{if is_extra_task_reward_received==1}}已{{else}}未{{/if}}领取
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="item">
+				<div class="main">
+					<div class="top">
+						<span>{{3-remain_resin_discount_num}}/{{resin_discount_num_limit}}</span>
+					</div>
+					<div class="info">
+						<div class="time">
+							{{if remain_resin_discount_num<=0}}周本已完成
+							{{else}}周本树脂减半次数已用{{/if}}
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="item">
+				<div class="main">
+					<div class="top">
+						<span
+							class="{{if transformer.obtained && transformer.reached }}red{{/if}}">{{if transformer.obtained }}{{if transformer.reached}}可使用
+							{{else}}冷却中{{/if}}
+								{{else}}尚未获得{{/if}}</span>
+					</div>
+					<div class="info">
+						<div class="time">
+							{{if transformer.obtained }}
+							{{if transformer.reached}}已准备完成
+							{{else}}{{transformer.recovery_time}}后可使用{{/if}}
+								{{else}}尚未获得{{/if}}
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="item">
+				<div class="main">
+					<div class="top">
+						<span
+							class="{{if current_home_coin/max_home_coin > 0.9}}red{{/if}}">{{current_home_coin}}/{{max_home_coin}}</span>
+					</div>
+					<div class="info">
+						<div class="time">
+							{{if coinTime}}
+							预计{{coinTime}}后达到上限
+							{{else}}存储已满{{/if}}
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="paiqian">
+				<div class="main">
+					<div class="bg"></div>
+					<div class="icon icon-派遣"></div>
+					<div class="info">
+						<div class="time">
+							{{if !expeditions || expeditions.length<=0}}尚未进行派遣
+							{{else if remained_time && remained_time!=0}}最快将于{{remained_time}} 完成
+								{{else}}派遣已完成{{/if}}
+						</div>
+					</div>
+					<div class="all_icon">
+						{{each expeditions list}}
+						<div><img class="icon" src="{{list.avatar_side_icon}}" alt="">
+							<div class="icon_div">
+								{{list.remained_time}}完成
+							</div>
+						</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+	<script type="text/javascript">
+		var count = 35;
+		var item = document.getElementsByClassName("item");
+		for (var i = 0; i < item.length; i++) {
+			item[i].style.top = (count) + "%"
+			count += 16;
+		}
+	</script>
+</html>

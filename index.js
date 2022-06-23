@@ -2,17 +2,26 @@ import lodash from "lodash";
 import {
 	AtlasAlias
 } from "./apps/xiaoyao_image.js";
-import {versionInfo,calendar} from "./apps/help.js"
+import {
+	versionInfo,
+	calendar
+} from "./apps/help.js";
+import {
+	Note
+} from "./apps/Note.js"
 import {
 	rule as adminRule,
 	updateRes,
 	updateMiaoPlugin
 } from "./apps/admin.js";
 export {
-	updateRes,updateMiaoPlugin,versionInfo,calendar,
-	AtlasAlias
+	updateRes,
+	updateMiaoPlugin,
+	versionInfo,
+	calendar,
+	AtlasAlias,
+	Note
 };
-
 
 let rule = {
 	versionInfo: {
@@ -23,9 +32,13 @@ let rule = {
 		reg: "^#图鉴列表$",
 		describe: "【#日历】 活动日历",
 	},
-	AtlasAlias:{
+	AtlasAlias: {
 		reg: "#*(.*)(信息|图鉴|命座|天赋|突破|材料|特色料理|特殊料理)$", //匹配消息正则，命令正则
 		describe: "【刻晴信息、刻晴图鉴、刻晴突破、刻晴命座】角色信息图鉴", //【命令】功能说明
+	},
+	Note: {
+		reg: "^#*(体力|树脂|查询体力|便笺|便签)$", //匹配消息正则，命令正则
+		describe: "体力",
 	},
 	...adminRule
 };
