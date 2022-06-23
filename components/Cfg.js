@@ -2,7 +2,7 @@ import fs from "fs";
 import lodash from "lodash";
 
 const _path = process.cwd();
-const _cfgPath = `${_path}/plugins/miao-plugin/components/`;
+const _cfgPath = `${_path}/plugins/xiaoyao-cvs-plugin/components/`;
 let cfg = {};
 
 try {
@@ -31,7 +31,7 @@ let Cfg = {
     if (Cfg.get(rote, true)) {
       return false;
     }
-    if (/^#*喵喵/.test(e.msg || "")) {
+    if (/^#*图鉴/.test(e.msg || "")) {
       return false;
     }
     return true;

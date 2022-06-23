@@ -8,6 +8,9 @@ import format from "date-format";
 import puppeteer from "puppeteer";
 import common from "../../../lib/common.js";
 import lodash from "lodash";
+import {
+	Cfg
+} from "../components/index.js";
 // import MysApi from "../components/MysApi.js"
 
 import {
@@ -21,6 +24,9 @@ const _path = process.cwd();
 export async function Note(e, {
 	render
 }) {
+	if(!Cfg.get("sys.Note")){
+		return false;
+	}
 	let cookie, uid;
 	if (NoteCookie[e.user_id]) {
 		cookie = NoteCookie[e.user_id].cookie;

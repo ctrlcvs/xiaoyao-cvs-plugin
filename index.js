@@ -11,13 +11,13 @@ import {
 } from "./apps/Note.js"
 import {
 	rule as adminRule,
-	updateRes,
+	updateRes,sysCfg,
 	updateMiaoPlugin
 } from "./apps/admin.js";
 export {
 	updateRes,
 	updateMiaoPlugin,
-	versionInfo,
+	versionInfo,sysCfg,
 	calendar,
 	AtlasAlias,
 	Note

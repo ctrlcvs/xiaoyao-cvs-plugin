@@ -17,11 +17,12 @@ import {
 	init
 } from "../apps/xiaoyao_image.js"
 
-
 const require = createRequire(
 	import.meta.url);
-
-
+let cfgMap = {
+	"体力": "sys.Note",
+};
+let sysCfgReg = `^#图鉴设置\s*(${lodash.keys(cfgMap).join("|")})?\s*(.*)$`;
 export const rule = {
 	updateRes: {
 		hashMark: true,
@@ -33,7 +34,11 @@ export const rule = {
 		reg: "^#图鉴插件(强制)?更新",
 		describe: "【#管理】图鉴更新",
 	},
-
+	sysCfg: {
+		hashMark: true,
+		reg: sysCfgReg,
+		describe: "【#管理】系统设置"
+	}
 };
 
 
@@ -41,6 +46,43 @@ const _path = process.cwd();
 const resPath = `${_path}/plugins/xiaoyao-cvs-plugin/resources/`;
 const plusPath = `${resPath}/xiaoyao-plus/`;
 
+export async function sysCfg(e, {
+	render
+}) {
+	if (!await checkAuth(e)) {
+		return true;
+	}
+
+	let cfgReg = new RegExp(sysCfgReg);
+	let regRet = cfgReg.exec(e.msg);
+
+	if (!regRet) {
+		return true;
+	}
+	console.log(regRet)
+	if (regRet[1]) {
+		// 设置模式
+		let val = regRet[2] || "";
+
+		let cfgKey = cfgMap[regRet[1]];
+		
+		if (cfgKey === "sys.scale") {
+			val = Math.min(200, Math.max(50, val * 1 || 100));
+		} else {
+			val = !/关闭/.test(val);
+		}
+		if (cfgKey) {
+			console.log(val)
+			Cfg.set(cfgKey, val);
+		}
+	}
+	e.reply("设置成功！！");
+	return true;
+	// //渲染图像
+	// return await Common.render("admin/index", {
+	//   ...cfg,
+	// }, { e, render, scale: 1.4 });
+}
 const checkAuth = async function(e) {
 	return await e.checkAuth({
 		auth: "master",

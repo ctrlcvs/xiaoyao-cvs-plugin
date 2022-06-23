@@ -1,5 +1,6 @@
 {
 	"sys": {
-		"help": true
+		"help": true,
+		"Note": false
 	}
 }
