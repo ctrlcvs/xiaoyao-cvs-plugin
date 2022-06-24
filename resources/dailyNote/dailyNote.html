@@ -107,8 +107,8 @@
 						{{each expeditions list}}
 						<div><img class="icon" src="{{list.avatar_side_icon}}" alt="">
 							<div class="icon_div">
-								{{if list.remained_time>0}}{{list.remained_time}}完成
-								{{else}}已完成{{/if}}
+								{{if list.remained_time==0}}已完成
+								{{else}}{{list.remained_time}}完成{{/if}}
 							</div>
 						</div>
 						{{/each}}
