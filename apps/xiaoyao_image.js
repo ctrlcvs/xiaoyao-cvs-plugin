@@ -15,7 +15,7 @@ export async function AtlasAlias(e) {
 	// if (await foodInfo(e)) return true;
 	if (await RelicsInfo(e)) return true;
 	// if (await monsterInfo(e)) return true;
-	var name = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破|圣遗物|原魔|食物|食材|的|特殊|材|料|特色|料理|理|色/g, "");
+	var name = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破|圣遗物|食物|食材|的|特殊|材|料|特色|料理|理|色/g, "");
 	send_Msg(e, "all", name)
 	return true;
 }
@@ -41,6 +41,11 @@ export async function roleInfo(e) {
 }
 
 const send_Msg = function(e, type, name) {
+	let path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${type}/${name}.png`
+	if (fs.existsSync(path)) {
+		e.reply(segment.image(`file:///${path}`));
+		return true;
+	}
 	if (type == "all") {
 		for (let val of list) {
 			let new_name = info_img(e, Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`,
@@ -52,7 +57,7 @@ const send_Msg = function(e, type, name) {
 			}
 		}
 	}
-	let path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${type}/${name}.png`
+	 path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${type}/${name}.png`
 	if (!fs.existsSync(path)) {
 		return true;
 	}

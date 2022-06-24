@@ -5,6 +5,7 @@
 		<link rel="shortcut icon" href="#" />
 		<link rel="stylesheet" type="text/css" href="{{_res_path}}dailyNote/dailyNote.css?v=1.0" />
 		<link rel="preload" href="{{_res_path}}font/tttgbnumber.ttf" as="font">
+		
 	</head>
 	<body>
 		<div class="container" id="container"
@@ -17,14 +18,14 @@
 					<span>{{day}}</span>
 				</div>
 			</div>
-			<div class="item" style="padding-top: 185px;">
+			<div class="item" style="padding-top: 175px;">
 				<div class="top">
 					<span>{{current_resin}}/{{max_resin}}</span>
 				</div>
 				<div class="main">
 					<div class="time">
 						{{if resinMaxTime}}
-						将于{{resinMaxTime}} 全部恢复
+						将于<span class="span">{{resinMaxTime}}</span>全部恢复
 						{{else}}树脂已完全恢复{{/if}}
 					</div>
 				</div>
@@ -41,7 +42,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="item">
 				<div class="main">
 					<div class="top">
@@ -68,7 +68,7 @@
 						<div class="time">
 							{{if transformer.obtained }}
 							{{if transformer.reached}}已准备完成
-							{{else}}{{transformer.recovery_time}}后可使用{{/if}}
+							{{else}}<span class="span">{{transformer.recovery_time}}</span>后可使用{{/if}}
 								{{else}}尚未获得{{/if}}
 						</div>
 					</div>
@@ -84,7 +84,7 @@
 					<div class="info">
 						<div class="time">
 							{{if coinTime}}
-							预计{{coinTime}}后达到上限
+							预计<span class="span">{{coinTime}}</span>后达到上限
 							{{else}}存储已满{{/if}}
 						</div>
 					</div>
@@ -99,7 +99,8 @@
 					<div class="info">
 						<div class="time">
 							{{if !expeditions || expeditions.length<=0}}尚未进行派遣
-							{{else if remained_time && remained_time!=0}}最快将于{{remained_time}} 完成
+							{{else if remained_time && remained_time!=0}}最快将于<span class="span">{{remained_time}}</span>
+								完成
 								{{else}}派遣已完成{{/if}}
 						</div>
 					</div>
@@ -118,12 +119,5 @@
 
 		</div>
 	</body>
-	<script type="text/javascript">
-		var count = 35;
-		var item = document.getElementsByClassName("item");
-		for (var i = 0; i < item.length; i++) {
-			item[i].style.top = (count) + "%"
-			count += 16;
-		}
-	</script>
+	
 </html>

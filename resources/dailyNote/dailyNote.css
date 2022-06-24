@@ -8,84 +8,87 @@ html {
 	height: 100%;
 	font-family: HYWenHei-55W, monospace;
 }
+
 #container {
-				min-height: 900px;
-				height: auto;
-				width: 100%;
-			}
+	min-height: 900px;
+	height: auto;
+	width: 100%;
+	/* background-color: rgba(0,0,0,0.5); */
+}
 
-			.title {
-				position: absolute;
-				top: 64px;
-				left: 225px;
-				font-weight: bold;
-				font-size: 22px;
-				text-align: left;
-			}
+.title {
+	position: absolute;
+	top: 75px;
+	left: 225px;
+	font-weight: bold;
+	font-size: 22px;
+	text-align: left;
+}
 
-			.item {
-				width: 228px;
-				left: 200px;
-				top: 350px;
-				color: #7b8386;
-				font-weight: bold;
-				font-size: 22px;
-				margin-left: 205px;
-				margin-bottom: 25px;
-			}
+.item {
+	width: 228px;
+	left: 200px;
+	top: 350px;
+	color: #7b8386;
+	font-weight: bold;
+	font-size: 22px;
+	margin-left: 205px;
+	margin-bottom: 25px;
+}
 
-			.paiqian {
-				position: absolute;
-				width: 400px;
-				height: 26px;
-				left: 520px;
-				top: 80px;
-				text-align: center;
-				color: #7b8386;
-				font-weight: bold;
-				font-size: 20px;
-			}
+.paiqian {
+	position: absolute;
+	width: 400px;
+	height: 26px;
+	left: 520px;
+	top: 80px;
+	text-align: center;
+	color: #7b8386;
+	font-weight: bold;
+	font-size: 20px;
+}
 
-			.icon {
-				width: 65px;
-				margin: 5px 0 4px 13px;
-				display: inline-block;
-				vertical-align: bottom;
-			}
+.icon {
+	width: 65px;
+	margin: 3px 0 4px 13px;
+	display: inline-block;
+	vertical-align: bottom;
+}
 
-			.icon_div {
-				display: inline-block;
-				vertical-align: super;
-				margin-top: -10px;
-				margin-left: 15px;
-			}
+.icon_div {
+	display: inline-block;
+	vertical-align: super;
+	margin-top: -10px;
+	margin-left: 15px;
+}
 
-			.all_icon {
-				text-align: left;
-				position: relative;
-				top: -25px;
-			}
+.all_icon {
+	text-align: left;
+	position: relative;
+	top: -25px;
+}
 
-			.time {
-				position: relative;
-				top: -20px;
-			}
+.time {
+	position: relative;
+	top: -20px;
+}
 
-			.item .main .time {
-				font-size: 12px;
-				display: block;
-				position: initial;
-			}
+.item .main .time {
+	font-size: 12px;
+	display: block;
+	position: initial;
+}
 
-			.item .main {
-				display: block;
-			}
+.item .main {
+	display: block;
+}
 
-			.item .top {
-				font-weight: bold;
-				font-size: 30px;
-				display: block;
-			}
-			.item:nth-last-child(2){
-				margin-top: 35px;
-			}
+.item .top {
+	font-weight: bold;
+	font-size: 30px;
+	display: block;
+}
+
+.item:nth-last-child(2) {
+	/* margin-top: 35px; */
+}

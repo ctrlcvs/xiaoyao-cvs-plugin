@@ -15,7 +15,7 @@ export const render = async function (path, params, cfg) {
       scale: Cfg.scale(cfg.scale || 1),
       copyright: `Created By Yunzai-Bot<span class="version">${yunzaiVersion}</span> &  xiaoyao-cvs-Plugin<span class="version">${currentVersion}</span>`
     }
-  });
+  },"png");
 
   if (base64) {
     e.reply(segment.image(`base64://${base64}`));

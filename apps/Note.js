@@ -24,7 +24,7 @@ const _path = process.cwd();
 export async function Note(e, {
 	render
 }) {
-	if(!Cfg.get("sys.Note")){
+	if (!Cfg.get("sys.Note")) {
 		return false;
 	}
 	let cookie, uid;
@@ -110,26 +110,24 @@ export async function Note(e, {
 			resinMaxTime = ` ${resinMaxTime}`;
 		}
 	}
-
+	for (let val of data.expeditions) {
+		val.remained_time = new Date().getTime() + val.remained_time * 1000;
+		let remainedDate = new Date(val.remained_time);
+		val.remained_time = format("hh:mm", remainedDate);
+		if (format("dd", remainedDate) != nowDay) {
+			val.remained_time = `明天 ${val.remained_time}`;
+		} else {
+			val.remained_time = ` ${val.remained_time}`;
+		}
+	}
 	let remained_time = "";
 	if (data.expeditions && data.expeditions.length >= 1) {
 		remained_time = lodash.map(data.expeditions, "remained_time");
 		remained_time = lodash.min(remained_time);
 		if (remained_time > 0) {
-			for (let val of data.expeditions) {
-				val.remained_time = new Date().getTime() + val.remained_time * 1000;
-				let remainedDate = new Date(val.remained_time);
-				val.remained_time = format("hh:mm", remainedDate);
-				if (format("dd", remainedDate) != nowDay) {
-					val.remained_time = `明天 ${val.remained_time}`;
-				} else {
-					val.remained_time = ` ${val.remained_time}`;
-				}
-			}
 			remained_time = new Date().getTime() + remained_time * 1000;
 			let remainedDate = new Date(remained_time);
 			remained_time = format("hh:mm", remainedDate);
-
 			if (format("dd", remainedDate) != nowDay) {
 				remained_time = `明天 ${remained_time}`;
 			} else {
@@ -158,7 +156,7 @@ export async function Note(e, {
 	let day = format("MM-dd hh:mm", new Date());
 	let week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 	day += " " + week[new Date().getDay()];
-	
+
 	//参量质变仪
 	if (data?.transformer?.obtained) {
 		data.transformer.reached = data.transformer.recovery_time.reached;
@@ -175,12 +173,12 @@ export async function Note(e, {
 		}
 		data.transformer.recovery_time = recovery_time;
 	}
-	var image= fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image`);
-	var list_img=[];
+	var image = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image`);
+	var list_img = [];
 	for (let val of image) {
 		list_img.push(val)
 	}
-	var imgs=list_img[lodash.random(0, list_img.length-1)];
+	var imgs =list_img.length==1?list_img.length[0]:list_img[lodash.random(0, list_img.length - 1)];
 	return await Common.render("dailyNote/dailyNote", {
 		save_id: uid,
 		uid: uid,
