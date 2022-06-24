@@ -1,12 +1,12 @@
 import { Cfg } from "./index.js";
 import { segment } from "oicq";
 import { currentVersion, yunzaiVersion } from "./Changelog.js";
-
+import {render1} from "../apps/render.js";
 export const render = async function (path, params, cfg) {
   let paths = path.split("/");
   let { render, e } = cfg;
   let _layout_path = process.cwd() + "/plugins/xiaoyao-cvs-plugin/resources/";
-  let base64 = await render(paths[0], paths[1], {
+  let base64 = await render1(paths[0], paths[1], {
     ...params,
     _layout_path,
     defaultLayout: _layout_path + "default.html",
