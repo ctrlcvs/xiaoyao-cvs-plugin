@@ -54,14 +54,13 @@ export {
 };
 
 console.log(`图鉴初始化~`);
-
-// setTimeout(async function () {
-//   let msgStr = await redis.get("miao:restart-msg");
-//   if (msgStr) {
-//     let msg = JSON.parse(msgStr);
-//     await common.relpyPrivate(msg.qq, msg.msg);
-//     await redis.del("miao:restart-msg");
-//     let msgs = [`当前版本: ${currentVersion}`, `您可使用 #版本 命令查看更新信息`];
-//     await common.relpyPrivate(msg.qq, msgs.join("\n"));
-//   }
-// }, 1000);
+setTimeout(async function () {
+  let msgStr = await redis.get("xiaoyao:restart-msg");
+  if (msgStr) {
+    let msg = JSON.parse(msgStr);
+    await common.relpyPrivate(msg.qq, msg.msg);
+    await redis.del("xiaoyao:restart-msg");
+    let msgs = [`当前版本: ${currentVersion}`, `您可使用 #版本 命令查看更新信息`];
+    await common.relpyPrivate(msg.qq, msgs.join("\n"));
+  }
+}, 1000);
