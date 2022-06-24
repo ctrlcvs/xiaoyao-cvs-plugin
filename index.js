@@ -6,6 +6,8 @@ import {
 	versionInfo,
 	help
 } from "./apps/help.js";
+
+import common from "../../lib/common.js";
 import {
 	Note
 } from "./apps/Note.js"
