@@ -178,7 +178,7 @@ export async function Note(e, {
 	for (let val of image) {
 		list_img.push(val)
 	}
-	var imgs =list_img.length==1?list_img.length[0]:list_img[lodash.random(0, list_img.length - 1)];
+	var imgs =list_img.length==1?list_img[0]:list_img[lodash.random(0, list_img.length - 1)];
 	return await Common.render("dailyNote/dailyNote", {
 		save_id: uid,
 		uid: uid,
