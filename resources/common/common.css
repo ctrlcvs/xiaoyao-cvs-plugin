@@ -1,0 +1,324 @@
+@font-face {
+  font-family: "HWZS";
+  src: url("../common/font/华文中宋.TTF");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Number";
+  src: url("../common/font/tttgbnumber.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NZBZ";
+  src: url("../common/font/NZBZ.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "YS";
+  src: url("../common/font/HYWH-85W.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "YS2";
+  src: url("../common/font/HYWH-65W.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+body {
+  font-size: 18px;
+  color: #1e1f20;
+  font-family: Number, YS2, PingFangSC-Medium, PingFang SC, sans-serif;
+  transform: scale(1.4);
+  transform-origin: 0 0;
+  width: 600px;
+}
+.container {
+  width: 600px;
+  padding: 20px 15px 10px 15px;
+  background-size: contain;
+}
+.head-box {
+  border-radius: 15px;
+  padding: 10px 20px;
+  position: relative;
+  color: #fff;
+  margin-top: 30px;
+}
+.head-box .title {
+  font-size: 36px;
+  font-family: NZBZ, sans-serif;
+  text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, 0.9);
+}
+.head-box .genshin_logo {
+  position: absolute;
+  top: 1px;
+  right: 15px;
+  width: 97px;
+}
+.head-box .label {
+  font-size: 16px;
+  text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, 0.9);
+}
+.notice {
+  color: #888;
+  font-size: 12px;
+  text-align: right;
+  padding: 12px 5px 5px;
+}
+.notice-center {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 1px #333;
+}
+.copyright {
+  font-size: 16px;
+  font-family: Number, sans-serif;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  padding-left: 10px;
+  text-shadow: 1px 1px 1px #000;
+  margin: 10px 0;
+}
+.copyright .version {
+  font-size: 13px;
+  color: #d3bc8e;
+  display: inline-block;
+  padding: 0 3px;
+}
+/*  */
+.cons {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 5px;
+  font-family: Number, YS;
+  border-radius: 4px;
+}
+.cons-0 {
+  background: #666;
+  color: #fff;
+}
+.cons-n0 {
+  background: #404949;
+  color: #fff;
+}
+.cons-1 {
+  background: #5cbac2;
+  color: #fff;
+}
+.cons-2 {
+  background: #339d61;
+  color: #fff;
+}
+.cons-3 {
+  background: #3e95b9;
+  color: #fff;
+}
+.cons-4 {
+  background: #3955b7;
+  color: #fff;
+}
+.cons-5 {
+  background: #531ba9cf;
+  color: #fff;
+}
+.cons-6 {
+  background: #ff5722;
+  color: #fff;
+}
+.cons2-0 {
+  border-radius: 4px;
+  background: #666;
+  color: #fff;
+}
+.cons2-1 {
+  border-radius: 4px;
+  background: #71b1b7;
+  color: #fff;
+}
+.cons2-2 {
+  border-radius: 4px;
+  background: #369961;
+  color: #fff;
+}
+.cons2-3 {
+  border-radius: 4px;
+  background: #4596b9;
+  color: #fff;
+}
+.cons2-4 {
+  border-radius: 4px;
+  background: #4560b9;
+  color: #fff;
+}
+.cons2-5 {
+  border-radius: 4px;
+  background: #531ba9cf;
+  color: #fff;
+}
+.cons2-6 {
+  border-radius: 4px;
+  background: #ff5722;
+  color: #fff;
+}
+/********  ELEM  ********/
+.elem-anemo .talent-icon {
+  background-image: url("./bg/talent-anemo.png");
+}
+.elem-anemo .elem-bg,
+.anemo-bg {
+  background-image: url("./bg/bg-anemo.jpg");
+}
+.elem-cryo .talent-icon {
+  background-image: url("./bg/talent-cryo.png");
+}
+.elem-cryo .elem-bg,
+.cryo-bg {
+  background-image: url("./bg/bg-cryo.jpg");
+}
+.elem-electro .talent-icon {
+  background-image: url("./bg/talent-electro.png");
+}
+.elem-electro .elem-bg,
+.electro-bg {
+  background-image: url("./bg/bg-electro.jpg");
+}
+.elem-geo .talent-icon {
+  background-image: url("./bg/talent-geo.png");
+}
+.elem-geo .elem-bg,
+.geo-bg {
+  background-image: url("./bg/bg-geo.jpg");
+}
+.elem-hydro .talent-icon {
+  background-image: url("./bg/talent-hydro.png");
+}
+.elem-hydro .elem-bg,
+.hydro-bg {
+  background-image: url("./bg/bg-hydro.jpg");
+}
+.elem-pyro .talent-icon {
+  background-image: url("./bg/talent-pyro.png");
+}
+.elem-pyro .elem-bg,
+.pyro-bg {
+  background-image: url("./bg/bg-pyro.jpg");
+}
+/* cont */
+.cont {
+  border-radius: 10px;
+  background: url("../common/cont/card-bg.png") top left repeat-x;
+  background-size: auto 100%;
+  margin: 5px 15px 5px 10px;
+  position: relative;
+  box-shadow: 0 0 1px 0 #ccc, 2px 2px 4px 0 rgba(50, 50, 50, 0.8);
+  overflow: hidden;
+  color: #fff;
+  font-size: 16px;
+}
+.cont-title {
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 1px 0 #fff;
+  color: #d3bc8e;
+  font-family: Number, YS;
+  padding: 10px 20px;
+  text-align: left;
+  border-radius: 10px 10px 0 0;
+}
+.cont-title span {
+  font-size: 12px;
+  color: #aaa;
+  margin-left: 10px;
+  font-family: Number, YS;
+  font-weight: normal;
+}
+.cont-body {
+  padding: 10px 15px;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 1px 0 #fff;
+  font-family: YS;
+  font-weight: normal;
+}
+ul.cont-msg {
+  padding-left: 15px;
+}
+ul.cont-msg li {
+  margin: 5px 0;
+}
+ul.cont-msg li strong {
+  font-weight: normal;
+  margin: 0 2px;
+  color: #d3bc8e;
+}
+.cont-footer {
+  padding: 10px 15px;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  font-family: YS;
+  font-weight: normal;
+}
+.cont-table {
+  display: table;
+  width: 100%;
+}
+.cont-table .tr {
+  display: table-row;
+}
+.cont-table .tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.4);
+}
+.cont-table .tr:nth-child(odd) {
+  background: rgba(50, 50, 50, 0.4);
+}
+.cont-table .tr > div,
+.cont-table .tr > td {
+  display: table-cell;
+  box-shadow: 0 0 1px 0 #fff;
+}
+.cont-table .tr > div.value-full {
+  display: table;
+  width: 200%;
+}
+.cont-table .tr > div.value-none {
+  box-shadow: none;
+}
+.cont-table .thead {
+  text-align: center;
+}
+.cont-table .thead > div,
+.cont-table .thead > td {
+  font-family: YS;
+  color: #d3bc8e;
+  background: rgba(0, 0, 0, 0.4);
+  line-height: 40px;
+  height: 40px;
+}
+.cont-table .title,
+.cont-table .th {
+  font-family: YS;
+  color: #d3bc8e;
+  padding-right: 15px;
+  text-align: right;
+  background: rgba(0, 0, 0, 0.4);
+  min-width: 100px;
+  vertical-align: middle;
+}
+.logo {
+  font-size: 18px;
+  text-align: center;
+  color: #fff;
+  margin: 20px 0 10px 0;
+}
+/*# sourceMappingURL=common.css.map */
