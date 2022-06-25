@@ -19,6 +19,7 @@
 #### 安装教程
 
 1.  git clone https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cvs-plugin/
+2.  git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cvs-plugin/
 
 
 #### 使用说明
@@ -32,4 +33,5 @@
 2. 发送 #业务类型业务具体名称 进行触发，例如发送 #**图鉴，即可返回对应的图片信息。
 3. 发送 #图鉴插件（强制）更新获取最新代码
 4. 别名文件在Atlas_alias目录下面，当前只支持食物及原魔的别名
+5. 具体功能请使用【图鉴帮助】【图鉴版本】查看
  
