@@ -1,7 +1,15 @@
+# 1.0.3
+* 新增了`#图鉴设置`可以查看图鉴功能设定
+* 感谢 @傻里傻气的小萌新 的背景图片支持
+* 新增了`秘境图鉴` 
+* 图鉴系列均 @逍遥 提供
+* 新增`图鉴匹配`设置
+* 优化之前的别名文件
+
 # 1.0.2
 * 重写`体力`渲染
 * 增加`#图鉴设置体力开关`防止跟乐神的冲突默认是关闭的
-* 体力背景位置在Yunzai-Bot/plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/新加的图片放这个目录下面就行
+* 体力背景位置在 Yunzai-Bot/plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/新加的图片放这个目录下面就行
 * 增加`#图鉴帮助`查看插件包功能概况
 * 增加`#图鉴版本`查看插件版本（借鉴喵喵代码 emmm好吧cv）
 

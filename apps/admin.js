@@ -21,6 +21,8 @@ const require = createRequire(
 	import.meta.url);
 let cfgMap = {
 	"体力": "sys.Note",
+	"帮助": "sys.help",
+	"匹配": "sys.Atlas",
 };
 let sysCfgReg = `^#图鉴设置\s*(${lodash.keys(cfgMap).join("|")})?\s*(.*)$`;
 export const rule = {
@@ -65,7 +67,7 @@ export async function sysCfg(e, {
 		let val = regRet[2] || "";
 
 		let cfgKey = cfgMap[regRet[1]];
-		
+
 		if (cfgKey === "sys.scale") {
 			val = Math.min(200, Math.max(50, val * 1 || 100));
 		} else {
@@ -76,13 +78,36 @@ export async function sysCfg(e, {
 			Cfg.set(cfgKey, val);
 		}
 	}
-	e.reply("设置成功！！");
-	return true;
-	// //渲染图像
-	// return await Common.render("admin/index", {
-	//   ...cfg,
-	// }, { e, render, scale: 1.4 });
+	// e.reply("设置成功！！");
+	// return true;
+	let cfg = {
+		help: getStatus("sys.help", false),
+		Note: getStatus("sys.Note"),
+		Atlas: getStatus("sys.Atlas"),
+		imgPlus: fs.existsSync(plusPath),
+		bg:await rodom(), //获取底图
+	}
+	console.log(cfg)
+	//渲染图像
+	return await Common.render("admin/index", {
+		...cfg,
+	}, {
+		e,
+		render,
+		scale: 1.4
+	});
 }
+
+const rodom=async function(){
+	var image = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/admin/imgs/bg`);
+	var list_img = [];
+	for (let val of image) {
+		list_img.push(val)
+	}
+	var imgs = list_img.length == 1 ? list_img[0] : list_img[lodash.random(0, list_img.length - 1)];
+	return imgs;
+}
+
 const checkAuth = async function(e) {
 	return await e.checkAuth({
 		auth: "master",

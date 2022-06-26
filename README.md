@@ -19,6 +19,7 @@
 #### 安装教程
 
 1.  git clone https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cvs-plugin/
+2.  git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cvs-plugin/
 
 
 #### 使用说明

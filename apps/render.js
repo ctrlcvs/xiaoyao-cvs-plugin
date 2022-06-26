@@ -54,8 +54,6 @@ async function render1(app = "", type = "", data = {}, imgType = "jpeg") {
   });
 }
 
-
-
 async function doRender(app, type, data, imgType, renderCfg) {
 
   let { tplKey, tplFile, savePath, saveId } = renderCfg;

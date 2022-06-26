@@ -1,0 +1,113 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css" />
+<style>
+	.container {
+		background: url("{{_res_path}}/admin/imgs/bg/{{bg}}") #000144  top  !important;
+		background-size: 520px auto;
+		width: 800px;
+	}
+</style>
+{{/block}}
+{{block 'main'}}
+
+<div class="info_box">
+	<div class="head-box type{{bgType}}">
+		<div class="label">#图鉴设置</div>
+		<div class="title">图鉴管理面板</div>
+	</div>
+</div>
+<div class="cfg-box">
+  <div class="cfg-group">游戏图鉴卡片展示</div>
+  <ul class="cfg-ul">
+    <li class="cfg-li">
+      <div class="cfg-line">
+        图鉴匹配查询
+        <span class="cfg-hint"> #图鉴设置匹配 + 开启/关闭</span>
+        {{@Atlas}}
+      </div>
+	  <div class="cfg-desc">图鉴匹配规则需要 开启：图鉴结尾 关闭：食物原魔、圣遗物、食物无需图鉴结尾</div>
+    </li>
+  <!--  <li class="cfg-li">
+      <div class="cfg-line">
+        面板查询
+        <span class="cfg-hint"> #喵喵设置面板 + 开启/关闭</span>
+        {{@profile}}
+      </div>
+    </li>
+    <li class="cfg-li">
+      <div class="cfg-line">
+        老婆查询
+        <span class="cfg-hint"> #喵喵设置老婆 + 开启/关闭</span>
+        {{@wife}}
+      </div>
+    </li>
+    <li class="cfg-li">
+      <div class="cfg-line">
+        允许查他人
+        <span class="cfg-hint"> #喵喵设置查他人 + 开启/关闭</span>
+        {{@other}}
+      </div>
+      <div class="cfg-desc">面板查询暂不支持查他人</div>
+    </li> -->
+
+  </ul>
+</div>
+<div class="cfg-box">
+	<div class="cfg-group">角色资料与信息查询</div>
+	<ul class="cfg-ul">
+		<li class="cfg-li">
+			<div class="cfg-line">
+				角色图片扩展包
+				<span class="cfg-hint"> #图鉴更新</span>
+				{{if imgPlus}}
+				<div class="cfg-status">已安装</div>
+				{{else}}
+					<div class="cfg-status status-off">未安装</div>
+					{{/if}}
+			</div>
+			<div class="cfg-desc">角色图片的扩展包，包含更多的角色图片</div>
+		</li>
+	</ul>
+</div>
+<div class="cfg-box">
+	<div class="cfg-group">系统设置</div>
+	<ul class="cfg-ul">
+		<!-- <li class="cfg-li">
+      <div class="cfg-line">
+        渲染精度
+        <span class="cfg-hint">#图鉴设置渲染100 </span>
+        <div class="cfg-status">{{scale}}</div>
+      </div>
+      <div class="cfg-desc">可选值50~200，建议100。设置高精度会提高图片的精细度，但因图片较大可能会影响渲染与发送速度</div>
+    </li> -->
+
+		<li class="cfg-li">
+			<div class="cfg-line">
+				图鉴作为默认帮助
+				<span class="cfg-hint">#图鉴设置帮助 + 开启/关闭 </span>
+				{{@help}}
+			</div>
+			<div class="cfg-desc">开启后将使用图鉴版帮助作为Yunzai的默认帮助</div>
+		</li>
+		<li class="cfg-li">
+			<div class="cfg-line">
+				体力作为默认体力
+				<span class="cfg-hint">#图鉴设置体力 + 开启/关闭</span>
+				{{@Note}}
+			</div>
+			<div class="cfg-desc">开启后将使用图鉴版体力作为Yunzai的默认体力</div>
+		</li>
+		<!-- <li class="cfg-li">
+       <div class="cfg-line">
+         更新版本
+         <div class="cfg-status">#喵喵更新</div>
+       </div>
+       <div class="cfg-desc">更新喵喵Plugin，可能需要重启Yunzai-Bot</div>
+     </li>-->
+	</ul>
+
+</div>
+{{/block}}

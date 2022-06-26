@@ -6,11 +6,12 @@ export const render = async function (path, params, cfg) {
   let paths = path.split("/");
   let { render, e } = cfg;
   let _layout_path = process.cwd() + "/plugins/xiaoyao-cvs-plugin/resources/";
+  let layout_path= process.cwd() + "/plugins/xiaoyao-cvs-plugin/resources/common/layout/";
   let base64 = await render1(paths[0], paths[1], {
     ...params,
     _layout_path,
-    defaultLayout: _layout_path + "default.html",
-    elemLayout: _layout_path + "elem.html",
+    defaultLayout: layout_path + "default.html",
+    elemLayout: layout_path + "elem.html",
     sys: {
       scale: Cfg.scale(cfg.scale || 1),
       copyright: `Created By Yunzai-Bot<span class="version">${yunzaiVersion}</span> &  xiaoyao-cvs-Plugin<span class="version">${currentVersion}</span>`
