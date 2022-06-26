@@ -28,7 +28,7 @@ let sysCfgReg = `^#图鉴设置\s*(${lodash.keys(cfgMap).join("|")})?\s*(.*)$`;
 export const rule = {
 	updateRes: {
 		hashMark: true,
-		reg: "^#图鉴更新$",
+		reg: "^#图鉴(强制)?更新$",
 		describe: "【#管理】更新素材",
 	},
 	updateMiaoPlugin: {
@@ -132,6 +132,13 @@ export async function updateRes(e) {
 	if (fs.existsSync(`${resPath}/xiaoyao-plus/`)) {
 		e.reply("开始尝试更新，请耐心等待~");
 		command = `git pull`;
+		let isForce = e.msg.includes("强制");
+		if (isForce) {
+			command = "git  checkout . && git  pull";
+			e.reply("正在执行强制更新操作，请稍等");
+		} else {
+			e.reply("正在执行更新操作，请稍等");
+		}
 		exec(command, {
 			cwd: `${resPath}/xiaoyao-plus/`
 		}, function(error, stdout, stderr) {
