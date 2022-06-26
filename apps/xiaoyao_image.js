@@ -9,7 +9,7 @@ import fetch from "node-fetch";
 const _path = process.cwd();
 const __dirname = path.resolve();
 
-const list = ["shiwu_tujian", "yuanmo_tujian","mijin_tujian"]
+const list = ["shiwu_tujian", "yuanmo_tujian","mijin_tujian","shengyiwu_tujian"]
 export async function AtlasAlias(e) {
 	let reg=/#(.*)/;
 	if(Cfg.get("sys.Atlas")){
@@ -21,7 +21,7 @@ export async function AtlasAlias(e) {
 	if (await roleInfo(e)) return true;
 	if (await weaponInfo(e)) return true;
 	// if (await foodInfo(e)) return true;
-	if (await RelicsInfo(e)) return true;
+	// if (await RelicsInfo(e)) return true;
 	// if (await monsterInfo(e)) return true;
 	var name = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破|圣遗物|食物|食材|的|特殊|材|料|特色|料理|理|色/g, "");
 	return send_Msg(e, "all", name);
@@ -93,7 +93,6 @@ export async function init(isUpdate = false) {
 }
 
 export async function weaponInfo(e) {
-
 	let msg = e.msg || '';
 	if (e.atBot) {
 		msg = "#" + msg.replace("#", "");
@@ -110,23 +109,23 @@ export async function weaponInfo(e) {
 	return false;
 }
 
-export async function RelicsInfo(e) {
-	let msg = e.msg || '';
-	if (e.atBot) {
-		msg = "#" + msg.replace("#", "");
-	}
-	// if (!/(#*圣遗物(.*)|#(.*))$/.test(msg)) return;
-	let name = msg.replace(/#|＃|信息|副本|本|圣遗物|图鉴/g, "");
-	let response = await fetch(`https://info.minigg.cn/artifacts?query=${encodeURIComponent(name)}`);
-	let res = await response.json();
-	if (res?.errcode == "10006") return false;
-	name = res["name"];
-	if (name) {
-		send_Msg(e, "shengyiwu_tujian", name)
-		return true;
-	}
-	return false;
-}
+// export async function RelicsInfo(e) {
+// 	let msg = e.msg || '';
+// 	if (e.atBot) {
+// 		msg = "#" + msg.replace("#", "");
+// 	}
+// 	// if (!/(#*圣遗物(.*)|#(.*))$/.test(msg)) return;
+// 	let name = msg.replace(/#|＃|信息|副本|本|圣遗物|图鉴/g, "");
+// 	let response = await fetch(`https://info.minigg.cn/artifacts?query=${encodeURIComponent(name)}`);
+// 	let res = await response.json();
+// 	if (res?.errcode == "10006") return false;
+// 	name = res["name"];
+// 	if (name) {
+// 		send_Msg(e, "shengyiwu_tujian", name)
+// 		return true;
+// 	}
+// 	return false;
+// }
 const info_img = function(e, list, name) {
 	for (let i in list) {
 		for (let val of list[i]) {
