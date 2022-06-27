@@ -195,7 +195,7 @@ export async function updateMiaoPlugin(e) {
 		cwd: `${_path}/plugins/xiaoyao-cvs-plugin/`
 	}, function(error, stdout, stderr) {
 		//console.log(stdout);
-		if (/Already up to date/.test(stdout)) {
+		 if (/Already up[ -]to[ -]date/.test(stdout)) {
 			e.reply("目前已经是最新版图鉴插件了~");
 			return true;
 		}
@@ -211,19 +211,22 @@ export async function updateMiaoPlugin(e) {
 		}), {
 			EX: 30
 		});
-		timer = setTimeout(function() {
-			let command = "npm run restart";
-			exec(command, function(error, stdout, stderr) {
-				if (error) {
-					if (/Yunzai not found/.test(error)) {
-						e.reply("自动重启失败，请手动重启以应用新版图鉴插件。请使用 npm run start 命令启动Yunzai-Bot");
-					} else {
-						e.reply("重启失败！\nError code: " + error.code + "\n" + error.stack +
-							"\n 请稍后重试。");
-					}
-					return true;
-				}
-			})
+		timer = setTimeout(function () {
+		  let command = `npm run start`;
+		  if (process.argv[1].includes("pm2")) {
+		    command = `npm run restart`;
+		  }
+		  exec(command, function (error, stdout, stderr) {
+		    if (error) {
+		      e.reply("自动重启失败，请手动重启以应用新版图鉴插件。\nError code: " + error.code + "\n" + error.stack + "\n");
+		      Bot.logger.error('重启失败\n${error.stack}');
+		      return true;
+		    } else if (stdout) {
+		      Bot.logger.mark("重启成功，运行已转为后台，查看日志请用命令：npm run log");
+		      Bot.logger.mark("停止后台运行命令：npm stop");
+		      process.exit();
+		    }
+		  })
 		}, 1000);
 
 	});
