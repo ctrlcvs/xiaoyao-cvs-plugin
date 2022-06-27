@@ -1,3 +1,8 @@
+# 1.0.4
+* 新增了`版本号`
+* 新增`图鉴目录`可以输入图鉴目录查看图鉴大概操作
+* json文件统一在Yunzai-Bot/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias下面
+
 # 1.0.3
 * 新增了`#图鉴设置`可以查看图鉴功能设定
 * 感谢 @傻里傻气的小萌新 的背景图片支持

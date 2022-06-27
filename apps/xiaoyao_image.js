@@ -2,22 +2,25 @@ import {
 	segment
 } from "oicq";
 import fs from "fs";
-import { Cfg } from "../components/index.js";
+import {
+	Cfg
+} from "../components/index.js";
 import Data from "../components/Data.js"
 import path from 'path';
 import fetch from "node-fetch";
 const _path = process.cwd();
 const __dirname = path.resolve();
 
-const list = ["shiwu_tujian", "yuanmo_tujian","mijin_tujian","shengyiwu_tujian"]
+const list = ["shiwu_tujian", "yuanmo_tujian", "mijin_tujian", "shengyiwu_tujian"]
 export async function AtlasAlias(e) {
-	let reg=/#(.*)/;
-	if(Cfg.get("sys.Atlas")){
-		reg=/#*(.*)图鉴/;
+	let reg = /#(.*)/;
+	if (Cfg.get("sys.Atlas")) {
+		reg = /#*(.*)图鉴/;
 	}
-	if(!reg.test(e.msg)){
+	if (!reg.test(e.msg)) {
 		return false;
 	}
+	if (await Atlas_list(e)) return true;
 	if (await roleInfo(e)) return true;
 	if (await weaponInfo(e)) return true;
 	// if (await foodInfo(e)) return true;
@@ -81,7 +84,7 @@ export async function init(isUpdate = false) {
 			weapon.set(val, i);
 		}
 	}
-	let paths="./plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/wuqi_tujian";
+	let paths = "./plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/wuqi_tujian";
 	if (!fs.existsSync(paths)) {
 		return true;
 	}
@@ -108,7 +111,20 @@ export async function weaponInfo(e) {
 
 	return false;
 }
-
+export async function Atlas_list(e) {
+	let list = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`, "Atlas_list");
+	let name = e.msg.replace(/#|井/g, "")
+	for (let i in list) {
+		var title = i.split("|");
+		for (let j = 0; j < title.length;j++) {
+			if (title[j] == name) {
+				await e.reply("请选择:\n"+list[i].join("\n"))
+				return true;
+			}
+		}
+	}
+	return false;
+}
 // export async function RelicsInfo(e) {
 // 	let msg = e.msg || '';
 // 	if (e.atBot) {
@@ -129,7 +145,7 @@ export async function weaponInfo(e) {
 const info_img = function(e, list, name) {
 	for (let i in list) {
 		for (let val of list[i]) {
-			if (val == name||i==name) {
+			if (val == name || i == name) {
 				return i;
 			}
 		}
