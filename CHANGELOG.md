@@ -4,6 +4,7 @@
 * 新版清新的模板背景路径**/plugins/xiaoyao-cvs-plugin/resources/dailyNote/icon/bg/**
  * 模板背景可以自定义具体看内容
  */
+* 帮助文件新增兼容自定义以及默认
 
 # 1.0.4
 * 新增了`版本号`
