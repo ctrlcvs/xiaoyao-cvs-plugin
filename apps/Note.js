@@ -136,10 +136,14 @@ export async function Note(e, {
 				/(.png|.jpg)/g, ""));
 			let name = YunzaiApps.mysInfo.roleIdToName(id, true);
 			var time_cha = 20;
-			if (role_user["12"].includes(name)) {
-				time_cha = 12;
+			if (role_user["15"].includes(name)) {
+				time_cha = 15;
 			}
-			val.percentage = ((val.dq_time / 60 / 60 * 1 / time_cha) * 100 / 10).toFixed(0) * 10;
+			let percentage = ((val.dq_time / 60 / 60 * 1 / time_cha) * 100 / 10).toFixed(0) * 10;
+			if (percentage > 100){
+				percentage = 100
+			}
+			val.percentage = percentage
 			let remainedDate = new Date(val.remained_time);
 			val.remained_time = format("hh:mm", remainedDate);
 			let Time_day = await dateTime_(remainedDate)
