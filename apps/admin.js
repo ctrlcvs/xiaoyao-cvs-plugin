@@ -24,6 +24,7 @@ let cfgMap = {
 	"帮助": "sys.help",
 	"匹配": "sys.Atlas",
 	"模板": "mb.len",
+	"目录":"Atlas.all",
 };
 let sysCfgReg = `^#图鉴设置\s*(${lodash.keys(cfgMap).join("|")})?\s*(.*)$`;
 export const rule = {
@@ -89,6 +90,7 @@ export async function sysCfg(e, {
 		len:Cfg.get("mb.len", 0),
 		imgPlus: fs.existsSync(plusPath),
 		bg: await rodom(), //获取底图
+		Atlasall:getStatus("Atlas.all"),
 	}
 	console.log(cfg)
 	//渲染图像

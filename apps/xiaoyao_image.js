@@ -13,6 +13,9 @@ const __dirname = path.resolve();
 
 const list = ["shiwu_tujian", "yuanmo_tujian", "mijin_tujian", "shengyiwu_tujian"]
 export async function AtlasAlias(e) {
+	if (!Cfg.get("Atlas.all")) {
+		return false;
+	}
 	let reg = /#(.*)/;
 	if (Cfg.get("sys.Atlas")) {
 		reg = /#*(.*)图鉴/;
