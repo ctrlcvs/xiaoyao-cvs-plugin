@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<link rel="shortcut icon" href="#" />
+		<link rel="stylesheet" type="text/css" href="{{_res_path}}dailyNote/xiaoyao_Note.css?v=1.0" />
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<div class="container" id="container" style=" background-image: url({{_res_path}}/dailyNote/icon/bg/bg.png);">
+			<div class="left_model">
+				<div class="list">
+					<div class="div">
+						<img src="{{_res_path}}/dailyNote/icon/树脂.png" alt="">
+					</div>
+					<div class="div">
+						<span class="title">原脆树脂</span>
+						<div class="kb"></div>
+						<span class="bottom">{{resinMaxTime_mb2Day}}<span class="time">{{resinMaxTime_mb2}}</span>恢复</span>
+					</div>
+					<div class="div sumCount">
+						{{current_resin}}/{{max_resin}}
+					</div>
+				</div>
+				<div class="list">
+					<div class="div">
+						<img src="{{_res_path}}/dailyNote/icon/洞天宝钱.png" alt="">
+					</div>
+					<div class="div">
+						<span class="title">洞庭宝钱</span>
+						<div class="kb"></div>
+						<span class="bottom">{{coinTime_mb2Day}}<span class="time">{{coinTime_mb2}}</span>恢复</span>
+					</div>
+					<div class="div sumCount">
+						<!-- /{{max_home_coin}} -->
+						<span class="{{if current_home_coin/max_home_coin > 0.9}}red{{/if}}">{{current_home_coin}}</span>
+
+					</div>
+				</div>
+				<div class="list">
+					<div class="div">
+						<img src="{{_res_path}}/dailyNote/icon/每日.png" alt="">
+					</div>
+					<div class="div">
+						<span class="title">每日委托</span>
+						<div class="kb"></div>
+						<span class="bottom">今日委托奖励{{if is_extra_task_reward_received==1}}已{{else}}未{{/if}}领取</span>
+					</div>
+					<div class="div sumCount">
+						{{finished_task_num}}/{{total_task_num}}
+					</div>
+				</div>
+				<div class="list">
+					<div class="div">
+						<img src="{{_res_path}}/dailyNote/icon/周本.png" alt="">
+					</div>
+					<div class="div">
+						<span class="title">值得铭记的强敌</span>
+						<div class="kb"></div>
+						<span class="bottom">本周剩余消耗减半次数</span>
+					</div>
+					<div class="div sumCount">
+						{{3-remain_resin_discount_num}}/{{resin_discount_num_limit}}
+					</div>
+				</div>
+				<div class="list">
+					<div class="div">
+						<img src="{{_res_path}}/dailyNote/icon/质变仪.png" alt="">
+					</div>
+					<div class="div">
+						<span class="title">参量质变仪</span>
+						<div class="kb"></div>
+						<span class="bottom">
+						{{if transformer.obtained }}
+						{{if transformer.reached}}已准备完成
+						{{else}}预计<span class="time">{{transformer.recovery_time}}</span>后可使用{{/if}}
+							{{else}}尚未获得{{/if}}
+							<!-- {{coinTime_mb2Day}}<span class="time">{{coinTime_mb2}}</span>恢复 -->
+							</span>
+					</div>
+					<div class="div sumCount">
+						<span
+							class="{{if transformer.obtained && transformer.reached }}red{{/if}}">{{if transformer.obtained }}{{if transformer.reached}}可使用
+							{{else}}冷却中{{/if}}
+								{{else}}尚未获得{{/if}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="right_model">
+				<div class="uId">
+					UID:120065390
+				</div>
+				<div class="head_image">
+					{{each expeditions list}}
+					<div class="li">
+						<!-- <div class="circleProgress_wrapper">
+							<div class="wrapper right">
+								<div class="circleProgress rightcircle"></div>
+							</div>
+							<div class="wrapper left">
+								<div class="circleProgress leftcircle"></div>
+							</div>
+						</div> -->
+						<div class="jdt">
+							<img src="{{_res_path}}/dailyNote/speed/{{list.percentage}}.png"/>
+						</div>
+						<div class="icon">
+							<img src="{{list.avatar_side_icon}}" alt="">
+						</div>
+						<div class="text" style="top:{{list.remained_time==0?'30%':'20%'}}">
+							<span>{{if list.remained_time==0}}已完成
+								{{else}}{{list.remained_mb2}}完成{{/if}}</span>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+
+				<div class="bottom_list">
+					<div class="bottom_time">
+						{{day_mb2}}
+					</div>
+					<!-- <div class="bottom_image">
+						<img src="{{_res_path}}/dailyNote/icon/图片.png" alt="">
+					</div> -->
+				</div>
+
+			</div>
+		</div>
+	</body>
+</html>

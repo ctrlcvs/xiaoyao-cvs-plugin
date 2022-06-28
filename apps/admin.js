@@ -23,6 +23,7 @@ let cfgMap = {
 	"体力": "sys.Note",
 	"帮助": "sys.help",
 	"匹配": "sys.Atlas",
+	"模板": "mb.len",
 };
 let sysCfgReg = `^#图鉴设置\s*(${lodash.keys(cfgMap).join("|")})?\s*(.*)$`;
 export const rule = {
@@ -61,20 +62,21 @@ export async function sysCfg(e, {
 	if (!regRet) {
 		return true;
 	}
-	console.log(regRet)
 	if (regRet[1]) {
+
 		// 设置模式
 		let val = regRet[2] || "";
-
+		
 		let cfgKey = cfgMap[regRet[1]];
 
 		if (cfgKey === "sys.scale") {
 			val = Math.min(200, Math.max(50, val * 1 || 100));
+		}else if(cfgKey === "mb.len"){
+			val= Math.min(2,Math.max(val,0));
 		} else {
 			val = !/关闭/.test(val);
 		}
 		if (cfgKey) {
-			console.log(val)
 			Cfg.set(cfgKey, val);
 		}
 	}
@@ -84,8 +86,9 @@ export async function sysCfg(e, {
 		help: getStatus("sys.help", false),
 		Note: getStatus("sys.Note"),
 		Atlas: getStatus("sys.Atlas"),
+		len:Cfg.get("mb.len", 0),
 		imgPlus: fs.existsSync(plusPath),
-		bg:await rodom(), //获取底图
+		bg: await rodom(), //获取底图
 	}
 	console.log(cfg)
 	//渲染图像
@@ -98,7 +101,7 @@ export async function sysCfg(e, {
 	});
 }
 
-const rodom=async function(){
+const rodom = async function() {
 	var image = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/admin/imgs/bg`);
 	var list_img = [];
 	for (let val of image) {
@@ -135,6 +138,7 @@ export async function updateRes(e) {
 		let isForce = e.msg.includes("强制");
 		if (isForce) {
 			command = "git  checkout . && git  pull";
+			// command="git fetch --all && git reset --hard origin/master && git pull "
 			e.reply("正在执行强制更新操作，请稍等");
 		} else {
 			e.reply("正在执行更新操作，请稍等");
@@ -195,7 +199,7 @@ export async function updateMiaoPlugin(e) {
 		cwd: `${_path}/plugins/xiaoyao-cvs-plugin/`
 	}, function(error, stdout, stderr) {
 		//console.log(stdout);
-		 if (/Already up[ -]to[ -]date/.test(stdout)) {
+		if (/Already up[ -]to[ -]date/.test(stdout)) {
 			e.reply("目前已经是最新版图鉴插件了~");
 			return true;
 		}
@@ -211,22 +215,23 @@ export async function updateMiaoPlugin(e) {
 		}), {
 			EX: 30
 		});
-		timer = setTimeout(function () {
-		  let command = `npm run start`;
-		  if (process.argv[1].includes("pm2")) {
-		    command = `npm run restart`;
-		  }
-		  exec(command, function (error, stdout, stderr) {
-		    if (error) {
-		      e.reply("自动重启失败，请手动重启以应用新版图鉴插件。\nError code: " + error.code + "\n" + error.stack + "\n");
-		      Bot.logger.error('重启失败\n${error.stack}');
-		      return true;
-		    } else if (stdout) {
-		      Bot.logger.mark("重启成功，运行已转为后台，查看日志请用命令：npm run log");
-		      Bot.logger.mark("停止后台运行命令：npm stop");
-		      process.exit();
-		    }
-		  })
+		timer = setTimeout(function() {
+			let command = `npm run start`;
+			if (process.argv[1].includes("pm2")) {
+				command = `npm run restart`;
+			}
+			exec(command, function(error, stdout, stderr) {
+				if (error) {
+					e.reply("自动重启失败，请手动重启以应用新版图鉴插件。\nError code: " + error.code + "\n" +
+						error.stack + "\n");
+					Bot.logger.error('重启失败\n${error.stack}');
+					return true;
+				} else if (stdout) {
+					Bot.logger.mark("重启成功，运行已转为后台，查看日志请用命令：npm run log");
+					Bot.logger.mark("停止后台运行命令：npm stop");
+					process.exit();
+				}
+			})
 		}, 1000);
 
 	});

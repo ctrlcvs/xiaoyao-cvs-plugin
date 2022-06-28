@@ -8,9 +8,11 @@ import format from "date-format";
 import puppeteer from "puppeteer";
 import common from "../../../lib/common.js";
 import lodash from "lodash";
+import Data from "../components/Data.js"
 import {
 	Cfg
 } from "../components/index.js";
+import moment from 'moment';
 // import MysApi from "../components/MysApi.js"
 
 import {
@@ -19,6 +21,10 @@ import {
 } from "../../../lib/app/mysApi.js";
 
 const _path = process.cwd();
+let role_user = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/json/`, "dispatch_time");
+
+let path_url = ["dailyNote", "xiaoyao_Note"];
+let path_img = ["background_image", "/icon/bg"];
 
 //#体力
 export async function Note(e, {
@@ -87,7 +93,6 @@ export async function Note(e, {
 	}
 
 	let data = res.data;
-
 	//推送任务
 	if (e.isTask && data.current_resin < e.sendResin) {
 		return;
@@ -99,23 +104,43 @@ export async function Note(e, {
 
 	let nowDay = format("dd", new Date());
 	let resinMaxTime;
+	let resinMaxTime_mb2;
+	let resinMaxTime_mb2Day;
 	if (data.resin_recovery_time > 0) {
 		resinMaxTime = new Date().getTime() + data.resin_recovery_time * 1000;
 		let maxDate = new Date(resinMaxTime);
 		resinMaxTime = format("hh:mm", maxDate);
-
+		let Time_day = await dateTime_(maxDate)
+		resinMaxTime_mb2 = Time_day + moment(maxDate).format("hh:mm");
+		// console.log(format("dd", maxDate))
 		if (format("dd", maxDate) != nowDay) {
+			resinMaxTime_mb2Day = `明天`;
 			resinMaxTime = `明天 ${resinMaxTime}`;
 		} else {
+			resinMaxTime_mb2Day = `今天`;
 			resinMaxTime = ` ${resinMaxTime}`;
 		}
 	}
+	// console.log(data.expeditions)
 	for (let val of data.expeditions) {
-		// console.log(val.remained_time)
 		if (val.remained_time > 0) {
+			// console.log(val.remained_time)
+			val.dq_time = val.remained_time;
 			val.remained_time = new Date().getTime() + val.remained_time * 1000;
+			// console.log(val.remained_time)
+			var urls_avatar_side = val.avatar_side_icon.split("_");
+			let id = YunzaiApps.mysInfo.roleIdToName(urls_avatar_side[urls_avatar_side.length - 1].replace(
+				/(.png|.jpg)/g, ""));
+			let name = YunzaiApps.mysInfo.roleIdToName(id, true);
+			var time_cha = 20;
+			if (role_user["12"].includes(name)) {
+				time_cha = 12;
+			}
+			val.percentage = ((val.dq_time / 60 / 60 * 1 / time_cha) * 100 / 10).toFixed(0) * 10;
 			let remainedDate = new Date(val.remained_time);
 			val.remained_time = format("hh:mm", remainedDate);
+			let Time_day = await dateTime_(remainedDate)
+			val.remained_mb2 = Time_day + moment(remainedDate).format("hh:mm" );
 			if (format("dd", remainedDate) != nowDay) {
 				val.remained_time = `明天 ${val.remained_time}`;
 			} else {
@@ -139,18 +164,27 @@ export async function Note(e, {
 		}
 	}
 
+	let coinTime_mb2 = "";
+	let coinTime_mb2Day = "";
 	let coinTime = "";
+	var chnNumChar = ["零", "一", "后", "三", "四", "五", "六", "七", "八", "九"];
 	if (data.home_coin_recovery_time > 0) {
+		let coinDate = new Date(new Date().getTime() + data.home_coin_recovery_time * 1000);
 		let coinDay = Math.floor(data.home_coin_recovery_time / 3600 / 24);
 		let coinHour = Math.floor((data.home_coin_recovery_time / 3600) % 24);
 		let coinMin = Math.floor((data.home_coin_recovery_time / 60) % 60);
 		if (coinDay > 0) {
 			coinTime = `${coinDay}天${coinHour}小时${coinMin}分钟`;
+			coinTime_mb2Day = chnNumChar[coinDay * 1] + "天";
+			let Time_day = await dateTime_(coinDate)
+			coinTime_mb2 = Time_day + moment(coinDate).format("hh:mm");
 		} else {
-			let coinDate = new Date(new Date().getTime() + data.home_coin_recovery_time * 1000);
+			coinTime_mb2 = moment(coinDate).format("hh:mm");
 			if (format("dd", coinDate) != nowDay) {
+				coinTime_mb2Day = "明天";
 				coinTime = `明天 ${format("hh:mm", coinDate)}`;
 			} else {
+				coinTime_mb2Day = "今天";
 				coinTime = format("hh:mm", coinDate);
 			}
 		}
@@ -159,12 +193,11 @@ export async function Note(e, {
 	let day = format("MM-dd hh:mm", new Date());
 	let week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 	day += " " + week[new Date().getDay()];
-
+	let day_mb2 = format("yyyy年MM月dd日 hh:mm", new Date()) + " " + week[new Date().getDay()];
 	//参量质变仪
 	if (data?.transformer?.obtained) {
 		data.transformer.reached = data.transformer.recovery_time.reached;
 		let recovery_time = "";
-
 		if (data.transformer.recovery_time.Day > 0) {
 			recovery_time += `${data.transformer.recovery_time.Day}天`;
 		}
@@ -176,19 +209,28 @@ export async function Note(e, {
 		}
 		data.transformer.recovery_time = recovery_time;
 	}
-	var image = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image`);
+	let mb=Cfg.get("mb.len", 0)-1;
+	if(mb<0){
+		mb=lodash.random(0,path_url.length-1);
+	}
+	var image = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`);
 	var list_img = [];
 	for (let val of image) {
 		list_img.push(val)
 	}
 	var imgs = list_img.length == 1 ? list_img[0] : list_img[lodash.random(0, list_img.length - 1)];
-	return await Common.render("dailyNote/dailyNote", {
+	return await Common.render(`dailyNote/${path_url[mb]}`, {
 		save_id: uid,
 		uid: uid,
+		coinTime_mb2Day,
+		coinTime_mb2,
+		resinMaxTime_mb2Day,
 		resinMaxTime,
+		resinMaxTime_mb2,
 		remained_time,
 		coinTime,
 		imgs,
+		day_mb2,
 		day,
 		...data,
 	}, {
@@ -199,6 +241,10 @@ export async function Note(e, {
 	return true;
 }
 
+async function dateTime_(time) {
+	return format("hh", time) < 6 ? "凌晨" : format("hh", time) < 12 ? "上午" : format("hh",
+		time) < 16 ? "下午" : "傍晚";
+}
 
 async function getDailyNote(uid, cookie) {
 	let {
@@ -220,4 +266,53 @@ async function getDailyNote(uid, cookie) {
 export async function saveJson() {
 	let path = "data/NoteCookie/NoteCookie.json";
 	fs.writeFileSync(path, JSON.stringify(NoteCookie, "", "\t"));
+}
+
+
+//体力定时推送
+export async function DailyNoteTask() {
+	//体力大于多少时推送
+	let sendResin = 120;
+	//推送cd，12小时一次
+	let sendCD = 12 * 3600;
+
+	//获取需要推送的用户
+	for (let [user_id, cookie] of Object.entries(NoteCookie)) {
+		user_id = cookie.qq || user_id;
+		//没有开启推送
+		if (!cookie.isPush) {
+			continue;
+		}
+
+		//今天已经提醒
+		let sendkey = `genshin:dailyNote:send:${user_id}`;
+		let send = await redis.get(sendkey);
+		if (send) {
+			continue;
+		}
+
+		let e = {
+			sendResin,
+			user_id,
+			isTask: true
+		};
+
+		e.reply = (msg) => {
+			common.relpyPrivate(user_id, msg);
+		};
+
+		//判断今天是否推送
+		if (cookie.maxTime && cookie.maxTime > 0 && new Date().getTime() > cookie.maxTime - (160 - sendResin) * 8 *
+			60 * 1000) {
+			//Bot.logger.mark(`体力推送:${user_id}`);
+
+			redis.set(sendkey, "1", {
+				EX: sendCD
+			});
+
+			await Note(e, {
+				render
+			});
+		}
+	}
 }
