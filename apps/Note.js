@@ -140,10 +140,11 @@ export async function Note(e, {
 			let remainedDate = new Date(val.remained_time);
 			val.remained_time = format("hh:mm", remainedDate);
 			let Time_day = await dateTime_(remainedDate)
-			val.remained_mb2 = Time_day + moment(remainedDate).format("hh:mm" );
 			if (format("dd", remainedDate) != nowDay) {
+				val.remained_mb2 = "明天"+Time_day + moment(remainedDate).format("hh:mm" );
 				val.remained_time = `明天 ${val.remained_time}`;
 			} else {
+				val.remained_mb2 = "今天"+Time_day + moment(remainedDate).format("hh:mm" );
 				val.remained_time = ` ${val.remained_time}`;
 			}
 		}
