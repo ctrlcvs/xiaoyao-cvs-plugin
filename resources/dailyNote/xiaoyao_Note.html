@@ -16,12 +16,14 @@
 						<img src="{{_res_path}}/dailyNote/icon/树脂.png" alt="">
 					</div>
 					<div class="div">
-						<span class="title">原脆树脂</span>
+						<span class="title">原粹树脂</span>
 						<div class="kb"></div>
-						<span class="bottom">{{resinMaxTime_mb2Day}}<span class="time">{{resinMaxTime_mb2}}</span>恢复</span>
-					</div>
+						<span class="bottom">{{if resinMaxTime}}
+						{{resinMaxTime_mb2Day}}<span class="time">{{resinMaxTime_mb2}}</span>恢复
+						{{else}}树脂已完全恢复{{/if}}</span>
+				</div>
 					<div class="div sumCount">
-						{{current_resin}}/{{max_resin}}
+						<span class="{{if current_resin>=159}}red{{/if}}">{{current_resin}}</span>/{{max_resin}}
 					</div>
 				</div>
 				<div class="list">
@@ -29,7 +31,7 @@
 						<img src="{{_res_path}}/dailyNote/icon/洞天宝钱.png" alt="">
 					</div>
 					<div class="div">
-						<span class="title">洞庭宝钱</span>
+						<span class="title">洞天宝钱</span>
 						<div class="kb"></div>
 						<span class="bottom">{{coinTime_mb2Day}}<span class="time">{{coinTime_mb2}}</span>恢复</span>
 					</div>
@@ -49,7 +51,7 @@
 						<span class="bottom">今日委托奖励{{if is_extra_task_reward_received==1}}已{{else}}未{{/if}}领取</span>
 					</div>
 					<div class="div sumCount">
-						{{finished_task_num}}/{{total_task_num}}
+						<span class="{{if finished_task_num<4}}red{{/if}}">{{finished_task_num}}</span>/{{total_task_num}}
 					</div>
 				</div>
 				<div class="list">
@@ -62,7 +64,7 @@
 						<span class="bottom">本周剩余消耗减半次数</span>
 					</div>
 					<div class="div sumCount">
-						{{3-remain_resin_discount_num}}/{{resin_discount_num_limit}}
+						<span class="{{if remain_resin_discount_num>0}}red{{/if}}">{{3-remain_resin_discount_num}}</span>/{{resin_discount_num_limit}}
 					</div>
 				</div>
 				<div class="list">

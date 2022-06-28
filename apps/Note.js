@@ -123,8 +123,8 @@ export async function Note(e, {
 	}
 	// console.log(data.expeditions)
 	for (let val of data.expeditions) {
-		if(val.remained_time<= 0){
-			val.percentage=100;
+		if (val.remained_time <= 0) {
+			val.percentage = 100;
 		}
 		if (val.remained_time > 0) {
 			// console.log(val.remained_time)
@@ -137,17 +137,17 @@ export async function Note(e, {
 			let name = YunzaiApps.mysInfo.roleIdToName(id, true);
 			var time_cha = 20;
 			if (role_user["12"].includes(name)) {
-				time_cha = 12;
+				time_cha = 15;
 			}
 			val.percentage = ((val.dq_time / 60 / 60 * 1 / time_cha) * 100 / 10).toFixed(0) * 10;
 			let remainedDate = new Date(val.remained_time);
 			val.remained_time = format("hh:mm", remainedDate);
 			let Time_day = await dateTime_(remainedDate)
 			if (format("dd", remainedDate) != nowDay) {
-				val.remained_mb2 = "明天"+Time_day + moment(remainedDate).format("hh:mm" );
+				val.remained_mb2 = "明天" + Time_day + moment(remainedDate).format("hh:mm");
 				val.remained_time = `明天 ${val.remained_time}`;
 			} else {
-				val.remained_mb2 = "今天"+Time_day + moment(remainedDate).format("hh:mm" );
+				val.remained_mb2 = "今天" + Time_day + moment(remainedDate).format("hh:mm");
 				val.remained_time = ` ${val.remained_time}`;
 			}
 		}
@@ -213,9 +213,9 @@ export async function Note(e, {
 		}
 		data.transformer.recovery_time = recovery_time;
 	}
-	let mb=Cfg.get("mb.len", 0)-1;
-	if(mb<0){
-		mb=lodash.random(0,path_url.length-1);
+	let mb = Cfg.get("mb.len", 0) - 1;
+	if (mb < 0) {
+		mb = lodash.random(0, path_url.length - 1);
 	}
 	var image = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`);
 	var list_img = [];
