@@ -33,7 +33,10 @@
 					<div class="div">
 						<span class="title">洞天宝钱</span>
 						<div class="kb"></div>
-						<span class="bottom">{{coinTime_mb2Day}}<span class="time">{{coinTime_mb2}}</span>恢复</span>
+						<span class="bottom">
+						{{if coinTime}}
+						{{coinTime_mb2Day}}<span class="time">{{coinTime_mb2}}</span>恢复
+						{{else}}存储已满{{/if}}</span>
 					</div>
 					<div class="div sumCount">
 						<!-- /{{max_home_coin}} -->
