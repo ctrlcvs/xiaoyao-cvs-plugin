@@ -43,3 +43,10 @@ git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cv
 8. 发送 #图鉴版本 获取图鉴更新日志
 9. 其余具体功能通过 #图鉴帮助 #图鉴版本 查看
  
+## 其他
+<!---
+- 有什么问题、Bug，或有其它建议，欢迎提 [issue](https://github.com/Ctrlcvs/xiaoyao-cvs-plugin/issues)
+-->
+- 最后再求个star，你的支持是维护本项目的动力~~
+- 图片素材来源于网络，仅供交流学习使用
+- 严禁用于任何商业用途和非法行为
