@@ -26,7 +26,7 @@ export async function AtlasAlias(e) {
 	// if (await foodInfo(e)) return true;
 	// if (await RelicsInfo(e)) return true;
 	// if (await monsterInfo(e)) return true;
-	var name = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破|圣遗物|食物|食材|的|特殊|材|料|特色|料理|理|色/g, "");
+	var name = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破|圣遗物|食物|食材|特殊|材|料|特色|料理|理/g, "");
 	return send_Msg(e, "all", name);
 }
 
