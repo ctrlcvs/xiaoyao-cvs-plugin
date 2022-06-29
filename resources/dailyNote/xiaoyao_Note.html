@@ -117,8 +117,12 @@
 							<img src="{{list.avatar_side_icon}}" alt="">{{/if}}
 						</div>
 						<div class="text" style="top:{{list.remained_time==0?'30%':'20%'}}">
+							{{if list.mb2_icon==''}}
+							<span>未派遣</span>
+							{{else}}
 							<span>{{if list.remained_time==0}}已完成
 								{{else}}{{list.remained_mb2}}完成{{/if}}</span>
+								{{/if}}
 						</div>
 					</div>
 					{{/each}}
