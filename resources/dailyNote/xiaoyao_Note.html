@@ -109,10 +109,12 @@
 							</div>
 						</div> -->
 						<div class="jdt">
-							<img src="{{_res_path}}/dailyNote/speed/{{list.percentage}}.png"/>
+							<img src="{{_res_path}}/dailyNote/speed/{{100-list.percentage}}.png"/>
 						</div>
-						<div class="icon">
-							<img src="{{list.avatar_side_icon}}" alt="">
+						<div class="icon {{list.mb2_icon==''?'user_null':''}}" >
+							{{if list.mb2_icon==''}}
+							<img src="{{_res_path}}/dailyNote/icon/角色.png" style="width: 60px;height: 60px;" alt=""/>{{else}}
+							<img src="{{list.avatar_side_icon}}" alt="">{{/if}}
 						</div>
 						<div class="text" style="top:{{list.remained_time==0?'30%':'20%'}}">
 							<span>{{if list.remained_time==0}}已完成

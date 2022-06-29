@@ -253,6 +253,16 @@
 .jdt {
 	display: inline-flex;
 }
-.red{
-	color: red;
+
+.red {
+	color: #d9766c;
+}
+
+.user_null {
+	vertical-align: middle;
+	display: inline-block;
+	position: absolute;
+	margin-left: -5px;
+	top: -3px;
+	left: 7px;
 }

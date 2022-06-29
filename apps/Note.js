@@ -150,8 +150,18 @@ export async function Note(e, {
 				val.remained_mb2 = "今天" + Time_day + moment(remainedDate).format("hh:mm");
 				val.remained_time = ` ${val.remained_time}`;
 			}
+			val.mb2_icon=val.avatar_side_icon
 		}
 	}
+	for (var i = 0; i < 5-data.expeditions.length; i++) {
+		data.expeditions.push({
+			remained_time:0,
+			remained_mb2:0,
+			percentage:0,
+			mb2_icon:""
+		})
+	}
+	
 	let remained_time = "";
 	if (data.expeditions && data.expeditions.length >= 1) {
 		remained_time = lodash.map(data.expeditions, "remained_time");
@@ -171,7 +181,7 @@ export async function Note(e, {
 	let coinTime_mb2 = "";
 	let coinTime_mb2Day = "";
 	let coinTime = "";
-	var chnNumChar = ["零", "一", "后", "三", "四", "五", "六", "七", "八", "九"];
+	var chnNumChar = ["零", "明", "后", "三", "四", "五", "六", "七", "八", "九"];
 	if (data.home_coin_recovery_time > 0) {
 		let coinDate = new Date(new Date().getTime() + data.home_coin_recovery_time * 1000);
 		let coinDay = Math.floor(data.home_coin_recovery_time / 3600 / 24);
