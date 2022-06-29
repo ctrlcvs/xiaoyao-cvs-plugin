@@ -85,12 +85,12 @@ export async function sysCfg(e, {
 	// return true;
 	let cfg = {
 		help: getStatus("sys.help", false),
-		Note: getStatus("sys.Note"),
-		Atlas: getStatus("sys.Atlas"),
+		Note: getStatus("sys.Note",false),
+		Atlas: getStatus("sys.Atlas",false),
 		len:Cfg.get("mb.len", 0),
 		imgPlus: fs.existsSync(plusPath),
 		bg: await rodom(), //获取底图
-		Atlasall:getStatus("Atlas.all"),
+		Atlasall:getStatus("Atlas.all",false),
 	}
 	console.log(cfg)
 	//渲染图像
@@ -116,7 +116,7 @@ const rodom = async function() {
 const checkAuth = async function(e) {
 	return await e.checkAuth({
 		auth: "master",
-		replyMsg: `只有主人才能命令喵喵哦~
+		replyMsg: `只有主人才能命令我哦~
     (*/ω＼*)`
 	});
 }
