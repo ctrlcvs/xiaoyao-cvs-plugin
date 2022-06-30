@@ -124,7 +124,7 @@ export async function Note(e, {
 	// console.log(data.expeditions)
 	for (let val of data.expeditions) {
 		if (val.remained_time <= 0) {
-			val.percentage = 100;
+			val.percentage = 0;
 		}
 		if (val.remained_time > 0) {
 			// console.log(val.remained_time)
