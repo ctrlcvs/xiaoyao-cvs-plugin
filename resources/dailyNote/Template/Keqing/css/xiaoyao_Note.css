@@ -1,0 +1,234 @@
+@font-face {
+	font-family: HYWenHei;
+	src: url(../../../../font/HYWenHei.ttf);
+}
+
+@font-face {
+	font-family: MiSans-Regular;
+	src: url(../../../../font/MiSans-Regular.ttf);
+}
+
+@font-face {
+	font-family: MiSans-Medium;
+	src: url(../../../../font/MiSans-Medium.ttf);
+}
+
+@font-face {
+	font-family: HYWenHei-HEW;
+	src: url(../../../../font/HYWenHei-HEW.ttf);
+}
+
+#container {
+	min-height: 627px;
+	height: auto;
+	width: 1137px;
+	/* background-color: rgba(0, 0, 0, 0.5); */
+	 color: #fff;	/*全局字体样式 */
+	/* -webkit-text-stroke: 0.1px #a033c9; /*字体样式描边色 */ 
+}
+/**
+ * 这个是派遣头像位置
+ */
+.icon {
+	vertical-align: middle;
+	display: inline-block;
+	position: absolute;
+	margin-left: -5px;
+	top: -15px;
+	left: 2px;
+}
+/**
+ * 设置派遣的距离
+ */
+.li {
+	width: 44%;
+	display: inline-block;
+	position: relative;
+	margin-bottom: 35px;
+}
+.left_model {
+	width: calc(50% - 136px);
+	padding: 75px 0;
+	padding-left: 136px;
+	display: inline-block;
+	float: left;
+}
+
+.left_model img {
+	width: 40px;
+	height: 40px;
+	vertical-align: middle;
+
+}
+
+.div {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.left_model .div:nth-child(2) {
+	margin-left: 22px;
+	width: 190px;
+}
+
+.title {
+	font-size: 24px;
+	font-family: "MiSans-Regular";
+	/* color: #444444; */
+	display: block;
+	text-align: left;
+	text-shadow: 0 0 5px #a033c9,0 0 5px #a033c9,0 0 5px #a033c9,0 0 5px #a033c9;	/* //设置发光效果 */
+	src: url("{{_res_path}}font/MiSans-Regular.ttf");
+}
+
+.bottom {
+	text-align: left;
+	/* color: #a9834f; */
+	font-family: "MiSans-Regular";
+}
+
+.time {
+	border-radius: 15px;
+	background-color: #9961ec;
+	color: #fff;
+	text-align: center;
+	padding: 4px 10px;
+	margin: 0 6px;
+	font-family: "HYWenHei";
+}
+
+.kb {
+	height: 10px;
+}
+
+.list {
+	margin-bottom: 42px;
+}
+
+.list:last-child {
+	margin-bottom: 0;
+}
+
+.sumCount {
+	font-size: 30px;
+	font-family: "HYWenHei";
+	text-align: center;
+	/* color: #a9843f; */
+	/* float: right; */
+	width: 170px;
+	/* margin-top: 10px; */
+	background-image: url(../icon/矩形.png);
+}
+
+.right_model {
+	display: inline-block;
+	width: calc(50% - 135px);
+	padding: 80px 58px 45px;
+	float: left;
+}
+
+.uId {
+	text-align: center;
+	background-image: url(../icon/圆角矩形.png);
+	text-align: center;
+	width: 364px;
+	height: 50px;
+	line-height: 50px;
+	/* color: #a033c9; */
+	color: #fff;
+	text-shadow: 0 0 5px #a033c9,0 0 5px #a033c9,0 0 5px #a033c9,0 0 5px #a033c9;	/* //设置发光效果 */
+	/* border: 1px solid #a033c9; */
+	font-size: 24px;
+	font-family: 'HYWenHei';
+}
+
+.head_image {
+	margin-top: 45px;
+}
+
+
+.icon img {
+	width: 78px;
+	height: 78px;
+}
+
+.text {
+	vertical-align: middle;
+	display: inline-block;
+	width: calc(80px);
+	font-size: 16px;
+	text-align: center;
+	/* color: #a9843f; */
+	position: absolute;
+	font-family: "MiSans-Medium";
+	text-shadow: 0 0 5px #a033c9,0 0 5px #a033c9,0 0 5px #a033c9,0 0 5px #a033c9;	/* //设置发光效果 */
+	top: 20%;
+	margin-left: 25px;
+}
+
+
+
+.circleProgress_wrapper {
+	width: 64px;
+	height: 64px;
+	/* margin: 50px auto; */
+	position: relative;
+	display: inline-block;
+	/* border:1px solid #ddd; */
+}
+
+.wrapper {
+	width: 32px;
+	height: 64px;
+	position: absolute;
+	top: 0;
+	overflow: hidden;
+}
+
+.right {
+	right: 0;
+	/* border: solid 1px black; */
+}
+
+.left {
+	left: 0;
+	/* border: solid 1px red; */
+}
+
+.bottom_time {
+	display: flex;
+	font-size: 20px;
+	/* color: #d9766c; */
+	font-family: "HYWenHei";
+	text-align: center;
+	width: 200px;
+}
+
+.bottom_image {
+	width: 212px;
+	height: 163px;
+	display: inline-block;
+
+}
+
+.bottom_image img {
+	width: 100%;
+	height: 100%;
+}
+
+.jdt {
+	display: inline-flex;
+}
+
+.red {
+	/* color: #d9766c; */
+}
+
+.user_null {
+	vertical-align: middle;
+	display: inline-block;
+	position: absolute;
+	margin-left: -5px;
+	top: -3px;
+	left: 7px;
+}

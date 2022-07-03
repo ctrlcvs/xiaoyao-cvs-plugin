@@ -2,9 +2,13 @@
 *兼容`体力模板2`可自定义css以及背景icon等
     * 模板内容需要具体参考**/dailyNote/Template/temp**
     * 推荐英文命名文件夹
+    * 其中css文件放在**/dailyNote/Template/你的模板/css/xiaoyao_Note.css**这块懒得做命名处理了统一这个命名
+    * 进度条图片文件放在**/dailyNote/Template/你的模板/speed/** 文件命名0-100数字 无需%
+    * icon文件目录**/dailyNote/Template/你的模板/icon/**中需要包含背景、矩形、圆角矩形三个图片，命名也需要这个命名
 *优化正则匹配不至于一直输出
 *修复模板一无派遣的bug
 *优化部分别名
+*当前版本如果对内容不清楚可参考**/dailyNote/Template/Keqing/** 内的文件样式以及文件存放
 
 # 1.0.5
 * 新增了一个体力模板
