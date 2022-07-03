@@ -40,7 +40,7 @@ let rule = {
 		describe: "查看插件的功能",
 	},
 	AtlasAlias: {
-		reg: "#*(.*)$",
+		reg: "^(#(.*)|.*图鉴)$",
 		describe: "角色、食物、怪物、武器信息图鉴",
 	},
 	Note: {

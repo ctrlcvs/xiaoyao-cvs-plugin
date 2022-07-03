@@ -150,18 +150,11 @@ export async function Note(e, {
 				val.remained_mb2 = "今天" + Time_day + moment(remainedDate).format("hh:mm");
 				val.remained_time = ` ${val.remained_time}`;
 			}
-			val.mb2_icon=val.avatar_side_icon
+			val.mb2_icon = val.avatar_side_icon
 		}
 	}
-	for (var i = 0; i < 5-data.expeditions.length; i++) {
-		data.expeditions.push({
-			remained_time:0,
-			remained_mb2:0,
-			percentage:0,
-			mb2_icon:""
-		})
-	}
-	
+
+
 	let remained_time = "";
 	if (data.expeditions && data.expeditions.length >= 1) {
 		remained_time = lodash.map(data.expeditions, "remained_time");
@@ -227,6 +220,27 @@ export async function Note(e, {
 	if (mb < 0) {
 		mb = lodash.random(0, path_url.length - 1);
 	}
+	if (mb == 1) {
+		for (var i = 0; i < 5 - data.expeditions.length; i++) {
+			data.expeditions.push({
+				remained_time: 0,
+				remained_mb2: 0,
+				percentage: 0,
+				mb2_icon: ""
+			})
+		}
+	}
+	var urlFile = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/`);
+	var urlType = [];
+	for (let val of urlFile) {
+		if (val.includes(".")) continue;
+		urlType.push(val)
+	}
+	// console.log(urlType)
+	if (urlType.length > 0) {
+		urlType = urlType[lodash.random(0, urlType.length - 1)]
+	}
+	// console.log(urlType)
 	var image = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`);
 	var list_img = [];
 	for (let val of image) {
@@ -238,6 +252,7 @@ export async function Note(e, {
 		uid: uid,
 		coinTime_mb2Day,
 		coinTime_mb2,
+		urlType,
 		resinMaxTime_mb2Day,
 		resinMaxTime,
 		resinMaxTime_mb2,
