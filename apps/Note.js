@@ -220,16 +220,7 @@ export async function Note(e, {
 	if (mb < 0) {
 		mb = lodash.random(0, path_url.length - 1);
 	}
-	if (mb == 1) {
-		for (var i = 0; i < 5 - data.expeditions.length; i++) {
-			data.expeditions.push({
-				remained_time: 0,
-				remained_mb2: 0,
-				percentage: 0,
-				mb2_icon: ""
-			})
-		}
-	}
+	let img_path=`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
 	var urlFile = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/`);
 	var urlType = [];
 	for (let val of urlFile) {
@@ -240,8 +231,18 @@ export async function Note(e, {
 	if (urlType.length > 0) {
 		urlType = urlType[lodash.random(0, urlType.length - 1)]
 	}
-	// console.log(urlType)
-	var image = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`);
+	if (mb == 1) {
+		for (var i = 0; i < 5 - data.expeditions.length; i++) {
+			data.expeditions.push({
+				remained_time: 0,
+				remained_mb2: 0,
+				percentage: 0,
+				mb2_icon: ""
+			})
+		}
+		img_path=`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/${urlType}${path_img[mb]}`;
+	}
+	var image = fs.readdirSync(img_path);
 	var list_img = [];
 	for (let val of image) {
 		list_img.push(val)
