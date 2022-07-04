@@ -42,11 +42,11 @@ let Data = {
   /*
   * 写JSON
   * */
-  writeJson(path, file, data, space = "\t") {
+  writeJson(root,path, file, data, space = "\t") {
     if (!/\.json$/.test(file)) {
       file = file + ".json";
     }
-
+	
     // 检查并创建目录
     Data.createDir(path, true);
     return fs.writeFileSync(`${path}/${file}`, JSON.stringify(data, null, space));

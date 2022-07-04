@@ -9,7 +9,8 @@ import {
 
 import common from "../../lib/common.js";
 import {
-	Note
+	Note,
+	Note_appoint
 } from "./apps/Note.js"
 import {
 	rule as adminRule,
@@ -24,6 +25,7 @@ export {
 	updateRes,
 	updateMiaoPlugin,
 	versionInfo,
+	Note_appoint,
 	sysCfg,
 	help,
 	AtlasAlias,
@@ -46,6 +48,10 @@ let rule = {
 	Note: {
 		reg: "^#*(体力|树脂|查询体力|便笺|便签)$",
 		describe: "体力",
+	},
+	Note_appoint: {
+		reg: "^#体力模板(设置(.*)|列表)$",
+		describe: "体力模板设置",
 	},
 	...adminRule
 };

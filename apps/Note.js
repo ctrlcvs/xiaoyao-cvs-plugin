@@ -8,9 +8,9 @@ import format from "date-format";
 import puppeteer from "puppeteer";
 import common from "../../../lib/common.js";
 import lodash from "lodash";
-import Data from "../components/Data.js"
 import {
-	Cfg
+	Cfg,
+	Data
 } from "../components/index.js";
 import moment from 'moment';
 // import MysApi from "../components/MysApi.js"
@@ -25,7 +25,14 @@ let role_user = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/dai
 
 let path_url = ["dailyNote", "xiaoyao_Note"];
 let path_img = ["background_image", "/icon/bg"];
-
+let tempDataUrl=`${_path}/plugins/xiaoyao-cvs-plugin/data/NoteTemp`
+let tempData = {};
+init()
+function init() {
+	Data.createDir("",tempDataUrl ,false);
+	tempData=Data.readJSON(tempDataUrl,"tempData")
+	// console.log(tempData)
+}
 //#体力
 export async function Note(e, {
 	render
@@ -220,16 +227,15 @@ export async function Note(e, {
 	if (mb < 0) {
 		mb = lodash.random(0, path_url.length - 1);
 	}
-	let img_path=`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
-	var urlFile = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/`);
-	var urlType = [];
-	for (let val of urlFile) {
-		if (val.includes(".")) continue;
-		urlType.push(val)
-	}
-	// console.log(urlType)
+	
+	let urlType = note_file();
 	if (urlType.length > 0) {
 		urlType = urlType[lodash.random(0, urlType.length - 1)]
+	}
+	let img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
+	if(tempData[e.user_id]){
+		mb=tempData[e.user_id].type;
+		urlType=tempData[e.user_id].temp;
 	}
 	if (mb == 1) {
 		for (var i = 0; i < 5 - data.expeditions.length; i++) {
@@ -240,7 +246,7 @@ export async function Note(e, {
 				mb2_icon: ""
 			})
 		}
-		img_path=`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/${urlType}${path_img[mb]}`;
+		img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/${urlType}${path_img[mb]}`;
 	}
 	var image = fs.readdirSync(img_path);
 	var list_img = [];
@@ -273,7 +279,9 @@ export async function Note(e, {
 
 async function dateTime_(time) {
 	return format("hh", time) < 6 ? "凌晨" : format("hh", time) < 12 ? "上午" : format("hh",
-		time) < 16 ? "下午" : "傍晚";
+		time) < 17.5 ? "下午" : format("hh",
+		time) < 19.5 ? "傍晚" : format("hh",
+		time) < 22 ? "晚上" : "深夜";
 }
 
 async function getDailyNote(uid, cookie) {
@@ -283,9 +291,7 @@ async function getDailyNote(uid, cookie) {
 		query,
 		body
 	} = getUrl("dailyNote", uid);
-
 	headers.Cookie = cookie;
-
 	const response = await fetch(url, {
 		method: "get",
 		headers
@@ -330,19 +336,46 @@ export async function DailyNoteTask() {
 		e.reply = (msg) => {
 			common.relpyPrivate(user_id, msg);
 		};
-
 		//判断今天是否推送
 		if (cookie.maxTime && cookie.maxTime > 0 && new Date().getTime() > cookie.maxTime - (160 - sendResin) * 8 *
 			60 * 1000) {
 			//Bot.logger.mark(`体力推送:${user_id}`);
-
 			redis.set(sendkey, "1", {
 				EX: sendCD
 			});
-
 			await Note(e, {
 				render
 			});
 		}
 	}
+}
+
+
+export async function Note_appoint(e) {
+	let msg = e.msg.replace(/#|井|体力|模板|设置/g, "");
+	let urlType = note_file();
+	let type = 0;
+	if (msg.includes("列表")) {
+		e.reply(`当前支持选择的模板有:\n${urlType.join("\n")}`);
+		return true;
+	}
+	if (!urlType.includes(msg)) {
+		e.reply("没有找到你想要的模板昵！可输入 【#体力模板列表】 查询当前支持的模板哦~~")
+		return true;
+	} else type = 1;
+	tempData[e.user_id]={temp: msg,type: type,}
+	fs.writeFileSync(tempDataUrl+"/tempData.json",JSON.stringify(tempData));
+	init()
+	e.reply("诶~这是你选的模板吗，模板设置成功了快用指令来试试吧~！")
+	return true;
+}
+
+const note_file = function() {
+	var urlFile = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/`);
+	var urlType = [];
+	for (let val of urlFile) {
+		if (val.includes(".")) continue;
+		urlType.push(val)
+	}
+	return urlType;
 }
