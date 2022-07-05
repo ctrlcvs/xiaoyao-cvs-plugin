@@ -8,6 +8,7 @@ import format from "date-format";
 import puppeteer from "puppeteer";
 import common from "../../../lib/common.js";
 import lodash from "lodash";
+import { getPluginRender } from "../../../lib/render.js"
 import {
 	Cfg,
 	Data
@@ -25,12 +26,13 @@ let role_user = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/dai
 
 let path_url = ["dailyNote", "xiaoyao_Note"];
 let path_img = ["background_image", "/icon/bg"];
-let tempDataUrl=`${_path}/plugins/xiaoyao-cvs-plugin/data/NoteTemp`
+let tempDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/NoteTemp`
 let tempData = {};
 init()
+
 function init() {
-	Data.createDir("",tempDataUrl ,false);
-	tempData=Data.readJSON(tempDataUrl,"tempData")
+	Data.createDir("", tempDataUrl, false);
+	tempData = Data.readJSON(tempDataUrl, "tempData")
 	// console.log(tempData)
 }
 //#体力
@@ -227,15 +229,15 @@ export async function Note(e, {
 	if (mb < 0) {
 		mb = lodash.random(0, path_url.length - 1);
 	}
-	
+
 	let urlType = note_file();
 	if (urlType.length > 0) {
 		urlType = urlType[lodash.random(0, urlType.length - 1)]
 	}
 	let img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
-	if(tempData[e.user_id]){
-		mb=tempData[e.user_id].type;
-		urlType=tempData[e.user_id].temp;
+	if (tempData[e.user_id] && tempData[e.user_id].type > 0) {
+		mb = tempData[e.user_id].type;
+		urlType = tempData[e.user_id].temp;
 	}
 	if (mb == 1) {
 		for (var i = 0; i < 5 - data.expeditions.length; i++) {
@@ -308,10 +310,9 @@ export async function saveJson() {
 //体力定时推送
 export async function DailyNoteTask() {
 	//体力大于多少时推送
-	let sendResin = 120;
+	let sendResin = 10;
 	//推送cd，12小时一次
 	let sendCD = 12 * 3600;
-
 	//获取需要推送的用户
 	for (let [user_id, cookie] of Object.entries(NoteCookie)) {
 		user_id = cookie.qq || user_id;
@@ -319,7 +320,7 @@ export async function DailyNoteTask() {
 		if (!cookie.isPush) {
 			continue;
 		}
-
+		
 		//今天已经提醒
 		let sendkey = `genshin:dailyNote:send:${user_id}`;
 		let send = await redis.get(sendkey);
@@ -339,13 +340,11 @@ export async function DailyNoteTask() {
 		//判断今天是否推送
 		if (cookie.maxTime && cookie.maxTime > 0 && new Date().getTime() > cookie.maxTime - (160 - sendResin) * 8 *
 			60 * 1000) {
-			//Bot.logger.mark(`体力推送:${user_id}`);
+			Bot.logger.mark(`体力推送:${user_id}`);
 			redis.set(sendkey, "1", {
 				EX: sendCD
 			});
-			await Note(e, {
-				render
-			});
+			await Note(e, getPluginRender("xiaoyao-cvs-plugin"));
 		}
 	}
 }
@@ -353,18 +352,24 @@ export async function DailyNoteTask() {
 
 export async function Note_appoint(e) {
 	let msg = e.msg.replace(/#|井|体力|模板|设置/g, "");
+	let All = ["默认", "随机", "0"];
 	let urlType = note_file();
 	let type = 0;
 	if (msg.includes("列表")) {
 		e.reply(`当前支持选择的模板有:\n${urlType.join("\n")}`);
 		return true;
 	}
-	if (!urlType.includes(msg)) {
+	if (!urlType.includes(msg) && !All.includes(msg)) {
 		e.reply("没有找到你想要的模板昵！可输入 【#体力模板列表】 查询当前支持的模板哦~~")
 		return true;
+	} else if (All.includes(msg)) {
+		type = -1;
 	} else type = 1;
-	tempData[e.user_id]={temp: msg,type: type,}
-	fs.writeFileSync(tempDataUrl+"/tempData.json",JSON.stringify(tempData));
+	tempData[e.user_id] = {
+		temp: msg,
+		type: type,
+	}
+	fs.writeFileSync(tempDataUrl + "/tempData.json", JSON.stringify(tempData));
 	init()
 	e.reply("诶~这是你选的模板吗，模板设置成功了快用指令来试试吧~！")
 	return true;

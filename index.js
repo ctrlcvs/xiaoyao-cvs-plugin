@@ -9,7 +9,7 @@ import {
 
 import common from "../../lib/common.js";
 import {
-	Note,
+	Note,DailyNoteTask,
 	Note_appoint
 } from "./apps/Note.js"
 import {
@@ -27,7 +27,7 @@ export {
 	versionInfo,
 	Note_appoint,
 	sysCfg,
-	help,
+	help,DailyNoteTask,
 	AtlasAlias,
 	Note
 };

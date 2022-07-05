@@ -1,7 +1,11 @@
 #1.0.7
+*新增`体力推送方法`
+    *可通过修改init.js方法调用实现新版体力推送
+    *具体将**YunzaiApps.dailyNote.DailyNoteTask()**方法改为**YunzaiApps["plugin_xiaoyao-cvs-plugin"].DailyNoteTask()**
 *新增`#体力模板2`指定模板
     *可通过`#体力模板列表`获取你当前已有的模板
     *通过`#体力模板设置(模板)`来指定你需要的模板
+    *可以通过`#体力模板设置随机`来恢复之前的状态
 *修复时间区间问题
 
 # 1.0.6
