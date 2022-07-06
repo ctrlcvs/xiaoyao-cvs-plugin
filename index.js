@@ -10,7 +10,7 @@ import {
 import common from "../../lib/common.js";
 import {
 	Note,DailyNoteTask,
-	Note_appoint
+	Note_appoint,pokeNote
 } from "./apps/Note.js"
 import {
 	rule as adminRule,
@@ -25,7 +25,7 @@ export {
 	updateRes,
 	updateMiaoPlugin,
 	versionInfo,
-	Note_appoint,
+	Note_appoint,pokeNote,
 	sysCfg,
 	help,DailyNoteTask,
 	AtlasAlias,
@@ -52,6 +52,10 @@ let rule = {
 	Note_appoint: {
 		reg: "^#体力模板(设置(.*)|列表)$",
 		describe: "体力模板设置",
+	},
+	pokeNote: {
+		reg: "#poke#",
+		describe: "体力",
 	},
 	...adminRule
 };

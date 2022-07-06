@@ -6,6 +6,8 @@ import Common from "../components/Common.js";
 import fs from "fs";
 import format from "date-format";
 import puppeteer from "puppeteer";
+
+import { MysUser, User } from "../../../lib/components/Models.js";
 import common from "../../../lib/common.js";
 import lodash from "lodash";
 import { getPluginRender } from "../../../lib/render.js"
@@ -347,6 +349,10 @@ export async function DailyNoteTask() {
 			await Note(e, getPluginRender("xiaoyao-cvs-plugin"));
 		}
 	}
+}
+
+export async function pokeNote(e){
+	return await Note(e, getPluginRender("xiaoyao-cvs-plugin"));
 }
 
 
