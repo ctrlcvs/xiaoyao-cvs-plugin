@@ -89,12 +89,11 @@ export async function sysCfg(e, {
 		Note: getStatus("sys.Note",false),
 		Atlas: getStatus("sys.Atlas",false),
 		len:Cfg.get("mb.len", 0),
-		 poke: getStatus("note.poke"),
+		 poke: getStatus("note.poke",false),
 		imgPlus: fs.existsSync(plusPath),
 		bg: await rodom(), //获取底图
 		Atlasall:getStatus("Atlas.all",false),
 	}
-	console.log(cfg)
 	//渲染图像
 	return await Common.render("admin/index", {
 		...cfg,

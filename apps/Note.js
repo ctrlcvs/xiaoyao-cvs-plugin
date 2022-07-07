@@ -40,8 +40,8 @@ function init() {
 //#体力
 export async function Note(e, {
 	render
-}) {
-	if (!Cfg.get("sys.Note")) {
+},poke) {
+	if (!Cfg.get("sys.Note")&&!poke) {
 		return false;
 	}
 	let cookie, uid;
@@ -355,7 +355,7 @@ export async function pokeNote(e){
 	if (!Cfg.get("note.poke")) {
 		return false;
 	}
-	return await Note(e, getPluginRender("xiaoyao-cvs-plugin"));
+	return await Note(e, getPluginRender("xiaoyao-cvs-plugin"),"poke");
 }
 
 
