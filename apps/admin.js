@@ -23,6 +23,7 @@ let cfgMap = {
 	"体力": "sys.Note",
 	"帮助": "sys.help",
 	"匹配": "sys.Atlas",
+	"戳一戳":"note.poke",
 	"模板": "mb.len",
 	"目录":"Atlas.all",
 };
@@ -88,6 +89,7 @@ export async function sysCfg(e, {
 		Note: getStatus("sys.Note",false),
 		Atlas: getStatus("sys.Atlas",false),
 		len:Cfg.get("mb.len", 0),
+		 poke: getStatus("note.poke"),
 		imgPlus: fs.existsSync(plusPath),
 		bg: await rodom(), //获取底图
 		Atlasall:getStatus("Atlas.all",false),

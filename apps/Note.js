@@ -352,6 +352,9 @@ export async function DailyNoteTask() {
 }
 
 export async function pokeNote(e){
+	if (!Cfg.get("note.poke")) {
+		return false;
+	}
 	return await Note(e, getPluginRender("xiaoyao-cvs-plugin"));
 }
 

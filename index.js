@@ -11,7 +11,7 @@ import common from "../../lib/common.js";
 import {
 	Note,DailyNoteTask,
 	Note_appoint,pokeNote
-} from "./apps/Note.js"
+} from "./apps/Note.js";
 import {
 	rule as adminRule,
 	updateRes,
@@ -57,6 +57,7 @@ let rule = {
 		reg: "#poke#",
 		describe: "体力",
 	},
+	
 	...adminRule
 };
 

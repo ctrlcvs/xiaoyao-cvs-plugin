@@ -1,3 +1,8 @@
+#1.0.8
+* 支持戳一戳返回体力
+    * 需要使用喵喵分支Yunzai以支持此能力，如需切换可在Yunzai跟目录输入下方命令后更新重启
+    * `git remote set-url origin https://gitee.com/yoimiya-kokomi/Yunzai-Bot`
+    * 可通过`#图鉴设置` 关闭戳一戳
 #1.0.7
 *新增`体力推送方法`
     *可通过修改init.js方法调用实现新版体力推送
