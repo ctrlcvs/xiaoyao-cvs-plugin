@@ -25,7 +25,6 @@ try {
   if (fs.existsSync(_logPath)) {
     logs = fs.readFileSync(_logPath, "utf8") || "";
     logs = logs.split("\n");
-
     let temp = {}, lastLine = {};
     lodash.forEach(logs, (line) => {
       if (versionCount <= -1) {
@@ -62,9 +61,11 @@ try {
         } else if (/^\s{3,}\*/.test(line)) {
           lastLine.logs.push(getLine(line));
         }
+		
       }
     });
   }
+ 
 } catch (e) {
   // do nth
 }

@@ -1,60 +1,19 @@
-#1.0.8
+# 1.1.0
+* 增加`#图鉴帮助`用于查看帮助命令
+* 增加`#图鉴设置`用于设置图鉴相关功能
 * 支持戳一戳返回体力
     * 需要使用喵喵分支Yunzai以支持此能力，如需切换可在Yunzai跟目录输入下方命令后更新重启
     * `git remote set-url origin https://gitee.com/yoimiya-kokomi/Yunzai-Bot`
     * 可通过`#图鉴设置` 关闭戳一戳
-#1.0.7
-*新增`体力推送方法`
+* 增加`体力推送方法`
     *可通过修改init.js方法调用实现新版体力推送
     *具体将**YunzaiApps.dailyNote.DailyNoteTask()**方法改为**YunzaiApps["plugin_xiaoyao-cvs-plugin"].DailyNoteTask()**
-*新增`#体力模板2`指定模板
+* 增加`#体力模板2`指定模板
     *可通过`#体力模板列表`获取你当前已有的模板
     *通过`#体力模板设置(模板)`来指定你需要的模板
     *可以通过`#体力模板设置随机`来恢复之前的状态
-*修复时间区间问题
-
-# 1.0.6
-*兼容`体力模板2`可自定义css以及背景icon等
-    * 模板内容需要具体参考**/dailyNote/Template/temp**
-    * 推荐英文命名文件夹
-    * 花里胡哨背景
-        * 其中css文件放在**/dailyNote/Template/你的模板/css/xiaoyao_Note.css**这块懒得做命名处理了统一这个命名
-        * 进度条图片文件放在**/dailyNote/Template/你的模板/speed/** 文件命名0-100数字 无需%
-        * icon文件目录**/dailyNote/Template/你的模板/icon/**中需要包含矩形、圆角矩形三个图片，命名也需要这个命名
-    * 清新版本的背景请放置到**/dailyNote/Template/temp/icon/bg/**下面
-*优化正则匹配不至于一直输出
-*修复模板一无派遣的bug
-*优化部分别名
-*当前版本如果对内容不清楚可参考**/dailyNote/Template/Keqing/** 内的文件样式以及文件存放
-
-# 1.0.5
-* 新增了一个体力模板
-* 设置功能新增模板切换`图鉴设置模板(0-2)`
-* 新版清新的模板背景路径**/plugins/xiaoyao-cvs-plugin/resources/dailyNote/icon/bg/**
-    * 模板背景可以自定义具体看内容
-* 帮助文件新增兼容自定义以及默认
-
-# 1.0.4
-* 新增了`版本号`
-* 新增`图鉴目录`可以输入图鉴目录查看图鉴大概操作
-* json文件统一在**Yunzai-Bot/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias**下面
-
-# 1.0.3
-* 新增了`#图鉴设置`可以查看图鉴功能设定
-* 感谢 **@傻里傻气的小萌新** 的背景图片支持
-* 新增了`秘境图鉴` 
-* 图鉴系列均 **@逍遥** 提供
-* 新增`图鉴匹配`设置
-* 优化之前的别名文件
-
-# 1.0.2
-* 重写`体力`渲染
-* 增加`#图鉴设置体力开关`防止跟乐神的冲突默认是关闭的
-* 体力背景位置在 **Yunzai-Bot/plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/**新加的图片放这个目录下面就行
-* 增加`#图鉴帮助`查看插件包功能概况
-* 增加`#图鉴版本`查看插件版本（借鉴喵喵代码 emmm好吧cv）
-
-# 1.0.1
 * 增加`#**图鉴`用于查看逍遥全图鉴
 * 增加`#图鉴更新`用于获取图鉴数据
 * 增加`#图鉴插件(强制)更新`用于插件包更新
+# 1.0.0
+* ~~~~~~~~~~~

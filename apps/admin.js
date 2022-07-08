@@ -150,7 +150,7 @@ export async function updateRes(e) {
 			cwd: `${resPath}/xiaoyao-plus/`
 		}, function(error, stdout, stderr) {
 			//console.log(stdout);
-			if (/Already up to date/.test(stdout)) {
+			if (/Already up to date/.test(stdout)||stdout.includes("最新")) {
 				e.reply("目前所有图片都已经是最新了~");
 				return true;
 			}
@@ -202,7 +202,7 @@ export async function updateMiaoPlugin(e) {
 		cwd: `${_path}/plugins/xiaoyao-cvs-plugin/`
 	}, function(error, stdout, stderr) {
 		//console.log(stdout);
-		if (/Already up[ -]to[ -]date/.test(stdout)) {
+		if (/Already up[ -]to[ -]date/.test(stdout)||stdout.includes("最新")) {
 			e.reply("目前已经是最新版图鉴插件了~");
 			return true;
 		}
