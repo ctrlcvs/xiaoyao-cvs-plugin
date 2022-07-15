@@ -312,7 +312,7 @@ export async function saveJson() {
 //体力定时推送
 export async function DailyNoteTask() {
 	//体力大于多少时推送
-	let sendResin = 10;
+	let sendResin = 120;
 	//推送cd，12小时一次
 	let sendCD = 12 * 3600;
 	//获取需要推送的用户
