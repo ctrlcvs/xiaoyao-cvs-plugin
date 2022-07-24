@@ -43,7 +43,7 @@ export async function Note(e, {
 	let cookie, uid,res;
 	if(isV3){
 		res = await MysInfo.get(e, 'dailyNote')
-		if (!res || res.retcode !== 0) return false
+		if (!res || res.retcode !== 0) return true
 	}else{
 		if (NoteCookie[e.user_id]) {
 			cookie = NoteCookie[e.user_id].cookie;
