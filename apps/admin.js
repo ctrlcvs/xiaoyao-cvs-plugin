@@ -13,9 +13,7 @@ import {
 	Cfg
 } from "../components/index.js";
 import Common from "../components/Common.js";
-import {
-	init
-} from "../apps/xiaoyao_image.js"
+
 
 const require = createRequire(
 	import.meta.url);
@@ -156,14 +154,12 @@ export async function updateRes(e) {
 			}
 			let numRet = /(\d*) files changed,/.exec(stdout);
 			if (numRet && numRet[1]) {
-				init()
 				e.reply(`报告主人，更新成功，此次更新了${numRet[1]}个图片~`);
 				return true;
 			}
 			if (error) {
 				e.reply("更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。");
 			} else {
-				init()
 				e.reply("图片加量包更新成功~");
 			}
 		});
@@ -176,7 +172,6 @@ export async function updateRes(e) {
 			if (error) {
 				e.reply("角色图片加量包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。");
 			} else {
-				init()
 				e.reply("角色图片加量包安装成功！您后续也可以通过 #图鉴更新 命令来更新图像");
 			}
 		});

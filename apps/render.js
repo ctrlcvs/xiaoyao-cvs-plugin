@@ -3,7 +3,7 @@ import fs from "fs";
 import puppeteer from "puppeteer";
 import lodash from "lodash";
 
-import { Data } from "../../../lib/components/index.js";
+import { Data } from "../components/index.js";
 
 const _path = process.cwd();
 //html模板
@@ -33,6 +33,7 @@ let shoting = [];
  * @param data 前端参数，必传 data.save_id 用来区分模板
  * @param imgType 图片类型 jpeg，png（清晰一点，大小更大）
  */
+const plugin="xiaoyao-cvs-plugin"
 async function render1(app = "", type = "", data = {}, imgType = "jpeg") {
   if (lodash.isUndefined(data._res_path)) {
     data._res_path = `../../../../../plugins/xiaoyao-cvs-plugin/resources/`;
@@ -197,4 +198,29 @@ async function browserInit() {
   }
 }
 
-export { render1, browserInit, renderNum };
+function getPluginRender(plugin) {
+  return async function (app = "", type = "", data = {}, imgType = "jpeg") {
+    // 在data中保存plugin信息
+    data._plugin = plugin;
+
+    if (lodash.isUndefined(data._res_path)) {
+      data._res_path = `../../../../../plugins/${plugin}/resources/`;
+    }
+    if (lodash.isUndefined(data._sys_res_path)) {
+      data._sys_res_path = `../../../../../resources/`;
+    }
+    let tplKey = `${plugin}.${app}.${type}`;
+    let saveId = data.save_id;
+    let tplFile = _path + `/plugins/${plugin}/resources/${app}/${type}.html`;
+    Data.createDir(_path + `/data/`, `html/plugin_${plugin}/${app}/${type}`);
+    let savePath = _path + `/data/html/plugin_${plugin}/${app}/${type}/${saveId}.html`;
+    return await doRender(app, type, data, imgType, {
+      tplKey,
+      tplFile,
+      savePath,
+      saveId,
+    });
+  }
+}
+
+export { render1, browserInit, renderNum,getPluginRender };

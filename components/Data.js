@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import fs from "fs";
-import request from "request";
+const _path = process.cwd()
 
 let Data = {
 
@@ -51,7 +51,18 @@ let Data = {
     Data.createDir(path, true);
     return fs.writeFileSync(`${path}/${file}`, JSON.stringify(data, null, space));
   },
-
+  async importModule (path, file, rootPath = _path) {
+    if (!/\.js$/.test(file)) {
+      file = file + '.js'
+    }
+    // 检查并创建目录
+    Data.createDir(_path, path, true)
+    if (fs.existsSync(`${_path}/${path}/${file}`)) {
+      let data = await import(`file://${_path}/${path}/${file}`)
+      return data || {}
+    }
+    return {}
+  },
   /*
   * 返回一个从 target 中选中的属性的对象
   *
@@ -146,34 +157,11 @@ let Data = {
     return Promise.all(ret);
   },
 
-  async cacheFile(fileList, cacheRoot) {
-
-    let ret = {};
-    let cacheFn = async function (url) {
-      let path = Data.getUrlPath(url);
-      if (fs.existsSync(`${cacheRoot}/${path.path}/${path.filename}`)) {
-        console.log("已存在，跳过 " + path.path + "/" + path.filename);
-        ret[url] = `${path.path}/${path.filename}`;
-        return true;
-      }
-
-      Data.pathExists(cacheRoot, path.path);
-      await request(url).pipe(fs.createWriteStream(`${cacheRoot}/${path.path}/` + path.filename));
-      console.log("下载成功: " + path.path + "/" + path.filname);
-      ret[url] = `${path.path}/${path.filename}`;
-      return true;
-    };
-
-    await Data.asyncPool(10, fileList, cacheFn);
-    return ret;
-
-  },
-
   sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-
+ 
 }
 
 export default Data;

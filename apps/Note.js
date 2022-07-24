@@ -5,24 +5,20 @@ import fetch from "node-fetch";
 import Common from "../components/Common.js";
 import fs from "fs";
 import format from "date-format";
-import puppeteer from "puppeteer";
-
-import { MysUser, User } from "../../../lib/components/Models.js";
-import common from "../../../lib/common.js";
+import { isV3 } from '../components/Changelog.js'
+import MysInfo from '../model/mys/mysInfo.js'
+// import { MysUser } from "../../../lib/components/Models.js";
+// import common from "../../../lib/common.js";
 import lodash from "lodash";
-import { getPluginRender } from "../../../lib/render.js"
+import { getPluginRender } from "./render.js";
+
+import gsCfg from '../model/gsCfg.js'
 import {
 	Cfg,
 	Data
 } from "../components/index.js";
 import moment from 'moment';
-// import MysApi from "../components/MysApi.js"
-
-import {
-	getUrl,
-	getHeaders
-} from "../../../lib/app/mysApi.js";
-
+import MysApi from "../model/mys/mysApi.js";
 const _path = process.cwd();
 let role_user = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/json/`, "dispatch_time");
 
@@ -44,63 +40,64 @@ export async function Note(e, {
 	if (!Cfg.get("sys.Note")&&!poke) {
 		return false;
 	}
-	let cookie, uid;
-	if (NoteCookie[e.user_id]) {
-		cookie = NoteCookie[e.user_id].cookie;
-		uid = NoteCookie[e.user_id].uid;
-	} else if (BotConfig.dailyNote && BotConfig.dailyNote[e.user_id]) {
-		cookie = BotConfig.dailyNote[e.user_id].cookie;
-		uid = BotConfig.dailyNote[e.user_id].uid;
-	} else {
-		e.reply(`尚未配置，无法查询体力\n配置教程：${BotConfig.cookieDoc}`);
-		return true;
-	}
-
-	const response = await getDailyNote(uid, cookie);
-	if (!response.ok) {
-		e.reply("米游社接口错误");
-		return true;
-	}
-	const res = await response.json();
-
-	if (res.retcode == 10102) {
-		if (!e.openDailyNote) {
-			e.openDailyNote = true;
-			await openDailyNote(cookie); //自动开启
-			dailyNote(e);
+	let cookie, uid,res;
+	if(isV3){
+		res = await MysInfo.get(e, 'dailyNote')
+		if (!res || res.retcode !== 0) return false
+	}else{
+		if (NoteCookie[e.user_id]) {
+			cookie = NoteCookie[e.user_id].cookie;
+			uid = NoteCookie[e.user_id].uid;
+		} else if (BotConfig.dailyNote && BotConfig.dailyNote[e.user_id]) {
+			cookie = BotConfig.dailyNote[e.user_id].cookie;
+			uid = BotConfig.dailyNote[e.user_id].uid;
 		} else {
-			e.reply("请先开启实时便笺数据展示");
+			e.reply(`尚未配置，无法查询体力\n配置教程：${BotConfig.cookieDoc}`);
+			return true;
 		}
-		return true;
-	}
-
-	if (res.retcode != 0) {
-		if (res.message == "Please login") {
-			Bot.logger.mark(`体力cookie已失效`);
-			e.reply(`体力cookie已失效，请重新配置\n注意：退出米游社登录cookie将会失效！`);
-
-			if (NoteCookie[e.user_id]) {
-				await MysUser.delNote(NoteCookie[e.user_id]);
-				delete NoteCookie[e.user_id];
-				saveJson();
+		const response = await getDailyNote(uid, cookie);
+		if (!response.ok) {
+			e.reply("米游社接口错误");
+			return true;
+		}
+		res = await response.json();
+		if (res.retcode == 10102) {
+			if (!e.openDailyNote) {
+				e.openDailyNote = true;
+				await openDailyNote(cookie); //自动开启
+				dailyNote(e);
+			} else {
+				e.reply("请先开启实时便笺数据展示");
 			}
-		} else {
-			e.reply(`体力查询错误：${res.message}`);
-			Bot.logger.mark(`体力查询错误:${JSON.stringify(res)}`);
+			return true;
 		}
-
-		return true;
-	}
-
-	//redis保存uid
-	redis.set(`genshin:uid:${e.user_id}`, uid, {
-		EX: 2592000
-	});
-
-	//更新
-	if (NoteCookie[e.user_id]) {
-		NoteCookie[e.user_id].maxTime = new Date().getTime() + res.data.resin_recovery_time * 1000;
-		saveJson();
+		if (res.retcode != 0) {
+			if (res.message == "Please login") {
+				Bot.logger.mark(`体力cookie已失效`);
+				e.reply(`体力cookie已失效，请重新配置\n注意：退出米游社登录cookie将会失效！`);
+				if (NoteCookie[e.user_id]) {
+					// await MysUser.delNote(NoteCookie[e.user_id]);
+					delete NoteCookie[e.user_id];
+					saveJson();
+				}
+			} else {
+				e.reply(`体力查询错误：${res.message}`);
+				Bot.logger.mark(`体力查询错误:${JSON.stringify(res)}`);
+			}
+		
+			return true;
+		}
+		
+		//redis保存uid
+		redis.set(`genshin:uid:${e.user_id}`, uid, {
+			EX: 2592000
+		});
+		
+		//更新
+		if (NoteCookie[e.user_id]) {
+			NoteCookie[e.user_id].maxTime = new Date().getTime() + res.data.resin_recovery_time * 1000;
+			saveJson();
+		}
 	}
 
 	let data = res.data;
@@ -143,9 +140,9 @@ export async function Note(e, {
 			val.remained_time = new Date().getTime() + val.remained_time * 1000;
 			// console.log(val.remained_time)
 			var urls_avatar_side = val.avatar_side_icon.split("_");
-			let id = YunzaiApps.mysInfo.roleIdToName(urls_avatar_side[urls_avatar_side.length - 1].replace(
+			let id = gsCfg.roleIdToName(urls_avatar_side[urls_avatar_side.length - 1].replace(
 				/(.png|.jpg)/g, ""));
-			let name = YunzaiApps.mysInfo.roleIdToName(id, true);
+			let name = gsCfg.roleIdToName(id, true);
 			var time_cha = 20;
 			if (role_user["12"].includes(name)) {
 				time_cha = 15;
@@ -287,14 +284,14 @@ async function dateTime_(time) {
 		time) < 19.5 ? "傍晚" : format("hh",
 		time) < 22 ? "晚上" : "深夜";
 }
-
 async function getDailyNote(uid, cookie) {
+	 let mysApi = new MysApi(uid, cookie)
 	let {
 		url,
 		headers,
 		query,
 		body
-	} = getUrl("dailyNote", uid);
+	} = mysApi.getUrl("dailyNote", uid);
 	headers.Cookie = cookie;
 	const response = await fetch(url, {
 		method: "get",
@@ -302,7 +299,6 @@ async function getDailyNote(uid, cookie) {
 	});
 	return response;
 }
-
 export async function saveJson() {
 	let path = "data/NoteCookie/NoteCookie.json";
 	fs.writeFileSync(path, JSON.stringify(NoteCookie, "", "\t"));
@@ -337,7 +333,10 @@ export async function DailyNoteTask() {
 		};
 
 		e.reply = (msg) => {
-			common.relpyPrivate(user_id, msg);
+			 Bot.pickUser(user_id*1).sendMsg(msg).catch((err) => {
+			  logger.mark(err)
+			})
+			// common.relpyPrivate(user_id, msg);
 		};
 		//判断今天是否推送
 		if (cookie.maxTime && cookie.maxTime > 0 && new Date().getTime() > cookie.maxTime - (160 - sendResin) * 8 *
