@@ -279,7 +279,7 @@ export async function Note(e, {
 }
 
 async function dateTime_(time) {
-	return moment(time).format("hh") < 6 ? "凌晨" : moment(time).format("hh") < 12 ? "上午" : moment(time).format("hh") < 17.5 ? "下午" : moment(time).format("hh") < 19.5 ? "傍晚" : moment(time).format("hh") < 22 ? "晚上" : "深夜";
+	return moment(time).format("HH") < 6 ? "凌晨" : moment(time).format("HH") < 12 ? "上午" : moment(time).format("HH") < 17.5 ? "下午" : moment(time).format("HH") < 19.5 ? "傍晚" : moment(time).format("HH") < 22 ? "晚上" : "深夜";
 }
 async function getDailyNote(uid, cookie) {
 	 let mysApi = new MysApi(uid, cookie)
