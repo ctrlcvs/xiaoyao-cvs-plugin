@@ -1,6 +1,7 @@
 # 1.1.1
 * 初步兼容V3版本
-* V3版本请在cmd命令窗口追加`date-format`包 指令pnpm i date-format
+* 版本兼容问题V2报错的话请导入`yaml`包 指令 `cnpm i yaml`
+* V3版本请在cmd命令窗口追加`date-format`包 指令`pnpm i date-format`
 
 # 1.1.0
 * 增加`#图鉴帮助`用于查看帮助命令

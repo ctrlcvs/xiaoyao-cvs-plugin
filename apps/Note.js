@@ -4,7 +4,6 @@ import {
 import fetch from "node-fetch";
 import Common from "../components/Common.js";
 import fs from "fs";
-import format from "date-format";
 import { isV3 } from '../components/Changelog.js'
 import MysInfo from '../model/mys/mysInfo.js'
 // import { MysUser } from "../../../lib/components/Models.js";
@@ -44,6 +43,7 @@ export async function Note(e, {
 	if(isV3){
 		res = await MysInfo.get(e, 'dailyNote')
 		if (!res || res.retcode !== 0) return true
+		uid=e.uid;
 	}else{
 		if (NoteCookie[e.user_id]) {
 			cookie = NoteCookie[e.user_id].cookie;
@@ -110,18 +110,18 @@ export async function Note(e, {
 		Bot.logger.mark(`体力推送:${e.user_id}`);
 	}
 
-	let nowDay = format("dd", new Date());
+	let nowDay = moment(new Date()).format("DD");
 	let resinMaxTime;
 	let resinMaxTime_mb2;
 	let resinMaxTime_mb2Day;
 	if (data.resin_recovery_time > 0) {
 		resinMaxTime = new Date().getTime() + data.resin_recovery_time * 1000;
 		let maxDate = new Date(resinMaxTime);
-		resinMaxTime = format("hh:mm", maxDate);
+		resinMaxTime =moment(maxDate).format("hh:mm");
 		let Time_day = await dateTime_(maxDate)
 		resinMaxTime_mb2 = Time_day + moment(maxDate).format("hh:mm");
 		// console.log(format("dd", maxDate))
-		if (format("dd", maxDate) != nowDay) {
+		if (moment(maxDate).format("DD") != nowDay) {
 			resinMaxTime_mb2Day = `明天`;
 			resinMaxTime = `明天 ${resinMaxTime}`;
 		} else {
@@ -149,9 +149,9 @@ export async function Note(e, {
 			}
 			val.percentage = ((val.dq_time / 60 / 60 * 1 / time_cha) * 100 / 10).toFixed(0) * 10;
 			let remainedDate = new Date(val.remained_time);
-			val.remained_time = format("hh:mm", remainedDate);
+			val.remained_time = moment(remainedDate).format("hh:mm");
 			let Time_day = await dateTime_(remainedDate)
-			if (format("dd", remainedDate) != nowDay) {
+			if (moment(remainedDate).format("DD") != nowDay) {
 				val.remained_mb2 = "明天" + Time_day + moment(remainedDate).format("hh:mm");
 				val.remained_time = `明天 ${val.remained_time}`;
 			} else {
@@ -170,8 +170,8 @@ export async function Note(e, {
 		if (remained_time > 0) {
 			remained_time = new Date().getTime() + remained_time * 1000;
 			let remainedDate = new Date(remained_time);
-			remained_time = format("hh:mm", remainedDate);
-			if (format("dd", remainedDate) != nowDay) {
+			remained_time = moment(remainedDate).format("hh:mm");
+			if (moment(remainedDate).format("DD") != nowDay) {
 				remained_time = `明天 ${remained_time}`;
 			} else {
 				remained_time = ` ${remained_time}`;
@@ -195,20 +195,20 @@ export async function Note(e, {
 			coinTime_mb2 = Time_day + moment(coinDate).format("hh:mm");
 		} else {
 			coinTime_mb2 = moment(coinDate).format("hh:mm");
-			if (format("dd", coinDate) != nowDay) {
+			if ( moment(coinDate).format("DD") != nowDay) {
 				coinTime_mb2Day = "明天";
-				coinTime = `明天 ${format("hh:mm", coinDate)}`;
+				coinTime = `明天 ${ moment(coinDate).format("hh:mm")}`;
 			} else {
 				coinTime_mb2Day = "今天";
-				coinTime = format("hh:mm", coinDate);
+				coinTime = moment(coinDate).format("hh:mm", coinDate);
 			}
 		}
 	}
 
-	let day = format("MM-dd hh:mm", new Date());
+	let day =  moment(new Date()).format("MM-DD HH:mm");
 	let week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 	day += " " + week[new Date().getDay()];
-	let day_mb2 = format("yyyy年MM月dd日 hh:mm", new Date()) + " " + week[new Date().getDay()];
+	let day_mb2 =   moment(new Date()).format("yyyy年MM月DD日 HH:mm") + " " + week[new Date().getDay()];
 	//参量质变仪
 	if (data?.transformer?.obtained) {
 		data.transformer.reached = data.transformer.recovery_time.reached;
@@ -279,10 +279,7 @@ export async function Note(e, {
 }
 
 async function dateTime_(time) {
-	return format("hh", time) < 6 ? "凌晨" : format("hh", time) < 12 ? "上午" : format("hh",
-		time) < 17.5 ? "下午" : format("hh",
-		time) < 19.5 ? "傍晚" : format("hh",
-		time) < 22 ? "晚上" : "深夜";
+	return moment(time).format("hh") < 6 ? "凌晨" : moment(time).format("hh") < 12 ? "上午" : moment(time).format("hh") < 17.5 ? "下午" : moment(time).format("hh") < 19.5 ? "傍晚" : moment(time).format("hh") < 22 ? "晚上" : "深夜";
 }
 async function getDailyNote(uid, cookie) {
 	 let mysApi = new MysApi(uid, cookie)
