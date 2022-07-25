@@ -1,7 +1,7 @@
 #### 介绍
 # xiaoyao-cvs-plugin
 
-由逍遥佬提供素材图片，本人负责插件编辑
+yunzai-bot扩展图鉴以及体力优化
 
 #### 介绍
 
@@ -12,7 +12,7 @@
 原神图鉴插件。
 
 #### 软件架构
-自行制作的原神图鉴，按业务分类整理。图片更新时替换对应路径的文件，保持图片url不变。
+由逍遥佬自行制作的原神图鉴，按业务分类整理。图片更新时替换对应路径的文件，保持图片url不变。
 
 
 #### 安装教程
@@ -29,8 +29,14 @@ git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cv
 #### 使用说明
 
 1.  配合云崽使用, https://gitee.com/Le-niao/Yunzai-Bot
-
-
+2.  V3版本安装报错的话请用指令引入包
+```
+pnpm i date-format
+```
+3.  V2版本安装报错指令引入包
+```
+cnpm i yaml
+```
 
 #### 命令说明
 1. 发送 #图鉴更新 获取最新的图鉴记录。(必须)
