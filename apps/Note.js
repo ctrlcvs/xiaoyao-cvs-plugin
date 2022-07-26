@@ -117,7 +117,7 @@ export async function Note(e, {
 	if (data.resin_recovery_time > 0) {
 		resinMaxTime = new Date().getTime() + data.resin_recovery_time * 1000;
 		let maxDate = new Date(resinMaxTime);
-		resinMaxTime =moment(maxDate).format("hh:mm");
+		resinMaxTime =moment(maxDate).format("HH:mm");
 		let Time_day = await dateTime_(maxDate)
 		resinMaxTime_mb2 = Time_day + moment(maxDate).format("hh:mm");
 		// console.log(format("dd", maxDate))
