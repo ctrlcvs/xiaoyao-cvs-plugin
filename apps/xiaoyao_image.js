@@ -41,8 +41,8 @@ export async function roleInfo(e) {
 	let id = gsCfg.roleNameToID(msg)
 	let name;
 	if (["10000005", "10000007", "20000000"].includes(id)) {
-		if (!["风主", "岩主", "雷主"].includes(msg)) {
-			e.reply("请选择：风主图鉴、岩主图鉴、雷主图鉴");
+		if (!["风主", "岩主", "雷主","草主"].includes(msg)) {
+			e.reply("请选择：风主图鉴、岩主图鉴、雷主图鉴、草主图鉴");
 			return true;
 		}
 		name = msg;
