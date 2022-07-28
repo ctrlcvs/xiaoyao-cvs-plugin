@@ -1,3 +1,12 @@
+# 1.1.2
+* 初步实现米游社签到米游币以及社区签到
+* 需要引入包文件`cnpm i promise-retry `跟`cnpm i superagent`
+* V3版本引入文件`pnpm i promise-retry `跟`pnpm i superagent`
+* 如果出现了安装其中一个包导致另外的包出问题的请群里询问
+* 具体获取cookie教程后续会完善 敬情期待~
+* 需要完整的cookie内容要包含`login_ticket`跟`login_uid`不然是无法实现米游社签到的
+* 自动签到逻辑目前还在梳理中.....
+
 # 1.1.1
 * 初步兼容V3版本
 * 版本兼容问题V2报错的话请导入`yaml`包 指令 `cnpm i yaml`

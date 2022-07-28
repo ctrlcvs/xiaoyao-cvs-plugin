@@ -19,15 +19,19 @@ import {
 import {
 	currentVersion
 } from "../components/Changelog.js";
+import {
+	rule as signRule,
+	sign,mysSign
+} from "./sign.js"
 export {
 	updateRes,
-	updateMiaoPlugin,
+	updateMiaoPlugin,sign,
 	versionInfo,
 	Note_appoint,pokeNote,
 	sysCfg,
 	help,DailyNoteTask,
 	AtlasAlias,
-	Note
+	Note,mysSign
 };
 
 let rule = {
@@ -55,7 +59,7 @@ let rule = {
 		reg: "#poke#",
 		describe: "体力",
 	},
-	
+	...signRule,
 	...adminRule
 };
 

@@ -26,7 +26,6 @@ let path_img = ["background_image", "/icon/bg"];
 let tempDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/NoteTemp`
 let tempData = {};
 init()
-
 function init() {
 	Data.createDir("", tempDataUrl, false);
 	tempData = Data.readJSON(tempDataUrl, "tempData")
