@@ -149,7 +149,7 @@ export async function Note(e, {
 			}
 			val.percentage = ((val.dq_time / 60 / 60 * 1 / time_cha) * 100 / 10).toFixed(0) * 10;
 			let remainedDate = new Date(val.remained_time);
-			val.remained_time = moment(remainedDate).format("hh:mm");
+			val.remained_time = moment(remainedDate).format("HH:mm");
 			let Time_day = await dateTime_(remainedDate)
 			if (moment(remainedDate).format("DD") != nowDay) {
 				val.remained_mb2 = "明天" + Time_day + moment(remainedDate).format("hh:mm");

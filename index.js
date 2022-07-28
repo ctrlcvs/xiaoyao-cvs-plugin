@@ -11,11 +11,11 @@ let index = {
 }
 if (isV3) {
 	index = await Data.importModule('/plugins/xiaoyao-cvs-plugin/adapter', 'index.js')
-	console.log(index)
 }
 export const atlas = index.atlas || {}
-
-console.log(`图鉴插件${currentVersion}初始化~`)
+Bot.logger.info(`--------------------------`)
+Bot.logger.info(`图鉴插件${currentVersion}初始化~`)
+Bot.logger.info(`--------------------------`)
 
 setTimeout(async function() {
 	let msgStr = await redis.get('xiaoyao:restart-msg')

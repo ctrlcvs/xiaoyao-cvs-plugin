@@ -33,7 +33,6 @@ export class atlas extends plugin {
           render
         })
         if (ret === true) {
-          console.log('ret true')
           return true
         }
       }
