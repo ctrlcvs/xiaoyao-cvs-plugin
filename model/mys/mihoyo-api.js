@@ -4,7 +4,9 @@ import _ from 'lodash';
 import superagent from 'superagent';
 import fs from "fs";
 import YAML from 'yaml'
-import {Data} from "../../components/index.js";
+import {
+	Data
+} from "../../components/index.js";
 import fetch from "node-fetch"
 const APP_VERSION = "2.2.0";
 const DEVICE_ID = utils.randomString(32).toUpperCase();
@@ -67,13 +69,13 @@ export default class MihoYoApi {
 		return resObj;
 	}
 	async stoken(cookie, e) {
-		this.e=e;
-		if(Object.keys(this.getStoken(e.user_id)).length != 0){
+		this.e = e;
+		if (Object.keys(this.getStoken(e.user_id)).length != 0) {
 			return true;
 		}
 		const map = this.getCookieMap(cookie);
 		const loginTicket = map.get("login_ticket");
-		const loginUid = map.get("login_uid");
+		const loginUid = map.get("login_uid") ? map.get("login_uid") : map.get("ltuid");
 		const url = "https://api-takumi.mihoyo.com/auth/api/getMultiTokenByLoginTicket?login_ticket=" +
 			loginTicket + "&token_types=3&uid=" + loginUid;
 		fetch(url, {
@@ -96,7 +98,7 @@ export default class MihoYoApi {
 				}
 				response.json().then(function(data) {
 					// console.log(data);
-					if(!data.data){
+					if (!data.data) {
 						return false;
 					}
 					let datalist = {
@@ -118,11 +120,11 @@ export default class MihoYoApi {
 	_getHeader() {
 		const randomStr = utils.randomString(6);
 		const timestamp = Math.floor(Date.now() / 1000)
-		let data=this.getStoken(this.e.user_id);
+		let data = this.getStoken(this.e.user_id);
 		// console.log(data)
 		// iOS sign
 		let sign = md5(`salt=b253c83ab2609b1b600eddfe974df47b&t=${timestamp}&r=${randomStr}`);
-		let cookie =`stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
+		let cookie = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
 		return {
 			'Cookie': cookie,
 			'Content-Type': 'application/json',
@@ -140,11 +142,12 @@ export default class MihoYoApi {
 	}
 	getCookieMap(cookie) {
 		let cookiePattern = /^(\S+)=(\S+)$/;
-		let cookieArray = cookie.split("; ");
+		let cookieArray = cookie.replace(/\s*/g,"").split(";");
 		let cookieMap = new Map();
 		for (let item of cookieArray) {
-			let entry = cookiePattern.exec(item);
-			cookieMap.set(entry[1], entry[2]);
+			let entry = item.split("=");
+			if(!entry[0]) continue;
+			cookieMap.set(entry[0], entry[1]);
 		}
 		return cookieMap;
 	}
