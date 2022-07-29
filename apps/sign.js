@@ -11,7 +11,6 @@ import {
 	isV3
 } from '../components/Changelog.js';
 import gsCfg from '../model/gsCfg.js'
-import { fileFrom } from "node-fetch";
 export const rule = {
 	mysSign: {
 		reg: "^#*(米游社|mys|社区)(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零|全部)签到$",
@@ -45,6 +44,7 @@ export async function sign(e) {
 	let resultMessage="";
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await getDataList(msg);
+	e.reply(`开始尝试${msg}社区签到`)
 	for (let forum of ForumData) {
 		resultMessage += `**${forum.name}**\n`
 		try {
@@ -79,11 +79,13 @@ export async function mysSign(e) {
 		e.reply("未读取到stoken请尝试重新登录获取cookies")
 		return true;
 	}
+	
 	START = moment().unix();
 	let resultMessage="";
 	// Execute task
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await getDataList(msg);
+	e.reply(`开始尝试${msg}社区签到`)
 	for (let forum of ForumData) {
 		resultMessage += `\n**${forum.name}**\n`
 		try {
