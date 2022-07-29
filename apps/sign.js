@@ -166,9 +166,10 @@ async function getDataList(name){
 async function cookie(e) {
 	let cookie, uid;
 	let miHoYoApi = new MihoYoApi(e);
+	let skuid;
 	if (isV3) {
 		// console.log(e)
-		let skuid = await gsCfg.getBingCookie(e.user_id);
+		skuid= await gsCfg.getBingCookie(e.user_id);
 		cookie = skuid.ck;
 		uid = skuid.item;
 	} else {
@@ -180,8 +181,12 @@ async function cookie(e) {
 			uid = BotConfig.dailyNote[e.user_id].uid;
 		}
 	}
+	if(!cookie){
+		e.reply("cookie失效请重新绑定~")
+		return false;
+	}
 	e.uid = uid;
-	if (!cookie.includes("login_ticket")) {
+	if (!cookie.includes("login_ticket")&&(isV3&&!skuid?.login_ticket)) {
 		e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket")
 		return false;
 	}

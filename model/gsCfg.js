@@ -145,8 +145,9 @@ class GsCfg {
 			let ck = fs.readFileSync(file, 'utf-8')
 			ck = YAML.parse(ck)
 			for(let item in ck){
+				let login_ticket=ck[item]?.login_ticket
 				ck=ck[item].ck
-				return {ck,item};
+				return {ck,item,login_ticket};
 			}
 		} catch (error) {
 			return {}
