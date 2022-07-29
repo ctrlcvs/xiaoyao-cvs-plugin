@@ -32,11 +32,16 @@ const RETRY_OPTIONS = {
 	maxTimeout: 10000
 };
 export async function sign(e) {
-	if (!(await cookie(e))) {
+	let isck=await cookie(e);
+	if (!isck) {
 		return true;
 	}
 	START = moment().unix();
 	let miHoYoApi = new MihoYoApi(e);
+	if(Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0){
+		e.reply("未读取到stoken请尝试重新登录获取cookies")
+		return true;
+	}
 	let resultMessage="";
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await getDataList(msg);
@@ -64,11 +69,17 @@ export async function sign(e) {
 	return true
 }
 export async function mysSign(e) {
-	if (!(await cookie(e))) {
+	let isck=await cookie(e);
+	if (!isck) {
+		return true;
+	}
+	let iscount="";
+	let miHoYoApi = new MihoYoApi(e);
+	if(Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0){
+		e.reply("未读取到stoken请尝试重新登录获取cookies")
 		return true;
 	}
 	START = moment().unix();
-	let miHoYoApi = new MihoYoApi(e);
 	let resultMessage="";
 	// Execute task
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
@@ -173,6 +184,8 @@ async function cookie(e) {
 		return false;
 	}
 	let flot = (await miHoYoApi.stoken(cookie, e));
+	// console.log(flot)
+	await utils.sleepAsync(1000);	//延迟加载防止文件未生成
 	if (!flot) {
 		e.reply("登录失效请重新登录获取cookie发送机器人~")
 		return false;

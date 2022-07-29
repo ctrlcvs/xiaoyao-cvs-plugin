@@ -68,7 +68,7 @@ export default class MihoYoApi {
 	}
 	async stoken(cookie, e) {
 		this.e=e;
-		if(this.getStoken(e.user_id)){
+		if(Object.keys(this.getStoken(e.user_id)).length != 0){
 			return true;
 		}
 		const map = this.getCookieMap(cookie);
@@ -96,6 +96,9 @@ export default class MihoYoApi {
 				}
 				response.json().then(function(data) {
 					// console.log(data);
+					if(!data.data){
+						return false;
+					}
 					let datalist = {
 						stuid: map.get("account_id"),
 						stoken: data.data.list[0].token,
