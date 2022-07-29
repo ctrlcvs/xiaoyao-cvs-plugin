@@ -46,7 +46,12 @@ class GsCfg {
 			...this.getYaml(app, name, 'config')
 		}
 	}
-
+	
+	getfileYaml(path,name){
+		return YAML.parse(
+			fs.readFileSync(path+name+".yaml", 'utf8')
+		)
+	}
 	/**
 	 * 获取配置yaml
 	 * @param app 功能

@@ -10,7 +10,8 @@ import MysInfo from '../model/mys/mysInfo.js'
 import {
 	isV3
 } from '../components/Changelog.js';
-import gsCfg from '../model/gsCfg.js'
+import gsCfg from '../model/gsCfg.js';
+
 export const rule = {
 	mysSign: {
 		reg: "^#*(米游社|mys|社区)(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零|全部)签到$",
@@ -19,6 +20,10 @@ export const rule = {
 	sign: {
 		reg: "^#*(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零)签到$",
 		describe: "米社规则签到"
+	},
+	cookiesDocHelp: {
+		reg: "^#*(米游社|cookies|米游币)帮助$",
+		describe: "cookies获取帮助"
 	}
 };
 
@@ -30,6 +35,7 @@ const RETRY_OPTIONS = {
 	minTimeout: 5000,
 	maxTimeout: 10000
 };
+
 export async function sign(e) {
 	let isck=await cookie(e);
 	if (!isck) {
@@ -167,8 +173,8 @@ async function cookie(e) {
 	let cookie, uid;
 	let miHoYoApi = new MihoYoApi(e);
 	let skuid;
+	let cookiesDoc=await getcookiesDoc();
 	if (isV3) {
-		// console.log(e)
 		skuid= await gsCfg.getBingCookie(e.user_id);
 		cookie = skuid.ck;
 		uid = skuid.item;
@@ -182,12 +188,12 @@ async function cookie(e) {
 		}
 	}
 	if(!cookie){
-		e.reply("cookie失效请重新绑定~")
+		e.reply("cookie失效请重新绑定~【教程】\n"+cookiesDoc)
 		return false;
 	}
 	e.uid = uid;
 	if (!cookie.includes("login_ticket")&&(isV3&&!skuid?.login_ticket)) {
-		e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket")
+		e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket【教程】 "+cookiesDoc)
 		return false;
 	}
 	let flot = (await miHoYoApi.stoken(cookie, e));
@@ -198,4 +204,12 @@ async function cookie(e) {
 		return false;
 	}
 	return true;
+}
+export async function cookiesDocHelp(e){
+	let cookiesDoc=await  getcookiesDoc()
+	e.reply("【cookies帮助】"+cookiesDoc+"\ncookies必须包含login_ticket获取后请私发机器人");
+	return true
+}
+async function getcookiesDoc(){
+	return await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`,"config").cookiesDoc
 }

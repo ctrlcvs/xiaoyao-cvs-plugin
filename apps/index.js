@@ -21,13 +21,13 @@ import {
 } from "../components/Changelog.js";
 import {
 	rule as signRule,
-	sign,mysSign
+	sign,mysSign,cookiesDocHelp
 } from "./sign.js"
 export {
 	updateRes,
 	updateMiaoPlugin,sign,
 	versionInfo,
-	Note_appoint,pokeNote,
+	Note_appoint,pokeNote,cookiesDocHelp,
 	sysCfg,
 	help,DailyNoteTask,
 	AtlasAlias,
