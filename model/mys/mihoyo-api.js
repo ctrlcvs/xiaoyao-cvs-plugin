@@ -36,7 +36,7 @@ export default class MihoYoApi {
 
 	async forumPostList(forumId) {
 		const url =
-			`https://api-takumi.mihoyo.com/post/api/getForumPostList?forum_id=${forumId}&is_good=false&is_hot=false&page_size=20&sort_type=1`;
+			`https://api-takumi.mihoyo.com/post/api/getForumPostList?forum_id=${forumId}&is_good=false&is_hot=false&page_size=10&sort_type=1`;
 
 		let res = await superagent.get(url).set(this._getHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);

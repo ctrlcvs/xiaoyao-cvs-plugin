@@ -50,7 +50,7 @@ export async function sign(e) {
 	let resultMessage="";
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await getDataList(msg);
-	e.reply(`开始尝试${msg}签到预计2-3分钟~`)
+	e.reply(`开始尝试${msg}签到预计${msg=='全部'?"2-3":"1-3"}分钟~`)
 	for (let forum of ForumData) {
 		resultMessage += `**${forum.name}**\n`
 		try {
@@ -91,7 +91,7 @@ export async function mysSign(e) {
 	// Execute task
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await getDataList(msg);
-	e.reply(`开始尝试${msg}社区签到预计2-3分钟~`)
+	e.reply(`开始尝试${msg}社区签到预计${msg=='全部'?"10-20":"1-3"}分钟~`)
 	for (let forum of ForumData) {
 		resultMessage += `\n**${forum.name}**\n`
 		try {
