@@ -50,7 +50,7 @@ export async function sign(e) {
 	let resultMessage="";
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await getDataList(msg);
-	e.reply(`开始尝试${msg}社区签到`)
+	e.reply(`开始尝试${msg}签到预计2-3分钟~`)
 	for (let forum of ForumData) {
 		resultMessage += `**${forum.name}**\n`
 		try {
@@ -91,7 +91,7 @@ export async function mysSign(e) {
 	// Execute task
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await getDataList(msg);
-	e.reply(`开始尝试${msg}社区签到`)
+	e.reply(`开始尝试${msg}社区签到预计2-3分钟~`)
 	for (let forum of ForumData) {
 		resultMessage += `\n**${forum.name}**\n`
 		try {
@@ -160,9 +160,8 @@ async function replyMsg(e,resultMessage){
 
 async function getDataList(name){
 	let ForumData = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/defSet/json`, "mys")
-	
 	for(let item of ForumData){
-		if(item.name=name){ //循环结束未找到的时候返回原数组签到全部
+		if(item.name==name){ //循环结束未找到的时候返回原数组签到全部
 			return [item]
 		}
 	}
@@ -173,6 +172,9 @@ async function cookie(e) {
 	let cookie, uid;
 	let miHoYoApi = new MihoYoApi(e);
 	let skuid;
+	if(Object.keys((await miHoYoApi.getStoken(e.user_id))).length != 0){
+		return true;
+	}
 	let cookiesDoc=await getcookiesDoc();
 	if (isV3) {
 		skuid= await gsCfg.getBingCookie(e.user_id);
