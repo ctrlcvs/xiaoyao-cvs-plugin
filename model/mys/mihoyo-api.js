@@ -16,16 +16,119 @@ const APP_VERSION = "2.2.0";
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
 const _path = process.cwd();
-let YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`
+let YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
+// 米游社的版块
+const boards = {
+	honkai3rd: {
+		forumid: 1,
+		key: 'honkai3rd',
+		biz: 'bh3_cn',
+		actid: 'ea20211026151532',
+		name: '崩坏3',
+		url: "https://bbs.mihoyo.com/bh3/",
+		getReferer() {
+			return `https://webstatic.mihoyo.com/bh3/event/euthenia/index.html?bbs_presentation_style=fullscreen&bbs_game_role_required=${this.biz}&bbs_auth_required=true&act_id=${this.actid}&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
+		}
+	},
+	genshin: {
+		forumid: 26,
+		key: 'genshin',
+		biz: 'hk4e_cn',
+		actid: 'e202009291139501',
+		name: '原神',
+		url: "https://bbs.mihoyo.com/ys/",
+		getReferer() {
+			return `https://webstatic.mihoyo.com/bbs/event/signin-ys/index.html?bbs_auth_required=true&act_id=${this.actid}&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
+		}
+	},
+	honkai2: {
+		forumid: 30,
+		biz: 'bh2_cn',
+		actid: 'e202203291431091',
+		name: '崩坏2',
+		url: "https://bbs.mihoyo.com/bh2/",
+		getReferer() {
+			return `https://webstatic.mihoyo.com/bbs/event/signin/bh2/index.html?bbs_auth_required=true&act_id=${this.actid}&bbs_presentation_style=fullscreen&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
+		}
+	},
+	tears: {
+		forumid: 37,
+		biz: 'nxx_cn',
+		name: '未定事件簿',
+		url: "https://bbs.mihoyo.com/wd/",
+		getReferer() {
+			return `https://webstatic.mihoyo.com/bbs/event/signin/bh2/index.html?bbs_auth_required=true&act_id=${this.actid}&bbs_presentation_style=fullscreen&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
+		}
+	},
+	/** 以下数据待定 由于并未有存在签到入口可能后续会开放*/
+	house: {
+		forumid: 34,
+		name: '大别野',
+		url: "https://bbs.mihoyo.com/dby/"
+	},
+	honkaisr: {
+		forumid: 52,
+		name: '崩坏星穹铁道',
+		url: "https://bbs.mihoyo.com/sr/"
+	},
+	jql: {
+		forumid: 57,
+		name: "绝区零",
+		url: "https://bbs.mihoyo.com/zzz/"
+	}
+}
+
 export default class MihoYoApi {
 	constructor(e) {
 		if (e) {
 			this.e = e
 			this.userId = String(e.user_id)
+			this.msgName = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "")
 		}
 		Data.createDir("", YamlDataUrl, false);
+		//初始化配置文件
+		let data = this.getStoken(this.e.user_id);
+		let dataCk = gsCfg.getfileYaml(`${_path}/data/MysCookie/`, e.user_id);
+		this.cookies = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
+		this.cookie = `account_id=${data.account_id};cookie_token=${data.cookie_token};`;
 	}
-
+	getbody() {
+		for (let item in boards) {
+			if (boards[item].name === this.msgName) {
+				return boards[item]
+			}
+		}
+	}
+	async honkai3rdSignTask(name) {
+		let kkbody = this.getbody();
+		try {
+			// 获取账号信息
+			const {
+				game_uid,
+				region,
+				nickname
+			} = await this.getUserInfo(kkbody)
+			if (!nickname) {
+				return {
+					message: `未绑定${this.msgName}信息`
+				}
+			}
+			// // 获取签到信息和奖励信息 、、后续重新梳理补充
+			// const {
+			// 	name,
+			// 	count
+			// } = await this.getHonkai3rdSignInfo(game_uid, region, nickname, boards.honkai3rd)
+			// if (!name) {
+			// 	return {
+			// 		message: `获取签到信息和奖励信息异常`
+			// 	}
+			// }
+			// 签到操作
+			return await this.postSign(kkbody, game_uid, region)
+		} catch (error) {
+			logger.mark(`error.message`, error.message)
+		}
+	}
 	async forumSign(forumId) {
 		const url = `https://api-takumi.mihoyo.com/apihub/sapi/signIn?gids=${forumId}`;
 		let res = await superagent.post(url).set(this._getHeader()).timeout(10000);
@@ -34,33 +137,68 @@ export default class MihoYoApi {
 		return resObj;
 	}
 
+	// 获取签到状态和奖励信息
+	async getHonkai3rdSignInfo(game_uid, region, nickname, board) {
+		let res = await superagent.get(
+			`https://api-takumi.mihoyo.com/common/eutheniav2/index?region=${region}&act_id=${boards.honkai3rd.actid}&uid=${game_uid}`
+		).set(this
+			.getpubHeaders(board)).timeout(10000);
+		let resObj = JSON.parse(res.text);
+		// logger.mark(`ForumSign: ${res.text}`);
+		let data = resObj.data
+		const list = data?.sign?.list
+		const signCount = data?.sign?. ['sign_cnt']
+		if (list && signCount !== undefined) {
+			const award = list?. [signCount]
+			const status = award?.status
+			// status 2 已签到, 1 未签到, 0 未到签到时间
+			if (status === 0) {
+				// 未到签到时间, 说明今天已签到, 当前奖励已经领取
+				return "ok"
+			} else if (status === 1) {
+				// 未签到
+				const name = award?.name
+				const count = award?.cnt
+				if (name && count) {
+					if (status === 2) {} else {
+						return {
+							name,
+							count
+						}
+					}
+				} else {
+					logger.mark(`ForumSign: error`);
+				}
+			}
+		}
+		return "";
+	}
+
+	async getHonkai2SignInfo(game_uid, region, nickname, board) {
+
+	}
 	async forumPostList(forumId) {
 		const url =
 			`https://api-takumi.mihoyo.com/post/api/getForumPostList?forum_id=${forumId}&is_good=false&is_hot=false&page_size=10&sort_type=1`;
-
 		let res = await superagent.get(url).set(this._getHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
-		// logger.mark(`ForumList: ${res.text}`)
 		return resObj;
 	}
 
 	async forumPostDetail(postId) {
 		const url = `https://api-takumi.mihoyo.com/post/api/getPostFull?post_id=${postId}`;
-
 		let res = await superagent.get(url).set(this._getHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
-		// logger.mark(`ForumDetail: ${res.text}`)
 		return resObj;
 	}
 
 	async forumPostShare(postId) {
-		const url = `https://api-takumi.mihoyo.com/apihub/api/getShareConf?entity_id=${postId}&entity_type=1`;
+		const url =
+			`https://api-takumi.mihoyo.com/apihub/api/getShareConf?entity_id=${postId}&entity_type=1`;
 		let res = await superagent.get(url).set(this._getHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
-		// Bot.logger.mark(`ForumShare: ${res.text}`)
 		return resObj;
 	}
-
 	async forumPostVote(postId) {
 		const url = `https://api-takumi.mihoyo.com/apihub/sapi/upvotePost`;
 		const upvotePostData = {
@@ -69,7 +207,6 @@ export default class MihoYoApi {
 		}
 		let res = await superagent.post(url).set(this._getHeader()).send(JSON.stringify(upvotePostData));
 		let resObj = JSON.parse(res.text);
-		// Bot.logger.mark(`ForumVote: ${res.text}`)
 		return resObj;
 	}
 	async stoken(cookie, e) {
@@ -80,8 +217,8 @@ export default class MihoYoApi {
 		const map = this.getCookieMap(cookie);
 		let loginTicket = map.get("login_ticket");
 		const loginUid = map.get("login_uid") ? map.get("login_uid") : map.get("ltuid");
-		if(isV3){
-			loginTicket=gsCfg.getBingCookie(e.user_id).login_ticket
+		if (isV3) {
+			loginTicket = gsCfg.getBingCookie(e.user_id).login_ticket
 		}
 		const url = "https://api-takumi.mihoyo.com/auth/api/getMultiTokenByLoginTicket?login_ticket=" +
 			loginTicket + "&token_types=3&uid=" + loginUid;
@@ -124,16 +261,34 @@ export default class MihoYoApi {
 		});
 		return true;
 	}
+	/** 米游社 api headers */
+	// 签到的 headers
+	getpubHeaders(board) {
+		const randomStr = utils.randomString(6);
+		const timestamp = Math.floor(Date.now() / 1000)
+		let sign = md5(`salt=b253c83ab2609b1b600eddfe974df47b&t=${timestamp}&r=${randomStr}`);
+		return {
+			'accept-language': 'zh-CN,zh;q=0.9,ja-JP;q=0.8,ja;q=0.7,en-US;q=0.6,en;q=0.5',
+			'x-rpc-device_id': DEVICE_ID,
+			'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.3.0',
+			Referer: board.getReferer(),
+			Host: 'api-takumi.mihoyo.com',
+			'x-rpc-channel': 'appstore',
+			'x-rpc-app_version': '2.3.0',
+			'x-requested-with': 'com.mihoyo.hyperion',
+			'x-rpc-client_type': '5',
+			'Content-Type': 'application/json;charset=UTF-8',
+			DS: `${timestamp},${randomStr},${sign}`,
+			'Cookie': this.cookie
+		}
+	}
+	// 米游币任务的 headers
 	_getHeader() {
 		const randomStr = utils.randomString(6);
 		const timestamp = Math.floor(Date.now() / 1000)
-		let data = this.getStoken(this.e.user_id);
-		// console.log(data)
-		// iOS sign
 		let sign = md5(`salt=b253c83ab2609b1b600eddfe974df47b&t=${timestamp}&r=${randomStr}`);
-		let cookie = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
 		return {
-			'Cookie': cookie,
+			'Cookie': this.cookies,
 			'Content-Type': 'application/json',
 			'User-Agent': 'Hyperion/67 CFNetwork/1128.0.1 Darwin/19.6.0',
 			'Referer': 'https://app.mihoyo.com',
@@ -149,11 +304,11 @@ export default class MihoYoApi {
 	}
 	getCookieMap(cookie) {
 		let cookiePattern = /^(\S+)=(\S+)$/;
-		let cookieArray = cookie.replace(/\s*/g,"").split(";");
+		let cookieArray = cookie.replace(/\s*/g, "").split(";");
 		let cookieMap = new Map();
 		for (let item of cookieArray) {
 			let entry = item.split("=");
-			if(!entry[0]) continue;
+			if (!entry[0]) continue;
 			cookieMap.set(entry[0], entry[1]);
 		}
 		return cookieMap;
@@ -168,4 +323,34 @@ export default class MihoYoApi {
 			return {}
 		}
 	}
+	//==== 签到任务 ====
+	// @todo 签到任务大概率是接口通用的, 只是部分参数不一样, 可以构造通用方法, 方便后续整合崩2, 事件簿, 铁道等
+
+	// 获取账号信息 通用
+	async getUserInfo(board) {
+		let res = await superagent.get(
+				`https://api-takumi.mihoyo.com/binding/api/getUserGameRolesByCookie?game_biz=${board.biz}`)
+			.set(this
+				.getpubHeaders(board)).timeout(10000);
+		let resObj = JSON.parse(res.text);
+		let data = resObj.data
+		const game_uid = data?.list?. [0]?.game_uid
+		const region = data?.list?. [0]?.region
+		const nickname = data?.list?. [0]?.nickname
+		return {
+			game_uid,
+			region,
+			nickname
+		}
+	}
+	// 游戏签到操作 逻辑通用, 根据传入的 board 构建不同的参数
+	async postSign(board, game_uid, region) {
+		let url =
+			`https://api-takumi.mihoyo.com/common/eutheniav2/sign?region=${region}&act_id=${board.actid}&uid=${game_uid}`
+		let res = await superagent.post(url).set(this.getpubHeaders(board)).timeout(10000);
+		let resObj = JSON.parse(res.text);
+		return resObj
+	}
+
+
 }
