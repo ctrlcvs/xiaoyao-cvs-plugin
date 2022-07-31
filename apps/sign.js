@@ -18,7 +18,7 @@ export const rule = {
 		describe: "米游社米游币签到（理论上会签到全部所以区分开了）"
 	},
 	sign: {
-		reg: "^#*(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零)签到$",
+		reg: "^#*(崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零)签到$",
 		describe: "米社规则签到"
 	},
 	cookiesDocHelp: {
@@ -43,21 +43,17 @@ export async function sign(e) {
 	}
 	START = moment().unix();
 	let miHoYoApi = new MihoYoApi(e);
-	if(Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0){
-		e.reply("未读取到stoken请尝试重新登录获取cookies")
-		return true;
-	}
 	let resultMessage="";
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await getDataList(msg);
-	e.reply(`开始尝试${msg}签到预计${msg=='全部'?"2-3":"1-3"}分钟~`)
+	e.reply(`开始尝试${msg}签到预计${msg=='全部'?"60":"5-10"}秒~`)
 	for (let forum of ForumData) {
 		resultMessage += `**${forum.name}**\n`
 		try {
 			// 1 BBS Sign
 			let resObj = await promiseRetry((retry, number) => {
 				Bot.logger.info(`开始签到: [${forum.name}] 尝试次数: ${number}`);
-				return miHoYoApi.forumSign(forum.forumId).catch((e) => {
+				return miHoYoApi.honkai3rdSignTask(msg).catch((e) => {
 					Bot.logger.error(`${forum.name} 签到失败: [${e.message}] 尝试次数: ${number}`);
 					return retry(e);
 				});
@@ -68,7 +64,7 @@ export async function sign(e) {
 			Bot.logger.error(`${forum.name} 签到失败 [${e.message}]`);
 			resultMessage += `签到失败: [${e.message}]\n`;
 		}
-
+	
 		await utils.randomSleepAsync();
 	}
 	await replyMsg(e,resultMessage);
@@ -92,6 +88,26 @@ export async function mysSign(e) {
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await getDataList(msg);
 	e.reply(`开始尝试${msg}社区签到预计${msg=='全部'?"10-20":"1-3"}分钟~`)
+	for (let forum of ForumData) {
+		resultMessage += `**${forum.name}**\n`
+		try {
+			// 1 BBS Sign
+			let resObj = await promiseRetry((retry, number) => {
+				Bot.logger.info(`开始签到: [${forum.name}] 尝试次数: ${number}`);
+				return miHoYoApi.forumSign(forum.forumId).catch((e) => {
+					Bot.logger.error(`${forum.name} 签到失败: [${e.message}] 尝试次数: ${number}`);
+					return retry(e);
+				});
+			}, RETRY_OPTIONS);
+			Bot.logger.info(`${forum.name} 签到结果: [${resObj.message}]`);
+			resultMessage += `签到: [${resObj.message}]\n`;
+		} catch (e) {
+			Bot.logger.error(`${forum.name} 签到失败 [${e.message}]`);
+			resultMessage += `签到失败: [${e.message}]\n`;
+		}
+	
+		await utils.randomSleepAsync();
+	}
 	for (let forum of ForumData) {
 		resultMessage += `\n**${forum.name}**\n`
 		try {
@@ -172,9 +188,6 @@ async function cookie(e) {
 	let cookie, uid;
 	let miHoYoApi = new MihoYoApi(e);
 	let skuid;
-	if(Object.keys((await miHoYoApi.getStoken(e.user_id))).length != 0){
-		return true;
-	}
 	let cookiesDoc=await getcookiesDoc();
 	if (isV3) {
 		skuid= await gsCfg.getBingCookie(e.user_id);
@@ -194,6 +207,10 @@ async function cookie(e) {
 		return false;
 	}
 	e.uid = uid;
+	e.cookie=cookie;
+	if(Object.keys((await miHoYoApi.getStoken(e.user_id))).length != 0){
+		return true;
+	}
 	if (!cookie.includes("login_ticket")&&(isV3&&!skuid?.login_ticket)) {
 		e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket【教程】 "+cookiesDoc)
 		return false;
