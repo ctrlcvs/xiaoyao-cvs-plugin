@@ -18,7 +18,7 @@ export const rule = {
 		describe: "米游社米游币签到（理论上会签到全部所以区分开了）"
 	},
 	sign: {
-		reg: "^#*(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零)签到$",
+		reg: "^#*(崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零)签到$",
 		describe: "米社规则签到"
 	},
 	cookiesDocHelp: {
@@ -188,9 +188,6 @@ async function cookie(e) {
 	let cookie, uid;
 	let miHoYoApi = new MihoYoApi(e);
 	let skuid;
-	if(Object.keys((await miHoYoApi.getStoken(e.user_id))).length != 0){
-		return true;
-	}
 	let cookiesDoc=await getcookiesDoc();
 	if (isV3) {
 		skuid= await gsCfg.getBingCookie(e.user_id);
@@ -210,6 +207,10 @@ async function cookie(e) {
 		return false;
 	}
 	e.uid = uid;
+	e.cookie=cookie;
+	if(Object.keys((await miHoYoApi.getStoken(e.user_id))).length != 0){
+		return true;
+	}
 	if (!cookie.includes("login_ticket")&&(isV3&&!skuid?.login_ticket)) {
 		e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket【教程】 "+cookiesDoc)
 		return false;

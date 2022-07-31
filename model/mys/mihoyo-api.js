@@ -82,15 +82,16 @@ export default class MihoYoApi {
 	constructor(e) {
 		if (e) {
 			this.e = e
+			this.cookie=e.cookie
 			this.userId = String(e.user_id)
 			this.msgName = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "")
 		}
 		Data.createDir("", YamlDataUrl, false);
-		//初始化配置文件
+		// //初始化配置文件
 		let data = this.getStoken(this.e.user_id);
-		let dataCk = gsCfg.getfileYaml(`${_path}/data/MysCookie/`, e.user_id);
-		this.cookies = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
-		this.cookie = `account_id=${data.account_id};cookie_token=${data.cookie_token};`;
+		if(data){
+			this.cookies = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
+		}
 	}
 	getbody() {
 		for (let item in boards) {
@@ -103,12 +104,11 @@ export default class MihoYoApi {
 		let kkbody = this.getbody();
 		try {
 			// 获取账号信息
-			const {
-				game_uid,
-				region,
-				nickname
-			} = await this.getUserInfo(kkbody)
-			if (!nickname) {
+			const  objData= await this.getUserInfo(kkbody)
+			if(objData.retcode!=200) {
+				return objData
+			}
+			if (!objData.nickname) {
 				return {
 					message: `未绑定${this.msgName}信息`
 				}
@@ -124,7 +124,7 @@ export default class MihoYoApi {
 			// 	}
 			// }
 			// 签到操作
-			return await this.postSign(kkbody, game_uid, region)
+			return await this.postSign(kkbody, objData.game_uid, objData.region)
 		} catch (error) {
 			logger.mark(`error.message`, error.message)
 		}
@@ -174,9 +174,7 @@ export default class MihoYoApi {
 		return "";
 	}
 
-	async getHonkai2SignInfo(game_uid, region, nickname, board) {
-
-	}
+	
 	async forumPostList(forumId) {
 		const url =
 			`https://api-takumi.mihoyo.com/post/api/getForumPostList?forum_id=${forumId}&is_good=false&is_hot=false&page_size=10&sort_type=1`;
@@ -334,19 +332,28 @@ export default class MihoYoApi {
 				.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		let data = resObj.data
+		if(resObj.retcode!=0){
+			return resObj
+		}
 		const game_uid = data?.list?. [0]?.game_uid
 		const region = data?.list?. [0]?.region
 		const nickname = data?.list?. [0]?.nickname
 		return {
 			game_uid,
 			region,
-			nickname
+			nickname,retcode:200
 		}
 	}
-	// 游戏签到操作 逻辑通用, 根据传入的 board 构建不同的参数
+	// 游戏签到操作 	
 	async postSign(board, game_uid, region) {
 		let url =
-			`https://api-takumi.mihoyo.com/common/eutheniav2/sign?region=${region}&act_id=${board.actid}&uid=${game_uid}`
+			`https://api-takumi.mihoyo.com/common/eutheniav2/sign`
+			if(board.name=="原神"){
+				url=`https://api-takumi.mihoyo.com/event/bbs_sign_reward/sign`
+			}
+			url+=`?region=${region}&act_id=${board.actid}&uid=${game_uid}`
+			// console.log(url)
+			// console.log(this.e)
 		let res = await superagent.post(url).set(this.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		return resObj
