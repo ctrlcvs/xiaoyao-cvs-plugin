@@ -23,7 +23,7 @@ const boards = {
 		forumid: 1,
 		key: 'honkai3rd',
 		biz: 'bh3_cn',
-		actid: 'ea20211026151532',
+		actid: 'e202207181446311',
 		name: '崩坏3',
 		url: "https://bbs.mihoyo.com/bh3/",
 		getReferer() {
@@ -82,30 +82,31 @@ export default class MihoYoApi {
 	constructor(e) {
 		if (e) {
 			this.e = e
-			this.cookie=e.cookie
+			this.cookie = e.cookie
 			this.userId = String(e.user_id)
 			this.msgName = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "")
+			// //初始化配置文件
+			let data = this.getStoken(this.e.user_id);
+			if (data) {
+				this.cookies = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
+			}
 		}
 		Data.createDir("", YamlDataUrl, false);
-		// //初始化配置文件
-		let data = this.getStoken(this.e.user_id);
-		if(data){
-			this.cookies = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
-		}
+
 	}
-	getbody() {
+	getbody(name) {
 		for (let item in boards) {
-			if (boards[item].name === this.msgName) {
+			if (boards[item].name === name) {
 				return boards[item]
 			}
 		}
 	}
 	async honkai3rdSignTask(name) {
-		let kkbody = this.getbody();
+		let kkbody = this.getbody(name);
 		try {
 			// 获取账号信息
-			const  objData= await this.getUserInfo(kkbody)
-			if(objData.retcode!=200) {
+			const objData = await this.getUserInfo(kkbody)
+			if (objData.retcode != 200) {
 				return objData
 			}
 			if (!objData.nickname) {
@@ -174,7 +175,7 @@ export default class MihoYoApi {
 		return "";
 	}
 
-	
+
 	async forumPostList(forumId) {
 		const url =
 			`https://api-takumi.mihoyo.com/post/api/getForumPostList?forum_id=${forumId}&is_good=false&is_hot=false&page_size=20&sort_type=1`;
@@ -332,7 +333,7 @@ export default class MihoYoApi {
 				.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		let data = resObj.data
-		if(resObj.retcode!=0){
+		if (resObj.retcode != 0) {
 			return resObj
 		}
 		const game_uid = data?.list?. [0]?.game_uid
@@ -341,26 +342,26 @@ export default class MihoYoApi {
 		return {
 			game_uid,
 			region,
-			nickname,retcode:200
+			nickname,
+			retcode: 200
 		}
 	}
 	// 游戏签到操作 	
 	async postSign(board, game_uid, region) {
-		let web_api=`https://api-takumi.mihoyo.com`
+		let web_api = `https://api-takumi.mihoyo.com`
 		let url =
-			`${web_api}/common/eutheniav2/sign`
-			if(board.name=="原神"){
-				url=`${web_api}/event/bbs_sign_reward/sign`
-			}
-			if(board.name=="崩坏2"||board.name=="未定事件簿"){
-				url=`${web_api}/event/luna/info?lang=zh-cn`
-			}
-			url+=`?region=${region}&act_id=${board.actid}&uid=${game_uid}`
-			// if(board.name==="崩坏3"){
-			// 	url=`https://webstatic.mihoyo.com/bh3/event/signin-cn/index.html?bbs_presentation_style=fullscreen&bbs_game_role_required=bh3_cn&bbs_auth_required=true&act_id=${board.actid}&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
-			// }
-			// console.log(url)
-			// console.log(this.e)
+			`${web_api}/event/luna/sign`
+		if (board.name == "原神") {
+			url = `${web_api}/event/bbs_sign_reward/sign`
+		}
+		if (board.name == "崩坏2" || board.name == "未定事件簿") {
+			url = `${web_api}/event/luna/info?lang=zh-cn`
+		}
+		url += `?region=${region}&act_id=${board.actid}&uid=${game_uid}`
+		// if (board.name === "崩坏3") {
+		// 	url = `${web_api}/event/luna/info?lang=zh-cn&region=${region}&act_id=${board.actid}&uid=${game_uid}`
+		// }
+		// console.log(this.e)
 		let res = await superagent.post(url).set(this.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		return resObj

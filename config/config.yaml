@@ -1,2 +1,10 @@
 # cookies教程
 cookiesDoc: docs.qq.com/doc/DV2tDY2ltSFdtbU9z
+# 米币签到成功是否推送
+isPushSign: false
+# 米游社米币签到定时任务，Cron表达式，默认00:02开始执行签到
+mysBbsTime: 0 2 0 * * ? 
+# 签到成功是否推送
+isAllSign: false
+# 米游社签到定时任务，Cron表达式，默认00:02开始执行签到
+allSignTime: 0 2 0 * * ? 

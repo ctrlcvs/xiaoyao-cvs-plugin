@@ -21,9 +21,23 @@ export function randomString(length){
 		}
 		return randomStr;
 }
-	
+	/**
+	 * 发送私聊消息，仅给好友发送
+	 * @param user_id qq号
+	 * @param msg 消息
+	 */
+export async function relpyPrivate (userId, msg) {
+	  userId = Number(userId)
+	  let friend = Bot.fl.get(userId)
+	  if (friend) {
+	    logger.mark(`发送好友消息[${friend.nickname}](${userId})`)
+	    return await Bot.pickUser(userId).sendMsg(msg).catch((err) => {
+	      logger.mark(err)
+	    })
+	  }
+}
 export default {
 	sleepAsync,
 	randomSleepAsync,
-	randomString
+	randomString,relpyPrivate
 }

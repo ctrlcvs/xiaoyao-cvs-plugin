@@ -133,7 +133,27 @@ class GsCfg {
 			ckQQ
 		}
 	}
+    /** 读取所有用户绑定的stoken */
+	async getBingStoken() {
+		let ck = []
+		let ckQQ = {}
+		let dir = `plugins/${plugin}/data/yaml/`
+		let files = fs.readdirSync(dir).filter(file => file.endsWith('.yaml'))
 
+		const readFile = promisify(fs.readFile)
+
+		let promises = []
+
+		files.forEach((v) => promises.push(readFile(`${dir}${v}`, 'utf8')))
+		const res = await Promise.all(promises)
+		res.forEach((v,index) => {
+			let tmp = YAML.parse(v)
+			tmp["qq"]=files[index].split(".")[0]*1
+			ck.push(tmp)
+			
+		})
+		return ck
+	}
 	getBingCkSingle(userId) {
 		let file = `./data/MysCookie/${userId}.yaml`
 		try {

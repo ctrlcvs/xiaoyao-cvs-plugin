@@ -1,4 +1,5 @@
 import lodash from "lodash";
+import schedule from "node-schedule";
 import {
 	AtlasAlias
 } from "./xiaoyao_image.js";
@@ -7,8 +8,10 @@ import {
 	help
 } from "./help.js";
 import {
-	Note,DailyNoteTask,
-	Note_appoint,pokeNote
+	Note,
+	DailyNoteTask,
+	Note_appoint,
+	pokeNote
 } from "./Note.js";
 import {
 	rule as adminRule,
@@ -21,18 +24,31 @@ import {
 } from "../components/Changelog.js";
 import {
 	rule as signRule,
-	sign,mysSign,cookiesDocHelp
+	sign,
+	mysSign,
+	cookiesDocHelp,
+	allMysSign,
+	allSign
 } from "./sign.js"
 export {
 	updateRes,
-	updateMiaoPlugin,sign,
+	updateMiaoPlugin,
+	sign,
 	versionInfo,
-	Note_appoint,pokeNote,cookiesDocHelp,
+	Note_appoint,
+	pokeNote,
+	cookiesDocHelp,
 	sysCfg,
-	help,DailyNoteTask,
+	help,
+	DailyNoteTask,
+	allMysSign,
+	allSign,
 	AtlasAlias,
-	Note,mysSign
+	Note,
+	mysSign
 };
+import gsCfg from '../model/gsCfg.js';
+const _path = process.cwd();
 
 let rule = {
 	versionInfo: {
@@ -68,6 +84,15 @@ lodash.forEach(rule, (r) => {
 	r.prehash = true;
 	r.hashMark = true;
 });
+task();
+//定时任务
+async function task() {
+	if (typeof test != "undefined") return;
+	let set = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config")
+	schedule.scheduleJob(set.mysBbsTime, () => allMysSign());
+	schedule.scheduleJob(set.allSignTime, () => allSign());
+}
+
 
 export {
 	rule
