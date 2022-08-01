@@ -47,9 +47,9 @@ const RETRY_OPTIONS = {
 
 export async function sign(e) {
 	let {
-		skuid
+		skuid,cookie
 	} = await getCookie(e);
-	if (!skuid) {
+	if (!cookie) {
 		e.reply("请先绑定cookie~\n发送【cookie帮助】获取教程")
 		return true;
 	}
