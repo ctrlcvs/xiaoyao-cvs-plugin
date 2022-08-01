@@ -113,11 +113,11 @@ export default class MihoYoApi {
 					message: `未绑定${this.msgName}信息`
 				}
 			}
-			// // 获取签到信息和奖励信息 、、后续重新梳理补充
+			// 获取签到信息和奖励信息 、、后续重新梳理补充
 			// const {
 			// 	name,
 			// 	count
-			// } = await this.getHonkai3rdSignInfo(game_uid, region, nickname, boards.honkai3rd)
+			// } = await this.getHonkai3rdSignInfo(objData.game_uid, objData.region, objData.nickname, boards.honkai3rd)
 			// if (!name) {
 			// 	return {
 			// 		message: `获取签到信息和奖励信息异常`
@@ -346,12 +346,19 @@ export default class MihoYoApi {
 	}
 	// 游戏签到操作 	
 	async postSign(board, game_uid, region) {
+		let web_api=`https://api-takumi.mihoyo.com`
 		let url =
-			`https://api-takumi.mihoyo.com/common/eutheniav2/sign`
+			`${web_api}/common/eutheniav2/sign`
 			if(board.name=="原神"){
-				url=`https://api-takumi.mihoyo.com/event/bbs_sign_reward/sign`
+				url=`${web_api}/event/bbs_sign_reward/sign`
+			}
+			if(board.name=="崩坏2"||board.name=="未定事件簿"){
+				url=`${web_api}/event/luna/info?lang=zh-cn`
 			}
 			url+=`?region=${region}&act_id=${board.actid}&uid=${game_uid}`
+			// if(board.name==="崩坏3"){
+			// 	url=`https://webstatic.mihoyo.com/bh3/event/signin-cn/index.html?bbs_presentation_style=fullscreen&bbs_game_role_required=bh3_cn&bbs_auth_required=true&act_id=${board.actid}&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
+			// }
 			// console.log(url)
 			// console.log(this.e)
 		let res = await superagent.post(url).set(this.getpubHeaders(board)).timeout(10000);
