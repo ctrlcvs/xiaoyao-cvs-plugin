@@ -55,13 +55,13 @@ export async function roleInfo(e) {
 }
 
 const send_Msg = function(e, type, name) {
-	let path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${type}/${name}.png`
-	if (fs.existsSync(path)) {
-		e.reply(segment.image(`file:///${path}`));
-		return true;
-	}
 	if (type == "all") {
 		for (let val of list) {
+			let path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${val}/${name}.png`
+			if (fs.existsSync(path)) {
+				e.reply(segment.image(`file:///${path}`));
+				return true;
+			}
 			let new_name = info_img(e, Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`,
 				val), name)
 			if (new_name) {

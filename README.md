@@ -31,11 +31,11 @@ git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cv
 1.  配合云崽使用, https://gitee.com/Le-niao/Yunzai-Bot
 2.  V3版本安装报错的话请用指令引入包
 ```
-pnpm i superagent
+pnpm add superagent -w
 ```
 
 ```
-pnpm i promise-retry
+pnpm add promise-retry -w
 ```
 3.  V2版本安装报错指令引入包
 ```

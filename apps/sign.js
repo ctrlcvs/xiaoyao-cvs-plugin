@@ -1,4 +1,4 @@
-﻿import MihoYoApi from "../model/mys/mihoyo-api.js"
+import MihoYoApi from "../model/mys/mihoyo-api.js"
 import utils from '../model/mys/utils.js';
 import promiseRetry from 'promise-retry';
 import {
@@ -22,9 +22,9 @@ export const rule = {
 		reg: "^#*(崩坏3|崩坏2|未定事件簿)签到$",
 		describe: "米社规则签到"
 	},
-	signlist:{
+	signlist: {
 		reg: "^#(米游币|米社)全部签到$",
-			describe: "米游币全部签到"
+		describe: "米游币全部签到"
 	},
 	// allMysSign: {
 	// 	reg: "^#米游币全部签到$",
@@ -51,7 +51,8 @@ const RETRY_OPTIONS = {
 
 export async function sign(e) {
 	let {
-		skuid,cookie
+		skuid,
+		cookie
 	} = await getCookie(e);
 	if (!cookie) {
 		e.reply("请先绑定cookie~\n发送【cookie帮助】获取教程")
@@ -98,7 +99,7 @@ export async function mysSign(e) {
 	let iscount = "";
 	let miHoYoApi = new MihoYoApi(e);
 	if (Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0) {
-		e.reply("未读取到stoken请尝试重新登录获取cookies")
+		e.reply("未读取到stoken请检查cookies是否包含login_ticket、以及云崽是否为最新版本V3、V2兼容")
 		return true;
 	}
 
@@ -292,7 +293,6 @@ export async function allMysSign() {
 			if (!isPushSign) {
 				return;
 			}
-
 			if (msg.includes("签到成功") && (cookie.isSignPush === true || cookie.isSignPush === undefined)) {
 				// msg = msg.replace("签到成功", "自动签到成功");
 				utils.relpyPrivate(user_id, msg + "\n自动签到成功");
@@ -327,7 +327,7 @@ export async function allSign() {
 			qq,
 			isTask: true
 		};
-		e.msg="全部"
+		e.msg = "全部"
 		e.reply = (msg) => {
 			if (!msg.includes("OK")) {
 				return;
@@ -351,23 +351,31 @@ const checkAuth = async function(e) {
     (*/ω＼*)`
 	});
 }
-let isbool=false;
-export async function signlist(e){
+let isbool = false;
+let ismysbool = false;
+export async function signlist(e) {
 	if (!await checkAuth(e)) {
-			return true;
-		}
-if(isbool){
-			e.reply(`签到中请勿重复执行`)
-			return true;
-		}
-		isbool=true;
-		let msg=e.msg.replace(/#|全部签到/g,"")
+		return true;
+	}
+	if (isbool) {
+		e.reply(`米社签到中请勿重复执行`)
+		return true;
+	}
+	if (ismysbool) {
+		e.reply(`米游币签到中请勿重复执行`)
+		return true;
+	}
+	let msg = e.msg.replace(/#|全部签到/g, "")
 	e.reply(`开始执行${msg}签到中，请勿重复执行`);
-	if(msg=="米游币"){
+	if (msg == "米游币") {
+		ismysbool=true;
 		await allMysSign()
-	}else{
+	} else {
+		isbool = true;
 		await allSign()
 	}
 	e.reply(`${msg}签到任务已完成`);
-                isbool=false;
+	ismysbool=false;
+	isbool = false;
+	return true;
 }

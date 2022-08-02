@@ -84,7 +84,6 @@ export default class MihoYoApi {
 			this.e = e
 			this.cookie = e.cookie
 			this.userId = String(e.user_id)
-			this.msgName = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "")
 			// //初始化配置文件
 			let data = this.getStoken(this.e.user_id);
 			if (data) {
@@ -111,7 +110,7 @@ export default class MihoYoApi {
 			}
 			if (!objData.nickname) {
 				return {
-					message: `未绑定${this.msgName}信息`
+					message: `未绑定${name}信息`
 				}
 			}
 			// 获取签到信息和奖励信息 、、后续重新梳理补充
@@ -127,7 +126,7 @@ export default class MihoYoApi {
 			// 签到操作
 			return await this.postSign(kkbody, objData.game_uid, objData.region)
 		} catch (error) {
-			logger.mark(`error.message`, error.message)
+			Bot.logger.mark(`error.message`, error.message)
 		}
 	}
 	async forumSign(forumId) {
@@ -168,7 +167,7 @@ export default class MihoYoApi {
 						}
 					}
 				} else {
-					logger.mark(`ForumSign: error`);
+					Bot.logger.mark(`ForumSign: error`);
 				}
 			}
 		}

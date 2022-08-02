@@ -16,9 +16,14 @@ export class atlas extends plugin {
       }]
     })
   }
-
+  accept () {
+    this.e.original_msg = this.e.original_msg || this.e.msg
+  }
   async dispatch (e) {
-    let msg = e.raw_message
+    let msg = e.original_msg || ''
+    if (!msg) {
+      return false
+    }
     e.checkAuth = async function (cfg) {
       return await checkAuth(e, cfg)
     }
