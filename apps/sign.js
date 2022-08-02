@@ -12,7 +12,6 @@ import {
 } from '../components/Changelog.js';
 import gsCfg from '../model/gsCfg.js';
 import fs from "fs";
-
 export const rule = {
 	mysSign: {
 		reg: "^#*(米游社|mys|社区)(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零|全部)签到$",
@@ -48,7 +47,7 @@ const RETRY_OPTIONS = {
 	minTimeout: 5000,
 	maxTimeout: 10000
 };
-
+let YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
 export async function sign(e) {
 	let {
 		skuid,
@@ -368,6 +367,11 @@ export async function signlist(e) {
 	let msg = e.msg.replace(/#|全部签到/g, "")
 	e.reply(`开始执行${msg}签到中，请勿重复执行`);
 	if (msg == "米游币") {
+		if(!fs.existsSync(YamlDataUrl)){
+			Data.createDir("", YamlDataUrl, false);
+			e.reply("未读取到可签到文件")
+			return true;
+		}
 		ismysbool=true;
 		await allMysSign()
 	} else {
