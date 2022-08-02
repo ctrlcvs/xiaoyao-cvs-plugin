@@ -1,4 +1,4 @@
-import MihoYoApi from "../model/mys/mihoyo-api.js"
+﻿import MihoYoApi from "../model/mys/mihoyo-api.js"
 import utils from '../model/mys/utils.js';
 import promiseRetry from 'promise-retry';
 import {
@@ -351,11 +351,16 @@ const checkAuth = async function(e) {
     (*/ω＼*)`
 	});
 }
-
+let isbool=false;
 export async function signlist(e){
 	if (!await checkAuth(e)) {
 			return true;
 		}
+if(isbool){
+			e.reply(`签到中请勿重复执行`)
+			return true;
+		}
+		isbool=true;
 		let msg=e.msg.replace(/#|全部签到/g,"")
 	e.reply(`开始执行${msg}签到中，请勿重复执行`);
 	if(msg=="米游币"){
@@ -364,4 +369,5 @@ export async function signlist(e){
 		await allSign()
 	}
 	e.reply(`${msg}签到任务已完成`);
+                isbool=false;
 }
