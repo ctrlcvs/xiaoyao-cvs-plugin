@@ -26,12 +26,12 @@ import {
 	rule as signRule,
 	sign,
 	mysSign,
-	cookiesDocHelp,
+	cookiesDocHelp,signlist,
 	allMysSign,
 	allSign
 } from "./sign.js"
 export {
-	updateRes,
+	updateRes,signlist,
 	updateMiaoPlugin,
 	sign,
 	versionInfo,

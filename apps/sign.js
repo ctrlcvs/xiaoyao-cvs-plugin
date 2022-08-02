@@ -22,14 +22,18 @@ export const rule = {
 		reg: "^#*(崩坏3|崩坏2|未定事件簿)签到$",
 		describe: "米社规则签到"
 	},
-	allMysSign: {
-		reg: "^#米游币全部签到$",
-		describe: "米游币全部签到"
+	signlist:{
+		reg: "^#(米游币|米社)全部签到$",
+			describe: "米游币全部签到"
 	},
-	allSign: {
-		reg: "^#米社全部签到$",
-		describe: "米社全部签到"
-	},
+	// allMysSign: {
+	// 	reg: "^#米游币全部签到$",
+	// 	describe: "米游币全部签到"
+	// },
+	// allSign: {
+	// 	reg: "^#米社全部签到$",
+	// 	describe: "米社全部签到"
+	// },
 	cookiesDocHelp: {
 		reg: "^#*(米游社|cookies|米游币)帮助$",
 		describe: "cookies获取帮助"
@@ -264,7 +268,7 @@ async function getcookiesDoc() {
 }
 //定时米社米币签到任务
 export async function allMysSign() {
-	Bot.logger.mark(`开始米社签到任务`);
+	Bot.logger.mark(`开始米社米币签到任务`);
 	let stoken = await gsCfg.getBingStoken();
 	let isPushSign = await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").isPushSign
 	//获取需要签到的用户
@@ -305,7 +309,7 @@ export async function allMysSign() {
 //定时签到任务
 export async function allSign() {
 	Bot.logger.mark(`开始米社签到任务`);
-	let isPushSign = await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").isAllSign
+	let isAllSign = await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").isAllSign
 	let userIdList = [];
 	if (isV3) {
 		let dir = './data/MysCookie/'
@@ -339,4 +343,25 @@ export async function allSign() {
 		await utils.sleepAsync(10000);
 	}
 	Bot.logger.mark(`签到任务完成`);
+}
+const checkAuth = async function(e) {
+	return await e.checkAuth({
+		auth: "master",
+		replyMsg: `只有主人才能命令我哦~
+    (*/ω＼*)`
+	});
+}
+
+export async function signlist(e){
+	if (!await checkAuth(e)) {
+			return true;
+		}
+		let msg=e.msg.replace(/#|全部签到/g,"")
+	e.reply(`开始执行${msg}签到中，请勿重复执行`);
+	if(msg=="米游币"){
+		await allMysSign()
+	}else{
+		await allSign()
+	}
+	e.reply(`${msg}签到任务已完成`);
 }
