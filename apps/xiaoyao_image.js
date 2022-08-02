@@ -55,9 +55,10 @@ export async function roleInfo(e) {
 }
 
 const send_Msg = function(e, type, name) {
+	let path;
 	if (type == "all") {
 		for (let val of list) {
-			let path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${val}/${name}.png`
+			path= `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${val}/${name}.png`
 			if (fs.existsSync(path)) {
 				e.reply(segment.image(`file:///${path}`));
 				return true;
