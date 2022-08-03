@@ -233,7 +233,7 @@ export async function Note(e, {
 		mb = lodash.random(0, path_url.length - 1);
 	}
 
-	let urlType = note_file();
+	let urlType = note_file("xiaoyao");
 	if (urlType.length > 0) {
 		urlType = urlType[lodash.random(0, urlType.length - 1)]
 	}
@@ -437,18 +437,20 @@ export async function Note_appoint(e) {
 	return true;
 }
 
-const note_file = function() {
+const note_file = function(xiaoyao) {
 	var urlFile = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/`);
 	var urlType = [];
 	for (let val of urlFile) {
 		if (val.includes(".")) continue;
 		urlType.push(val)
 	}
-	var urlFileOne = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/`);
-	for (let val of urlFileOne) {
-		if (!val.includes(".")) continue;
-		urlType.push(val)
-
+	if(!xiaoyao){
+		var urlFileOne = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/`);
+		for (let val of urlFileOne) {
+			if (!val.includes(".")) continue;
+			urlType.push(val)
+		
+		}
 	}
 	return urlType;
 }

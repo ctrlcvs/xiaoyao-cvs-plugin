@@ -26,12 +26,14 @@ import {
 	rule as signRule,
 	sign,
 	mysSign,
-	cookiesDocHelp,signlist,
+	cookiesDocHelp,
+	signlist,
 	allMysSign,
 	allSign
 } from "./sign.js"
 export {
-	updateRes,signlist,
+	updateRes,
+	signlist,
 	updateMiaoPlugin,
 	sign,
 	versionInfo,
@@ -89,8 +91,17 @@ task();
 async function task() {
 	if (typeof test != "undefined") return;
 	let set = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config")
-	schedule.scheduleJob(set.mysBbsTime, () => allMysSign());
-	schedule.scheduleJob(set.allSignTime, () => allSign());
+	schedule.scheduleJob(set.mysBbsTime, function() {
+			if (set.ismysSign) {
+				allMysSign()
+			}
+		}
+	);
+	schedule.scheduleJob(set.allSignTime, function() {
+		if (set.isSign) {
+			allSign()
+		}
+	});
 }
 
 
