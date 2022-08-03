@@ -355,12 +355,34 @@ export async function pokeNote(e){
 
 
 export async function Note_appoint(e) {
+	let mbPath=`${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/`;
 	let msg = e.msg.replace(/#|井|体力|模板|设置/g, "");
 	let All = ["默认", "随机", "0"];
 	let urlType = note_file();
 	let type = 0;
 	if (msg.includes("列表")) {
-		e.reply(`当前支持选择的模板有:\n${urlType.join("\n")}`);
+		let mstList=[];
+		urlType.unshift(`当前支持选择的模板有:`)
+		for (let item of urlType) {
+			let msg_pass=[];
+			msg_pass.push(item)
+			if(item!=urlType[0]){
+				msg_pass.push( segment.image(`file:///${mbPath}${item}/icon/bg/${fs.readdirSync(`${mbPath}${item}/icon/bg/`)[0]}`))
+			}
+			let botqq;
+			if(isV3){
+				let cfg = await import(`file://${_path}/lib/config/config.js`)
+				botqq=cfg.default.qq
+			}else{
+				botqq=BotConfig?.account?.qq
+			}
+			mstList.push({
+				message: msg_pass,
+				nickname: "云崽",
+				user_id: botqq
+			})
+		}
+		e.reply(await Bot.makeForwardMsg(mstList));
 		return true;
 	}
 	if (!urlType.includes(msg) && !All.includes(msg)) {
