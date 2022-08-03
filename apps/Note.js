@@ -381,7 +381,7 @@ export async function Note_appoint(e) {
 	let nickname = Bot.nickname;
 	if (e.isGroup) {
 		let info = await Bot.getGroupMemberInfo(e.group_id, Bot.uin)
-		nickname = info.card ?? info.nickname
+		nickname = info.card || info.nickname
 	}
 	if (msg.includes("列表")) {
 		let mstList = [];
