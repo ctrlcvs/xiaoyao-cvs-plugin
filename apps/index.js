@@ -70,7 +70,7 @@ let rule = {
 		describe: "体力",
 	},
 	Note_appoint: {
-		reg: "^#体力模板(设置(.*)|列表)$",
+		reg: "^#体力模板(设置(.*)|列表(.*))$",
 		describe: "体力模板设置",
 	},
 	pokeNote: {

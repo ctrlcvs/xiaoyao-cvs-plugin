@@ -384,8 +384,12 @@ export async function Note_appoint(e) {
 		nickname = info.card || info.nickname
 	}
 	if (msg.includes("列表")) {
+		let xlmsg=msg.replace("列表","") || 1
 		let mstList = [];
-		urlType.unshift(`请选择序号~~\n当前支持选择的模板有:`)
+		let sumCount=(urlType.length/98).toFixed(0);
+		xlmsg=sumCount-xlmsg>-1?xlmsg:sumCount;
+		urlType.unshift(`模板列表共，第${xlmsg+1}页，共${urlType.length}张，请选择序号~~\n当前支持选择的模板有:`)
+		let count=0;
 		for (let [index, item] of urlType.entries()) {
 			let msg_pass = [];
 			let imgurl;
@@ -400,6 +404,12 @@ export async function Note_appoint(e) {
 				}
 				item = index + "." + item
 			}
+			if(msg_pass.length==98){
+				break;
+			}
+			if(index<98*(xlmsg-1)){
+				continue;
+			}
 			msg_pass.push(item)
 			if (imgurl) {
 				msg_pass.push(imgurl)
@@ -410,6 +420,14 @@ export async function Note_appoint(e) {
 				user_id: Bot.uin
 			})
 		}
+		if(xlmsg*98<urlType.length-1){
+			mstList.push({
+				message: `更多内容请翻页查看\n如：#体力模板列表2`,
+				nickname: nickname,
+				user_id: Bot.uin
+			})
+		}
+		
 		e.reply(await Bot.makeForwardMsg(mstList));
 		return true;
 	}
