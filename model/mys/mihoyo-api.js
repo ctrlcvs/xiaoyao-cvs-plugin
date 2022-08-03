@@ -207,6 +207,15 @@ export default class MihoYoApi {
 		let resObj = JSON.parse(res.text);
 		return resObj;
 	}
+
+	async yunGenshen() {
+		const url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/login`;
+		let res = await superagent.post(url).set(this.getyunHeader()).timeout(10000);
+		url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/wallet/wallet/get`;
+		res = await superagent.get(url).set(this.getyunHeader()).timeout(10000);
+		
+	}
+
 	async stoken(cookie, e) {
 		this.e = e;
 		if (Object.keys(this.getStoken(e.user_id)).length != 0) {
@@ -300,6 +309,27 @@ export default class MihoYoApi {
 			// 'DS': `1602569298,k0xfEh,07f4545f5d88eac59cb1257aef74a570`
 		}
 	}
+	//云原神签到头
+	getyunHeader() {
+		return {
+			"x-rpc-combo_token": token, //这里填你的ck
+			"x-rpc-client_type": "2",
+			"x-rpc-app_version": "1.3.0",
+			"x-rpc-sys_version": "11",
+			"x-rpc-channel": "mihoyo",
+			"x-rpc-device_id": device_id, //这里填获取到的设备Id
+			"x-rpc-device_name": "Xiaomi Mi 10 Pro",
+			"x-rpc-device_model": "Mi 10 Pro",
+			"x-rpc-app_id": "1953439974",
+			"Referer": "https://app.mihoyo.com",
+			"Content-Length": "0",
+			"Host": "api-cloudgame.mihoyo.com",
+			"Connection": "Keep-Alive",
+			"Accept-Encoding": "gzip",
+			"User-Agent": "okhttp/3.14.9"
+		}
+	}
+
 	getCookieMap(cookie) {
 		let cookiePattern = /^(\S+)=(\S+)$/;
 		let cookieArray = cookie.replace(/\s*/g, "").split(";");

@@ -4,12 +4,16 @@ import {
 import fetch from "node-fetch";
 import Common from "../components/Common.js";
 import fs from "fs";
-import { isV3 } from '../components/Changelog.js'
+import {
+	isV3
+} from '../components/Changelog.js'
 import MysInfo from '../model/mys/mysInfo.js'
 // import { MysUser } from "../../../lib/components/Models.js";
 // import common from "../../../lib/common.js";
 import lodash from "lodash";
-import { getPluginRender } from "./render.js";
+import {
+	getPluginRender
+} from "./render.js";
 
 import gsCfg from '../model/gsCfg.js'
 import {
@@ -26,6 +30,7 @@ let path_img = ["background_image", "/icon/bg"];
 let tempDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/NoteTemp`
 let tempData = {};
 init()
+
 function init() {
 	Data.createDir("", tempDataUrl, false);
 	tempData = Data.readJSON(tempDataUrl, "tempData")
@@ -34,16 +39,16 @@ function init() {
 //#体力
 export async function Note(e, {
 	render
-},poke) {
-	if (!Cfg.get("sys.Note")&&!poke) {
+}, poke) {
+	if (!Cfg.get("sys.Note") && !poke) {
 		return false;
 	}
-	let cookie, uid,res;
-	if(isV3){
+	let cookie, uid, res;
+	if (isV3) {
 		res = await MysInfo.get(e, 'dailyNote')
 		if (!res || res.retcode !== 0) return true
-		uid=e.uid;
-	}else{
+		uid = e.uid;
+	} else {
 		if (NoteCookie[e.user_id]) {
 			cookie = NoteCookie[e.user_id].cookie;
 			uid = NoteCookie[e.user_id].uid;
@@ -83,15 +88,15 @@ export async function Note(e, {
 				e.reply(`体力查询错误：${res.message}`);
 				Bot.logger.mark(`体力查询错误:${JSON.stringify(res)}`);
 			}
-		
+
 			return true;
 		}
-		
+
 		//redis保存uid
 		redis.set(`genshin:uid:${e.user_id}`, uid, {
 			EX: 2592000
 		});
-		
+
 		//更新
 		if (NoteCookie[e.user_id]) {
 			NoteCookie[e.user_id].maxTime = new Date().getTime() + res.data.resin_recovery_time * 1000;
@@ -116,7 +121,7 @@ export async function Note(e, {
 	if (data.resin_recovery_time > 0) {
 		resinMaxTime = new Date().getTime() + data.resin_recovery_time * 1000;
 		let maxDate = new Date(resinMaxTime);
-		resinMaxTime =moment(maxDate).format("HH:mm");
+		resinMaxTime = moment(maxDate).format("HH:mm");
 		let Time_day = await dateTime_(maxDate)
 		resinMaxTime_mb2 = Time_day + moment(maxDate).format("hh:mm");
 		// console.log(format("dd", maxDate))
@@ -194,7 +199,7 @@ export async function Note(e, {
 			coinTime_mb2 = Time_day + moment(coinDate).format("hh:mm");
 		} else {
 			coinTime_mb2 = moment(coinDate).format("hh:mm");
-			if ( moment(coinDate).format("DD") != nowDay) {
+			if (moment(coinDate).format("DD") != nowDay) {
 				coinTime_mb2Day = "明天";
 				coinTime = `明天 ${ moment(coinDate).format("hh:mm")}`;
 			} else {
@@ -204,10 +209,10 @@ export async function Note(e, {
 		}
 	}
 
-	let day =  moment(new Date()).format("MM-DD HH:mm");
+	let day = moment(new Date()).format("MM-DD HH:mm");
 	let week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 	day += " " + week[new Date().getDay()];
-	let day_mb2 =   moment(new Date()).format("yyyy年MM月DD日 HH:mm") + " " + week[new Date().getDay()];
+	let day_mb2 = moment(new Date()).format("yyyy年MM月DD日 HH:mm") + " " + week[new Date().getDay()];
 	//参量质变仪
 	if (data?.transformer?.obtained) {
 		data.transformer.reached = data.transformer.recovery_time.reached;
@@ -233,7 +238,7 @@ export async function Note(e, {
 		urlType = urlType[lodash.random(0, urlType.length - 1)]
 	}
 	let img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
-	if (tempData[e.user_id] && tempData[e.user_id].type > 0) {
+	if (tempData[e.user_id] && tempData[e.user_id].type > -1) {
 		mb = tempData[e.user_id].type;
 		urlType = tempData[e.user_id].temp;
 	}
@@ -254,6 +259,9 @@ export async function Note(e, {
 		list_img.push(val)
 	}
 	var imgs = list_img.length == 1 ? list_img[0] : list_img[lodash.random(0, list_img.length - 1)];
+	if (mb == 0 && urlType.includes(".")) {
+		imgs = urlType
+	}
 	return await Common.render(`dailyNote/${path_url[mb]}`, {
 		save_id: uid,
 		uid: uid,
@@ -278,10 +286,12 @@ export async function Note(e, {
 }
 
 async function dateTime_(time) {
-	return moment(time).format("HH") < 6 ? "凌晨" : moment(time).format("HH") < 12 ? "上午" : moment(time).format("HH") < 17.5 ? "下午" : moment(time).format("HH") < 19.5 ? "傍晚" : moment(time).format("HH") < 22 ? "晚上" : "深夜";
+	return moment(time).format("HH") < 6 ? "凌晨" : moment(time).format("HH") < 12 ? "上午" : moment(time).format(
+			"HH") < 17.5 ? "下午" : moment(time).format("HH") < 19.5 ? "傍晚" : moment(time).format("HH") < 22 ? "晚上" :
+		"深夜";
 }
 async function getDailyNote(uid, cookie) {
-	 let mysApi = new MysApi(uid, cookie)
+	let mysApi = new MysApi(uid, cookie)
 	let {
 		url,
 		headers,
@@ -314,7 +324,7 @@ export async function DailyNoteTask() {
 		if (!cookie.isPush) {
 			continue;
 		}
-		
+
 		//今天已经提醒
 		let sendkey = `genshin:dailyNote:send:${user_id}`;
 		let send = await redis.get(sendkey);
@@ -329,8 +339,8 @@ export async function DailyNoteTask() {
 		};
 
 		e.reply = (msg) => {
-			 Bot.pickUser(user_id*1).sendMsg(msg).catch((err) => {
-			  logger.mark(err)
+			Bot.pickUser(user_id * 1).sendMsg(msg).catch((err) => {
+				logger.mark(err)
 			})
 			// common.relpyPrivate(user_id, msg);
 		};
@@ -346,51 +356,77 @@ export async function DailyNoteTask() {
 	}
 }
 
-export async function pokeNote(e){
+export async function pokeNote(e) {
 	if (!Cfg.get("note.poke")) {
 		return false;
 	}
-	return await Note(e, getPluginRender("xiaoyao-cvs-plugin"),"poke");
+	return await Note(e, getPluginRender("xiaoyao-cvs-plugin"), "poke");
 }
 
 
 export async function Note_appoint(e) {
-	let mbPath=`${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/`;
+	let mbPath = `${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/`;
 	let msg = e.msg.replace(/#|井|体力|模板|设置/g, "");
+
 	let All = ["默认", "随机", "0"];
 	let urlType = note_file();
+	if (!isNaN(msg) && msg != 0) {
+		if (msg > urlType.length) {
+			e.reply(`没有${msg}的索引序号哦~`)
+			return true;
+		}
+		msg = urlType[msg - 1];
+	}
 	let type = 0;
+	let nickname = Bot.nickname;
+	if (e.isGroup) {
+		let info = await Bot.getGroupMemberInfo(e.group_id, Bot.uin)
+		nickname = info.card ?? info.nickname
+	}
 	if (msg.includes("列表")) {
-		let mstList=[];
-		urlType.unshift(`当前支持选择的模板有:`)
-		for (let item of urlType) {
-			let msg_pass=[];
-			msg_pass.push(item)
-			if(item!=urlType[0]){
-				msg_pass.push( segment.image(`file:///${mbPath}${item}/icon/bg/${fs.readdirSync(`${mbPath}${item}/icon/bg/`)[0]}`))
+		let mstList = [];
+		urlType.unshift(`请选择序号~~\n当前支持选择的模板有:`)
+		for (let [index, item] of urlType.entries()) {
+			let msg_pass = [];
+			let imgurl;
+			if (index != 0) {
+				if (item.includes(".")) {
+					imgurl = await segment.image(`file:///${mbPath}background_image/${item}`);
+					item = item.split(".")[0];
+				} else {
+					imgurl = await segment.image(
+						`file:///${mbPath}Template/${item}/icon/bg/${fs.readdirSync(`${mbPath}/Template/${item}/icon/bg/`)[0]}`
+					)
+				}
+				item = index + "." + item
 			}
-			let botqq;
-			if(isV3){
-				let cfg = await import(`file://${_path}/lib/config/config.js`)
-				botqq=cfg.default.qq
-			}else{
-				botqq=BotConfig?.account?.qq
+			msg_pass.push(item)
+			if (imgurl) {
+				msg_pass.push(imgurl)
 			}
 			mstList.push({
 				message: msg_pass,
-				nickname: "云崽",
-				user_id: botqq
+				nickname: nickname,
+				user_id: Bot.uin
 			})
 		}
 		e.reply(await Bot.makeForwardMsg(mstList));
 		return true;
+	}
+	if(urlType.includes(msg+".png")){
+		msg=msg+".png";
 	}
 	if (!urlType.includes(msg) && !All.includes(msg)) {
 		e.reply("没有找到你想要的模板昵！可输入 【#体力模板列表】 查询当前支持的模板哦~~")
 		return true;
 	} else if (All.includes(msg)) {
 		type = -1;
-	} else type = 1;
+	} else {
+		type = 1
+		if (msg.includes(".")) {
+			type = 0
+		}
+	}
 	tempData[e.user_id] = {
 		temp: msg,
 		type: type,
@@ -407,6 +443,12 @@ const note_file = function() {
 	for (let val of urlFile) {
 		if (val.includes(".")) continue;
 		urlType.push(val)
+	}
+	var urlFileOne = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/`);
+	for (let val of urlFileOne) {
+		if (!val.includes(".")) continue;
+		urlType.push(val)
+
 	}
 	return urlType;
 }

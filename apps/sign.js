@@ -289,7 +289,7 @@ export async function allMysSign() {
 
 		e.reply = (msg) => {
 			//关闭签到消息推送
-			if (!isPushSign) {
+			if (!isPushSign||ismysbool) {
 				return;
 			}
 			if (msg.includes("签到成功") && (cookie.isSignPush === true || cookie.isSignPush === undefined)) {
@@ -331,7 +331,7 @@ export async function allSign() {
 			if (!msg.includes("OK")) {
 				return;
 			}
-			if (!isAllSign) {
+			if (!isAllSign||isbool) {
 				return;
 			}
 			if (msg.includes("签到成功") && (cookie.isSignPush === true || cookie.isSignPush === undefined)) {

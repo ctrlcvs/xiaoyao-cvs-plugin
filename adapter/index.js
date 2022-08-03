@@ -5,16 +5,20 @@ import { checkAuth, getMysApi } from './mys.js'
 
 export class atlas extends plugin {
   constructor () {
+	let rule = {
+	  reg: '.+',
+	  fnc: 'dispatch'
+	}
     super({
       name: 'xiaoyao-cvs-plugin',
       desc: '图鉴插件',
       event: 'message',
       priority: 50,
-      rule: [{
-        reg: '.+',
-        fnc: 'dispatch'
-      }]
+      rule: [rule]
     })
+	Object.defineProperty(rule, 'log', {
+	  get: () => !!this.isDispatch
+	})
   }
   accept () {
     this.e.original_msg = this.e.original_msg || this.e.msg
