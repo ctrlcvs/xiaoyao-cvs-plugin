@@ -133,7 +133,7 @@ export default class MihoYoApi {
 		const url = `https://api-takumi.mihoyo.com/apihub/sapi/signIn?gids=${forumId}`;
 		let res = await superagent.post(url).set(this._getHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
-		// Bot.logger.mark(`ForumSign: ${res.text}`);
+		Bot.logger.mark(`ForumSign: ${res.text}`);
 		return resObj;
 	}
 
@@ -384,14 +384,10 @@ export default class MihoYoApi {
 			url = `${web_api}/event/bbs_sign_reward/sign`
 		}
 		if (board.name == "崩坏2" || board.name == "未定事件簿") {
-			url = `${web_api}/event/luna/info?lang=zh-cn`
+			url = `${web_api}/event/luna/sign`
 		}
 		url += `?region=${region}&act_id=${board.actid}&uid=${game_uid}`
-		// if (board.name === "崩坏3") {
-		// 	url = `${web_api}/event/luna/info?lang=zh-cn&region=${region}&act_id=${board.actid}&uid=${game_uid}`
-		// }
-		// console.log(this.e)
-		let res = await superagent.post(url).set(this.getpubHeaders(board)).timeout(10000);
+		let res= await superagent.post(url).set(this.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		return resObj
 	}
