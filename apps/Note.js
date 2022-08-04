@@ -407,7 +407,7 @@ export async function Note_appoint(e) {
 			if(Object.keys(mstList).length==80){
 				break;
 			}
-			if(index<xxmsg){
+			if(index<xxmsg&&index!=0){
 				continue;
 			}
 			msg_pass.push(item)
