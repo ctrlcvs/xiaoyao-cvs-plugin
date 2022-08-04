@@ -84,6 +84,8 @@ export default class MihoYoApi {
 			this.e = e
 			this.cookie = e.cookie
 			this.userId = String(e.user_id)
+			this.yuntoken=e.yuntoken
+			this.devId=e.devId
 			// //初始化配置文件
 			let data = this.getStoken(this.e.user_id);
 			if (data) {
@@ -209,13 +211,47 @@ export default class MihoYoApi {
 	}
 
 	async yunGenshen() {
-		const url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/login`;
+		let url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/login`;
 		let res = await superagent.post(url).set(this.getyunHeader()).timeout(10000);
-		url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/wallet/wallet/get`;
+		let sendMSg = "";
+		let log_msg=(await this.logyunGenshen()).log_msg
+		sendMSg += log_msg
+		Bot.logger.info(log_msg)
+		url =
+			`https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/listNotifications?status=NotificationStatusUnread&type=NotificationTypePopup&is_sort=true`;
 		res = await superagent.get(url).set(this.getyunHeader()).timeout(10000);
-		
+		let resObj = JSON.parse(res.text);
+		let list = resObj.data.list;
+		if(Object.keys(list).length==0){
+			resObj.sendMSg="您今天的奖励已经领取了啦~";
+			return resObj;
+		}
+		for (let item of list) {
+			let reward_id = item.id;
+			let reward_msg = item.msg;
+			url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/ackNotification`;
+			res = await superagent.post(url).set(this.getyunHeader()).send({"id": reward_id}).timeout(10000);
+			let log_msg=`\n领取奖励,ID:${reward_id},Msg:${reward_msg}`;
+			Bot.logger.info(log_msg)
+			sendMSg+=log_msg
+		}
+		log_msg="\n\n"+(await this.logyunGenshen()).log_msg
+		sendMSg += log_msg
+		resObj.sendMSg=sendMSg;
+		Bot.logger.info(log_msg)
+		return resObj;
 	}
-
+	
+	async logyunGenshen(){
+		let url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/wallet/wallet/get`;
+		let res = await superagent.get(url).set(this.getyunHeader()).timeout(10000);
+		let resObj = JSON.parse(res.text);
+		let data = resObj.data
+		let log_msg=`米云币:${data?.coin?.coin_num},免费时长:${data?.free_time?.free_time}分钟,总时长:${data.total_time}分钟`;
+		resObj.log_msg=log_msg
+		return resObj
+	}
+	
 	async stoken(cookie, e) {
 		this.e = e;
 		if (Object.keys(this.getStoken(e.user_id)).length != 0) {
@@ -312,12 +348,12 @@ export default class MihoYoApi {
 	//云原神签到头
 	getyunHeader() {
 		return {
-			"x-rpc-combo_token": token, //这里填你的ck
+			"x-rpc-combo_token": this.yuntoken, //这里填你的ck
 			"x-rpc-client_type": "2",
 			"x-rpc-app_version": "1.3.0",
 			"x-rpc-sys_version": "11",
 			"x-rpc-channel": "mihoyo",
-			"x-rpc-device_id": device_id, //这里填获取到的设备Id
+			"x-rpc-device_id": this.devId, //这里填获取到的设备Id
 			"x-rpc-device_name": "Xiaomi Mi 10 Pro",
 			"x-rpc-device_model": "Mi 10 Pro",
 			"x-rpc-app_id": "1953439974",
@@ -387,7 +423,7 @@ export default class MihoYoApi {
 			url = `${web_api}/event/luna/sign`
 		}
 		url += `?region=${region}&act_id=${board.actid}&uid=${game_uid}`
-		let res= await superagent.post(url).set(this.getpubHeaders(board)).timeout(10000);
+		let res = await superagent.post(url).set(this.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		return resObj
 	}

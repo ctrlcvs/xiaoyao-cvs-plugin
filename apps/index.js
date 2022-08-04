@@ -28,7 +28,7 @@ import {
 	mysSign,
 	cookiesDocHelp,
 	signlist,
-	allMysSign,
+	allMysSign,yunSign,sendyunTime,yuntoken,
 	allSign
 } from "./sign.js"
 export {
@@ -38,7 +38,7 @@ export {
 	sign,
 	versionInfo,
 	Note_appoint,
-	pokeNote,
+	pokeNote,yunSign,sendyunTime,yuntoken,
 	cookiesDocHelp,
 	sysCfg,
 	help,

@@ -317,6 +317,9 @@ export async function DailyNoteTask() {
 	let sendResin = 120;
 	//推送cd，12小时一次
 	let sendCD = 12 * 3600;
+	if(isV3){
+		return true;
+	}
 	//获取需要推送的用户
 	for (let [user_id, cookie] of Object.entries(NoteCookie)) {
 		user_id = cookie.qq || user_id;
@@ -340,7 +343,7 @@ export async function DailyNoteTask() {
 
 		e.reply = (msg) => {
 			Bot.pickUser(user_id * 1).sendMsg(msg).catch((err) => {
-				logger.mark(err)
+				Bot.logger.mark(err)
 			})
 			// common.relpyPrivate(user_id, msg);
 		};
@@ -388,8 +391,9 @@ export async function Note_appoint(e) {
 		let mstList = [];
 		let sumCount=(urlType.length/80).toFixed(0);
 		xlmsg=sumCount-xlmsg>-1?xlmsg:sumCount;
-		urlType.unshift(`模板列表共，第${xlmsg}页，共${urlType.length}张，请选择序号~~\n当前支持选择的模板有:`)
+		urlType.unshift(`模板列表共，第${xlmsg}页，共${urlType.length}张，\n您可通过【#体力模板设置1】来绑定你需要的体力模板~\n请选择序号~~\n当前支持选择的模板有:`)
 		let xxmsg=(xlmsg-1)==0?0:80*(xlmsg-1)
+		let count=0;
 		for (let [index, item] of urlType.entries()) {
 			let msg_pass = [];
 			let imgurl;
@@ -404,6 +408,7 @@ export async function Note_appoint(e) {
 				}
 				item = index + "." + item
 			}
+			count++;
 			if(Object.keys(mstList).length==80){
 				break;
 			}
@@ -420,13 +425,17 @@ export async function Note_appoint(e) {
 				user_id: Bot.uin
 			})
 		}
-		if(xxmsg<urlType.length-1){
-			mstList.push({
-				message: `更多内容请翻页查看\n如：#体力模板列表2`,
-				nickname: nickname,
-				user_id: Bot.uin
-			})
+		let endMsg="";
+		if(count<urlType.length-1){
+			endMsg= `更多内容请翻页查看\n如：#体力模板列表2`
+		}else{
+			endMsg= `已经到底了~~`
 		}
+		mstList.push({
+			message: endMsg,
+			nickname: nickname,
+			user_id: Bot.uin
+		})
 		e.reply(await Bot.makeForwardMsg(mstList));
 		return true;
 	}

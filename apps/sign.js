@@ -12,6 +12,7 @@ import {
 } from '../components/Changelog.js';
 import gsCfg from '../model/gsCfg.js';
 import fs from "fs";
+import YAML from 'yaml'
 export const rule = {
 	mysSign: {
 		reg: "^#*(米游社|mys|社区)(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零|全部)签到$",
@@ -25,14 +26,18 @@ export const rule = {
 		reg: "^#(米游币|米社)全部签到$",
 		describe: "米游币全部签到"
 	},
-	// allMysSign: {
-	// 	reg: "^#米游币全部签到$",
-	// 	describe: "米游币全部签到"
-	// },
-	// allSign: {
-	// 	reg: "^#米社全部签到$",
-	// 	describe: "米社全部签到"
-	// },
+	sendyunTime: {
+		reg: "^#*云原神(时间|剩余时间|剩余|还有多久|还剩多少分钟|查询)$",
+		describe: "米游币全部签到"
+	},
+	yunSign: {
+		reg: "^#*云原神签到$",
+		describe: "云原神签到"
+	},
+	yuntoken:{
+		reg: "^(.*)ct(.*)$",
+		describe: "云原神签到"
+	},
 	cookiesDocHelp: {
 		reg: "^#*(米游社|cookies|米游币)帮助$",
 		describe: "cookies获取帮助"
@@ -380,5 +385,68 @@ export async function signlist(e) {
 	e.reply(`${msg}签到任务已完成`);
 	ismysbool=false;
 	isbool = false;
+	return true;
+}
+let yunpath=`${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`;
+init()
+function init() {
+	Data.createDir("",yunpath , false);
+}
+export async function yunSign(e){
+	if(!(await getyunToken(e))){
+		e.reply("尚未绑定云原神token")
+		return true;
+	}
+	let miHoYoApi = new MihoYoApi(e);
+	e.reply((await miHoYoApi.yunGenshen()).sendMSg)
+	return;
+}
+const getyunToken=async function(e){
+	let file = `${yunpath}/${e.user_id}.yaml`
+	try {
+		let ck = fs.readFileSync(file, 'utf-8')
+		ck = YAML.parse(ck)
+		e.devId=ck.devId;		e.yuntoken=ck.yuntoken;
+		return ck
+	} catch (error) {
+		return ""
+	}
+}
+export async function sendyunTime(e){
+	if(!(await getyunToken(e))){
+		e.reply("尚未绑定云原神token")
+		return true;
+	}
+	let miHoYoApi = new MihoYoApi(e);
+	e.reply((await miHoYoApi.logyunGenshen()).log_msg)
+	return;
+}
+export async function yuntoken(e){
+	console.log(e)
+	if (["ct","si","devId"].includes(e.msg)) {
+		e.reply(`格式支持\nai=*;ci=*;oi=*;ct=***********;si=**************;bi=***********;devId=***********`)
+	  return false;
+	}
+	let msg=e.msg.split("devId")
+	let devId=msg[1].replace(/=/,"")
+	let yuntoken=msg[0];
+	e.devId=devId;
+	e.yuntoken=yuntoken;
+	let miHoYoApi = new MihoYoApi(e);
+	let objData=(await miHoYoApi.logyunGenshen()) //校验token是否有效
+	if(objData.retcode!=0){
+		e.reply(objData.message)
+		return true;
+	}
+	let datalist = {
+		devId: devId,
+		yuntoken: yuntoken,
+		qq: e.user_id,
+		uid: e.uid,
+		sign: true
+	}
+	let yamlStr = YAML.stringify(datalist);
+	fs.writeFileSync(`${yunpath}${e.user_id}.yaml`, yamlStr, 'utf8');
+	e.reply("云原神cookie保存成功~\n您后续可发送【#云原神查询】获取使用时间~")
 	return true;
 }
