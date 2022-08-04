@@ -206,10 +206,9 @@ async function getDataList(name) {
 async function cookie(e) {
 	let {
 		cookie,
-		uid
+		uid,skuid
 	} = await getCookie(e);
 	let miHoYoApi = new MihoYoApi(e);
-	let skuid;
 	let cookiesDoc = await getcookiesDoc();
 
 	if (!cookie) {
