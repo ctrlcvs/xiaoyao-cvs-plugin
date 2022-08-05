@@ -12,7 +12,9 @@ import {
 	isV3
 } from '../../components/Changelog.js';
 import fetch from "node-fetch"
-const APP_VERSION = "2.2.0";
+const APP_VERSION = "2.34.1";
+const salt="z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
+//b253c83ab2609b1b600eddfe974df47b
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
 const _path = process.cwd();
@@ -135,7 +137,7 @@ export default class MihoYoApi {
 		const url = `https://api-takumi.mihoyo.com/apihub/sapi/signIn?gids=${forumId}`;
 		let res = await superagent.post(url).set(this._getHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
-		Bot.logger.mark(`ForumSign: ${res.text}`);
+		// Bot.logger.mark(`ForumSign: ${res.text}`);
 		return resObj;
 	}
 
@@ -229,8 +231,8 @@ export default class MihoYoApi {
 		for (let item of list) {
 			let reward_id = item.id;
 			let reward_msg = item.msg;
-			url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/ackNotification`;
-			res = await superagent.post(url).set(this.getyunHeader()).send({"id": reward_id}).timeout(10000);
+			url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/ackNotification?id=${reward_id}`;
+			res = await superagent.post(url).set(this.getyunHeader()).timeout(10000);
 			let log_msg=`\n领取奖励,ID:${reward_id},Msg:${reward_msg}`;
 			Bot.logger.info(log_msg)
 			sendMSg+=log_msg
@@ -329,7 +331,7 @@ export default class MihoYoApi {
 	_getHeader() {
 		const randomStr = utils.randomString(6);
 		const timestamp = Math.floor(Date.now() / 1000)
-		let sign = md5(`salt=b253c83ab2609b1b600eddfe974df47b&t=${timestamp}&r=${randomStr}`);
+		let sign = md5(`salt=${salt}&t=${timestamp}&r=${randomStr}`);
 		return {
 			'Cookie': this.cookies,
 			'Content-Type': 'application/json',
@@ -340,7 +342,7 @@ export default class MihoYoApi {
 			'x-rpc-app_version': APP_VERSION,
 			'x-rpc-device_model': 'iPhone11,8',
 			'x-rpc-device_name': DEVICE_NAME,
-			'x-rpc-client_type': '1', // 1 - iOS, 2 - Android, 4 - Web
+			'x-rpc-client_type': '2', // 1 - iOS, 2 - Android, 4 - Web
 			'DS': `${timestamp},${randomStr},${sign}`
 			// 'DS': `1602569298,k0xfEh,07f4545f5d88eac59cb1257aef74a570`
 		}

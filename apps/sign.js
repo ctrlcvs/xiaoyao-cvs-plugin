@@ -166,7 +166,7 @@ export async function mysSign(e) {
 						return retry(e);
 					});
 				}, RETRY_OPTIONS);
-				Bot.logger.mark(`${forum.name} [${post.subject}] 点赞成功 [${resObj.message}]`);
+				// Bot.logger.mark(`${forum.name} [${post.subject}] 点赞成功 [${resObj.message}]`);
 				await utils.randomSleepAsync();
 			}
 
