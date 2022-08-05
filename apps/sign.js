@@ -150,7 +150,7 @@ export async function mysSign(e) {
 				post = post.post;
 				// 2.1 BBS read post
 				let resObj = await promiseRetry((retry, number) => {
-					Bot.logger.mark(`读取帖子: [${post.subject}] 尝试次数: ${number}`);
+					// Bot.logger.mark(`读取帖子: [${post.subject}] 尝试次数: ${number}`);
 					return miHoYoApi.forumPostDetail(post['post_id']).catch((e) => {
 						Bot.logger.error(`${forum.name} 读取帖子失败: [${e.message}] 尝试次数: ${number}`);
 						return retry(e);
@@ -160,7 +160,7 @@ export async function mysSign(e) {
 				await utils.randomSleepAsync();
 				// 2.2 BBS vote post
 				resObj = await promiseRetry((retry, number) => {
-					Bot.logger.mark(`点赞帖子: [${post.subject}] 尝试次数: ${number}`);
+					// Bot.logger.mark(`点赞帖子: [${post.subject}] 尝试次数: ${number}`);
 					return miHoYoApi.forumPostVote(post['post_id']).catch((e) => {
 						Bot.logger.error(`${forum.name} 点赞帖子失败: [${e.message}] 尝试次数: ${number}`);
 						return retry(e);
@@ -173,7 +173,7 @@ export async function mysSign(e) {
 			// 2.3 BBS share post
 			let sharePost = postList[0].post;
 			resObj = await promiseRetry((retry, number) => {
-				Bot.logger.mark(`分享帖子: [${sharePost.subject}] 尝试次数: ${number}`);
+				// Bot.logger.mark(`分享帖子: [${sharePost.subject}] 尝试次数: ${number}`);
 				return miHoYoApi.forumPostShare(sharePost['post_id']).catch((e) => {
 					Bot.logger.error(`${forum.name} 分享帖子失败: [${e.message}] 尝试次数: ${number}`);
 					return retry(e);
@@ -429,6 +429,10 @@ export async function yuntoken(e){
 	  return false;
 	}
 	let msg=e.msg.split("devId")
+	
+	if(msg.length<2){
+		return false;
+	}
 	let devId=msg[1].replace(/=/,"")
 	let yuntoken=msg[0];
 	e.devId=devId;
