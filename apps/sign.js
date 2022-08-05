@@ -28,7 +28,7 @@ export const rule = {
 	},
 	sendyunTime: {
 		reg: "^#*云原神(时间|剩余时间|剩余|还有多久|还剩多少分钟|查询)$",
-		describe: "米游币全部签到"
+		describe: "查询当前云原神剩余时间"
 	},
 	yunSign: {
 		reg: "^#*云原神签到$",
@@ -36,7 +36,7 @@ export const rule = {
 	},
 	yuntoken:{
 		reg: "^(.*)ct(.*)$",
-		describe: "云原神签到"
+		describe: "云原神签到token获取"
 	},
 	cookiesDocHelp: {
 		reg: "^#*(米游社|cookies|米游币)帮助$",
@@ -150,7 +150,7 @@ export async function mysSign(e) {
 				post = post.post;
 				// 2.1 BBS read post
 				let resObj = await promiseRetry((retry, number) => {
-					// Bot.logger.info(`读取帖子: [${post.subject}] 尝试次数: ${number}`);
+					Bot.logger.mark(`读取帖子: [${post.subject}] 尝试次数: ${number}`);
 					return miHoYoApi.forumPostDetail(post['post_id']).catch((e) => {
 						Bot.logger.error(`${forum.name} 读取帖子失败: [${e.message}] 尝试次数: ${number}`);
 						return retry(e);
@@ -160,21 +160,20 @@ export async function mysSign(e) {
 				await utils.randomSleepAsync();
 				// 2.2 BBS vote post
 				resObj = await promiseRetry((retry, number) => {
-					// Bot.logger.info(`点赞帖子: [${post.subject}] 尝试次数: ${number}`);
+					Bot.logger.mark(`点赞帖子: [${post.subject}] 尝试次数: ${number}`);
 					return miHoYoApi.forumPostVote(post['post_id']).catch((e) => {
 						Bot.logger.error(`${forum.name} 点赞帖子失败: [${e.message}] 尝试次数: ${number}`);
 						return retry(e);
 					});
 				}, RETRY_OPTIONS);
-
-				// Bot.logger.info(`${forum.name} [${post.subject}] 点赞成功 [${resObj.message}]`);
+				Bot.logger.mark(`${forum.name} [${post.subject}] 点赞成功 [${resObj.message}]`);
 				await utils.randomSleepAsync();
 			}
 
 			// 2.3 BBS share post
 			let sharePost = postList[0].post;
 			resObj = await promiseRetry((retry, number) => {
-				// Bot.logger.info(`分享帖子: [${sharePost.subject}] 尝试次数: ${number}`);
+				Bot.logger.mark(`分享帖子: [${sharePost.subject}] 尝试次数: ${number}`);
 				return miHoYoApi.forumPostShare(sharePost['post_id']).catch((e) => {
 					Bot.logger.error(`${forum.name} 分享帖子失败: [${e.message}] 尝试次数: ${number}`);
 					return retry(e);
@@ -422,7 +421,9 @@ export async function sendyunTime(e){
 	return;
 }
 export async function yuntoken(e){
-	console.log(e)
+	if(e.msg.includes("ltoken")||e.msg.includes("_MHYUUID")){ //防止拦截米社cookie
+		return false;
+	}
 	if (["ct","si","devId"].includes(e.msg)) {
 		e.reply(`格式支持\nai=*;ci=*;oi=*;ct=***********;si=**************;bi=***********;devId=***********`)
 	  return false;
