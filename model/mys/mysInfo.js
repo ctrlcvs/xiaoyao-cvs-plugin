@@ -10,6 +10,8 @@ let bingCkUid = {}
 let bingCkQQ = {}
 let bingCkLtuid = {}
 
+
+let tmpCk = {}
 export default class MysInfo {
   /** redis key */
   static keyPre = 'Yz:genshin:mys:'
@@ -58,19 +60,22 @@ export default class MysInfo {
 
     /** 初始化公共ck */
     await mysInfo.initPubCk()
-
-    if (mysInfo.checkAuth(api)) {
-      /** 获取ck绑定uid */
-      mysInfo.uid = (await MysInfo.getSelfUid(e)).uid
-    } else {
-      /** 获取uid */
-      mysInfo.uid = await MysInfo.getUid(e)
-    }
-
-    if (!mysInfo.uid) return false
+	
+   if (mysInfo.checkAuth(api)) {
+     /** 获取ck绑定uid */
+     mysInfo.uid = (await MysInfo.getSelfUid(e))
+   } else {
+     /** 获取uid */
+     mysInfo.uid = await MysInfo.getUid(e)
+   }
+   
+   if (!mysInfo.uid) {
+     e.noTips = true
+     return false
+   }
 
     mysInfo.e.uid = mysInfo.uid
-
+	
     /** 获取ck */
     await mysInfo.getCookie()
 
@@ -80,66 +85,84 @@ export default class MysInfo {
     return mysInfo
   }
 
-  /** 获取uid */
-  static async getUid (e) {
-    if (e.uid) return e.uid
-
-    let { msg = '', at = '' } = e
-
-    if (!msg) return false
-
-    let uid = false
-    /** at用户 */
-    if (at) {
-      uid = await redis.get(`${MysInfo.key.qqUid}${at}`)
-      if (uid) return String(uid)
-      e.reply('尚未绑定uid', false, { at })
-      return false
-    }
-
-    let matchUid = (msg = '') => {
-      let ret = /[1|2|5][0-9]{8}/g.exec(msg)
-      if (!ret) return false
-      return ret[0]
-    }
-
-    /** 命令消息携带 */
-    uid = matchUid(msg)
-    if (uid) return String(uid)
-
-    /** 绑定的uid */
-    uid = await redis.get(`${MysInfo.key.qqUid}${e.user_id}`)
-    if (uid) return String(uid)
-
-    /** 群名片 */
-    uid = matchUid(e.sender.card)
-    if (uid) return String(uid)
-
-    e.reply('请先#绑定uid', false, { at })
-
-    return false
-  }
+ /** 获取uid */
+ static async getUid (e) {
+   if (e.uid) {
+     /** 没有绑定的自动绑定 */
+     MysInfo.uidBingQQ(e, e.uid)
+     return String(e.uid)
+   }
+ 
+   let { msg = '', at = '' } = e
+ 
+   if (!msg) return false
+ 
+   let uid = false
+   /** at用户 */
+   if (at) {
+     uid = await redis.get(`${MysInfo.key.qqUid}${at}`)
+     if (uid) return String(uid)
+     if (e.noTips !== true) e.reply('尚未绑定uid', false, { at })
+     return false
+   }
+ 
+   let matchUid = (msg = '') => {
+     let ret = /[1|2|5][0-9]{8}/g.exec(msg)
+     if (!ret) return false
+     return ret[0]
+   }
+ 
+   /** 命令消息携带 */
+   uid = matchUid(msg)
+   if (uid) {
+     /** 没有绑定的自动绑定 */
+     MysInfo.uidBingQQ(e, uid)
+     return String(uid)
+   }
+ 
+   /** 绑定的uid */
+   uid = await redis.get(`${MysInfo.key.qqUid}${e.user_id}`)
+   if (uid) return String(uid)
+ 
+   /** 群名片 */
+   uid = matchUid(e.sender.card)
+   if (uid) return String(uid)
+ 
+   if (e.noTips !== true) e.reply('请先#绑定uid', false, { at })
+ 
+   return false
+ }
 
   /** 获取ck绑定uid */
   static async getSelfUid (e) {
-    if (e.uid) return e.uid
-
+    // if (e.uid) return e.uid
+  
     let { msg = '', at = '' } = e
-
+  
     if (!msg) return false
-
+  
     /** at用户 */
     if (at && (!bingCkQQ[at] || !bingCkQQ[at].uid)) {
-      e.reply('尚未绑定cookie', false, { at })
+      if (e.noTips !== true) e.reply('尚未绑定cookie', false, { at })
       return false
     }
-
+  
     if (!e.user_id || !bingCkQQ[e.user_id] || !bingCkQQ[e.user_id].uid) {
-      e.reply(MysInfo.tips, false, { at })
+      if (e.noTips !== true) e.reply(MysInfo.tips, false, { at })
       return false
     }
-
-    return bingCkQQ[e.user_id]
+  
+    /** 当前查询uid不是绑定的uid */
+    if (e.uid && e.uid != bingCkQQ[e.user_id].uid) return false
+  
+    return bingCkQQ[e.user_id].uid
+  }
+  
+  /** 没有绑定的自动绑定 */
+  static async uidBingQQ (e, uid) {
+    if (!await redis.get(`${MysInfo.key.qqUid}${e.user_id}`)) {
+      await redis.setEx(`${MysInfo.key.qqUid}${e.user_id}`, 3600 * 24 * 30, String(uid))
+    }
   }
 
   /** 判断绑定ck才能查询 */
@@ -214,6 +237,10 @@ export default class MysInfo {
   }
 
   async getCookie () {
+    if (tmpCk[this.uid]) {
+      this.ckInfo = tmpCk[this.uid]
+      return this.ckInfo.ck
+    }
     if (this.ckInfo.ck) return this.ckInfo.ck
     // 使用用户uid绑定的ck
     await this.getBingCK() ||
@@ -223,6 +250,12 @@ export default class MysInfo {
     await this.getBingCKqq() ||
     // 使用公共ck
     await this.getPublicCK()
+
+    tmpCk[this.uid] = this.ckInfo
+
+    setTimeout(() => {
+      delete tmpCk[this.uid]
+    }, 1000 * 30)
 
     return this.ckInfo.ck
   }
