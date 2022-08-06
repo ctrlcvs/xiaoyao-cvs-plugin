@@ -57,9 +57,10 @@ const boards = {
 		forumid: 37,
 		biz: 'nxx_cn',
 		name: '未定事件簿',
+		actid:'e202202251749321',
 		url: "https://bbs.mihoyo.com/wd/",
 		getReferer() {
-			return `https://webstatic.mihoyo.com/bbs/event/signin/bh2/index.html?bbs_auth_required=true&act_id=${this.actid}&bbs_presentation_style=fullscreen&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
+			return `https://webstatic.mihoyo.com/bbs/event/signin/nxx/index.html?bbs_auth_required=true&bbs_presentation_style=fullscreen&act_id=${this.actid}`
 		}
 	},
 	/** 以下数据待定 由于并未有存在签到入口可能后续会开放*/
