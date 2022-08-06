@@ -27,19 +27,19 @@ import {
 	sign,
 	mysSign,
 	cookiesDocHelp,
-	signlist,
-	allMysSign,yunSign,sendyunTime,yuntoken,
+	signlist,yunSignlist,yunAllSign,
+	allMysSign,yunSign,sendyunTime,yuntoken,yunHelp,
 	allSign
 } from "./sign.js"
 export {
-	updateRes,
+	updateRes,yunSignlist,
 	signlist,
 	updateMiaoPlugin,
 	sign,
-	versionInfo,
+	versionInfo,yunAllSign,
 	Note_appoint,
 	pokeNote,yunSign,sendyunTime,yuntoken,
-	cookiesDocHelp,
+	cookiesDocHelp,yunHelp,
 	sysCfg,
 	help,
 	DailyNoteTask,
@@ -100,6 +100,11 @@ async function task() {
 	schedule.scheduleJob(set.allSignTime, function() {
 		if (set.isSign) {
 			allSign()
+		}
+	});
+	schedule.scheduleJob(set.YunSignTime, function() {
+		if (set.isYunSign) {
+			yunSignlist()
 		}
 	});
 }

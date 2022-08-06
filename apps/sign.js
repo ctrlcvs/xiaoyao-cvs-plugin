@@ -34,6 +34,10 @@ export const rule = {
 		reg: "^#*云原神签到$",
 		describe: "云原神签到"
 	},
+	yunAllSign: {
+		reg: "^#云原神全部签到$",
+		describe: "云原神全部签到"
+	},
 	yuntoken:{
 		reg: "^(.*)ct(.*)$",
 		describe: "云原神签到token获取"
@@ -41,8 +45,13 @@ export const rule = {
 	cookiesDocHelp: {
 		reg: "^#*(米游社|cookies|米游币)帮助$",
 		describe: "cookies获取帮助"
+	},
+	yunHelp:{
+		reg: "^#*(云原神|云)帮助$",
+		describe: "cookies获取帮助"
 	}
 };
+
 
 const _path = process.cwd();
 let START = moment().unix();
@@ -53,6 +62,11 @@ const RETRY_OPTIONS = {
 	maxTimeout: 10000
 };
 let YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
+let yunpath=`${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`;
+init()
+function init() {
+	Data.createDir("",yunpath , false);
+}
 export async function sign(e) {
 	let {
 		skuid,
@@ -283,6 +297,7 @@ export async function allMysSign() {
 			isTask: true
 		};
 		e.cookie = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
+		Bot.logger.mark(`正在为qq${user_id}进行米游币签到中...`);
 		e.msg = "全部"
 		//已签到不重复执行
 		let key = `genshin:mys:signed_bbs:${user_id}`;
@@ -330,6 +345,7 @@ export async function allSign() {
 			isTask: true
 		};
 		e.msg = "全部"
+		Bot.logger.mark(`正在为qq${user_id}米社签到中...`);
 		e.reply = (msg) => {
 			if (!msg.includes("OK")) {
 				return;
@@ -386,14 +402,57 @@ export async function signlist(e) {
 	isbool = false;
 	return true;
 }
-let yunpath=`${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`;
-init()
-function init() {
-	Data.createDir("",yunpath , false);
+let isYun=false;
+export async function yunAllSign(e){
+	if (!await checkAuth(e)) {
+		return true;
+	}
+	
+	e.reply(`开始执行云原神签到中，请勿重复执行`);
+	if(isYun){
+		e.reply(`云原神签到中请勿重复执行`)
+		return true;
+	}
+	isYun=true;
+	await yunSignlist(e);
+	e.reply(`云原神签到任务已完成`);
 }
+
+export async function yunSignlist(e){
+	Bot.logger.mark(`云原神签到任务开始`);
+	let files = fs.readdirSync(yunpath).filter(file => file.endsWith('.yaml'))
+	let isYunSignMsg = await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").isYunSignMsg
+	let userIdList = (files.join(",").replace(/.yaml/g, "").split(","))
+	for (let qq of userIdList) {
+		let user_id = qq;
+		let e = {
+			user_id,
+			qq,
+			isTask: true
+		};
+		Bot.logger.mark(`正在为qq${user_id}云原神签到中...`);
+		e.msg = "全部"
+		e.reply = (msg) => {
+			if (!msg.includes("OK")) {
+				return;
+			}
+			if (!isYunSignMsg||isYun) {
+				return;
+			}
+			if (msg.includes("签到成功")) {
+				utils.relpyPrivate(qq, msg + "\n云原神自动签到成功");
+			}
+		};
+		await yunSign(e);
+		await utils.sleepAsync(10000);
+	}
+	Bot.logger.mark(`云原神签到任务完成`);
+}
+
+
 export async function yunSign(e){
 	if(!(await getyunToken(e))){
-		e.reply("尚未绑定云原神token")
+		e.reply("尚未绑定云原神token\n"+await yunDoc())
 		return true;
 	}
 	let miHoYoApi = new MihoYoApi(e);
@@ -413,7 +472,7 @@ const getyunToken=async function(e){
 }
 export async function sendyunTime(e){
 	if(!(await getyunToken(e))){
-		e.reply("尚未绑定云原神token")
+		e.reply("尚未绑定云原神token\n"+await yunDoc())
 		return true;
 	}
 	let miHoYoApi = new MihoYoApi(e);
@@ -454,4 +513,14 @@ export async function yuntoken(e){
 	fs.writeFileSync(`${yunpath}${e.user_id}.yaml`, yamlStr, 'utf8');
 	e.reply("云原神cookie保存成功~\n您后续可发送【#云原神查询】获取使用时间~")
 	return true;
+}
+
+
+export async  function yunHelp(e){
+	e.reply("云原神帮助：\n"+await yunDoc())
+	return true;
+}
+
+const yunDoc=async function(){
+	return await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").yunDoc
 }
