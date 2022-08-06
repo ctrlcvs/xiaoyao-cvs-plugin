@@ -6,7 +6,6 @@ import {
 	Data
 } from "../components/index.js";
 import moment from 'moment';
-import MysInfo from '../model/mys/mysInfo.js'
 import {
 	isV3
 } from '../components/Changelog.js';
@@ -319,7 +318,7 @@ export async function allMysSign() {
 		await mysSign(e);
 		await utils.sleepAsync(10000);
 	}
-	Bot.logger.mark(`签到任务完成`);
+	Bot.logger.mark(`米社米币签到任务完成`);
 	return true
 }
 
@@ -360,7 +359,7 @@ export async function allSign() {
 		await sign(e);
 		await utils.sleepAsync(10000);
 	}
-	Bot.logger.mark(`签到任务完成`);
+	Bot.logger.mark(`米社签到任务完成`);
 }
 const checkAuth = async function(e) {
 	return await e.checkAuth({

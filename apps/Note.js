@@ -7,7 +7,7 @@ import fs from "fs";
 import {
 	isV3
 } from '../components/Changelog.js'
-import MysInfo from '../model/mys/mysInfo.js'
+// import MysInfo from '../model/mys/mysInfo.js'
 // import { MysUser } from "../../../lib/components/Models.js";
 // import common from "../../../lib/common.js";
 import lodash from "lodash";
@@ -45,7 +45,8 @@ export async function Note(e, {
 	}
 	let cookie, uid, res;
 	if (isV3) {
-		res = await MysInfo.get(e, 'dailyNote')
+		let MysInfo =await import(`file://${_path}/plugins/genshin/model/mys/mysInfo.js`);
+		res = await MysInfo.default.get(e, 'dailyNote')
 		if (!res || res.retcode !== 0) return true
 		uid = e.uid;
 	} else {
@@ -103,7 +104,6 @@ export async function Note(e, {
 			saveJson();
 		}
 	}
-
 	let data = res.data;
 	//推送任务
 	if (e.isTask && data.current_resin < e.sendResin) {
