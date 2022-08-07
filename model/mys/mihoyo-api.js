@@ -238,10 +238,10 @@ export default class MihoYoApi {
 			Bot.logger.info(log_msg)
 			sendMSg+=log_msg
 		}
-		log_msg="\n\n"+(await this.logyunGenshen()).log_msg
-		sendMSg += log_msg
+		// log_msg="\n\n"+(await this.logyunGenshen()).log_msg
+		// sendMSg += log_msg
 		resObj.sendMSg=sendMSg;
-		Bot.logger.info(log_msg)
+		// Bot.logger.info(log_msg)
 		return resObj;
 	}
 	
