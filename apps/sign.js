@@ -97,7 +97,7 @@ export async function sign(e) {
 				});
 			}, RETRY_OPTIONS);
 			Bot.logger.info(`${forum.name} 签到结果: [${resObj.message}]`);
-			resultMessage += `签到: [${resObj.message}]\n`;
+			resultMessage += `签到: \n${resObj.message}\n`;
 		} catch (e) {
 			Bot.logger.error(`${forum.name} 签到失败 [${e.message}]`);
 			resultMessage += `签到失败: [${e.message}]\n`;

@@ -110,13 +110,17 @@ export default class MihoYoApi {
 		try {
 			// 获取账号信息
 			const objData = await this.getUserInfo(kkbody)
-			if (objData.retcode != 200) {
-				return objData
-			}
-			if (!objData.nickname) {
+			let data=objData.data
+			if(data?.list?.length==0){
 				return {
 					message: `未绑定${name}信息`
 				}
+			}
+			let message=`\n${name}共计${data.list.length}个账号\n`;
+			for(let item of data.list){
+				let objshuj=(await this.postSign(kkbody, item.game_uid, item.region))
+				message+=`游戏id：${item.game_uid}：${objshuj.message}\n`
+				await utils.randomSleepAsync();
 			}
 			// 获取签到信息和奖励信息 、、后续重新梳理补充
 			// const {
@@ -129,7 +133,7 @@ export default class MihoYoApi {
 			// 	}
 			// }
 			// 签到操作
-			return await this.postSign(kkbody, objData.game_uid, objData.region)
+			return {message}
 		} catch (error) {
 			Bot.logger.mark(`error.message`, error.message)
 		}
@@ -401,18 +405,14 @@ export default class MihoYoApi {
 				.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		let data = resObj.data
+		// console.log(resObj)
 		if (resObj.retcode != 0) {
 			return resObj
 		}
-		const game_uid = data?.list?. [0]?.game_uid
-		const region = data?.list?. [0]?.region
-		const nickname = data?.list?. [0]?.nickname
-		return {
-			game_uid,
-			region,
-			nickname,
-			retcode: 200
-		}
+		// const game_uid = data?.list?. [0]?.game_uid
+		// const region = data?.list?. [0]?.region
+		// const nickname = data?.list?. [0]?.nickname
+		return resObj
 	}
 	// 游戏签到操作 	
 	async postSign(board, game_uid, region) {
