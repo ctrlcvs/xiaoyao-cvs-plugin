@@ -119,7 +119,7 @@ export default class MihoYoApi {
 			let message=`\n${name}共计${data.list.length}个账号\n`;
 			for(let item of data.list){
 				let objshuj=(await this.postSign(kkbody, item.game_uid, item.region))
-				message+=`游戏id：${item.game_uid}：${objshuj.message}\n`
+				message+=`游戏id：${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
 				await utils.randomSleepAsync();
 			}
 			// 获取签到信息和奖励信息 、、后续重新梳理补充
