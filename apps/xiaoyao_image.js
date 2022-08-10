@@ -12,7 +12,7 @@ import gsCfg from '../model/gsCfg.js'
 const _path = process.cwd();
 const __dirname = path.resolve();
 
-const list = ["wuqi_tujian","shiwu_tujian", "yuanmo_tujian", "mijin_tujian", "shengyiwu_tujian"]
+const list = ["wuqi_tujian","shiwu_tujian", "yuanmo_tujian", "mijin_tujian", "shengyiwu_tujian","daoju_tujian"]
 export async function AtlasAlias(e) {
 	if (!Cfg.get("Atlas.all")) {
 		return false;
