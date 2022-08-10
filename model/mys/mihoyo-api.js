@@ -238,7 +238,7 @@ export default class MihoYoApi {
 			let reward_msg = item.msg;
 			url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/ackNotification?id=${reward_id}`;
 			res = await superagent.post(url).set(this.getyunHeader()).timeout(10000);
-			let log_msg=`\n领取奖励,ID:${reward_id},Msg:${reward_msg}`;
+			let log_msg=`\n领取奖励,ID:${reward_id},Msg:${reward_msg.msg}`;
 			Bot.logger.info(log_msg)
 			sendMSg+=log_msg
 		}

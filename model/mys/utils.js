@@ -31,9 +31,9 @@ export async function relpyPrivate (userId, msg) {
 	  userId = Number(userId)
 	  let friend = Bot.fl.get(userId)
 	  if (friend) {
-	    logger.mark(`发送好友消息[${friend.nickname}](${userId})`)
+	    Bot.logger.mark(`发送好友消息[${friend.nickname}](${userId})`)
 	    return await Bot.pickUser(userId).sendMsg(msg).catch((err) => {
-	      logger.mark(err)
+	      Bot.logger.mark(err)
 	    })
 	  }
 }

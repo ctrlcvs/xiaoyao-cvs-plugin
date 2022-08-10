@@ -309,12 +309,11 @@ export async function allMysSign() {
 			if (!isPushSign||ismysbool) {
 				return;
 			}
-			if (msg.includes("签到成功") && (cookie.isSignPush === true || cookie.isSignPush === undefined)) {
+			if (msg.includes("OK")) { //签到成功并且不是已签到的才推送
 				// msg = msg.replace("签到成功", "自动签到成功");
 				utils.relpyPrivate(user_id, msg + "\n自动签到成功");
 			}
 		};
-
 		await mysSign(e);
 		await utils.sleepAsync(10000);
 	}
@@ -346,13 +345,10 @@ export async function allSign() {
 		e.msg = "全部"
 		Bot.logger.mark(`正在为qq${user_id}米社签到中...`);
 		e.reply = (msg) => {
-			if (!msg.includes("OK")) {
-				return;
-			}
 			if (!isAllSign||isbool) {
 				return;
 			}
-			if (msg.includes("签到成功") && (cookie.isSignPush === true || cookie.isSignPush === undefined)) {
+			if (msg.includes("OK")) {
 				utils.relpyPrivate(qq, msg + "\n自动签到成功");
 			}
 		};
@@ -432,13 +428,10 @@ export async function yunSignlist(e){
 		Bot.logger.mark(`正在为qq${user_id}云原神签到中...`);
 		e.msg = "全部"
 		e.reply = (msg) => {
-			if (!msg.includes("OK")) {
-				return;
-			}
 			if (!isYunSignMsg||isYun) {
 				return;
 			}
-			if (msg.includes("签到成功")) {
+			if (msg.includes("领取奖励")) {
 				utils.relpyPrivate(qq, msg + "\n云原神自动签到成功");
 			}
 		};
