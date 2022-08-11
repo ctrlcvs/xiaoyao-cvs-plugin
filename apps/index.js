@@ -29,13 +29,13 @@ import {
 	cookiesDocHelp,
 	signlist,yunSignlist,yunAllSign,
 	allMysSign,yunSign,sendyunTime,yuntoken,yunHelp,
-	allSign
+	allSign,bbsSeach
 } from "./sign.js"
 export {
 	updateRes,yunSignlist,
 	signlist,
 	updateMiaoPlugin,
-	sign,
+	sign,bbsSeach,
 	versionInfo,yunAllSign,
 	Note_appoint,
 	pokeNote,yunSign,sendyunTime,yuntoken,

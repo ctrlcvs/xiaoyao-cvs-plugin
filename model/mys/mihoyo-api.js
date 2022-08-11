@@ -13,7 +13,7 @@ import {
 } from '../../components/Changelog.js';
 import fetch from "node-fetch"
 const APP_VERSION = "2.34.1";
-const salt="z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
+const salt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
 //b253c83ab2609b1b600eddfe974df47b
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
@@ -57,7 +57,7 @@ const boards = {
 		forumid: 37,
 		biz: 'nxx_cn',
 		name: '未定事件簿',
-		actid:'e202202251749321',
+		actid: 'e202202251749321',
 		url: "https://bbs.mihoyo.com/wd/",
 		getReferer() {
 			return `https://webstatic.mihoyo.com/bbs/event/signin/nxx/index.html?bbs_auth_required=true&bbs_presentation_style=fullscreen&act_id=${this.actid}`
@@ -87,8 +87,8 @@ export default class MihoYoApi {
 			this.e = e
 			this.cookie = e.cookie
 			this.userId = String(e.user_id)
-			this.yuntoken=e.yuntoken
-			this.devId=e.devId
+			this.yuntoken = e.yuntoken
+			this.devId = e.devId
 			// //初始化配置文件
 			let data = this.getStoken(this.e.user_id);
 			if (data) {
@@ -110,16 +110,16 @@ export default class MihoYoApi {
 		try {
 			// 获取账号信息
 			const objData = await this.getUserInfo(kkbody)
-			let data=objData.data
-			if(data?.list?.length==0){
+			let data = objData.data
+			if (data?.list?.length == 0) {
 				return {
 					message: `未绑定${name}信息`
 				}
 			}
-			let message=`\n${name}共计${data.list.length}个账号\n`;
-			for(let item of data.list){
-				let objshuj=(await this.postSign(kkbody, item.game_uid, item.region))
-				message+=`游戏id：${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
+			let message = `\n${name}共计${data.list.length}个账号\n`;
+			for (let item of data.list) {
+				let objshuj = (await this.postSign(kkbody, item.game_uid, item.region))
+				message += `游戏id：${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
 				await utils.randomSleepAsync();
 			}
 			// 获取签到信息和奖励信息 、、后续重新梳理补充
@@ -133,7 +133,9 @@ export default class MihoYoApi {
 			// 	}
 			// }
 			// 签到操作
-			return {message}
+			return {
+				message
+			}
 		} catch (error) {
 			Bot.logger.mark(`error.message`, error.message)
 		}
@@ -145,7 +147,12 @@ export default class MihoYoApi {
 		// Bot.logger.mark(`ForumSign: ${res.text}`);
 		return resObj;
 	}
-
+	async getTasksList() {
+		let res = await superagent.get(`https://bbs-api.mihoyo.com/apihub/sapi/getUserMissionsState`).set(this
+			._getHeader()).timeout(10000);
+		let resObj = JSON.parse(res.text);
+		return resObj
+	}
 	// 获取签到状态和奖励信息
 	async getHonkai3rdSignInfo(game_uid, region, nickname, board) {
 		let res = await superagent.get(
@@ -221,7 +228,7 @@ export default class MihoYoApi {
 		let url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/login`;
 		let res = await superagent.post(url).set(this.getyunHeader()).timeout(10000);
 		let sendMSg = "";
-		let log_msg=(await this.logyunGenshen()).log_msg
+		let log_msg = (await this.logyunGenshen()).log_msg
 		sendMSg += log_msg
 		Bot.logger.info(log_msg)
 		url =
@@ -229,8 +236,8 @@ export default class MihoYoApi {
 		res = await superagent.get(url).set(this.getyunHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		let list = resObj.data.list;
-		if(Object.keys(list).length==0){
-			resObj.sendMSg="您今天的奖励已经领取了啦~";
+		if (Object.keys(list).length == 0) {
+			resObj.sendMSg = "您今天的奖励已经领取了啦~";
 			return resObj;
 		}
 		for (let item of list) {
@@ -238,27 +245,27 @@ export default class MihoYoApi {
 			let reward_msg = item.msg;
 			url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/ackNotification?id=${reward_id}`;
 			res = await superagent.post(url).set(this.getyunHeader()).timeout(10000);
-			let log_msg=`\n领取奖励,ID:${reward_id},Msg:${reward_msg.msg}`;
+			let log_msg = `\n领取奖励,ID:${reward_id},Msg:${reward_msg.msg}`;
 			Bot.logger.info(log_msg)
-			sendMSg+=log_msg
+			sendMSg += log_msg
 		}
 		// log_msg="\n\n"+(await this.logyunGenshen()).log_msg
 		// sendMSg += log_msg
-		resObj.sendMSg=sendMSg;
+		resObj.sendMSg = sendMSg;
 		// Bot.logger.info(log_msg)
 		return resObj;
 	}
-	
-	async logyunGenshen(){
+
+	async logyunGenshen() {
 		let url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/wallet/wallet/get`;
 		let res = await superagent.get(url).set(this.getyunHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		let data = resObj.data
-		let log_msg=`米云币:${data?.coin?.coin_num},免费时长:${data?.free_time?.free_time}分钟,总时长:${data.total_time}分钟`;
-		resObj.log_msg=log_msg
+		let log_msg = `米云币:${data?.coin?.coin_num},免费时长:${data?.free_time?.free_time}分钟,总时长:${data.total_time}分钟`;
+		resObj.log_msg = log_msg
 		return resObj
 	}
-	
+
 	async stoken(cookie, e) {
 		this.e = e;
 		if (Object.keys(this.getStoken(e.user_id)).length != 0) {

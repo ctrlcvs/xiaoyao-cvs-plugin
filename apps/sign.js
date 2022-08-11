@@ -11,11 +11,18 @@ import {
 } from '../components/Changelog.js';
 import gsCfg from '../model/gsCfg.js';
 import fs from "fs";
+import {
+	segment
+} from "oicq";
 import YAML from 'yaml'
 export const rule = {
 	mysSign: {
 		reg: "^#*(米游社|mys|社区)(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零|全部)签到$",
 		describe: "米游社米游币签到（理论上会签到全部所以区分开了）"
+	},
+	bbsSeach:{
+		reg: "^#*(米游币|米币)查询$",
+		describe: "米币查询"
 	},
 	sign: {
 		reg: "^#*(崩坏3|崩坏2|未定事件簿)签到$",
@@ -119,9 +126,14 @@ export async function mysSign(e) {
 		e.reply("未读取到stoken请检查cookies是否包含login_ticket、以及云崽是否为最新版本V3、V2兼容")
 		return true;
 	}
-
 	START = moment().unix();
 	let resultMessage = "";
+	let resObj=await mysSeach(e)
+	if(resObj.data.can_get_points===0){
+		resultMessage+=`今日米游币任务已完成~\n请勿重复操作\n当前米游币总持有数量为：${resObj.data.total_points}`;
+		await replyMsg(e, resultMessage);
+		return true
+	}
 	// Execute task
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await getDataList(msg);
@@ -203,11 +215,35 @@ export async function mysSign(e) {
 	return true
 }
 
+export async function bbsSeach(e){
+	let miHoYoApi = new MihoYoApi(e);
+	if (Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0) {
+		e.reply("未读取到stoken请检查cookies是否包含login_ticket，请先绑定stoken再查询~");
+		await cookiesDocHelp(e);
+		return true;
+	}
+	let resObj=await mysSeach(e)
+	e.reply(`当前米游币数量为：${resObj.data.total_points},今日剩余可获取：${resObj.data.can_get_points}`);
+	return true;
+}
+async function mysSeach(e){
+	let miHoYoApi = new MihoYoApi(e);
+	try{
+		let resObj = await promiseRetry((retry, number) => {
+			return miHoYoApi.getTasksList().catch((e) => {
+				return retry(e);
+			});
+		}, RETRY_OPTIONS);
+		return resObj
+	}catch(e){
+		
+	}
+}
 async function replyMsg(e, resultMessage) {
 	const END = moment().unix();
 	Bot.logger.info(`运行结束, 用时 ${END - START} 秒`);
 	resultMessage += `\n用时 ${END - START} 秒`;
-	e.reply(resultMessage);
+	e.reply([segment.at(e.user_id),"\n"+resultMessage]);
 }
 
 async function getDataList(name) {
