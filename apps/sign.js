@@ -218,12 +218,12 @@ export async function mysSign(e) {
 export async function bbsSeach(e){
 	let miHoYoApi = new MihoYoApi(e);
 	if (Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0) {
-		e.reply("未读取到stoken请检查cookies是否包含login_ticket，请先绑定stoken再查询~");
+		await replyMsg(e, "未读取到stoken请检查cookies是否包含login_ticket，请先绑定stoken再查询~");
 		await cookiesDocHelp(e);
 		return true;
 	}
 	let resObj=await mysSeach(e)
-	e.reply(`当前米游币数量为：${resObj.data.total_points},今日剩余可获取：${resObj.data.can_get_points}`);
+	await replyMsg(e,`当前米游币数量为：${resObj.data.total_points},今日剩余可获取：${resObj.data.can_get_points}`);
 	return true;
 }
 async function mysSeach(e){
