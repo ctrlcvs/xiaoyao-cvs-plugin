@@ -216,6 +216,7 @@ export async function mysSign(e) {
 }
 
 export async function bbsSeach(e){
+	START = moment().unix();
 	let miHoYoApi = new MihoYoApi(e);
 	if (Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0) {
 		await replyMsg(e, "未读取到stoken请检查cookies是否包含login_ticket，请先绑定stoken再查询~");
