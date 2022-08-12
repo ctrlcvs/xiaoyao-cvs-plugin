@@ -111,7 +111,7 @@ export default class MihoYoApi {
 			// 获取账号信息
 			const objData = await this.getUserInfo(kkbody)
 			let data = objData.data
-			if (data?.list?.length == 0) {
+			if (data?.list?.length == 0||!data?.list) {
 				return {
 					message: `未绑定${name}信息`
 				}
