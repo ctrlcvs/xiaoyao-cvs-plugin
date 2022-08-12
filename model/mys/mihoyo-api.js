@@ -124,7 +124,11 @@ export default class MihoYoApi {
 					continue; 
 				}
 				objshuj=(await this.postSign(kkbody, item.game_uid, item.region))
-				message += `游戏id：${item.nickname}-${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
+				if(objshuj.data.gt){
+					message+=`游戏id：${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到`;
+				}else{
+					message += `游戏id：${item.nickname}-${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
+				}
 				await utils.randomSleepAsync();
 			}
 			// 获取签到信息和奖励信息 、、后续重新梳理补充
