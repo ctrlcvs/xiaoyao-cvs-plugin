@@ -119,12 +119,12 @@ export default class MihoYoApi {
 			let message = `\n${name}共计${data.list.length}个账号\n`;
 			for (let item of data.list) {
 				let objshuj = await this.isPostSign(kkbody, item.game_uid, item.region)
-				if(objshuj.data.is_sign){
+				if(objshuj?.data?.is_sign){
 					message+=`游戏id：${item.nickname}-${item.game_uid}：今日已签到~\n`;
 					continue; 
 				}
 				objshuj=(await this.postSign(kkbody, item.game_uid, item.region))
-				if(objshuj.data.gt){
+				if(objshuj?.data?.gt){
 					message+=`游戏id：${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到`;
 				}else{
 					message += `游戏id：${item.nickname}-${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`

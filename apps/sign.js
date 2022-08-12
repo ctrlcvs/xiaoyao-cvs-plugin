@@ -158,7 +158,7 @@ export async function mysSign(e) {
 					return retry(e);
 				});
 			}, RETRY_OPTIONS);
-			Bot.logger.info(`${forum.name} 签到结果: [${resObj.message}]`);
+			Bot.logger.mark(`${e.user_id}:${forum.name} 签到结果: [${resObj.message}]`);
 			resultMessage += `签到: [${resObj.message}]\n`;
 		} catch (e) {
 			Bot.logger.error(`${forum.name} 签到失败 [${e.message}]`);
@@ -349,7 +349,6 @@ export async function allMysSign() {
 	//获取需要签到的用户
 	for (let data of stoken) {
 		let user_id = data.qq;
-		Bot.logger.mark(`正在为qq${user_id}签到`);
 		let e = {
 			user_id,
 			isTask: true
@@ -357,12 +356,6 @@ export async function allMysSign() {
 		e.cookie = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
 		Bot.logger.mark(`正在为qq${user_id}进行米游币签到中...`);
 		e.msg = "全部"
-		//已签到不重复执行
-		let key = `genshin:mys:signed_bbs:${user_id}`;
-		if (await redis.get(key)) {
-			continue;
-		}
-
 		e.reply = (msg) => {
 			//关闭签到消息推送
 			if (!isPushSign||ismysbool) {
