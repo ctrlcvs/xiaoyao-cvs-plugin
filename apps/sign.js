@@ -129,10 +129,19 @@ export async function mysSign(e) {
 	START = moment().unix();
 	let resultMessage = "";
 	let resObj=await mysSeach(e)
-	if(resObj.data.can_get_points===0){
+	if(resObj?.data?.can_get_points===0){
 		resultMessage+=`今日米游币任务已完成~\n请勿重复操作\n当前米游币总持有数量为：${resObj.data.total_points}`;
 		await replyMsg(e, resultMessage);
 		return true
+	}else if(!resObj?.data){
+		resultMessage+=`登录Stoken失效请重新获取cookies保存~`;
+		await replyMsg(e, resultMessage);
+		fs.unlink(`${YamlDataUrl}/${e.user_id}.yaml`,function(error){
+			if(error){
+				return ""
+			}
+		})
+		return true;
 	}
 	// Execute task
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
@@ -219,11 +228,20 @@ export async function bbsSeach(e){
 	START = moment().unix();
 	let miHoYoApi = new MihoYoApi(e);
 	if (Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0) {
-		await replyMsg(e, "未读取到stoken请检查cookies是否包含login_ticket，请先绑定stoken再查询~");
-		await cookiesDocHelp(e);
+		let cookiesDoc = await getcookiesDoc()
+		await replyMsg(e, "未读取到stoken请检查cookies是否包含login_ticket，请先绑定stoken再查询~\n"+cookiesDoc);
 		return true;
 	}
 	let resObj=await mysSeach(e)
+	if(!resObj?.data){
+		await replyMsg(e, `登录Stoken失效请重新获取cookies保存~`);
+		fs.unlink(`${YamlDataUrl}/${e.user_id}.yaml`,function(error){
+			if(error){
+				return ""
+			}
+		})
+		return true;
+	}
 	await replyMsg(e,`当前米游币数量为：${resObj.data.total_points},今日剩余可获取：${resObj.data.can_get_points}`);
 	return true;
 }
