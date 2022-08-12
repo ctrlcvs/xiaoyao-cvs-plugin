@@ -119,7 +119,8 @@ export default class MihoYoApi {
 			let message = `\n${name}共计${data.list.length}个账号\n`;
 			for (let item of data.list) {
 				let objshuj = await this.isPostSign(kkbody, item.game_uid, item.region)
-				if(objshuj.retcode==0){
+				console.log(objshuj)
+				if(objshuj.data.is_sign){
 					message+=`游戏id：${item.nickname}-${item.game_uid}：今日已签到~\n`;
 					continue; 
 				}
