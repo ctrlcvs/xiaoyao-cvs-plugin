@@ -118,8 +118,13 @@ export default class MihoYoApi {
 			}
 			let message = `\n${name}共计${data.list.length}个账号\n`;
 			for (let item of data.list) {
-				let objshuj = (await this.postSign(kkbody, item.game_uid, item.region))
-				message += `游戏id：${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
+				let objshuj = await this.isPostSign(kkbody, item.game_uid, item.region)
+				if(objshuj.retcode==0){
+					message+=`游戏id：${item.nickname}-${item.game_uid}：今日已签到~\n`;
+					continue; 
+				}
+				objshuj=(await this.postSign(kkbody, item.game_uid, item.region))
+				message += `游戏id：${item.nickname}-${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
 				await utils.randomSleepAsync();
 			}
 			// 获取签到信息和奖励信息 、、后续重新梳理补充
@@ -323,15 +328,15 @@ export default class MihoYoApi {
 	getpubHeaders(board) {
 		const randomStr = utils.randomString(6);
 		const timestamp = Math.floor(Date.now() / 1000)
-		let sign = md5(`salt=b253c83ab2609b1b600eddfe974df47b&t=${timestamp}&r=${randomStr}`);
+		let sign = md5(`salt=9nQiU3AV0rJSIBWgdynfoGMGKaklfbM7&t=${timestamp}&r=${randomStr}`);
 		return {
 			'accept-language': 'zh-CN,zh;q=0.9,ja-JP;q=0.8,ja;q=0.7,en-US;q=0.6,en;q=0.5',
 			'x-rpc-device_id': DEVICE_ID,
-			'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.3.0',
+			'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.34.1',
 			Referer: board.getReferer(),
 			Host: 'api-takumi.mihoyo.com',
 			'x-rpc-channel': 'appstore',
-			'x-rpc-app_version': '2.3.0',
+			'x-rpc-app_version': '2.34.1',
 			'x-requested-with': 'com.mihoyo.hyperion',
 			'x-rpc-client_type': '5',
 			'Content-Type': 'application/json;charset=UTF-8',
@@ -419,6 +424,22 @@ export default class MihoYoApi {
 		// const game_uid = data?.list?. [0]?.game_uid
 		// const region = data?.list?. [0]?.region
 		// const nickname = data?.list?. [0]?.nickname
+		return resObj
+	}
+	// 游戏签到操作查询
+	async isPostSign(board, game_uid, region) {
+		let web_api = `https://api-takumi.mihoyo.com`
+		let url =
+			`${web_api}/event/luna/info?lang=zh-cn`
+		if (board.name == "原神") {
+			url = `${web_api}/event/bbs_sign_reward/info`
+		}
+		if (board.name == "崩坏2" || board.name == "未定事件簿") {
+			url = `${web_api}/event/luna/info?lang=zh-cn`
+		}
+		url += `${board.name == "原神"?"?":"&"}region=${region}&act_id=${board.actid}&uid=${game_uid}`
+		let res = await superagent.get(url).set(this.getpubHeaders(board)).timeout(10000);
+		let resObj = JSON.parse(res.text);
 		return resObj
 	}
 	// 游戏签到操作 	

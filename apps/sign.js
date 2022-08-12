@@ -25,11 +25,11 @@ export const rule = {
 		describe: "米币查询"
 	},
 	sign: {
-		reg: "^#*(崩坏3|崩坏2|未定事件簿)签到$",
+		reg: "^#*(原神|崩坏3|崩坏2|未定事件簿)签到$",
 		describe: "米社规则签到"
 	},
 	signlist: {
-		reg: "^#(米游币|米社)全部签到$",
+		reg: "^#(米游币|米社(原神|崩坏3|崩坏2|未定事件簿)*)全部签到$",
 		describe: "米游币全部签到"
 	},
 	sendyunTime: {
@@ -90,7 +90,7 @@ export async function sign(e) {
 	let ForumData = await getDataList(msg);
 	e.reply(`开始尝试${msg}签到预计${msg=='全部'?"60":"5-10"}秒~`)
 	for (let forum of ForumData) {
-		if (!(["崩坏3", "崩坏2", "未定事件簿"].includes(forum.name))) {
+		if (!(["原神","崩坏3", "崩坏2", "未定事件簿"].includes(forum.name))) {
 			continue;
 		}
 		resultMessage += `**${forum.name}**\n`
@@ -226,6 +226,10 @@ export async function mysSign(e) {
 
 export async function bbsSeach(e){
 	START = moment().unix();
+	let isck = await cookie(e);
+	if (!isck) {
+		return true;
+	}
 	let miHoYoApi = new MihoYoApi(e);
 	if (Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0) {
 		let cookiesDoc = await getcookiesDoc()
@@ -377,7 +381,7 @@ export async function allMysSign() {
 }
 
 //定时签到任务
-export async function allSign() {
+export async function allSign(e="") {
 	Bot.logger.mark(`开始米社签到任务`);
 	let isAllSign = await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").isAllSign
 	let userIdList = [];
@@ -390,6 +394,7 @@ export async function allSign() {
 			userIdList.push(user_id)
 		}
 	}
+	let msg=e?.msg;
 	for (let qq of userIdList) {
 		let user_id = qq;
 		let e = {
@@ -397,7 +402,11 @@ export async function allSign() {
 			qq,
 			isTask: true
 		};
-		e.msg = "全部"
+		if(msg){
+			e.msg=msg.replace(/全部|签到|米社/g,"");
+		}else{
+			e.msg = "全部"
+		}
 		Bot.logger.mark(`正在为qq${user_id}米社签到中...`);
 		e.reply = (msg) => {
 			if (!isAllSign||isbool) {
@@ -445,7 +454,7 @@ export async function signlist(e) {
 		await allMysSign()
 	} else {
 		isbool = true;
-		await allSign()
+		await allSign(e)
 	}
 	e.reply(`${msg}签到任务已完成`);
 	ismysbool=false;
