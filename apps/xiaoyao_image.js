@@ -41,7 +41,7 @@ export async function roleInfo(e) {
 	let id;
 	if (isV3) {
 		Botcfg = (await import(`file://${_path}/plugins/genshin/model/gsCfg.js`)).default;
-		Botcfg.roleNameToID(msg)
+		id=Botcfg.roleNameToID(msg)
 	} else {
 		Botcfg = YunzaiApps.mysInfo
 		id = Botcfg.roleIdToName(msg);
