@@ -139,14 +139,18 @@ export async function Note(e, {
 			val.percentage = 0;
 		}
 		if (val.remained_time > 0) {
-			// console.log(val.remained_time)
 			val.dq_time = val.remained_time;
 			val.remained_time = new Date().getTime() + val.remained_time * 1000;
-			// console.log(val.remained_time)
 			var urls_avatar_side = val.avatar_side_icon.split("_");
-			let id = gsCfg.roleIdToName(urls_avatar_side[urls_avatar_side.length - 1].replace(
+			let Botcfg;
+			if (isV3) {
+				Botcfg = (await import(`file://${_path}/plugins/genshin/model/gsCfg.js`)).default;
+			} else {
+				Botcfg = YunzaiApps.mysInfo
+			}
+			let id = Botcfg.roleIdToName(urls_avatar_side[urls_avatar_side.length - 1].replace(
 				/(.png|.jpg)/g, ""));
-			let name = gsCfg.roleIdToName(id, true);
+			let name = Botcfg.roleIdToName(id, true);
 			var time_cha = 20;
 			if (role_user["12"].includes(name)) {
 				time_cha = 15;
