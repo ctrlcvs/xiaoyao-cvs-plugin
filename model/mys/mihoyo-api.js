@@ -93,6 +93,7 @@ export default class MihoYoApi {
 			let data = this.getStoken(this.e.user_id);
 			if (data) {
 				this.cookies = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
+				this.e.cookies=this.cookies
 			}
 		}
 		Data.createDir("", YamlDataUrl, false);

@@ -30,10 +30,16 @@ export async function userInfo(e,{render}){
 	let sumData=await user.getCkData()
 	let week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 	let day = moment(new Date()).format("yyyy年MM月DD日 HH:mm") + " " + week[new Date().getDay()];
-	let ck= user.getCookieMap(e.cookie);
+	if(Object.keys(sumData).length==0){
+		return true;
+	}
+	let ck="";
+	if(e.cookie){
+		 ck= user.getCookieMap(e.cookie);
+	}
 	return await Common.render(`user/userInfo`, {
 		uid: e.user_id,
-		ltuid:ck.get("ltuid"),
+		ltuid:ck.get("ltuid")||e.user_id,
 		save_id:e.user_id,
 		day,
 		sumData

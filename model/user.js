@@ -28,52 +28,58 @@ export default class user {
 		let sumData={};
 		await this.cookie(this.e)
 		this.miHoYoApi = new MihoYoApi(this.e);
-		let yunres = await promiseRetry((retry, number) => {
-			return this.miHoYoApi.logyunGenshen().catch((e) => {
-				return retry(e);
-			});
-		}, RETRY_OPTIONS);
-		let mysres = await promiseRetry((retry, number) => {
-			return this.miHoYoApi.getTasksList().catch((e) => {
-				return retry(e);
-			});
-		}, RETRY_OPTIONS);
-		
-		let yundata = yunres.data
-		if(mysres.retcode===0){
-			sumData["米游社"]={
-				"米游币余额":mysres.data.total_points,
-				"今日剩余可获取":mysres.data.can_get_points
-			}
-		}
-		if(yunres.retcode===0){
-			sumData["云原神"]={
-				"今日可获取":yundata?.coin?.coin_num,
-				"免费时长":yundata?.free_time?.free_time,
-				"总时长":yundata.total_time
-			}
-		}
-		for(let name of nameData){
-			let resSign = await promiseRetry((retry, number) => {
-				return this.miHoYoApi.honkai3rdSignTask(name).catch((e) => {
+		if(this.e.yuntoken){
+			let yunres = await promiseRetry((retry, number) => {
+				return this.miHoYoApi.logyunGenshen().catch((e) => {
 					return retry(e);
 				});
 			}, RETRY_OPTIONS);
-			if(resSign?.upData){
-				// console.log(resSign?.upData)
-				for(let item of resSign?.upData){
-					let num= lodash.random(0, 9999);
-					item.upName=item.upName=="原神"?"ys":item.upName=="崩坏3"?"bh3":item.upName=="崩坏2"?"bh2":item.upName=="未定事件簿"?"wdy":""
-					sumData[item.upName+""+num]={
-						"uid":item.game_uid,
-						"游戏昵称":item.nickname,
-						"等级":item.level,
-						"今日签到":item.is_sign?"已签到":"未签到"
+			
+			let yundata = yunres.data
+			if(yunres.retcode===0){
+				sumData["云原神"]={
+					"今日可获取":yundata?.coin?.coin_num,
+					"免费时长":yundata?.free_time?.free_time,
+					"总时长":yundata.total_time
+				}
+			}
+		}
+		if(this.e.cookies){
+			let mysres = await promiseRetry((retry, number) => {
+				return this.miHoYoApi.getTasksList().catch((e) => {
+					return retry(e);
+				});
+			}, RETRY_OPTIONS);
+			if(mysres.retcode===0){
+				sumData["米游社"]={
+					"米游币余额":mysres.data.total_points,
+					"今日剩余可获取":mysres.data.can_get_points
+				}
+			}
+			
+		}
+		if(this.e.cookie){
+			for(let name of nameData){
+				let resSign = await promiseRetry((retry, number) => {
+					return this.miHoYoApi.honkai3rdSignTask(name).catch((e) => {
+						return retry(e);
+					});
+				}, RETRY_OPTIONS);
+				if(resSign?.upData){
+					// console.log(resSign?.upData)
+					for(let item of resSign?.upData){
+						let num= lodash.random(0, 9999);
+						item.upName=item.upName=="原神"?"ys":item.upName=="崩坏3"?"bh3":item.upName=="崩坏2"?"bh2":item.upName=="未定事件簿"?"wdy":""
+						sumData[item.upName+""+num]={
+							"uid":item.game_uid,
+							"游戏昵称":item.nickname,
+							"等级":item.level,
+							"今日签到":item.is_sign?"已签到":"未签到"
+						}
 					}
 				}
 			}
 		}
-		
 		return sumData;
 	}
 	getCookieMap(cookie) {
