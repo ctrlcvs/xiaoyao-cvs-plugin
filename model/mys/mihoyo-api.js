@@ -117,18 +117,25 @@ export default class MihoYoApi {
 				}
 			}
 			let message = `\n${name}共计${data.list.length}个账号\n`;
+			let upData=[];
 			for (let item of data.list) {
+				item.upName=name
 				let objshuj = await this.isPostSign(kkbody, item.game_uid, item.region)
 				if(objshuj?.data?.is_sign){
+					item.is_sign=true;
+					upData.push(item)
 					message+=`游戏id：${item.nickname}-${item.game_uid}：今日已签到~\n`;
 					continue; 
 				}
 				objshuj=(await this.postSign(kkbody, item.game_uid, item.region))
 				if(objshuj?.data?.gt){
+					item.is_sign=false;
 					message+=`游戏id：${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到`;
 				}else{
+					item.is_sign=true;
 					message += `游戏id：${item.nickname}-${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
 				}
+				upData.push(item)
 				await utils.randomSleepAsync();
 			}
 			// 获取签到信息和奖励信息 、、后续重新梳理补充
@@ -143,7 +150,7 @@ export default class MihoYoApi {
 			// }
 			// 签到操作
 			return {
-				message
+				message,upData
 			}
 		} catch (error) {
 			Bot.logger.mark(`error.message`, error.message)
@@ -355,13 +362,14 @@ export default class MihoYoApi {
 		let sign = md5(`salt=${salt}&t=${timestamp}&r=${randomStr}`);
 		return {
 			'Cookie': this.cookies,
-			'Content-Type': 'application/json',
-			'User-Agent': 'Hyperion/67 CFNetwork/1128.0.1 Darwin/19.6.0',
-			'Referer': 'https://app.mihoyo.com',
+            "Referer": "https://app.mihoyo.com",
+			"x-rpc-sys_version": "6.0.1",
+            "Host": "bbs-api.mihoyo.com",
+            "User-Agent": "okhttp/4.8.0",
 			'x-rpc-channel': 'appstore',
 			'x-rpc-device_id': DEVICE_ID,
 			'x-rpc-app_version': APP_VERSION,
-			'x-rpc-device_model': 'iPhone11,8',
+			"x-rpc-device_model": "Mi 10",
 			'x-rpc-device_name': DEVICE_NAME,
 			'x-rpc-client_type': '2', // 1 - iOS, 2 - Android, 4 - Web
 			'DS': `${timestamp},${randomStr},${sign}`
