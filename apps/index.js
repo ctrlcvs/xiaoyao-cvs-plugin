@@ -23,6 +23,10 @@ import {
 	currentVersion
 } from "../components/Changelog.js";
 import {
+	rule as userRule,
+	userInfo
+} from "./user.js"
+import {
 	rule as signRule,
 	sign,
 	mysSign,
@@ -34,7 +38,7 @@ import {
 export {
 	updateRes,yunSignlist,
 	signlist,
-	updateMiaoPlugin,
+	updateMiaoPlugin,userInfo,
 	sign,bbsSeach,
 	versionInfo,yunAllSign,
 	Note_appoint,
@@ -77,6 +81,7 @@ let rule = {
 		reg: "#poke#",
 		describe: "体力",
 	},
+	...userRule,
 	...signRule,
 	...adminRule
 };
