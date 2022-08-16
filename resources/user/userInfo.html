@@ -1,0 +1,41 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/user/userInfo.css"/>
+<style>
+	.container {
+		width: 600px !important;
+		font-size: 1.125rem;
+		/* 全局字体大小 */
+		background-color: rgb(243,242,241);
+		padding: 20px 0 0 0 !important;
+	}
+</style>
+{{/block}}
+{{block 'main'}}
+<div class="topTitle">
+	<div class="title-left">
+		通行证ID: <span class="passCheck">{{ltuid}}</span>
+	</div>
+	<div class="title-right">
+		{{day}}
+	</div>
+</div>
+{{each sumData}}
+<div class="list">
+	<div class="list-title">
+		{{$index=="Yun"?"云原神":$index=="mysbbs"?"米游社":$index.indexOf("ys")>=0?"原神":$index.indexOf("bh3")>=0?"崩坏3":$index.indexOf("bh2")>=0?"崩坏2":$index.indexOf("wdy")>=0?"未定事件簿":$index}}
+	</div>
+	{{each $value item}}
+	<div class="list-div">
+		<div>
+			{{$index}}
+		</div>
+		<div>
+			{{item}}
+		</div>
+	</div>
+	{{/each}}
+</div>
+{{/each}}
+
+{{/block}}
