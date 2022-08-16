@@ -16,6 +16,7 @@ const _path = process.cwd();
 const __dirname = path.resolve();
 
 const list = ["wuqi_tujian", "shiwu_tujian", "yuanmo_tujian", "mijin_tujian", "shengyiwu_tujian", "daoju_tujian"]
+const reglist=["(#|专武|武器|图鉴|突破)","(#|食物|特殊料理|特色|料理|食材)","(#|原魔|怪物|图鉴|信息)","(#|秘境|信息|图鉴)","(#|圣遗物|图鉴)","(#|图鉴|道具)"]
 export async function AtlasAlias(e) {
 	if (!Cfg.get("Atlas.all")) {
 		return false;
@@ -29,8 +30,8 @@ export async function AtlasAlias(e) {
 	}
 	if (await Atlas_list(e)) return true;
 	if (await roleInfo(e)) return true;
-	var name = e.msg.replace(/#|＃|信息|图鉴|圣遗物|食物|食材|特殊|特色|料理/g, "");
-	return send_Msg(e, "all", name);
+	// var name = e.msg.replace(/#|＃|信息|图鉴|圣遗物|食物|食材|特殊|特色|料理/g, "");
+	return send_Msg(e, "all", "");
 }
 
 
@@ -64,7 +65,8 @@ export async function roleInfo(e) {
 const send_Msg = function(e, type, name) {
 	let path;
 	if (type == "all") {
-		for (let val of list) {
+		for (let [index,val] of list.entries()) {
+			name=e.msg.replace(new RegExp(reglist[index],"g"),"");
 			path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${val}/${name}.png`
 			if (fs.existsSync(path)) {
 				e.reply(segment.image(`file:///${path}`));
