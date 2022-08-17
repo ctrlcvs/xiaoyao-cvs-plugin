@@ -30,12 +30,7 @@ export default class user {
 		await this.cookie(this.e)
 		this.miHoYoApi = new MihoYoApi(this.e);
 		if(this.e.yuntoken){
-			let yunres = await promiseRetry((retry, number) => {
-				return this.miHoYoApi.logyunGenshen().catch((e) => {
-					return retry(e);
-				});
-			}, RETRY_OPTIONS);
-			
+			let yunres = await this.miHoYoApi.logyunGenshen();
 			let yundata = yunres.data
 			if(yunres.retcode===0){
 				sumData["云原神"]={
@@ -46,11 +41,7 @@ export default class user {
 			}
 		}
 		if(this.e.cookies){
-			let mysres = await promiseRetry((retry, number) => {
-				return this.miHoYoApi.getTasksList().catch((e) => {
-					return retry(e);
-				});
-			}, RETRY_OPTIONS);
+			let mysres = await this.miHoYoApi.getTasksList();
 			if(mysres.retcode===0){
 				sumData["米游社"]={
 					"米游币任务":mysres.data.can_get_points!=0?"未完成":"已完成",
@@ -62,11 +53,7 @@ export default class user {
 		}
 		if(this.e.cookie){
 			for(let name of nameData){
-				let resSign = await promiseRetry((retry, number) => {
-					return this.miHoYoApi.honkai3rdSignTask(name).catch((e) => {
-						return retry(e);
-					});
-				}, RETRY_OPTIONS);
+				let resSign = await this.miHoYoApi.honkai3rdSignTask(name);
 				if(resSign?.upData){
 					// console.log(resSign?.upData)
 					for(let item of resSign?.upData){
