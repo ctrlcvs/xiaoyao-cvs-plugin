@@ -36,10 +36,11 @@ export async function userInfo(e,{render}){
 	let ck="";
 	if(e.cookie){
 		 ck= user.getCookieMap(e.cookie);
+		 ck=ck.get("ltuid")
 	}
 	return await Common.render(`user/userInfo`, {
 		uid: e.user_id,
-		ltuid:ck.get("ltuid")||e.user_id,
+		ltuid:ck||e.user_id,
 		save_id:e.user_id,
 		day,
 		sumData

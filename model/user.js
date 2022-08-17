@@ -113,7 +113,7 @@ export default class user {
 		let cookiesDoc = await this.getcookiesDoc();
 	    let miHoYoApi = new MihoYoApi(this.e);
 		if (!cookie) {
-			e.reply("cookie失效请重新绑定~【教程】\n" + cookiesDoc)
+			e.reply("请先#绑定cookie\n发送【体力帮助】查看配置教程")
 			return false;
 		}
 	
