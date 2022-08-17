@@ -7,7 +7,7 @@
 		font-size: 1.125rem;
 		/* 全局字体大小 */
 		background-color: rgb(243,242,241);
-		padding: 20px 0 0 0 !important;
+		padding: 20px 0 10px 0 !important;
 	}
 </style>
 {{/block}}
@@ -22,7 +22,7 @@
 </div>
 {{each sumData}}
 <div class="list">
-	<div class="list-title">
+	<div class="list-title" style="width: {{$index.indexOf('wdy')>=0?'160px':''}};">
 		{{$index=="Yun"?"云原神":$index=="mysbbs"?"米游社":$index.indexOf("ys")>=0?"原神":$index.indexOf("bh3")>=0?"崩坏3":$index.indexOf("bh2")>=0?"崩坏2":$index.indexOf("wdy")>=0?"未定事件簿":$index}}
 	</div>
 	{{each $value item}}
@@ -30,9 +30,17 @@
 		<div>
 			{{$index}}
 		</div>
+		{{if item=="未完成"|| item=="未签到" }}
+		<div>
+			<span  class="false-color">
+				{{item}}
+			</span>
+		</div>
+		{{else}}
 		<div>
 			{{item}}
 		</div>
+		{{/if}}
 	</div>
 	{{/each}}
 </div>

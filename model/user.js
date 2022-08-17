@@ -53,6 +53,7 @@ export default class user {
 			}, RETRY_OPTIONS);
 			if(mysres.retcode===0){
 				sumData["米游社"]={
+					"米游币任务":mysres.data.can_get_points!=0?"未完成":"已完成",
 					"米游币余额":mysres.data.total_points,
 					"今日剩余可获取":mysres.data.can_get_points
 				}
@@ -75,7 +76,9 @@ export default class user {
 							"uid":item.game_uid,
 							"游戏昵称":item.nickname,
 							"等级":item.level,
-							"今日签到":item.is_sign?"已签到":"未签到"
+							"今日签到":item.is_sign?"已签到":"未签到",
+							"累计签到":item.total_sign_day+"天",
+							"今天奖励":item.awards
 						}
 					}
 				}
@@ -122,7 +125,7 @@ export default class user {
 			return true;
 		}
 		if (!cookie.includes("login_ticket") && (isV3 && !skuid?.login_ticket)) {
-			e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket【教程】 " + cookiesDoc)
+			// e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket【教程】 " + cookiesDoc)
 			return false;
 		}
 		let flot = (await miHoYoApi.stoken(cookie, e));

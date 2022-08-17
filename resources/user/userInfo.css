@@ -105,5 +105,13 @@
 }
 
 .false-color {
-	color: #ef3644 !important;
+	color: #fff !important;
+	position: relative;
+	width: 60%;
+	height: 100%;
+	background-color: #ef3644 !important;
+	display: inline-block;
+	text-align: center;
+	right: -30px;
+	border-radius: 0px 20px 20px 0;
 }

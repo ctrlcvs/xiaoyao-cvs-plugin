@@ -80,7 +80,7 @@ const boards = {
 		url: "https://bbs.mihoyo.com/zzz/"
 	}
 }
-
+let web_api = `https://api-takumi.mihoyo.com`
 export default class MihoYoApi {
 	constructor(e) {
 		if (e) {
@@ -122,33 +122,31 @@ export default class MihoYoApi {
 			for (let item of data.list) {
 				item.upName=name
 				let objshuj = await this.isPostSign(kkbody, item.game_uid, item.region)
+				item.total_sign_day=objshuj?.data?.total_sign_day
 				if(objshuj?.data?.is_sign){
 					item.is_sign=true;
-					upData.push(item)
+					// console.log(objshuj)
 					message+=`游戏id：${item.nickname}-${item.game_uid}：今日已签到~\n`;
-					continue; 
-				}
-				objshuj=(await this.postSign(kkbody, item.game_uid, item.region))
-				if(objshuj?.data?.gt){
-					item.is_sign=false;
-					message+=`游戏id：${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到`;
 				}else{
-					item.is_sign=true;
-					message += `游戏id：${item.nickname}-${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
+					objshuj=(await this.postSign(kkbody, item.game_uid, item.region))
+					if(objshuj?.data?.gt){
+						item.is_sign=false;
+						message+=`游戏id：${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到`;
+					}else{
+						item.total_sign_day++;
+						item.is_sign=true;
+						message += `游戏id：${item.nickname}-${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
+					}
+				}
+				//获取签到信息和奖励信息 
+				const SignInfo = await this.getSignInfo(kkbody)
+				if (SignInfo) {
+					let awards= SignInfo.data.awards[item.total_sign_day-1];
+					item.awards=awards.name+"*"+awards.cnt
 				}
 				upData.push(item)
 				await utils.randomSleepAsync();
 			}
-			// 获取签到信息和奖励信息 、、后续重新梳理补充
-			// const {
-			// 	name,
-			// 	count
-			// } = await this.getHonkai3rdSignInfo(objData.game_uid, objData.region, objData.nickname, boards.honkai3rd)
-			// if (!name) {
-			// 	return {
-			// 		message: `获取签到信息和奖励信息异常`
-			// 	}
-			// }
 			// 签到操作
 			return {
 				message,upData
@@ -171,40 +169,21 @@ export default class MihoYoApi {
 		return resObj
 	}
 	// 获取签到状态和奖励信息
-	async getHonkai3rdSignInfo(game_uid, region, nickname, board) {
+	async getSignInfo(board) {
+		let url=`${web_api}/event/luna/home?lang=zh-cn&`
+		if (board.name == "原神") {
+			url = `${web_api}/event/bbs_sign_reward/home?`
+		}
+		// if (board.name == "崩坏2" || board.name == "未定事件簿") {
+		// 	url = `${web_api}/event/luna/home?lang=zh-cn`
+		// }
 		let res = await superagent.get(
-			`https://api-takumi.mihoyo.com/common/eutheniav2/index?region=${region}&act_id=${boards.honkai3rd.actid}&uid=${game_uid}`
+			`${url}act_id=${board.actid}`
 		).set(this
 			.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
-		// logger.mark(`ForumSign: ${res.text}`);
-		let data = resObj.data
-		const list = data?.sign?.list
-		const signCount = data?.sign?. ['sign_cnt']
-		if (list && signCount !== undefined) {
-			const award = list?. [signCount]
-			const status = award?.status
-			// status 2 已签到, 1 未签到, 0 未到签到时间
-			if (status === 0) {
-				// 未到签到时间, 说明今天已签到, 当前奖励已经领取
-				return "ok"
-			} else if (status === 1) {
-				// 未签到
-				const name = award?.name
-				const count = award?.cnt
-				if (name && count) {
-					if (status === 2) {} else {
-						return {
-							name,
-							count
-						}
-					}
-				} else {
-					Bot.logger.mark(`ForumSign: error`);
-				}
-			}
-		}
-		return "";
+		// logger.mark(`getSignInfo: ${res.text}`);
+		return resObj;
 	}
 
 
@@ -441,7 +420,6 @@ export default class MihoYoApi {
 	}
 	// 游戏签到操作查询
 	async isPostSign(board, game_uid, region) {
-		let web_api = `https://api-takumi.mihoyo.com`
 		let url =
 			`${web_api}/event/luna/info?lang=zh-cn`
 		if (board.name == "原神") {
@@ -457,7 +435,6 @@ export default class MihoYoApi {
 	}
 	// 游戏签到操作 	
 	async postSign(board, game_uid, region) {
-		let web_api = `https://api-takumi.mihoyo.com`
 		let url =
 			`${web_api}/event/luna/sign`
 		if (board.name == "原神") {
