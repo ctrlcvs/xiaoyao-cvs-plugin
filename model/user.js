@@ -4,7 +4,7 @@ import MihoYoApi from "../model/mys/mihoyo-api.js"
 import fs from 'node:fs'
 import promiseRetry from 'promise-retry';
 import lodash from 'lodash'
-import utils from '"../model/mys/utils.js';
+import utils from '../model/mys/utils.js';
 import gsCfg from './gsCfg.js';
 import {
 	isV3
