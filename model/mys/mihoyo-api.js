@@ -14,6 +14,7 @@ import {
 import fetch from "node-fetch"
 const APP_VERSION = "2.34.1";
 const salt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
+const salt2="t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
 //b253c83ab2609b1b600eddfe974df47b
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
@@ -156,8 +157,9 @@ export default class MihoYoApi {
 		}
 	}
 	async forumSign(forumId) {
-		const url = `https://api-takumi.mihoyo.com/apihub/sapi/signIn?gids=${forumId}`;
-		let res = await superagent.post(url).set(this._getHeader()).timeout(10000);
+		const url = `https://bbs-api.mihoyo.com/apihub/app/api/signIn`;
+		this.forumId=forumId;
+		let res = await superagent.post(url).set(this._getHeader()).send(JSON.stringify({gids:forumId*1})).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		// Bot.logger.mark(`ForumSign: ${res.text}`);
 		return resObj;
@@ -264,9 +266,11 @@ export default class MihoYoApi {
 
 	async stoken(cookie, e) {
 		this.e = e;
-		if (Object.keys(this.getStoken(e.user_id)).length != 0) {
+		let stokens=Object.values(this.getStoken(e.user_id))
+		if (stokens.length != 0) {
 			return true;
 		}
+		let datalist={};
 		const map = this.getCookieMap(cookie);
 		let loginTicket = map.get("login_ticket");
 		const loginUid = map.get("login_uid") ? map.get("login_uid") : map.get("ltuid");
@@ -298,12 +302,14 @@ export default class MihoYoApi {
 					if (!data.data) {
 						return false;
 					}
-					let datalist = {
+					datalist[e.uid] = {
 						stuid: map.get("account_id"),
 						stoken: data.data.list[0].token,
 						ltoken: data.data.list[1].token,
-						uid: e.uid
+						uid: e.uid,
+						is_sign:true
 					}
+					// gsCfg.saveBingStoken(e.user_id,datalist)
 					let yamlStr = YAML.stringify(datalist);
 					fs.writeFileSync(`${YamlDataUrl}/${e.user_id}.yaml`, yamlStr, 'utf8');
 					return true;
@@ -312,6 +318,7 @@ export default class MihoYoApi {
 		).catch(function(err) {
 			return false;
 		});
+		// console.log(datalist);
 		return true;
 	}
 	/** 米游社 api headers */
@@ -335,24 +342,39 @@ export default class MihoYoApi {
 			'Cookie': this.cookie
 		}
 	}
+	//社区签到ds
+	get_ds2(q="",b){
+		let n = salt2
+		let i = Math.floor(Date.now() / 1000)
+		let r = _.random(100001,200000)
+		let add = `&b=${b}&q=${q}`
+		let c= md5("salt=" + n + "&t=" + i + "&r=" + r + add)
+		return `${i},${r},${c}`
+	}
+	  
 	// 米游币任务的 headers
 	_getHeader() {
 		const randomStr = utils.randomString(6);
 		const timestamp = Math.floor(Date.now() / 1000)
 		let sign = md5(`salt=${salt}&t=${timestamp}&r=${randomStr}`);
+		let ds=`${timestamp},${randomStr},${sign}`
+		if(this.forumId){
+			ds = this.get_ds2("",JSON.stringify({gids:this.forumId*1}));
+			this.forumId="";
+		}
 		return {
 			'Cookie': this.cookies,
-            "Referer": "https://app.mihoyo.com",
-			"x-rpc-sys_version": "6.0.1",
-            "Host": "bbs-api.mihoyo.com",
-            "User-Agent": "okhttp/4.8.0",
-			'x-rpc-channel': 'appstore',
+			"x-rpc-channel": "miyousheluodi",
 			'x-rpc-device_id': DEVICE_ID,
 			'x-rpc-app_version': APP_VERSION,
 			"x-rpc-device_model": "Mi 10",
 			'x-rpc-device_name': DEVICE_NAME,
 			'x-rpc-client_type': '2', // 1 - iOS, 2 - Android, 4 - Web
-			'DS': `${timestamp},${randomStr},${sign}`
+			'DS': ds,
+			"Referer": "https://app.mihoyo.com",
+			"x-rpc-sys_version": "6.0.1",
+			"Host": "bbs-api.mihoyo.com",
+			"User-Agent": "okhttp/4.8.0",
 			// 'DS': `1602569298,k0xfEh,07f4545f5d88eac59cb1257aef74a570`
 		}
 	}
