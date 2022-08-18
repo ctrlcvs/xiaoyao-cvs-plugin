@@ -16,56 +16,57 @@ const RETRY_OPTIONS = {
 	minTimeout: 5000,
 	maxTimeout: 10000
 };
-const nameData=["原神","崩坏3","崩坏2","未定事件簿"];
+const nameData = ["原神", "崩坏3", "崩坏2", "未定事件簿"];
 /** 配置文件 */
 export default class user {
 	constructor(e) {
-		this.e=e;
-		this.stokenPath=`./plugins/${plugin}/data/yaml/`
-		this.yunPath=`./plugins/${plugin}/data/yunToken/`;
+		this.e = e;
+		this.stokenPath = `./plugins/${plugin}/data/yaml/`
+		this.yunPath = `./plugins/${plugin}/data/yunToken/`;
 		this.getyunToken(this.e)
 	}
-	async getCkData(){
-		let sumData={};
+	async getCkData() {
+		let sumData = {};
 		await this.cookie(this.e)
 		this.miHoYoApi = new MihoYoApi(this.e);
-		if(this.e.yuntoken){
+		if (this.e.yuntoken) {
 			let yunres = await this.miHoYoApi.logyunGenshen();
 			let yundata = yunres.data
-			if(yunres.retcode===0){
-				sumData["云原神"]={
-					"今日可获取":yundata?.coin?.coin_num,
-					"免费时长":yundata?.free_time?.free_time,
-					"总时长":yundata.total_time
+			if (yunres.retcode === 0) {
+				sumData["云原神"] = {
+					"今日可获取": yundata?.coin?.coin_num,
+					"免费时长": yundata?.free_time?.free_time,
+					"总时长": yundata.total_time
 				}
 			}
 		}
-		if(this.e.cookies){
+		if (this.e.cookies) {
 			let mysres = await this.miHoYoApi.getTasksList();
-			if(mysres.retcode===0){
-				sumData["米游社"]={
-					"米游币任务":mysres.data.can_get_points!=0?"未完成":"已完成",
-					"米游币余额":mysres.data.total_points,
-					"今日剩余可获取":mysres.data.can_get_points
+			if (mysres.retcode === 0) {
+				sumData["米游社"] = {
+					"米游币任务": mysres.data.can_get_points != 0 ? "未完成" : "已完成",
+					"米游币余额": mysres.data.total_points,
+					"今日剩余可获取": mysres.data.can_get_points
 				}
 			}
-			
+
 		}
-		if(this.e.cookie){
-			for(let name of nameData){
+		if (this.e.cookie) {
+			for (let name of nameData) {
 				let resSign = await this.miHoYoApi.honkai3rdSignTask(name);
-				if(resSign?.upData){
+				if (resSign?.upData) {
 					// console.log(resSign?.upData)
-					for(let item of resSign?.upData){
-						let num= lodash.random(0, 9999);
-						item.upName=item.upName=="原神"?"ys":item.upName=="崩坏3"?"bh3":item.upName=="崩坏2"?"bh2":item.upName=="未定事件簿"?"wdy":""
-						sumData[item.upName+""+num]={
-							"uid":item.game_uid,
-							"游戏昵称":item.nickname,
-							"等级":item.level,
-							"今日签到":item.is_sign?"已签到":"未签到",
-							"累计签到":item.total_sign_day+"天",
-							"今天奖励":item.awards
+					for (let item of resSign?.upData) {
+						let num = lodash.random(0, 9999);
+						item.upName = item.upName == "原神" ? "ys" : item.upName == "崩坏3" ? "bh3" : item.upName ==
+							"崩坏2" ? "bh2" : item.upName == "未定事件簿" ? "wdy" : ""
+						sumData[item.upName + "" + num] = {
+							"uid": item.game_uid,
+							"游戏昵称": item.nickname,
+							"等级": item.level,
+							"今日签到": item.is_sign ? "已签到" : "未签到",
+							"累计签到": item.total_sign_day + "天",
+							"今天奖励": item.awards
 						}
 					}
 				}
@@ -99,16 +100,17 @@ export default class user {
 	async cookie(e) {
 		let {
 			cookie,
-			uid,skuid
+			uid,
+			skuid
 		} = await this.getCookie(e);
 		let cookiesDoc = await this.getcookiesDoc();
-	    let miHoYoApi = new MihoYoApi(this.e);
+		let miHoYoApi = new MihoYoApi(this.e);
 		if (!cookie) {
 			e.reply("请先#绑定cookie\n发送【体力帮助】查看配置教程")
 			return false;
 		}
-	
-		if (Object.keys((await miHoYoApi.getStoken(e.user_id))).length != 0) {
+		let stokens = miHoYoApi.getStoken(e.user_id)
+		if (!stokens) {
 			return true;
 		}
 		if (!cookie.includes("login_ticket") && (isV3 && !skuid?.login_ticket)) {
@@ -124,7 +126,7 @@ export default class user {
 		}
 		return true;
 	}
-	async  getcookiesDoc() {
+	async getcookiesDoc() {
 		return await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").cookiesDoc
 	}
 	async getCookie(e) {

@@ -148,9 +148,7 @@ class GsCfg {
 		const res = await Promise.all(promises)
 		res.forEach((v,index) => {
 			let tmp = YAML.parse(v)
-			tmp["qq"]=files[index].split(".")[0]*1
 			ck.push(tmp)
-			
 		})
 		return ck
 	}
@@ -170,7 +168,11 @@ class GsCfg {
 			let ck = fs.readFileSync(file, 'utf-8')
 			ck = YAML.parse(ck)
 			for(let item in ck){
-				let login_ticket=ck[item]?.login_ticket
+				let login_ticket;
+				if(!ck[item].isMain){
+					continue;
+				}
+				login_ticket=ck[item]?.login_ticket
 				ck=ck[item].ck
 				return {ck,item,login_ticket};
 			}
@@ -187,7 +189,18 @@ class GsCfg {
 			fs.writeFileSync(file, yaml, 'utf8')
 		}
 	}
-
+   saveBingStoken(userId, data) {
+		let file = `./plugins/${plugin}/data/yaml/${userId}.yaml`
+		console.log(data)
+		console.log(file)
+		if (lodash.isEmpty(data)) {
+			fs.existsSync(file) && fs.unlinkSync(file)
+		} else {
+			let yaml = YAML.stringify(data)
+			
+			fs.writeFileSync(file, yaml, 'utf8')
+		}
+	}
 	/**
 	 * 原神角色id转换角色名字
 	 */

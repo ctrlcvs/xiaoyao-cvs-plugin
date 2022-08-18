@@ -266,11 +266,10 @@ export default class MihoYoApi {
 
 	async stoken(cookie, e) {
 		this.e = e;
-		let stokens=Object.values(this.getStoken(e.user_id))
-		if (stokens.length != 0) {
+		let datalist=this.getStoken(e.user_id)
+		if (datalist){
 			return true;
 		}
-		let datalist={};
 		const map = this.getCookieMap(cookie);
 		let loginTicket = map.get("login_ticket");
 		const loginUid = map.get("login_uid") ? map.get("login_uid") : map.get("ltuid");
@@ -307,18 +306,18 @@ export default class MihoYoApi {
 						stoken: data.data.list[0].token,
 						ltoken: data.data.list[1].token,
 						uid: e.uid,
+						userId:this.e.user_id,
 						is_sign:true
 					}
-					// gsCfg.saveBingStoken(e.user_id,datalist)
-					let yamlStr = YAML.stringify(datalist);
-					fs.writeFileSync(`${YamlDataUrl}/${e.user_id}.yaml`, yamlStr, 'utf8');
+					gsCfg.saveBingStoken(e.user_id,datalist)
+					// let yamlStr = YAML.stringify(datalist);
+					// fs.writeFileSync(`${YamlDataUrl}/${e.user_id}.yaml`, yamlStr, 'utf8');
 					return true;
 				});
 			}
 		).catch(function(err) {
 			return false;
 		});
-		// console.log(datalist);
 		return true;
 	}
 	/** 米游社 api headers */
@@ -415,7 +414,14 @@ export default class MihoYoApi {
 		try {
 			let ck = fs.readFileSync(file, 'utf-8')
 			ck = YAML.parse(ck)
-			return ck
+			if(ck?.uid){
+				let datalist={};
+				ck.userId=this.e.user_id
+				datalist[ck.uid]=ck;
+				ck=datalist
+				gsCfg.saveBingStoken(this.e.user_id,datalist)
+			}
+			return ck[this.e.uid]
 		} catch (error) {
 			return {}
 		}
