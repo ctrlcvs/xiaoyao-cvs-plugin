@@ -352,7 +352,7 @@ export async function allMysSign() {
 	for (let dataUid of stoken) {
 		for(let uuId in dataUid){
 		let data=dataUid[uuId]
-		let user_id = data.userId;
+		let user_id = data.userId*1;
 		let e = {
 			user_id,
 			isTask: true
