@@ -123,7 +123,7 @@ export async function mysSign(e) {
 	let iscount = "";
 	let miHoYoApi = new MihoYoApi(e);
 	let stokens=await miHoYoApi.getStoken(e.user_id)
-	if (!stokens) {
+	if (Object.keys(stokens).length>0) {
 		e.reply("未读取到stoken请检查cookies是否包含login_ticket、以及云崽是否为最新版本V3、V2兼容")
 		return true;
 	}
@@ -233,7 +233,7 @@ export async function bbsSeach(e){
 	}
 	let miHoYoApi = new MihoYoApi(e);
 	let stokens=await miHoYoApi.getStoken(e.user_id)
-	if (!stokens) {
+	if (Object.keys(stokens).length>0) {
 		let cookiesDoc = await getcookiesDoc()
 		await replyMsg(e, "未读取到stoken请检查cookies是否包含login_ticket，请先绑定stoken再查询~\n"+cookiesDoc);
 		return true;
@@ -288,13 +288,12 @@ async function cookie(e) {
 	} = await getCookie(e);
 	let miHoYoApi = new MihoYoApi(e);
 	let cookiesDoc = await getcookiesDoc();
-
 	if (!cookie) {
 		e.reply("cookie失效请重新绑定~【教程】\n" + cookiesDoc)
 		return false;
 	}
-let stokens=miHoYoApi.getStoken(e.user_id)
-	if (!stokens) {
+    let stokens=miHoYoApi.getStoken(e.user_id)
+	if (Object.keys(stokens).length>0) {
 		return true;
 	}
 	if (!cookie.includes("login_ticket") && (isV3 && !skuid?.login_ticket)) {
@@ -302,7 +301,6 @@ let stokens=miHoYoApi.getStoken(e.user_id)
 		return false;
 	}
 	let flot = (await miHoYoApi.stoken(cookie, e));
-	// console.log(flot)
 	await utils.sleepAsync(1000); //延迟加载防止文件未生成
 	if (!flot) {
 		e.reply("登录失效请重新登录获取cookie发送机器人~")

@@ -12,9 +12,10 @@ import {
 	isV3
 } from '../../components/Changelog.js';
 import fetch from "node-fetch"
-const APP_VERSION = "2.34.1";
-const salt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
+const APP_VERSION = "2.35.2";
+const salt = "ZSHlXeQUBis52qD1kEgKt5lUYed4b7Bb";
 const salt2="t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
+const saltWeb="N50pqm7FSy2AkFz2B3TqtuZMJ5TOl3Ep";
 //b253c83ab2609b1b600eddfe974df47b
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
@@ -266,8 +267,8 @@ export default class MihoYoApi {
 
 	async stoken(cookie, e) {
 		this.e = e;
-		let datalist=this.getStoken(e.user_id)
-		if (datalist){
+		let datalist=this.getStoken(e.user_id) || {}
+		if (Object.keys(datalist).length>0){
 			return true;
 		}
 		const map = this.getCookieMap(cookie);
@@ -297,7 +298,6 @@ export default class MihoYoApi {
 					return false;
 				}
 				response.json().then(function(data) {
-					// console.log(data);
 					if (!data.data) {
 						return false;
 					}
@@ -306,12 +306,10 @@ export default class MihoYoApi {
 						stoken: data.data.list[0].token,
 						ltoken: data.data.list[1].token,
 						uid: e.uid,
-						userId:this.e.user_id,
+						userId:e.user_id,
 						is_sign:true
 					}
 					gsCfg.saveBingStoken(e.user_id,datalist)
-					// let yamlStr = YAML.stringify(datalist);
-					// fs.writeFileSync(`${YamlDataUrl}/${e.user_id}.yaml`, yamlStr, 'utf8');
 					return true;
 				});
 			}
@@ -325,7 +323,7 @@ export default class MihoYoApi {
 	getpubHeaders(board) {
 		const randomStr = utils.randomString(6);
 		const timestamp = Math.floor(Date.now() / 1000)
-		let sign = md5(`salt=9nQiU3AV0rJSIBWgdynfoGMGKaklfbM7&t=${timestamp}&r=${randomStr}`);
+		let sign = md5(`salt=${saltWeb}&t=${timestamp}&r=${randomStr}`);
 		return {
 			'accept-language': 'zh-CN,zh;q=0.9,ja-JP;q=0.8,ja;q=0.7,en-US;q=0.6,en;q=0.5',
 			'x-rpc-device_id': DEVICE_ID,
@@ -333,7 +331,7 @@ export default class MihoYoApi {
 			Referer: board.getReferer(),
 			Host: 'api-takumi.mihoyo.com',
 			'x-rpc-channel': 'appstore',
-			'x-rpc-app_version': '2.34.1',
+			'x-rpc-app_version': APP_VERSION,
 			'x-requested-with': 'com.mihoyo.hyperion',
 			'x-rpc-client_type': '5',
 			'Content-Type': 'application/json;charset=UTF-8',
@@ -371,7 +369,7 @@ export default class MihoYoApi {
 			'x-rpc-client_type': '2', // 1 - iOS, 2 - Android, 4 - Web
 			'DS': ds,
 			"Referer": "https://app.mihoyo.com",
-			"x-rpc-sys_version": "6.0.1",
+			"x-rpc-sys_version": "12",
 			"Host": "bbs-api.mihoyo.com",
 			"User-Agent": "okhttp/4.8.0",
 			// 'DS': `1602569298,k0xfEh,07f4545f5d88eac59cb1257aef74a570`
@@ -421,7 +419,7 @@ export default class MihoYoApi {
 				ck=datalist
 				gsCfg.saveBingStoken(this.e.user_id,datalist)
 			}
-			return ck[this.e.uid]
+			return ck[this.e.uid]||{}
 		} catch (error) {
 			return {}
 		}
