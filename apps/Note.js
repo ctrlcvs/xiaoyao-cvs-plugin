@@ -391,12 +391,12 @@ export async function Note_appoint(e) {
 		nickname = info.card || info.nickname
 	}
 	if (msg.includes("列表")) {
-		let xlmsg=msg.replace("列表","") || 1
+		let xlmsg=msg.replace("列表","")*1 || 1
 		let mstList = [];
 		let sumCount=(urlType.length/80).toFixed(0);
-		xlmsg=sumCount-xlmsg>-1?xlmsg:sumCount;
+		xlmsg=sumCount-xlmsg>-1?xlmsg:sumCount==0?1:sumCount;
 		urlType.unshift(`模板列表共，第${xlmsg}页，共${urlType.length}张，\n您可通过【#体力模板设置1】来绑定你需要的体力模板~\n请选择序号~~\n当前支持选择的模板有:`)
-		let xxmsg=(xlmsg-1)==0?0:80*(xlmsg-1)
+		let xxmsg=(xlmsg-1)<=0?0:80*(xlmsg-1)
 		let count=0;
 		for (let [index, item] of urlType.entries()) {
 			let msg_pass = [];
