@@ -122,7 +122,8 @@ export async function mysSign(e) {
 	}
 	let iscount = "";
 	let miHoYoApi = new MihoYoApi(e);
-	if (Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0) {
+	let stokens=await miHoYoApi.getStoken(e.user_id)
+	if (Object.keys(stokens).length==0) {
 		e.reply("未读取到stoken请检查cookies是否包含login_ticket、以及云崽是否为最新版本V3、V2兼容")
 		return true;
 	}
@@ -231,7 +232,8 @@ export async function bbsSeach(e){
 		return true;
 	}
 	let miHoYoApi = new MihoYoApi(e);
-	if (Object.keys((await miHoYoApi.getStoken(e.user_id))).length == 0) {
+	let stokens=await miHoYoApi.getStoken(e.user_id)
+	if (Object.keys(stokens).length==0) {
 		let cookiesDoc = await getcookiesDoc()
 		await replyMsg(e, "未读取到stoken请检查cookies是否包含login_ticket，请先绑定stoken再查询~\n"+cookiesDoc);
 		return true;
@@ -286,13 +288,12 @@ async function cookie(e) {
 	} = await getCookie(e);
 	let miHoYoApi = new MihoYoApi(e);
 	let cookiesDoc = await getcookiesDoc();
-
 	if (!cookie) {
 		e.reply("cookie失效请重新绑定~【教程】\n" + cookiesDoc)
 		return false;
 	}
-
-	if (Object.keys((await miHoYoApi.getStoken(e.user_id))).length != 0) {
+    let stokens=miHoYoApi.getStoken(e.user_id)
+	if (Object.keys(stokens).length>0) {
 		return true;
 	}
 	if (!cookie.includes("login_ticket") && (isV3 && !skuid?.login_ticket)) {
@@ -300,7 +301,6 @@ async function cookie(e) {
 		return false;
 	}
 	let flot = (await miHoYoApi.stoken(cookie, e));
-	// console.log(flot)
 	await utils.sleepAsync(1000); //延迟加载防止文件未生成
 	if (!flot) {
 		e.reply("登录失效请重新登录获取cookie发送机器人~")
@@ -347,8 +347,10 @@ export async function allMysSign() {
 	let stoken = await gsCfg.getBingStoken();
 	let isPushSign = await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").isPushSign
 	//获取需要签到的用户
-	for (let data of stoken) {
-		let user_id = data.qq;
+	for (let dataUid of stoken) {
+		for(let uuId in dataUid){
+		let data=dataUid[uuId]
+		let user_id = data.userId*1;
 		let e = {
 			user_id,
 			isTask: true
@@ -363,11 +365,12 @@ export async function allMysSign() {
 			}
 			if (msg.includes("OK")) { //签到成功并且不是已签到的才推送
 				// msg = msg.replace("签到成功", "自动签到成功");
-				utils.relpyPrivate(user_id, msg + "\n自动签到成功");
+				utils.relpyPrivate(user_id, msg + "uid:"+uuId+"\n自动签到成功");
 			}
 		};
 		await mysSign(e);
 		await utils.sleepAsync(10000);
+		}
 	}
 	Bot.logger.mark(`米社米币签到任务完成`);
 	return true

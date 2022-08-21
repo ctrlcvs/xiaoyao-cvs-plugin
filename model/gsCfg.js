@@ -5,7 +5,9 @@ import {
 	promisify
 } from 'node:util'
 import lodash from 'lodash'
-
+import {
+	Data
+} from "../components/index.js";
 const plugin = "xiaoyao-cvs-plugin"
 /** 配置文件 */
 class GsCfg {
@@ -47,9 +49,9 @@ class GsCfg {
 		}
 	}
 	/** 通用yaml读取*/
-	getfileYaml(path,name){
+	getfileYaml(path, name) {
 		return YAML.parse(
-			fs.readFileSync(path+name+".yaml", 'utf8')
+			fs.readFileSync(path + name + ".yaml", 'utf8')
 		)
 	}
 	/**
@@ -133,7 +135,7 @@ class GsCfg {
 			ckQQ
 		}
 	}
-    /** 读取所有用户绑定的stoken */
+	/** 读取所有用户绑定的stoken */
 	async getBingStoken() {
 		let ck = []
 		let ckQQ = {}
@@ -146,11 +148,9 @@ class GsCfg {
 
 		files.forEach((v) => promises.push(readFile(`${dir}${v}`, 'utf8')))
 		const res = await Promise.all(promises)
-		res.forEach((v,index) => {
+		res.forEach((v, index) => {
 			let tmp = YAML.parse(v)
-			tmp["qq"]=files[index].split(".")[0]*1
 			ck.push(tmp)
-			
 		})
 		return ck
 	}
@@ -169,10 +169,18 @@ class GsCfg {
 		try {
 			let ck = fs.readFileSync(file, 'utf-8')
 			ck = YAML.parse(ck)
-			for(let item in ck){
-				let login_ticket=ck[item]?.login_ticket
-				ck=ck[item].ck
-				return {ck,item,login_ticket};
+			for (let item in ck) {
+				let login_ticket;
+				if (!ck[item].isMain) {
+					continue;
+				}
+				login_ticket = ck[item]?.login_ticket
+				ck = ck[item].ck
+				return {
+					ck,
+					item,
+					login_ticket
+				};
 			}
 		} catch (error) {
 			return {}
@@ -187,7 +195,27 @@ class GsCfg {
 			fs.writeFileSync(file, yaml, 'utf8')
 		}
 	}
-
+	saveBingStoken(userId, data) {
+		let file = `./plugins/${plugin}/data/yaml/${userId}.yaml`
+		if (lodash.isEmpty(data)) {
+			fs.existsSync(file) && fs.unlinkSync(file)
+		} else {
+			 fs.exists(file, (exists) => {
+				if (!exists) {
+					fs.writeFileSync(file, "", 'utf8')
+				}
+				let ck = fs.readFileSync(file, 'utf-8')
+				let yaml = YAML.stringify(data)
+				ck = YAML.parse(ck)
+				if (!ck) {
+					fs.writeFileSync(file, yaml, 'utf8')
+				} else {
+					ck = YAML.stringify(ck)
+					fs.writeFileSync(file, yaml + ck, 'utf8')
+				}
+			})
+		}
+	}
 	/**
 	 * 原神角色id转换角色名字
 	 */

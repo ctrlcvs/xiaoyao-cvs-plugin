@@ -358,16 +358,16 @@ export async function DailyNoteTask() {
 			redis.set(sendkey, "1", {
 				EX: sendCD
 			});
-			await Note(e, getPluginRender("xiaoyao-cvs-plugin"));
+			// await Note(e, getPluginRender("xiaoyao-cvs-plugin"));
 		}
 	}
 }
 
-export async function pokeNote(e) {
+export async function pokeNote(e,{render}) {
 	if (!Cfg.get("note.poke")) {
 		return false;
 	}
-	return await Note(e, getPluginRender("xiaoyao-cvs-plugin"), "poke");
+	return await Note(e,{render}, "poke");
 }
 
 
