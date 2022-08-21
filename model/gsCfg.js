@@ -26,7 +26,18 @@ class GsCfg {
 			defSet: {}
 		}
 	}
-
+	async getyunToken(e) {
+		let file = `${yunpath}/${e.user_id}.yaml`
+		try {
+			let ck = fs.readFileSync(file, 'utf-8')
+			ck = YAML.parse(ck)
+			e.devId = ck.devId;
+			e.yuntoken = ck.yuntoken;
+			return ck
+		} catch (error) {
+			return ""
+		}
+	}
 	/**
 	 * @param app  功能
 	 * @param name 配置文件名称
