@@ -78,7 +78,7 @@
 	/* color: #444444; */
 	display: block;
 	text-align: left;
-	text-shadow: 0 0 5px #b2661b,0 0 5px #b2661b,0 0 5px #b2661b,0 0 5px #b2661b;	/* //设置发光效果 */
+	text-shadow: 0 0 5px #b2661b,0 0 5px #b2661b;	/* //设置发光效果 */
 	src: url("{{_res_path}}font/MiSans-Regular.ttf");
 }
 
@@ -139,7 +139,7 @@
 	line-height: 50px;
 	/* color: #a033c9; */
 	color: #fff;
-	text-shadow: 0 0 5px #b2661b,0 0 5px #b2661b,0 0 5px #b2661b,0 0 5px #b2661b;	/* //设置发光效果 */
+	text-shadow: 0 0 5px #b2661b,0 0 5px #b2661b;	/* //设置发光效果 */
 	/* border: 1px solid #a033c9; */
 	font-size: 24px;
 	font-family: 'HYWenHei';
@@ -164,7 +164,7 @@
 	/* color: #a9843f; */
 	position: absolute;
 	font-family: "MiSans-Medium";
-	text-shadow: 0 0 5px #b2661b,0 0 5px #b2661b,0 0 5px #b2661b,0 0 5px #b2661b;	/* //设置发光效果 */
+	text-shadow: 0 0 5px #b2661b,0 0 5px #b2661b;	/* //设置发光效果 */
 	top: 20%;
 	margin-left: 25px;
 }
@@ -202,7 +202,7 @@
 	display: flex;
 	font-size: 20px;
 	/* color: #d9766c; */
-	text-shadow: 0 0 5px #b2661b,0 0 5px #b2661b,0 0 5px #b2661b,0 0 5px #b2661b;	/* //设置发光效果 */
+	text-shadow: 0 0 5px #b2661b,0 0 5px #b2661b;	/* //设置发光效果 */
 	font-family: "HYWenHei";
 	text-align: center;
 	width: 200px;
