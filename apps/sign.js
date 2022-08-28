@@ -25,7 +25,7 @@ export const rule = {
 		describe: "米币查询"
 	},
 	sign: {
-		reg: "^#*(原神|崩坏3|崩坏2|未定事件簿)签到$",
+		reg: "^#*(崩坏3|崩坏2|未定事件簿)签到$",
 		describe: "米社规则签到"
 	},
 	signlist: {
@@ -39,6 +39,10 @@ export const rule = {
 	yunSign: {
 		reg: "^#*云原神签到$",
 		describe: "云原神签到"
+	},
+	delSign:{
+		reg: "^#*删除(我的)*(stoken|云原神)$",
+		describe: "删除云原神、stoken数据"
 	},
 	yunAllSign: {
 		reg: "^#云原神全部签到$",
@@ -90,7 +94,7 @@ export async function sign(e) {
 	let ForumData = await getDataList(msg);
 	e.reply(`开始尝试${msg}签到预计${msg=='全部'?"60":"5-10"}秒~`)
 	for (let forum of ForumData) {
-		if (!(["原神","崩坏3", "崩坏2", "未定事件簿"].includes(forum.name))) {
+		if (!(["崩坏3", "崩坏2", "未定事件簿"].includes(forum.name))) {
 			continue;
 		}
 		resultMessage += `**${forum.name}**\n`
@@ -293,6 +297,7 @@ async function cookie(e) {
 		return false;
 	}
     let stokens=miHoYoApi.getStoken(e.user_id)
+	console.log(stokens)
 	if (Object.keys(stokens).length>0) {
 		return true;
 	}
@@ -575,4 +580,13 @@ export async  function yunHelp(e){
 
 const yunDoc=async function(){
 	return await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").yunDoc
+}
+export async function delSign(e){
+	let msg=e.msg.replace(/#|删除|我的/g,"");
+	let url=msg=="云原神"?`${yunpath}`:`${YamlDataUrl}`;
+	console.log(e.uid)
+	if(await gsCfg.delSytk(url,e.user_id)){
+		e.reply(`删除${msg}数据成功~\n期待您的下次使用`)
+	}
+	return true;
 }
