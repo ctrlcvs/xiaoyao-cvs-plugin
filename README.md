@@ -61,6 +61,7 @@ cnpm i promise-retry
 9. 其余具体功能通过 #图鉴帮助 #图鉴版本 查看
 10. 发送 #崩坏3签到 可签到崩坏3游戏模块 具体支持【崩坏3、崩坏2、未定义事件】
 11. 发送 #云原神签到 可签到云原神游戏
+12. 默认配置文件位于 ./plugins/xiaoyao-cvs-plugin/defSet/config/config.yaml
  
 ## 其他
 <!---

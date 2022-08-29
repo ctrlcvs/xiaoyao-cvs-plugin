@@ -15,9 +15,22 @@ import {
 	segment
 } from "oicq";
 import YAML from 'yaml'
+
+const _path = process.cwd();
+let START = moment().unix();
+const TODAY_DATE = moment().format('YYYY-MM-DD');
+const RETRY_OPTIONS = {
+	retries: 3,
+	minTimeout: 5000,
+	maxTimeout: 10000
+};
+let YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
+let yunpath=`${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`;
+let configSign=gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config");
+configSign.signlist=configSign.signlist||"原神|崩坏3|崩坏2|未定事件簿".split("|")
 export const rule = {
 	mysSign: {
-		reg: "^#*(米游社|mys|社区)(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零|全部)签到$",
+		reg: `^#*(米游社|mys|社区)(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零|全部)签到$`,
 		describe: "米游社米游币签到（理论上会签到全部所以区分开了）"
 	},
 	bbsSeach:{
@@ -25,7 +38,7 @@ export const rule = {
 		describe: "米币查询"
 	},
 	sign: {
-		reg: "^#*(崩坏3|崩坏2|未定事件簿)签到$",
+		reg: `^#*(${configSign.signlist.join("|")})签到$`,
 		describe: "米社规则签到"
 	},
 	signlist: {
@@ -40,10 +53,10 @@ export const rule = {
 		reg: "^#*云原神签到$",
 		describe: "云原神签到"
 	},
-	delSign:{
-		reg: "^#*删除(我的)*(stoken|云原神)$",
-		describe: "删除云原神、stoken数据"
-	},
+	// delSign:{
+	// 	reg: "^#*删除(我的)*(stoken|云原神)$",
+	// 	describe: "删除云原神、stoken数据"
+	// },
 	yunAllSign: {
 		reg: "^#云原神全部签到$",
 		describe: "云原神全部签到"
@@ -61,18 +74,6 @@ export const rule = {
 		describe: "cookies获取帮助"
 	}
 };
-
-
-const _path = process.cwd();
-let START = moment().unix();
-const TODAY_DATE = moment().format('YYYY-MM-DD');
-const RETRY_OPTIONS = {
-	retries: 3,
-	minTimeout: 5000,
-	maxTimeout: 10000
-};
-let YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
-let yunpath=`${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`;
 init()
 function init() {
 	Data.createDir("",yunpath , false);
@@ -94,7 +95,7 @@ export async function sign(e) {
 	let ForumData = await getDataList(msg);
 	e.reply(`开始尝试${msg}签到预计${msg=='全部'?"60":"5-10"}秒~`)
 	for (let forum of ForumData) {
-		if (!(["崩坏3", "崩坏2", "未定事件簿"].includes(forum.name))) {
+		if (!(configSign.signlist.includes(forum.name))) {
 			continue;
 		}
 		resultMessage += `**${forum.name}**\n`
