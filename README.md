@@ -16,12 +16,12 @@ yunzai-bot扩展图鉴以及体力优化;
 
 
 #### 安装教程
-
-```
 使用gitee
+```
 git clone https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cvs-plugin/
-
+```
 使用github
+```
 git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cvs-plugin/
 ```
 
@@ -50,15 +50,17 @@ cnpm i superagent
 cnpm i promise-retry
 ```
 #### 命令说明
-1. 发送 #图鉴更新 获取最新的图鉴记录。(必须)
-2. 发送 #**图鉴 进行触发，例如发送 #刻晴图鉴，即可返回对应的图片信息。
-3. 发送 #图鉴插件（强制）更新获取最新代码
+1. 发送 【#图鉴更新】 获取最新的图鉴记录。(必须)
+2. 发送 【#**图鉴】 进行触发，例如发送 #刻晴图鉴，即可返回对应的图片信息。
+3. 发送 【#图鉴插件更新】获取最新代码
 4. 别名文件在 /xiaoyao-cvs-plugin/resources/Atlas_alias 目录下面，当前只支持食物及原魔的别名
 5. 树脂背景图文件在 /xiaoyao-cvs-plugin/resources/dailyNote/background_image 目录下
 6. 发送 #图鉴帮助 获取帮助面板
 7. 发送 #图鉴设置 获取图鉴管理面板
 8. 发送 #图鉴版本 获取图鉴更新日志
 9. 其余具体功能通过 #图鉴帮助 #图鉴版本 查看
+10. 发送 #崩坏3签到 可签到崩坏3游戏模块 具体支持【崩坏3、崩坏2、未定义事件】
+11. 发送 #云原神签到 可签到云原神游戏
  
 ## 其他
 <!---
