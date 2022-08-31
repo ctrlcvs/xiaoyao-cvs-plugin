@@ -72,6 +72,10 @@ export async function gclog(e) {
 	let data = objData.data
 	e.region = e.uid[0] == 5 ? "cn_qd01" : "cn_gf01"
 	let authkeyrow = await miHoYoApi.authkey(data);
+	if(!authkeyrow?.data){
+		e.reply("authkey获取失败："+authkeyrow.message)
+		return true;
+	}
 	let authkey=authkeyrow.data["authkey"]
 	let postdata = {
 		'authkey_ver': '1',
