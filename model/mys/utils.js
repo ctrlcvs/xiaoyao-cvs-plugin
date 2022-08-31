@@ -18,7 +18,6 @@ export function randomString(length){
 		let randomStr = '';
 		for (let i = 0; i < length; i++) {
 			randomStr += _.sample('abcdefghijklmnopqrstuvwxyz0123456789');
-			// randomStr += _.sample('dWCcD2FsOUXEstC5f9xubswZxEeoBOTc');
 		}
 		return randomStr;
 }

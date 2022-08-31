@@ -12,15 +12,20 @@ import {
 	isV3
 } from '../../components/Changelog.js';
 import fetch from "node-fetch"
+
 const APP_VERSION = "2.35.2";
+const mhyVersion = "2.11.1";
 const salt = "ZSHlXeQUBis52qD1kEgKt5lUYed4b7Bb";
-const salt2="t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
-const saltWeb="N50pqm7FSy2AkFz2B3TqtuZMJ5TOl3Ep";
+const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
+const saltWeb = "N50pqm7FSy2AkFz2B3TqtuZMJ5TOl3Ep";
+const oldsalt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
 //b253c83ab2609b1b600eddfe974df47b
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
 const _path = process.cwd();
 let YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
+let web_api = `https://api-takumi.mihoyo.com`
+let hk4_api = `https://hk4e-api.mihoyo.com`;
 // 米游社的版块
 const boards = {
 	honkai3rd: {
@@ -82,7 +87,7 @@ const boards = {
 		url: "https://bbs.mihoyo.com/zzz/"
 	}
 }
-let web_api = `https://api-takumi.mihoyo.com`
+
 export default class MihoYoApi {
 	constructor(e) {
 		if (e) {
@@ -95,7 +100,7 @@ export default class MihoYoApi {
 			let data = this.getStoken(this.e.user_id);
 			if (data) {
 				this.cookies = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
-				this.e.cookies=this.cookies
+				this.e.cookies = this.cookies
 			}
 		}
 		Data.createDir("", YamlDataUrl, false);
@@ -114,44 +119,46 @@ export default class MihoYoApi {
 			// 获取账号信息
 			const objData = await this.getUserInfo(kkbody)
 			let data = objData.data
-			if (data?.list?.length == 0||!data?.list) {
+			if (data?.list?.length == 0 || !data?.list) {
 				return {
 					message: `未绑定${name}信息`
 				}
 			}
 			let message = `\n${name}共计${data.list.length}个账号\n`;
-			let upData=[];
+			let upData = [];
 			for (let item of data.list) {
-				item.upName=name
+				item.upName = name
 				let objshuj = await this.isPostSign(kkbody, item.game_uid, item.region)
-				item.total_sign_day=objshuj?.data?.total_sign_day
-				if(objshuj?.data?.is_sign){
-					item.is_sign=true;
+				item.total_sign_day = objshuj?.data?.total_sign_day
+				if (objshuj?.data?.is_sign) {
+					item.is_sign = true;
 					// console.log(objshuj)
-					message+=`游戏id：${item.nickname}-${item.game_uid}：今日已签到~\n`;
-				}else{
-					objshuj=(await this.postSign(kkbody, item.game_uid, item.region))
-					if(objshuj?.data?.gt){
-						item.is_sign=false;
-						message+=`游戏id：${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到`;
-					}else{
+					message += `游戏id：${item.nickname}-${item.game_uid}：今日已签到~\n`;
+				} else {
+					objshuj = (await this.postSign(kkbody, item.game_uid, item.region))
+					if (objshuj?.data?.gt) {
+						item.is_sign = false;
+						message += `游戏id：${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到`;
+					} else {
 						item.total_sign_day++;
-						item.is_sign=true;
-						message += `游戏id：${item.nickname}-${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
+						item.is_sign = true;
+						message +=
+							`游戏id：${item.nickname}-${item.game_uid}：${objshuj.message=="OK"?"签到成功":objshuj.message}\n`
 					}
 				}
 				//获取签到信息和奖励信息 
 				const SignInfo = await this.getSignInfo(kkbody)
 				if (SignInfo) {
-					let awards= SignInfo.data.awards[item.total_sign_day-1];
-					item.awards=awards.name+"*"+awards.cnt
+					let awards = SignInfo.data.awards[item.total_sign_day - 1];
+					item.awards = awards.name + "*" + awards.cnt
 				}
 				upData.push(item)
 				await utils.randomSleepAsync();
 			}
 			// 签到操作
 			return {
-				message,upData
+				message,
+				upData
 			}
 		} catch (error) {
 			Bot.logger.mark(`error.message`, error.message)
@@ -159,8 +166,10 @@ export default class MihoYoApi {
 	}
 	async forumSign(forumId) {
 		const url = `https://bbs-api.mihoyo.com/apihub/app/api/signIn`;
-		this.forumId=forumId;
-		let res = await superagent.post(url).set(this._getHeader()).send(JSON.stringify({gids:forumId*1})).timeout(10000);
+		this.forumId = forumId;
+		let res = await superagent.post(url).set(this._getHeader()).send(JSON.stringify({
+			gids: forumId * 1
+		})).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		// Bot.logger.mark(`ForumSign: ${res.text}`);
 		return resObj;
@@ -173,7 +182,7 @@ export default class MihoYoApi {
 	}
 	// 获取签到状态和奖励信息
 	async getSignInfo(board) {
-		let url=`${web_api}/event/luna/home?lang=zh-cn&`
+		let url = `${web_api}/event/luna/home?lang=zh-cn&`
 		if (board.name == "原神") {
 			url = `${web_api}/event/bbs_sign_reward/home?`
 		}
@@ -244,14 +253,11 @@ export default class MihoYoApi {
 			let reward_msg = item.msg;
 			url = `https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/ackNotification?id=${reward_id}`;
 			res = await superagent.post(url).set(this.getyunHeader()).timeout(10000);
-			let log_msg = `\n领取奖励,ID:${reward_id},Msg:${reward_msg.msg}`;
+			let log_msg = `\n领取奖励,ID:${reward_id},Msg:${reward_msg}`;
 			Bot.logger.info(log_msg)
 			sendMSg += log_msg
 		}
-		// log_msg="\n\n"+(await this.logyunGenshen()).log_msg
-		// sendMSg += log_msg
 		resObj.sendMSg = sendMSg;
-		// Bot.logger.info(log_msg)
 		return resObj;
 	}
 
@@ -267,8 +273,8 @@ export default class MihoYoApi {
 
 	async stoken(cookie, e) {
 		this.e = e;
-		let datalist=this.getStoken(e.user_id) || {}
-		if (Object.keys(datalist).length>0){
+		let datalist = this.getStoken(e.user_id) || {}
+		if (Object.keys(datalist).length > 0) {
 			return true;
 		}
 		const map = this.getCookieMap(cookie);
@@ -306,10 +312,10 @@ export default class MihoYoApi {
 						stoken: data.data.list[0].token,
 						ltoken: data.data.list[1].token,
 						uid: e.uid,
-						userId:e.user_id,
-						is_sign:true
+						userId: e.user_id,
+						is_sign: true
 					}
-					gsCfg.saveBingStoken(e.user_id,datalist)
+					gsCfg.saveBingStoken(e.user_id, datalist)
 					return true;
 				});
 			}
@@ -340,24 +346,26 @@ export default class MihoYoApi {
 		}
 	}
 	//社区签到ds
-	get_ds2(q="",b){
+	get_ds2(q = "", b) {
 		let n = salt2
 		let i = Math.floor(Date.now() / 1000)
-		let r = _.random(100001,200000)
+		let r = _.random(100001, 200000)
 		let add = `&b=${b}&q=${q}`
-		let c= md5("salt=" + n + "&t=" + i + "&r=" + r + add)
+		let c = md5("salt=" + n + "&t=" + i + "&r=" + r + add)
 		return `${i},${r},${c}`
 	}
-	  
+
 	// 米游币任务的 headers
 	_getHeader() {
 		const randomStr = utils.randomString(6);
 		const timestamp = Math.floor(Date.now() / 1000)
 		let sign = md5(`salt=${salt}&t=${timestamp}&r=${randomStr}`);
-		let ds=`${timestamp},${randomStr},${sign}`
-		if(this.forumId){
-			ds = this.get_ds2("",JSON.stringify({gids:this.forumId*1}));
-			this.forumId="";
+		let ds = `${timestamp},${randomStr},${sign}`
+		if (this.forumId) {
+			ds = this.get_ds2("", JSON.stringify({
+				gids: this.forumId * 1
+			}));
+			this.forumId = "";
 		}
 		return {
 			'Cookie': this.cookies,
@@ -395,7 +403,48 @@ export default class MihoYoApi {
 			"User-Agent": "okhttp/3.14.9"
 		}
 	}
-
+	//一个奇怪的请求头
+	getHeader() {
+		return {
+			'x-rpc-app_version': mhyVersion,
+			'User-Agent': `Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X)  AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.11.1`,
+			'x-rpc-client_type': '5',
+			'Referer': 'https://webstatic.mihoyo.com/',
+			'Origin': 'https://webstatic.mihoyo.com',
+		}
+	}
+	old_version_get_ds_token() {
+		let n = 'N50pqm7FSy2AkFz2B3TqtuZMJ5TOl3Ep'
+		let i = Math.floor(Date.now() / 1000)
+		let r = utils.randomString(6)
+		let c = md5('salt=' + n + '&t=' + i + '&r=' + r)
+		return i + ',' + r + ',' + c
+	}
+	async authkey(e) {
+		let url = `${web_api}/binding/api/genAuthKey`;
+		let HEADER = this.getHeader();
+		HEADER['Cookie'] = this.cookies
+		HEADER['DS'] = this.old_version_get_ds_token()
+		HEADER['User-Agent'] = 'okhttp/4.8.0'
+		HEADER['x-rpc-app_version'] = '2.35.2'
+		HEADER['x-rpc-sys_version'] = '12'
+		HEADER['x-rpc-client_type'] = '5'
+		HEADER['x-rpc-channel'] = 'mihoyo'
+		HEADER['x-rpc-device_id'] = utils.randomString(32).toUpperCase();
+		HEADER['x-rpc-device_name'] = utils.randomString(_.random(1, 10));
+		HEADER['x-rpc-device_model'] = 'Mi 10'
+		HEADER['Referer'] = 'https://app.mihoyo.com'
+		HEADER['Host'] = 'api-takumi.mihoyo.com'
+		let data = {
+			'auth_appid': 'webview_gacha',
+			'game_biz': 'hk4e_cn',
+			'game_uid': this.e.uid * 1,
+			'region': this.e.region,
+		}
+		let res = await superagent.post(url).set(HEADER).send(JSON.stringify(data));
+		let resObj = JSON.parse(res.text);
+		return resObj
+	}
 	getCookieMap(cookie) {
 		let cookiePattern = /^(\S+)=(\S+)$/;
 		let cookieArray = cookie.replace(/\s*/g, "").split(";");
@@ -412,14 +461,14 @@ export default class MihoYoApi {
 		try {
 			let ck = fs.readFileSync(file, 'utf-8')
 			ck = YAML.parse(ck)
-			if(ck?.uid){
-				let datalist={};
-				ck.userId=this.e.user_id
-				datalist[ck.uid]=ck;
-				ck=datalist
-				gsCfg.saveBingStoken(this.e.user_id,datalist)
+			if (ck?.uid) {
+				let datalist = {};
+				ck.userId = this.e.user_id
+				datalist[ck.uid] = ck;
+				ck = datalist
+				gsCfg.saveBingStoken(this.e.user_id, datalist)
 			}
-			return ck[this.e.uid]||{}
+			return ck[this.e.uid] || {}
 		} catch (error) {
 			return {}
 		}

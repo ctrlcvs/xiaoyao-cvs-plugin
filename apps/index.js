@@ -24,7 +24,7 @@ import {
 } from "../components/Changelog.js";
 import {
 	rule as userRule,
-	userInfo
+	userInfo,gclog
 } from "./user.js"
 import {
 	rule as signRule,
@@ -33,11 +33,11 @@ import {
 	cookiesDocHelp,
 	signlist,yunSignlist,yunAllSign,
 	allMysSign,yunSign,sendyunTime,yuntoken,yunHelp,
-	allSign,bbsSeach
+	allSign,bbsSeach,delSign
 } from "./sign.js"
 export {
-	updateRes,yunSignlist,
-	signlist,
+	updateRes,yunSignlist,delSign,
+	signlist,gclog,
 	updateMiaoPlugin,userInfo,
 	sign,bbsSeach,
 	versionInfo,yunAllSign,
