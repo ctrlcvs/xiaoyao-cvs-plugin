@@ -62,15 +62,15 @@ export async function userInfo(e, {
 export async function gclog(e) {
 	let user = new User(e);
 	await user.cookie(e)
-	if(!e.cookies){
-		e.reply("暂未绑定stoken\n请先绑定stoken")
+	if(!e.cookies||e.cookies.includes("undefined")){
+		e.reply("请先绑定stoken")
 		return true;
 	}
 	let miHoYoApi = new MihoYoApi(e);
 	let kkbody = await miHoYoApi.getbody("原神");
 	const objData = await miHoYoApi.getUserInfo(kkbody)
 	let data = objData.data
-	e.region = e.uid[0] == 5 ? "cn_qd01" : "cn_gf01"
+	e.region = e.uid[0]*1 == 5 ? "cn_qd01" : "cn_gf01"
 	let authkeyrow = await miHoYoApi.authkey(data);
 	if(!authkeyrow?.data){
 		e.reply("authkey获取失败："+authkeyrow.message)
@@ -99,8 +99,7 @@ export async function gclog(e) {
 	for (let item of Object.keys(postdata)) {
 		url += `${item}=${postdata[item]}&`
 	}
-	let plyurl = url.substring(0, url.length - 1);
-	e.msg=plyurl
+	e.msg= url.substring(0, url.length - 1);
 	if(isV3){
 		let gclog= (await import(`file:///${_path}/plugins/genshin/model/gachaLog.js`)).default
 		await (new gclog(e)).logUrl()
