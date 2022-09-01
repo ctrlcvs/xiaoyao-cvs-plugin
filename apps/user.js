@@ -66,6 +66,12 @@ export async function gclog(e) {
 		e.reply("请先绑定stoken")
 		return true;
 	}
+	let redis_Data = await redis.get(`xiaoyao:gclog:${e.user_id}`);
+	if(redis_Data){
+		let time=redis_Data*1-Math.floor(Date.now()/1000);
+		e.reply(`请求过快,请${time}秒后重试...`);
+		return true;
+	}
 	let miHoYoApi = new MihoYoApi(e);
 	let kkbody = await miHoYoApi.getbody("原神");
 	const objData = await miHoYoApi.getUserInfo(kkbody)
@@ -110,5 +116,8 @@ export async function gclog(e) {
 		e.isPrivate = true;
 		await bing(e)
 	}
+	redis.set(`xiaoyao:gclog:${e.user_id}`,  Math.floor(Date.now()/1000)+(60*5), { //把色图链接写入缓存防止一直色色
+		EX:  60*5
+	});
 	return true;
 }
