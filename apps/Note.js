@@ -11,10 +11,6 @@ import {
 // import { MysUser } from "../../../lib/components/Models.js";
 // import common from "../../../lib/common.js";
 import lodash from "lodash";
-import {
-	getPluginRender
-} from "./render.js";
-
 import gsCfg from '../model/gsCfg.js'
 import {
 	Cfg,

@@ -30,6 +30,5 @@ YunSignTime: 0 2 4 * * ?
 isYunSignMsg: false
 # 云原神帮助
 yunDoc: docs.qq.com/doc/DTnJIREZwTmxEVHBl
-
-
-
+#更新抽卡记录缓存时间默认5分钟
+gclogEx: 5

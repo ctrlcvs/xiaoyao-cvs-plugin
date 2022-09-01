@@ -58,14 +58,10 @@ export async function userInfo(e, {
 	})
 	return true;
 }
-
+let configData=gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config");
 export async function gclog(e) {
 	let user = new User(e);
 	await user.cookie(e)
-	if(!e.cookies||e.cookies.includes("undefined")){
-		e.reply("请先绑定stoken")
-		return true;
-	}
 	let redis_Data = await redis.get(`xiaoyao:gclog:${e.user_id}`);
 	if(redis_Data){
 		let time=redis_Data*1-Math.floor(Date.now()/1000);
@@ -73,6 +69,10 @@ export async function gclog(e) {
 		return true;
 	}
 	let miHoYoApi = new MihoYoApi(e);
+	if(!e.cookies||e.cookies.includes("undefined")){
+		e.reply("请先绑定stoken")
+		return true;
+	}
 	let kkbody = await miHoYoApi.getbody("原神");
 	const objData = await miHoYoApi.getUserInfo(kkbody)
 	let data = objData.data
@@ -116,8 +116,9 @@ export async function gclog(e) {
 		e.isPrivate = true;
 		await bing(e)
 	}
-	redis.set(`xiaoyao:gclog:${e.user_id}`,  Math.floor(Date.now()/1000)+(60*5), { //把色图链接写入缓存防止一直色色
-		EX:  60*5
+	let time=(configData.gclogEx||5)*60
+	redis.set(`xiaoyao:gclog:${e.user_id}`,  Math.floor(Date.now()/1000)+time, { //把色图链接写入缓存防止一直色色
+		EX:  time
 	});
 	return true;
 }

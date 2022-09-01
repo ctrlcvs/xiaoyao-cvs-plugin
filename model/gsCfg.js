@@ -152,11 +152,13 @@ class GsCfg {
 				let ck = fs.readFileSync(file, 'utf-8')
 				let yaml = YAML.stringify(data)
 				ck = YAML.parse(ck)
-				if (!ck) {
+				if (ck?.uid) {
 					fs.writeFileSync(file, yaml, 'utf8')
 				} else {
-					ck = YAML.stringify(ck)
-					fs.writeFileSync(file, yaml + ck, 'utf8')
+					if(!ck[Object.keys(data)[0]]){
+						ck = YAML.stringify(ck)
+						fs.writeFileSync(file, yaml + ck, 'utf8')
+					}
 				}
 			})
 		}

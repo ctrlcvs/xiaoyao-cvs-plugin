@@ -1,9 +1,11 @@
 # 1.1.9
 * 优化部分代码以及配置
 * 新增指令`#更新抽卡记录`
-    *必须绑定stoken
+    * 必须绑定stoken
+    * 定义限制5分钟可请求一次避免刷屏`默认5分钟具体修改规则请自行修改config配置`
 * 默认配置文件位于****xiaoyao-cvs-plugin/defSet/config/config.yaml****
     *后续叠加配置数据会在此文件中增加
+
 # 1.1.2~1.1.8
 * 新增指令`#ck查询`
 * 可查询当前cookie绑定状态的签到信息以及米游币信息数据
@@ -24,7 +26,7 @@
     * 具体有`原神、崩坏3、崩坏2、未定事件簿`
     * `大别野、崩坏星穹铁道、绝区零` 并未提供签到入口待定，后续概率补充
 * 需要引入包文件`cnpm i promise-retry `跟`cnpm i superagent`
-* V3版本引入文件`pnpm i promise-retry `跟`pnpm i superagent`
+* V3版本引入文件`pnpm add promise-retry `跟`pnpm add superagent`
 * 如果出现了安装其中一个包导致另外的包出问题的请群里询问
 * 需要完整的cookie内容要包含`login_ticket`不然是无法实现米游社签到的
 * 获取到的cookies发送bot后请触发一次`#mys原神签到`指令以保存`stoken`实现自动签到**（注：触发指令后无需多次获取cookies）**
