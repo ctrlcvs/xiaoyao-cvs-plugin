@@ -36,8 +36,27 @@ export async function relpyPrivate (userId, msg) {
 	    })
 	  }
 }
+export async function replyMake(e,_msg,lenght){
+	let nickname = Bot.nickname;
+	if (e.isGroup) {
+		let info = await Bot.getGroupMemberInfo(e.group_id, Bot.uin)
+		nickname = info.card || info.nickname
+	}
+	let msgList=[];
+	for(let [index,item] of Object.entries(_msg)){
+		if(index<lenght){
+			continue;
+		}
+		msgList.push({
+			message: item,
+			nickname: nickname,
+			user_id: Bot.uin
+		})
+	}
+	e._reply(await Bot.makeForwardMsg(msgList));
+}
 export default {
 	sleepAsync,
-	randomSleepAsync,
+	randomSleepAsync,replyMake,
 	randomString,relpyPrivate
 }

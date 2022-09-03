@@ -106,6 +106,12 @@ export async function gclog(e) {
 		url += `${item}=${postdata[item]}&`
 	}
 	e.msg= url.substring(0, url.length - 1);
+	let sendMsg=[];
+	e.reply("抽卡记录获取中请稍等...")
+	e._reply=e.reply;
+	e.reply = (msg) => {
+		sendMsg.push(msg)
+	}
 	if(isV3){
 		let gclog= (await import(`file:///${_path}/plugins/genshin/model/gachaLog.js`)).default
 		await (new gclog(e)).logUrl()
@@ -116,6 +122,7 @@ export async function gclog(e) {
 		e.isPrivate = true;
 		await bing(e)
 	}
+	utils.replyMake(e,sendMsg,1)
 	let time=(configData.gclogEx||5)*60
 	redis.set(`xiaoyao:gclog:${e.user_id}`,  Math.floor(Date.now()/1000)+time, { //把色图链接写入缓存防止一直色色
 		EX:  time
