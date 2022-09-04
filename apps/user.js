@@ -122,9 +122,9 @@ export async function gclog(e) {
 		e.isPrivate = true;
 		await bing(e)
 	}
-	await utils.replyMake(e,sendMsg,1)
+	await utils.replyMake(e,sendMsg,1)					
 	let time=(configData.gclogEx||5)*60
-	redis.set(`xiaoyao:gclog:${e.user_id}`,  Math.floor(Date.now()/1000)+time, { //把色图链接写入缓存防止一直色色
+	redis.set(`xiaoyao:gclog:${e.user_id}`,  Math.floor(Date.now()/1000)+time, { //数据写入缓存避免重复请求
 		EX:  time
 	});
 	return true;
