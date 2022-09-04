@@ -16,7 +16,9 @@ const _path = process.cwd();
 const __dirname = path.resolve();
 
 const list = ["wuqi_tujian", "shiwu_tujian", "yuanmo_tujian", "mijin_tujian", "shengyiwu_tujian", "daoju_tujian"]
-const reglist=["(#|专武|武器|图鉴|突破)","(#|食物|特殊料理|特色|料理|食材|图鉴)","(#|原魔|怪物|图鉴|信息)","(#|秘境|信息|图鉴)","(#|圣遗物|图鉴)","(#|图鉴|道具)"]
+const reglist = ["(#|专武|武器|图鉴|突破)", "(#|食物|特殊料理|特色|料理|食材|图鉴)", "(#|原魔|怪物|图鉴|信息)", "(#|秘境|信息|图鉴)", "(#|圣遗物|图鉴)",
+	"(#|图鉴|道具)"
+]
 export async function AtlasAlias(e) {
 	if (!Cfg.get("Atlas.all")) {
 		return false;
@@ -30,19 +32,18 @@ export async function AtlasAlias(e) {
 	}
 	if (await Atlas_list(e)) return true;
 	if (await roleInfo(e)) return true;
-	// var name = e.msg.replace(/#|＃|信息|图鉴|圣遗物|食物|食材|特殊|特色|料理/g, "");
+	if (await filePath(e)) return true;
 	return send_Msg(e, "all", "");
 }
 
 
 export async function roleInfo(e) {
-	// let msg=e.msg.replace(/#|图鉴/g,"");
 	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破/g, "");
 	let Botcfg;
 	let id;
 	if (isV3) {
 		Botcfg = (await import(`file://${_path}/plugins/genshin/model/gsCfg.js`)).default;
-		id=Botcfg.roleNameToID(msg)
+		id = Botcfg.roleNameToID(msg)
 	} else {
 		Botcfg = YunzaiApps.mysInfo
 		id = Botcfg.roleIdToName(msg);
@@ -62,16 +63,30 @@ export async function roleInfo(e) {
 	return true;
 }
 
+const filePath = async function(e) {
+	let data = list;
+	data.push("juese_tujian")
+	for (let [index, val] of data.entries()) {
+		let msg=e.msg;
+		if(index!=data.length-1){
+			msg=e.msg.replace(new RegExp(reglist[index], "g"), "");
+		}else {
+			msg=e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破/g, "");
+		}
+		let path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${val}/${msg}.png`
+		console.log(path)
+		if (fs.existsSync(path)) {
+			e.reply(segment.image(`file:///${path}`));
+			return true;
+		}
+	}
+}
+
 const send_Msg = function(e, type, name) {
 	let path;
 	if (type == "all") {
-		for (let [index,val] of list.entries()) {
-			name=e.msg.replace(new RegExp(reglist[index],"g"),"");
-			path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${val}/${name}.png`
-			if (fs.existsSync(path)) {
-				e.reply(segment.image(`file:///${path}`));
-				return true;
-			}
+		for (let [index, val] of list.entries()) {
+			name = e.msg.replace(new RegExp(reglist[index], "g"), "");
 			let new_name = info_img(e, Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`,
 				val), name)
 			if (new_name) {
