@@ -35,6 +35,10 @@ let Cfg = {
       return false;
     }
     return true;
+  },
+  /** 合并默认配置和用户配置 */
+  merged() {
+    return lodash.merge({}, cfg)
   }
 };
 

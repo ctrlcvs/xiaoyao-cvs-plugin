@@ -74,7 +74,6 @@ const filePath = async function(e) {
 			msg=e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破/g, "");
 		}
 		let path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${val}/${msg}.png`
-		console.log(path)
 		if (fs.existsSync(path)) {
 			e.reply(segment.image(`file:///${path}`));
 			return true;
