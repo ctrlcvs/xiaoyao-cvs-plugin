@@ -23,8 +23,8 @@ import {
 	currentVersion
 } from "../components/Changelog.js";
 import {
-	rule as userRule,
-	userInfo,gclog
+	rule as userRule,delSign,
+	userInfo,gclog,mytoken,bindStoken
 } from "./user.js"
 import {
 	rule as signRule,
@@ -33,11 +33,11 @@ import {
 	cookiesDocHelp,
 	signlist,yunSignlist,yunAllSign,
 	allMysSign,yunSign,sendyunTime,yuntoken,yunHelp,
-	allSign,bbsSeach,delSign
+	allSign,bbsSeach
 } from "./sign.js"
 export {
 	updateRes,yunSignlist,delSign,
-	signlist,gclog,
+	signlist,gclog,mytoken,bindStoken,
 	updateMiaoPlugin,userInfo,
 	sign,bbsSeach,
 	versionInfo,yunAllSign,

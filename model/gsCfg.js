@@ -12,7 +12,7 @@ import {
 import {
 	isV3
 } from '../components/Changelog.js';
-
+import utils from './mys/utils.js';
 const plugin = "xiaoyao-cvs-plugin"
 const pathPlugin=`./plugins/${plugin}/data/`
 /** 
@@ -22,18 +22,6 @@ const pathPlugin=`./plugins/${plugin}/data/`
 class GsCfg {
 	constructor() {
 		
-	}
-	async getyunToken(e) {
-		let file = `${yunpath}/${e.user_id}.yaml`
-		try {
-			let ck = fs.readFileSync(file, 'utf-8')
-			ck = YAML.parse(ck)
-			e.devId = ck.devId;
-			e.yuntoken = ck.yuntoken;
-			return ck
-		} catch (error) {
-			return ""
-		}
 	}
 	/** 通用yaml读取*/
 	getfileYaml(path, name) {
@@ -122,24 +110,6 @@ class GsCfg {
 			return {}
 		}
 	}
-	getStoken(userId) {
-		let file = `${YamlDataUrl}/${userId}.yaml`
-		try {
-			let ck = fs.readFileSync(file, 'utf-8')
-			ck = YAML.parse(ck)
-			if(ck?.uid){
-				let datalist={};
-				ck.userId=this.e.user_id
-				datalist[ck.uid]=ck;
-				ck=datalist
-				this.saveBingStoken(this.e.user_id,datalist)
-			}
-			return ck[this.e.uid]||{}
-		} catch (error) {
-			return {}
-		}
-	}
-	
 	saveBingStoken(userId, data) {
 		let file = `./plugins/${plugin}/data/yaml/${userId}.yaml`
 		if (lodash.isEmpty(data)) {

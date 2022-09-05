@@ -74,7 +74,7 @@ export function supportGuoba() {
       ],
       // 获取配置数据方法（用于前端填充显示数据）
       getConfigData() {
-        return lodash.omit(Cfg.merged(), 'jwt')
+        return Cfg.merged()
       },
       // 设置配置的方法（前端点确定后调用的方法）
       setConfigData(data, {Result}) {

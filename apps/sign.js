@@ -53,10 +53,6 @@ export const rule = {
 		reg: "^#*云原神签到$",
 		describe: "云原神签到"
 	},
-	// delSign:{
-	// 	reg: "^#*删除(我的)*(stoken|云原神)$",
-	// 	describe: "删除云原神、stoken数据"
-	// },
 	yunAllSign: {
 		reg: "^#云原神全部签到$",
 		describe: "云原神全部签到"
@@ -581,13 +577,4 @@ export async  function yunHelp(e){
 
 const yunDoc=async function(){
 	return await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").yunDoc
-}
-export async function delSign(e){
-	let msg=e.msg.replace(/#|删除|我的/g,"");
-	let url=msg=="云原神"?`${yunpath}`:`${YamlDataUrl}`;
-	console.log(e.uid)
-	if(await gsCfg.delSytk(url,e.user_id)){
-		e.reply(`删除${msg}数据成功~\n期待您的下次使用`)
-	}
-	return true;
 }

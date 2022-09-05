@@ -17,6 +17,7 @@ const RETRY_OPTIONS = {
 	maxTimeout: 10000
 };
 const nameData = ["原神", "崩坏3", "崩坏2", "未定事件簿"];
+const YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
 /** 配置文件 */
 export default class user {
 	constructor(e) {
@@ -74,17 +75,7 @@ export default class user {
 		}
 		return sumData;
 	}
-	getCookieMap(cookie) {
-		let cookiePattern = /^(\S+)=(\S+)$/;
-		let cookieArray = cookie.replace(/\s*/g, "").split(";");
-		let cookieMap = new Map();
-		for (let item of cookieArray) {
-			let entry = item.split("=");
-			if (!entry[0]) continue;
-			cookieMap.set(entry[0], entry[1]);
-		}
-		return cookieMap;
-	}
+	
 	getyunToken(e) {
 		let file = `${this.yunPath}${e.user_id}.yaml`
 		try {
@@ -109,7 +100,7 @@ export default class user {
 			e.reply("请先#绑定cookie\n发送【体力帮助】查看配置教程")
 			return false;
 		}
-		let stokens = miHoYoApi.getStoken(e.user_id)
+		let stokens = this.getStoken(e.user_id)
 		if (!stokens) {
 			return true;
 		}
@@ -153,5 +144,49 @@ export default class user {
 			uid,
 			skuid
 		}
+	}
+	getStoken(userId) {
+		let file = `${YamlDataUrl}/${userId}.yaml`
+		try {
+			let ck = fs.readFileSync(file, 'utf-8')
+			ck = YAML.parse(ck)
+			if (ck?.uid) {
+				let datalist = {};
+				ck.userId = this.e.user_id
+				datalist[ck.uid] = ck;
+				ck = datalist
+				gsCfg.saveBingStoken(this.e.user_id, datalist)
+			}
+			return ck[this.e.uid] || {}
+		} catch (error) {
+			return {}
+		}
+	}
+	async delSytk(path,e){
+		await this.getCookie(e);
+		let file = `${path}/${e.user_id}.yaml`
+		fs.exists(file, (exists) => {
+			if (!exists) {
+				return true;
+			}
+			let ck = fs.readFileSync(file, 'utf-8')
+			ck = YAML.parse(ck)
+			if(ck?.yuntoken){
+				fs.unlinkSync(file);
+			}else if(ck){
+				if(!ck[e.uid]) {
+					return true;
+				}
+				delete ck[e.uid];
+				if(Object.keys(ck)==0){
+					fs.unlinkSync(file);
+				}else{
+					ck = YAML.stringify(ck)
+					fs.writeFileSync(file, ck, 'utf8')
+				}
+			}
+			e.reply(`已删除${e.msg}`)
+			return true;
+		})
 	}
 }
