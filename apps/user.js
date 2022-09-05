@@ -56,8 +56,8 @@ export async function userInfo(e, {
 	}
 	let ck = "";
 	if (e.cookie) {
-		ck = user.getCookieMap(e.cookie);
-		ck = ck.get("ltuid")
+		ck =await utils.getCookieMap(e.cookie);
+		ck = ck?.get("ltuid")
 	}
 	return await Common.render(`user/userInfo`, {
 		uid: e.user_id,
