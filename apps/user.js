@@ -167,6 +167,10 @@ export async function mytoken(e) {
 	return true;
 }
 export async function bindStoken(e) {
+	if (!e.isPrivate) {
+		e.reply("请私聊发送")
+		return true;
+	}
 	let msg = e.msg;
 	let user = new User(e);
 	let miHoYoApi = new MihoYoApi(e);
