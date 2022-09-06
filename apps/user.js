@@ -18,9 +18,7 @@ import {
 } from "oicq";
 import YAML from 'yaml'
 import User from "../model/user.js"
-import {
-	checkAuth
-} from "../adapter/mys.js"
+
 export const rule = {
 	userInfo: {
 		reg: "^#*(ck|stoken|cookie|cookies|签到)查询$",
@@ -219,8 +217,28 @@ export async function delSign(e) {
 export async function updCookie(e) {
 	let user = new User(e);
 	await user.getCookie(e)
-	let userCk = (await checkAuth(e, "cookie"))
-	e.uid = userCk.uid
+	if(isV3){
+		let {
+			checkAuth
+		} = (await import(`file:///${_path}/plugins/xiaoyao-cvs-plugin/adapter/mys.js`))
+		let userCk = (await checkAuth(e, "cookie"))
+		e.uid = userCk.uid
+	}else{
+		// let {
+		// 	MysUser
+		// } = (await import(`file:///${_path}/lib/components/Models.js`))
+		// console.log(MysUser)
+		// let uid =await MysUser.getUidByCookie();
+		// console.log(uid)
+		
+		// let {
+		// 	bing
+		// } = (await import(`file:///${_path}/lib/app/gachaLog.js`))
+		// let userCk = (await checkAuth(e, "cookie"))
+		// e.uid = userCk.uid
+		e.reply("暂不支持V2")
+		return true;
+	}
 	let miHoYoApi = new MihoYoApi(e);
 	if (!e.cookies || e.cookies.includes("undefined")) {
 		e.reply("请先绑定stoken")
