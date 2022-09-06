@@ -120,7 +120,6 @@ export async function checkAuth (e, cfg) {
    /* 检查user ck */
    let isCookieUser = await MysInfo.checkUidBing(uid)
    if (auth === 'cookie' && !isCookieUser) {
-     e.reply('尚未绑定Cookie...')
      return false
    }
    e.selfUser = new User({ id: e.user_id, uid })

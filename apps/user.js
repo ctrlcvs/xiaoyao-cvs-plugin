@@ -18,6 +18,9 @@ import {
 } from "oicq";
 import YAML from 'yaml'
 import User from "../model/user.js"
+import {
+	checkAuth
+} from "../adapter/mys.js"
 export const rule = {
 	userInfo: {
 		reg: "^#*(ck|stoken|cookie|cookies|签到)查询$",
@@ -35,18 +38,18 @@ export const rule = {
 		reg: "^(.*)stoken=(.*)$",
 		describe: "绑定stoken"
 	},
-	delSign:{
+	delSign: {
 		reg: "^#*删除(我的)*(stoken|(云原神|云ck))$",
 		describe: "删除云原神、stoken数据"
 	},
-	updCookie:{
-		reg:"^#*(刷新|更新)(ck|cookie)$",
-		describe:"刷新cookie"
+	updCookie: {
+		reg: "^#*(刷新|更新)(ck|cookie)$",
+		describe: "刷新cookie"
 	}
 }
 const _path = process.cwd();
 const YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
-const yunpath=`${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`;
+const yunpath = `${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`;
 export async function userInfo(e, {
 	render
 }) {
@@ -60,7 +63,7 @@ export async function userInfo(e, {
 	}
 	let ck = "";
 	if (e.cookie) {
-		ck =await utils.getCookieMap(e.cookie);
+		ck = await utils.getCookieMap(e.cookie);
 		ck = ck?.get("ltuid")
 	}
 	return await Common.render(`user/userInfo`, {
@@ -186,8 +189,8 @@ export async function bindStoken(e) {
 	}
 	await user.getCookie(e)
 	let sk = await utils.getCookieMap(msg)
-	let data={}
-	 data[e.uid]= {
+	let data = {}
+	data[e.uid] = {
 		uid: e.uid,
 		userId: e.user_id,
 		is_sign: true
@@ -206,23 +209,25 @@ export async function bindStoken(e) {
 	return true;
 }
 
-export async function delSign(e){
+export async function delSign(e) {
 	let user = new User(e);
-	e.msg=e.msg.replace(/#|删除|我的/g,"");
-	let url=e.msg=="stoken"?`${YamlDataUrl}`:`${yunpath}`;
-	await user.delSytk(url,e)
+	e.msg = e.msg.replace(/#|删除|我的/g, "");
+	let url = e.msg == "stoken" ? `${YamlDataUrl}` : `${yunpath}`;
+	await user.delSytk(url, e)
 	return true;
 }
-export async function updCookie(e){
+export async function updCookie(e) {
 	let user = new User(e);
 	await user.getCookie(e)
+	let userCk = (await checkAuth(e, "cookie"))
+	e.uid = userCk.uid
 	let miHoYoApi = new MihoYoApi(e);
 	if (!e.cookies || e.cookies.includes("undefined")) {
 		e.reply("请先绑定stoken")
 		return true;
 	}
-	let resObj=await miHoYoApi.updCookie();
-	if(!resObj?.data){
+	let resObj = await miHoYoApi.updCookie();
+	if (!resObj?.data) {
 		e.reply(`请求异常：${resObj.message}`)
 		return false;
 	}
@@ -231,12 +236,12 @@ export async function updCookie(e){
 	e.reply = (msg) => {
 		sendMsg.push(msg)
 	}
-	let sk = await utils.getCookieMap(e.cookie)
-	let ck=resObj["data"]["cookie_token"];
-	e.msg=`ltoken=${sk.get("ltoken")};ltuid=${sk.get("ltuid")};cookie_token=${ck}; account_id=${sk.get("ltuid")};`
+	let sk = await utils.getCookieMap(e.cookies)
+	let ck = resObj["data"]["cookie_token"];
+	e.msg = `ltoken=${sk.get("ltoken")};ltuid=${sk.get("stuid")};cookie_token=${ck}; account_id=${sk.get("stuid")};`
 	if (isV3) {
 		let userck = (await import(`file:///${_path}/plugins/genshin/model/user.js`)).default
-		e.ck=e.msg;
+		e.ck = e.msg;
 		await (new userck(e)).bing()
 	} else {
 		let {
