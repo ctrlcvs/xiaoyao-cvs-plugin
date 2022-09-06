@@ -39,6 +39,10 @@ export const rule = {
 		reg: "^#*删除(我的)*(stoken|(云原神|云ck))$",
 		describe: "删除云原神、stoken数据"
 	},
+	updCookie:{
+		reg:"^#*(刷新|更新)(ck|cookie)$",
+		describe:"刷新cookie"
+	}
 }
 const _path = process.cwd();
 const YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
@@ -207,5 +211,40 @@ export async function delSign(e){
 	e.msg=e.msg.replace(/#|删除|我的/g,"");
 	let url=e.msg=="stoken"?`${YamlDataUrl}`:`${yunpath}`;
 	await user.delSytk(url,e)
+	return true;
+}
+export async function updCookie(e){
+	let user = new User(e);
+	await user.getCookie(e)
+	let miHoYoApi = new MihoYoApi(e);
+	if (!e.cookies || e.cookies.includes("undefined")) {
+		e.reply("请先绑定stoken")
+		return true;
+	}
+	let resObj=await miHoYoApi.updCookie();
+	if(!resObj?.data){
+		e.reply(`请求异常：${resObj.message}`)
+		return false;
+	}
+	let sendMsg = [];
+	e._reply = e.reply;
+	e.reply = (msg) => {
+		sendMsg.push(msg)
+	}
+	let sk = await utils.getCookieMap(e.cookie)
+	let ck=resObj["data"]["cookie_token"];
+	e.msg=`ltoken=${sk.get("ltoken")};ltuid=${sk.get("ltuid")};cookie_token=${ck}; account_id=${sk.get("ltuid")};`
+	if (isV3) {
+		let userck = (await import(`file:///${_path}/plugins/genshin/model/user.js`)).default
+		e.ck=e.msg;
+		await (new userck(e)).bing()
+	} else {
+		let {
+			bingCookie
+		} = (await import(`file:///${_path}/lib/app/dailyNote.js`))
+		e.isPrivate = true;
+		await bingCookie(e)
+	}
+	await utils.replyMake(e, sendMsg, 0)
 	return true;
 }

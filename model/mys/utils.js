@@ -64,7 +64,7 @@ export async function getCookieMap(cookie) {
 		if (!entry[0]) continue;
 		cookieMap.set(entry[0], entry[1]);
 	}
-	return cookieMap;
+	return cookieMap||{};
 }
 export default {
 	sleepAsync,

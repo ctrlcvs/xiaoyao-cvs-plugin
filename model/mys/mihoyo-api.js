@@ -270,7 +270,12 @@ export default class MihoYoApi {
 		resObj.log_msg = log_msg
 		return resObj
 	}
-
+	async updCookie(){
+		let url = `https://api-takumi.mihoyo.com/auth/api/getCookieAccountInfoBySToken`;
+		let res = await superagent.get(url).set(this._getHeader()).timeout(10000);
+		let resObj = JSON.parse(res.text);
+	    return resObj;
+	}
 	async stoken(cookie, e) {
 		this.e = e;
 		let datalist = this.getStoken(e.user_id) || {}

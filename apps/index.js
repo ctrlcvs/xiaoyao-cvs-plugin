@@ -23,7 +23,7 @@ import {
 	currentVersion
 } from "../components/Changelog.js";
 import {
-	rule as userRule,delSign,
+	rule as userRule,delSign,updCookie,
 	userInfo,gclog,mytoken,bindStoken
 } from "./user.js"
 import {
@@ -45,7 +45,7 @@ export {
 	pokeNote,yunSign,sendyunTime,yuntoken,
 	cookiesDocHelp,yunHelp,
 	sysCfg,
-	help,
+	help,updCookie,
 	DailyNoteTask,
 	allMysSign,
 	allSign,
