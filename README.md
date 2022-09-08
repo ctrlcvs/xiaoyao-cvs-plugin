@@ -67,6 +67,7 @@ cnpm i promise-retry
 <!---
 - 有什么问题、Bug，或有其它建议，欢迎提 [issue](https://github.com/Ctrlcvs/xiaoyao-cvs-plugin/issues)
 -->
+- [爱发电](https://afdian.net/a/Ctrlcvs)
 - 最后再求个star，你的支持是维护本项目的动力~~
 - 图片素材来源于网络，仅供交流学习使用
 - 严禁用于任何商业用途和非法行为
