@@ -59,6 +59,15 @@ class GsCfg {
 			ckQQ
 		}
 	}
+	async getBingStoken(userId){
+		try {
+			return YAML.parse(
+				fs.readFileSync(`plugins/${plugin}/data/yaml/${userId}.yaml`, 'utf8')
+			)
+		}catch (ex) {
+			return  {}
+		}
+	}
 	/** 读取所有用户绑定的stoken */
 	async getBingStoken() {
 		let ck = []

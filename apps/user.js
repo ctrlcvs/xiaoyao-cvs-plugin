@@ -215,7 +215,7 @@ export async function delSign(e) {
 	return true;
 }
 export async function updCookie(e) {
-	let stoken=await gsCfg.getBingStoken();
+	let stoken=await gsCfg.getBingStoken(e.user_id);
 	if (Object.keys(stoken).length==0) {
 		e.reply("请先绑定stoken")
 		return true;
