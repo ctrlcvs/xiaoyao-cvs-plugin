@@ -381,8 +381,7 @@ export async function Note_appoint(e) {
 	let type = 0;
 	if (msg.includes("列表")) {
 		let xlmsg=msg.replace("列表","")*1 || 1
-		let mstList = [];
-		let sumCount=(urlType.length/80+0.4).toFixed(0);
+		let sumCount=(urlType.length/80+0.49).toFixed(0);
 		xlmsg=sumCount-xlmsg>-1?xlmsg:sumCount==0?1:sumCount;
 		let xxmsg=(xlmsg-1)<=0?0:80*(xlmsg-1)
 		let count=0;
@@ -400,7 +399,7 @@ export async function Note_appoint(e) {
 			}
 			item = index+1 + "." + item
 			count++;
-			if(Object.keys(mstList).length==80){
+			if(msgData.length==81){
 				break;
 			}
 			if(index<xxmsg){
@@ -413,7 +412,7 @@ export async function Note_appoint(e) {
 			msgData.push(msg_pass)
 		}
 		let endMsg="";
-		if(count<urlType.length-1){
+		if(count<urlType.length){
 			endMsg= `更多内容请翻页查看\n如：#体力模板列表2`
 		}else{
 			endMsg= `已经到底了~~`
