@@ -215,58 +215,39 @@ export async function delSign(e) {
 	return true;
 }
 export async function updCookie(e) {
-	let user = new User(e);
-	await user.getCookie(e)
-	if(isV3){
-		let {
-			checkAuth
-		} = (await import(`file:///${_path}/plugins/xiaoyao-cvs-plugin/adapter/mys.js`))
-		let userCk = (await checkAuth(e, "cookie"))
-		e.uid = userCk.uid
-	}else{
-		// let {
-		// 	MysUser
-		// } = (await import(`file:///${_path}/lib/components/Models.js`))
-		// console.log(MysUser)
-		// let uid =await MysUser.getUidByCookie();
-		// console.log(uid)
-		
-		// let {
-		// 	bing
-		// } = (await import(`file:///${_path}/lib/app/gachaLog.js`))
-		// let userCk = (await checkAuth(e, "cookie"))
-		// e.uid = userCk.uid
-		e.reply("暂不支持V2")
-		return true;
-	}
-	let miHoYoApi = new MihoYoApi(e);
-	if (!e.cookies || e.cookies.includes("undefined")) {
+	let stoken=await gsCfg.getBingStoken();
+	if (Object.keys(stoken).length==0) {
 		e.reply("请先绑定stoken")
 		return true;
 	}
-	let resObj = await miHoYoApi.updCookie();
-	if (!resObj?.data) {
-		e.reply(`请求异常：${resObj.message}`)
-		return false;
-	}
+	let stokenData=stoken[0]
+	let miHoYoApi = new MihoYoApi(e);
 	let sendMsg = [];
 	e._reply = e.reply;
 	e.reply = (msg) => {
 		sendMsg.push(msg)
 	}
-	let sk = await utils.getCookieMap(e.cookies)
-	let ck = resObj["data"]["cookie_token"];
-	e.msg = `ltoken=${sk.get("ltoken")};ltuid=${sk.get("stuid")};cookie_token=${ck}; account_id=${sk.get("stuid")};`
-	if (isV3) {
-		let userck = (await import(`file:///${_path}/plugins/genshin/model/user.js`)).default
-		e.ck = e.msg;
-		await (new userck(e)).bing()
-	} else {
-		let {
-			bingCookie
-		} = (await import(`file:///${_path}/lib/app/dailyNote.js`))
-		e.isPrivate = true;
-		await bingCookie(e)
+	for(let item of  Object.keys(stokenData)){
+		miHoYoApi.cookies= `stuid=${stokenData[item].stuid};stoken=${stokenData[item].stoken};ltoken=${stokenData[item].ltoken};`;
+		let resObj = await miHoYoApi.updCookie();
+		if (!resObj?.data) {
+			e._reply(`请求异常：${resObj.message}`)
+			return false;
+		}
+		let sk = await utils.getCookieMap(miHoYoApi.cookies)
+		let ck = resObj["data"]["cookie_token"];
+		e.msg = `ltoken=${sk.get("ltoken")};ltuid=${sk.get("stuid")};cookie_token=${ck}; account_id=${sk.get("stuid")};`
+		if (isV3) {
+			let userck = (await import(`file:///${_path}/plugins/genshin/model/user.js`)).default
+			e.ck = e.msg;
+			await (new userck(e)).bing()
+		} else {
+			let {
+				bingCookie
+			} = (await import(`file:///${_path}/lib/app/dailyNote.js`))
+			e.isPrivate = true;
+			await bingCookie(e)
+		}
 	}
 	await utils.replyMake(e, sendMsg, 0)
 	return true;

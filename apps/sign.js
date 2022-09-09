@@ -62,7 +62,7 @@ export const rule = {
 		describe: "云原神签到token获取"
 	},
 	cookiesDocHelp: {
-		reg: "^#*(米游社|cookies|米游币)帮助$",
+		reg: "^#*(米游社|cookies|米游币|stoken|Stoken)(帮助|教程|绑定)$",
 		describe: "cookies获取帮助"
 	},
 	yunHelp:{
@@ -294,7 +294,6 @@ async function cookie(e) {
 		return false;
 	}
     let stokens=miHoYoApi.getStoken(e.user_id)
-	console.log(stokens)
 	if (Object.keys(stokens).length>0) {
 		return true;
 	}
@@ -337,7 +336,7 @@ async function getCookie(e) {
 }
 export async function cookiesDocHelp(e) {
 	let cookiesDoc = await getcookiesDoc()
-	e.reply("【cookies帮助】" + cookiesDoc + "\ncookies必须包含login_ticket获取后请私发机器人");
+	e.reply(`【${e.msg.replace(/帮助|教程|绑定/g,"")}帮助】${cookiesDoc}\ncookies必须包含login_ticket获取后请私发机器人`);
 	return true
 }
 async function getcookiesDoc() {
@@ -518,7 +517,8 @@ const getyunToken=async function(e){
 	try {
 		let ck = fs.readFileSync(file, 'utf-8')
 		ck = YAML.parse(ck)
-		e.devId=ck.devId;		e.yuntoken=ck.yuntoken;
+		e.devId=ck.devId;
+		e.yuntoken=ck.yuntoken;
 		return ck
 	} catch (error) {
 		return ""

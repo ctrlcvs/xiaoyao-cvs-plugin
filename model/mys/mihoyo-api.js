@@ -13,13 +13,12 @@ import {
 } from '../../components/Changelog.js';
 import fetch from "node-fetch"
 
-const APP_VERSION = "2.35.2";
+const APP_VERSION = "2.36.1";
 const mhyVersion = "2.11.1";
-const salt = "ZSHlXeQUBis52qD1kEgKt5lUYed4b7Bb";
+const salt = "n0KjuIrKgLHh08LWSCYP0WXlVXaYvV64";
 const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
-const saltWeb = "N50pqm7FSy2AkFz2B3TqtuZMJ5TOl3Ep";
+const saltWeb = "YVEIkzDFNHLeKXLxzqCA9TzxCpWwbIbk";
 const oldsalt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
-//b253c83ab2609b1b600eddfe974df47b
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
 const _path = process.cwd();
