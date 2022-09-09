@@ -215,20 +215,19 @@ export async function delSign(e) {
 	return true;
 }
 export async function updCookie(e) {
-	let stoken=await gsCfg.getBingStoken(e.user_id);
+	let stoken=await gsCfg.getUserStoken(e.user_id);
 	if (Object.keys(stoken).length==0) {
 		e.reply("请先绑定stoken")
 		return true;
 	}
-	let stokenData=stoken[0]
 	let miHoYoApi = new MihoYoApi(e);
 	let sendMsg = [];
 	e._reply = e.reply;
 	e.reply = (msg) => {
 		sendMsg.push(msg)
 	}
-	for(let item of  Object.keys(stokenData)){
-		miHoYoApi.cookies= `stuid=${stokenData[item].stuid};stoken=${stokenData[item].stoken};ltoken=${stokenData[item].ltoken};`;
+	for(let item of  Object.keys(stoken)){
+		miHoYoApi.cookies= `stuid=${stoken[item].stuid};stoken=${stoken[item].stoken};ltoken=${stoken[item].ltoken};`;
 		let resObj = await miHoYoApi.updCookie();
 		if (!resObj?.data) {
 			e._reply(`请求异常：${resObj.message}`)

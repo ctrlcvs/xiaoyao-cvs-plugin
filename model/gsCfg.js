@@ -15,13 +15,13 @@ import {
 import utils from './mys/utils.js';
 const plugin = "xiaoyao-cvs-plugin"
 const pathPlugin=`./plugins/${plugin}/data/`
-/** 
+/**
  * 配置文件
  * 主要用于处理 stoken以及云原神账号数据
  */
 class GsCfg {
 	constructor() {
-		
+
 	}
 	/** 通用yaml读取*/
 	getfileYaml(path, name) {
@@ -35,15 +35,15 @@ class GsCfg {
 		let ckQQ = {}
 		let dir = './data/MysCookie/'
 		let files = fs.readdirSync(dir).filter(file => file.endsWith('.yaml'))
-	
+
 		const readFile = promisify(fs.readFile)
-	
+
 		let promises = []
-	
+
 		files.forEach((v) => promises.push(readFile(`${dir}${v}`, 'utf8')))
-	
+
 		const res = await Promise.all(promises)
-	
+
 		res.forEach((v) => {
 			let tmp = YAML.parse(v)
 			lodash.forEach(tmp, (v, i) => {
@@ -53,17 +53,18 @@ class GsCfg {
 				}
 			})
 		})
-	
+
 		return {
 			ck,
 			ckQQ
 		}
 	}
-	async getBingStoken(userId){
+	async getUserStoken(userId){
 		try {
-			return YAML.parse(
+			let ck=YAML.parse(
 				fs.readFileSync(`plugins/${plugin}/data/yaml/${userId}.yaml`, 'utf8')
 			)
+			return ck||{}
 		}catch (ex) {
 			return  {}
 		}
@@ -74,11 +75,11 @@ class GsCfg {
 		let ckQQ = {}
 		let dir = `plugins/${plugin}/data/yaml/`
 		let files = fs.readdirSync(dir).filter(file => file.endsWith('.yaml'))
-	
+
 		const readFile = promisify(fs.readFile)
-	
+
 		let promises = []
-	
+
 		files.forEach((v) => promises.push(readFile(`${dir}${v}`, 'utf8')))
 		const res = await Promise.all(promises)
 		res.forEach((v, index) => {
@@ -124,7 +125,7 @@ class GsCfg {
 		if (lodash.isEmpty(data)) {
 			fs.existsSync(file) && fs.unlinkSync(file)
 		} else {
-			 fs.exists(file, (exists) => {
+			fs.exists(file, (exists) => {
 				if (!exists) {
 					fs.writeFileSync(file, "", 'utf8')
 				}
