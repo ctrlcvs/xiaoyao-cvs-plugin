@@ -7,9 +7,6 @@ import fs from "fs";
 import {
 	isV3
 } from '../components/Changelog.js'
-// import MysInfo from '../model/mys/mysInfo.js'
-// import { MysUser } from "../../../lib/components/Models.js";
-// import common from "../../../lib/common.js";
 import lodash from "lodash";
 import gsCfg from '../model/gsCfg.js'
 import {
@@ -18,6 +15,7 @@ import {
 } from "../components/index.js";
 import moment from 'moment';
 import MysApi from "../model/mys/mysApi.js";
+import utils from "../model/mys/utils.js";
 const _path = process.cwd();
 let role_user = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/json/`, "dispatch_time");
 
@@ -287,7 +285,7 @@ export async function Note(e, {
 
 async function dateTime_(time) {
 	return moment(time).format("HH") < 6 ? "凌晨" : moment(time).format("HH") < 12 ? "上午" : moment(time).format(
-			"HH") < 17.5 ? "下午" : moment(time).format("HH") < 19.5 ? "傍晚" : moment(time).format("HH") < 22 ? "晚上" :
+		"HH") < 17.5 ? "下午" : moment(time).format("HH") < 19.5 ? "傍晚" : moment(time).format("HH") < 22 ? "晚上" :
 		"深夜";
 }
 async function getDailyNote(uid, cookie) {
@@ -381,49 +379,38 @@ export async function Note_appoint(e) {
 		msg = urlType[msg - 1];
 	}
 	let type = 0;
-	let nickname = Bot.nickname;
-	if (e.isGroup) {
-		let info = await Bot.getGroupMemberInfo(e.group_id, Bot.uin)
-		nickname = info.card || info.nickname
-	}
 	if (msg.includes("列表")) {
 		let xlmsg=msg.replace("列表","")*1 || 1
 		let mstList = [];
 		let sumCount=(urlType.length/80+0.4).toFixed(0);
 		xlmsg=sumCount-xlmsg>-1?xlmsg:sumCount==0?1:sumCount;
-		urlType.unshift(`模板列表共，第${xlmsg}页，共${urlType.length}张，\n您可通过【#体力模板设置1】来绑定你需要的体力模板~\n请选择序号~~\n当前支持选择的模板有:`)
 		let xxmsg=(xlmsg-1)<=0?0:80*(xlmsg-1)
 		let count=0;
+		let msgData=[`模板列表共，第${xlmsg}页，共${urlType.length}张，\n您可通过【#体力模板设置1】来绑定你需要的体力模板~\n请选择序号~~\n当前支持选择的模板有:`];
 		for (let [index, item] of urlType.entries()) {
 			let msg_pass = [];
 			let imgurl;
-			if (index != 0) {
-				if (item.includes(".")) {
-					imgurl = await segment.image(`file:///${mbPath}background_image/${item}`);
-					item = item.split(".")[0];
-				} else {
-					imgurl = await segment.image(
-						`file:///${mbPath}Template/${item}/icon/bg/${fs.readdirSync(`${mbPath}/Template/${item}/icon/bg/`)[0]}`
-					)
-				}
-				item = index + "." + item
+			if (item.includes(".")) {
+				imgurl = await segment.image(`file:///${mbPath}background_image/${item}`);
+				item = item.split(".")[0];
+			} else {
+				imgurl = await segment.image(
+					`file:///${mbPath}Template/${item}/icon/bg/${fs.readdirSync(`${mbPath}/Template/${item}/icon/bg/`)[0]}`
+				)
 			}
+			item = index+1 + "." + item
 			count++;
 			if(Object.keys(mstList).length==80){
 				break;
 			}
-			if(index<xxmsg&&index!=0){
+			if(index<xxmsg){
 				continue;
 			}
 			msg_pass.push(item)
 			if (imgurl) {
 				msg_pass.push(imgurl)
 			}
-			mstList.push({
-				message: msg_pass,
-				nickname: nickname,
-				user_id: Bot.uin
-			})
+			msgData.push(msg_pass)
 		}
 		let endMsg="";
 		if(count<urlType.length-1){
@@ -431,12 +418,8 @@ export async function Note_appoint(e) {
 		}else{
 			endMsg= `已经到底了~~`
 		}
-		mstList.push({
-			message: endMsg,
-			nickname: nickname,
-			user_id: Bot.uin
-		})
-		e.reply(await Bot.makeForwardMsg(mstList));
+		msgData.push(endMsg)
+		await utils.replyMake(e, msgData, 0)
 		return true;
 	}
 	if(urlType.includes(msg+".png")){
@@ -475,7 +458,7 @@ const note_file = function(xiaoyao) {
 		for (let val of urlFileOne) {
 			if (!val.includes(".")) continue;
 			urlType.push(val)
-		
+
 		}
 	}
 	return urlType;

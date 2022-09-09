@@ -53,7 +53,12 @@ export async function replyMake(e, _msg, lenght) {
 			user_id: Bot.uin
 		})
 	}
-	e._reply(await Bot.makeForwardMsg(msgList));
+	if(e._reply){
+		e._reply(await Bot.makeForwardMsg(msgList));
+	}else {
+		e.reply(await Bot.makeForwardMsg(msgList));
+	}
+
 }
 export async function getCookieMap(cookie) {
 	let cookiePattern = /^(\S+)=(\S+)$/;

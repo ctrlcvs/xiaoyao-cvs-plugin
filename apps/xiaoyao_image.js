@@ -12,6 +12,7 @@ import gsCfg from '../model/gsCfg.js'
 import {
 	isV3
 } from '../components/Changelog.js'
+import utils from "../model/mys/utils.js";
 const _path = process.cwd();
 const __dirname = path.resolve();
 
@@ -106,10 +107,10 @@ export async function Atlas_list(e) {
 	let list = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`, "Atlas_list");
 	let name = e.msg.replace(/#|井/g, "")
 	for (let i in list) {
-		var title = i.split("|");
+		let title = i.split("|");
 		for (let j = 0; j < title.length; j++) {
 			if (title[j] == name) {
-				await e.reply("请选择:\n" + list[i].join("\n"))
+				await utils.replyMake(e, [`当前选择【${name}】`,"请选择:\n" + list[i].join("\n")], 0)
 				return true;
 			}
 		}
