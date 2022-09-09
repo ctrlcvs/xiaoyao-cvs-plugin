@@ -59,7 +59,7 @@ class GsCfg {
 			ckQQ
 		}
 	}
-	async getBingStoken(userId){
+	async getUserStoken(userId){
 		try {
 			return YAML.parse(
 				fs.readFileSync(`plugins/${plugin}/data/yaml/${userId}.yaml`, 'utf8')
