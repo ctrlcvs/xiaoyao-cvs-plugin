@@ -89,7 +89,7 @@ export async function gclog(e) {
 	}
 	let miHoYoApi = new MihoYoApi(e);
 	if (!e.cookies || e.cookies.includes("undefined")) {
-		e.reply("请先绑定stoken")
+		e.reply(`请先绑定stoken\n发送【stoken帮助】查看配置教程`)
 		return true;
 	}
 	let kkbody = await miHoYoApi.getbody("原神");
