@@ -89,7 +89,7 @@ export async function gclog(e) {
 	}
 	let miHoYoApi = new MihoYoApi(e);
 	if (!e.cookies || e.cookies.includes("undefined")) {
-		e.reply("请先绑定stoken")
+		e.reply(`请先绑定stoken\n发送【stoken帮助】查看配置教程`)
 		return true;
 	}
 	let kkbody = await miHoYoApi.getbody("原神");
@@ -182,7 +182,7 @@ export async function bindStoken(e) {
 	miHoYoApi.cookies = msg;
 	let resObj = await miHoYoApi.getTasksList();
 	if (!resObj?.data) {
-		await e.reply(`登录Stoken失效\n请重新获取~`);
+		await e.reply(`登录Stoken失效\n请发送【stoken帮助】查看配置教程重新配置~`);
 		return true;
 	}
 	await user.getCookie(e)
@@ -201,6 +201,7 @@ export async function bindStoken(e) {
 	msg += '\n【#米币查询】查询米游币余额'
 	msg += '\n【#mys原神签到】获取米游币'
 	msg += '\n【#更新抽卡记录】更新抽卡记录'
+	msg += '\n【#刷新ck】刷新失效cookie'
 	msg += '\n【#我的stoken】查看绑定信息'
 	msg += '\n【#删除stoken】删除绑定信息'
 	await e.reply(msg);
@@ -217,7 +218,7 @@ export async function delSign(e) {
 export async function updCookie(e) {
 	let stoken=await gsCfg.getUserStoken(e.user_id);
 	if (Object.keys(stoken).length==0) {
-		e.reply("请先绑定stoken")
+		e.reply("请先绑定stoken\n发送【stoken帮助】查看配置教程")
 		return true;
 	}
 	let miHoYoApi = new MihoYoApi(e);

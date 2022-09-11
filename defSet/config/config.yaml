@@ -1,6 +1,7 @@
 #此文件为默认配置请勿修改此文件
 
-# cookies教程  
+# cookies教程
+# stoken 教程2由 @逍遥 提供  https://docs.qq.com/doc/DVFdKVHBRR3RaUWxL
 cookiesDoc: docs.qq.com/doc/DV2tDY2ltSFdtbU9z
 # 米币签到成功是否推送
 isPushSign: false
@@ -28,7 +29,7 @@ isYunSign: true
 YunSignTime: 0 2 4 * * ? 
 # 云原神签到成功是否推送
 isYunSignMsg: false
-# 云原神帮助
+# 云原神帮助 由 @FanSky_Qs 提供
 yunDoc: docs.qq.com/doc/DTnJIREZwTmxEVHBl
 #更新抽卡记录缓存时间默认5分钟
 gclogEx: 5

@@ -61,7 +61,8 @@
 					<div class="div">
 						<span class="title light">值得铭记的强敌</span>
 						<div class="kb"></div>
-						<span class="bottom">本周剩余消耗减半次数</span>
+						<span class="bottom">{{if remain_resin_discount_num<=0}}周本已完成
+							{{else}}周本树脂减半次数已用{{/if}}</span>
 					</div>
 					<div class="div sumCount">
 						<span class="{{if remain_resin_discount_num>0}}red{{/if}}">{{3-remain_resin_discount_num}}</span>/{{resin_discount_num_limit}}

@@ -125,7 +125,7 @@ export async function mysSign(e) {
 	let miHoYoApi = new MihoYoApi(e);
 	let stokens=await miHoYoApi.getStoken(e.user_id)
 	if (Object.keys(stokens).length==0) {
-		e.reply("未读取到stoken请检查cookies是否包含login_ticket、以及云崽是否为最新版本V3、V2兼容")
+		e.reply("未读取到stoken\n请发送【stoken帮助】查看配置教程配置~")
 		return true;
 	}
 	START = moment().unix();
@@ -136,7 +136,7 @@ export async function mysSign(e) {
 		await replyMsg(e, resultMessage);
 		return true
 	}else if(!resObj?.data){
-		resultMessage+=`登录Stoken失效请重新获取cookies保存~`;
+		resultMessage+=`登录Stoken失效\n请发送【stoken帮助】查看配置教程重新配置~`;
 		await replyMsg(e, resultMessage);
 		fs.unlink(`${YamlDataUrl}/${e.user_id}.yaml`,function(error){
 			if(error){
@@ -241,7 +241,7 @@ export async function bbsSeach(e){
 	}
 	let resObj=await mysSeach(e)
 	if(!resObj?.data){
-		await replyMsg(e, `登录Stoken失效请重新获取cookies保存~`);
+		await replyMsg(e, `登录Stoken失效请重新获取cookies或stoken保存~`);
 		fs.unlink(`${YamlDataUrl}/${e.user_id}.yaml`,function(error){
 			if(error){
 				return ""
