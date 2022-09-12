@@ -313,8 +313,8 @@ async function getCookie(e) {
 	let skuid, cookie, uid
 	if (isV3) {
 		skuid = await gsCfg.getBingCookie(e.user_id);
-		cookie = skuid.ck;
-		uid = skuid.item;
+		cookie = skuid?.ck;
+		uid = skuid?.item;
 	} else {
 		if (NoteCookie[e.user_id]) {
 			cookie = NoteCookie[e.user_id].cookie;
