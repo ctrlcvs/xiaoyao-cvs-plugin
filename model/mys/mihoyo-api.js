@@ -270,8 +270,10 @@ export default class MihoYoApi {
 		return resObj
 	}
 	async updCookie(){
-		let url = `https://api-takumi.mihoyo.com/auth/api/getCookieAccountInfoBySToken`;
-		let res = await superagent.get(url).set(this._getHeader()).timeout(10000);
+		let url = `${web_api}/auth/api/getCookieAccountInfoBySToken?game_biz=hk4e_cn`;
+        let map=this.getCookieMap(this.cookies)
+		url+=`&stoken=${map.get("stoken")}&uid=${map.get("stuid")}`;
+		let res = await superagent.get(url);
 		let resObj = JSON.parse(res.text);
 	    return resObj;
 	}
