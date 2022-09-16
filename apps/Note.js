@@ -16,6 +16,7 @@ import {
 import moment from 'moment';
 import MysApi from "../model/mys/mysApi.js";
 import utils from "../model/mys/utils.js";
+import {getRender} from "../adapter/render.js"
 const _path = process.cwd();
 let role_user = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/json/`, "dispatch_time");
 
@@ -352,7 +353,13 @@ export async function DailyNoteTask() {
 			redis.set(sendkey, "1", {
 				EX: sendCD
 			});
-			// await Note(e, getPluginRender("xiaoyao-cvs-plugin"));
+			if(isV3){
+				await Note(e, {render:await getRender()});
+			}else{
+				let {getPluginRender} = await import(`file://${_path}/lib/render.js`);
+				await Note(e, {render:await getPluginRender()});
+			}
+			
 		}
 	}
 }
@@ -361,6 +368,7 @@ export async function pokeNote(e,{render}) {
 	if (!Cfg.get("note.poke")) {
 		return false;
 	}
+	// return await Note(e,{render:await getRender()}, "poke");
 	return await Note(e,{render}, "poke");
 }
 
