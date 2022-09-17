@@ -25,6 +25,7 @@ const _path = process.cwd();
 let YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
 let web_api = `https://api-takumi.mihoyo.com`
 let hk4_api = `https://hk4e-api.mihoyo.com`;
+let bbs_api=`https://bbs-api.mihoyo.com`;
 // 米游社的版块
 const boards = {
 	honkai3rd: {
@@ -200,14 +201,14 @@ export default class MihoYoApi {
 
 	async forumPostList(forumId) {
 		const url =
-			`https://api-takumi.mihoyo.com/post/api/getForumPostList?forum_id=${forumId}&is_good=false&is_hot=false&page_size=20&sort_type=1`;
+			`${web_api}/post/api/getForumPostList?forum_id=${forumId}&is_good=false&is_hot=false&page_size=20&sort_type=1`;
 		let res = await superagent.get(url).set(this._getHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		return resObj;
 	}
 
 	async forumPostDetail(postId) {
-		const url = `https://api-takumi.mihoyo.com/post/api/getPostFull?post_id=${postId}`;
+		const url = `${bbs_api}/post/api/getPostFull?post_id=${postId}`;
 		let res = await superagent.get(url).set(this._getHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		return resObj;
@@ -215,13 +216,13 @@ export default class MihoYoApi {
 
 	async forumPostShare(postId) {
 		const url =
-			`https://api-takumi.mihoyo.com/apihub/api/getShareConf?entity_id=${postId}&entity_type=1`;
+			`${web_api}/apihub/api/getShareConf?entity_id=${postId}&entity_type=1`;
 		let res = await superagent.get(url).set(this._getHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		return resObj;
 	}
 	async forumPostVote(postId) {
-		const url = `https://api-takumi.mihoyo.com/apihub/sapi/upvotePost`;
+		const url = `${web_api}/apihub/sapi/upvotePost`;
 		const upvotePostData = {
 			"post_id": postId,
 			"is_cancel": false

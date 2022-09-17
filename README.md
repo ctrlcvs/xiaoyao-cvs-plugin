@@ -73,4 +73,4 @@ cnpm i promise-retry
 - 严禁用于任何商业用途和非法行为
 - Yunzai-Bot 官方QQ群：213938015 （暂时停止新加入）
 - 喵喵Miao-Plugin QQ群：607710456 （暂时停止新加入）
-- 图鉴xiaoyao-cvs-Plugin QQ群：[544570609](https://jq.qq.com/?_wv=1027&k=GOHommWT)
+- 图鉴xiaoyao-cvs-Plugin QQ群：544570609(暂时不支持加入)
