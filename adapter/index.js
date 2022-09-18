@@ -4,23 +4,27 @@ import { render } from './render.js'
 import { checkAuth, getMysApi } from './mys.js'
 
 export class atlas extends plugin {
-  constructor () {
+  constructor (e) {
 	let rule = {
 	  reg: '.+',
 	  fnc: 'dispatch'
 	}
+	let event=e?.event || e?.sub_type
     super({
       name: 'xiaoyao-cvs-plugin',
       desc: '图鉴插件',
-      event: 'message',
+      event: event === 'poke' ? 'notice.*.poke' : 'message',
       priority: 50,
-      rule: [rule]
+      rule: [rule],
     })
 	Object.defineProperty(rule, 'log', {
 	  get: () => !!this.isDispatch
 	})
   }
   accept () {
+	if(this.event==='notice.*.poke'){
+	  this.e.msg = '#poke#'
+	}
     this.e.original_msg = this.e.original_msg || this.e.msg
   }
   async dispatch (e) {
