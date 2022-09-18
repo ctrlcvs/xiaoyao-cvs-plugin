@@ -22,7 +22,8 @@ export class atlas extends plugin {
 	})
   }
   accept () {
-	if(this.event==='notice.*.poke'){
+	if(this.event==='notice.*.poke'&&this.e.target_id === Bot.uin){
+	  this.e.user_id=this.e.operator_id;
 	  this.e.msg = '#poke#'
 	}
     this.e.original_msg = this.e.original_msg || this.e.msg
