@@ -4,17 +4,18 @@ import { render } from './render.js'
 import { checkAuth, getMysApi } from './mys.js'
 
 export class atlas extends plugin {
-  constructor () {
+  constructor (e) {
 	let rule = {
 	  reg: '.+',
 	  fnc: 'dispatch'
 	}
+	let event=e?.event
     super({
       name: 'xiaoyao-cvs-plugin',
       desc: '图鉴插件',
-      event: 'message',
+      event: event === 'poke' ? 'notice.*.poke' : 'message',
       priority: 50,
-      rule: [rule]
+      rule: [rule],
     })
 	Object.defineProperty(rule, 'log', {
 	  get: () => !!this.isDispatch
