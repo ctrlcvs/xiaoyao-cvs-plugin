@@ -13,19 +13,21 @@ import {
 } from '../../components/Changelog.js';
 import fetch from "node-fetch"
 
-const APP_VERSION = "2.36.1";
+const APP_VERSION = "2.37.1";
 const mhyVersion = "2.11.1";
-const salt = "n0KjuIrKgLHh08LWSCYP0WXlVXaYvV64";
+const salt = "6J1hde1Wu02eF1DFlLpMjeg2dMloAytL";
 const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
-const saltWeb = "YVEIkzDFNHLeKXLxzqCA9TzxCpWwbIbk";
+const saltWeb = "Qqx8cyv7kuyD8fTw11SmvXSFHp7iZD29";
 const oldsalt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
+
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
 const _path = process.cwd();
-let YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
-let web_api = `https://api-takumi.mihoyo.com`
-let hk4_api = `https://hk4e-api.mihoyo.com`;
-let bbs_api=`https://bbs-api.mihoyo.com`;
+const YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
+const web_api = `https://api-takumi.mihoyo.com`
+const os_web_api = `https://api-os-takumi.mihoyo.com`
+const hk4_api = `https://hk4e-api.mihoyo.com`;
+const bbs_api = `https://bbs-api.mihoyo.com`;
 // 米游社的版块
 const boards = {
 	honkai3rd: {
@@ -216,13 +218,13 @@ export default class MihoYoApi {
 
 	async forumPostShare(postId) {
 		const url =
-			`${web_api}/apihub/api/getShareConf?entity_id=${postId}&entity_type=1`;
+			`${bbs_api}/apihub/api/getShareConf?entity_id=${postId}&entity_type=1`;
 		let res = await superagent.get(url).set(this._getHeader()).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		return resObj;
 	}
 	async forumPostVote(postId) {
-		const url = `${web_api}/apihub/sapi/upvotePost`;
+		const url = `${bbs_api}/apihub/sapi/upvotePost`;
 		const upvotePostData = {
 			"post_id": postId,
 			"is_cancel": false
@@ -270,13 +272,18 @@ export default class MihoYoApi {
 		resObj.log_msg = log_msg
 		return resObj
 	}
-	async updCookie(){
+	async updCookie() {
 		let url = `${web_api}/auth/api/getCookieAccountInfoBySToken?game_biz=hk4e_cn`;
-        let map=this.getCookieMap(this.cookies)
-		url+=`&stoken=${map.get("stoken")}&uid=${map.get("stuid")}`;
+		// if(this.e.region.includes("os")){
+		//os接口暂时先不接入
+		// 	url=`${os_web_api}/binding/api/getUserGameRolesByCookie?game_biz=hk4e_global`;
+		// }
+		// console.log(url)
+		let map = this.getCookieMap(this.cookies)
+		url += `&stoken=${map.get("stoken")}&uid=${map.get("stuid")}`;
 		let res = await superagent.get(url);
 		let resObj = JSON.parse(res.text);
-	    return resObj;
+		return resObj;
 	}
 	async stoken(cookie, e) {
 		this.e = e;
@@ -340,7 +347,7 @@ export default class MihoYoApi {
 		return {
 			'accept-language': 'zh-CN,zh;q=0.9,ja-JP;q=0.8,ja;q=0.7,en-US;q=0.6,en;q=0.5',
 			'x-rpc-device_id': DEVICE_ID,
-			'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.34.1',
+			'User-Agent': `Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/${APP_VERSION}`,
 			Referer: board.getReferer(),
 			Host: 'api-takumi.mihoyo.com',
 			'x-rpc-channel': 'appstore',
@@ -485,13 +492,16 @@ export default class MihoYoApi {
 
 	// 获取账号信息 通用
 	async getUserInfo(board) {
-		let res = await superagent.get(
-				`https://api-takumi.mihoyo.com/binding/api/getUserGameRolesByCookie?game_biz=${board.biz}`)
+		let url = `${web_api}/binding/api/getUserGameRolesByCookie?game_biz=${board.biz}`
+		// if(this.e.region.includes("os")){
+		//os接口暂时先不接入
+		// 	url=`${os_web_api}/binding/api/getUserGameRolesByCookie?game_biz=hk4e_global`;
+		// }
+		let res = await superagent.get(url)
 			.set(this
 				.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		let data = resObj.data
-		// console.log(resObj)
 		if (resObj.retcode != 0) {
 			return resObj
 		}

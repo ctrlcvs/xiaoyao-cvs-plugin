@@ -168,6 +168,10 @@ export async function mysSign(e) {
 		}
 		await utils.randomSleepAsync();
 	}
+	let trueDetail=0;
+	let Vote=0;
+	let Share=0;
+	let sumcount=0;
 	for (let forum of ForumData) {
 		resultMessage += `\n**${forum.name}**\n`
 		try {
@@ -179,8 +183,8 @@ export async function mysSign(e) {
 					return retry(e);
 				});
 			}, RETRY_OPTIONS);
-			Bot.logger.info(`${forum.name} 读取列表成功 [${resObj.message}]，读取到 [${resObj.data.list.length}] 条记录`);
-
+			sumcount++;
+			// Bot.logger.info(`${forum.name} 读取列表成功 [${resObj.message}]，读取到 [${resObj.data.list.length}] 条记录`);
 			let postList = resObj.data.list;
 			for (let post of postList) {
 				post = post.post;
@@ -192,6 +196,9 @@ export async function mysSign(e) {
 						return retry(e);
 					});
 				}, RETRY_OPTIONS);
+				if(resObj?.message){
+					trueDetail++;
+				}
 				// Bot.logger.info(`${forum.name} [${post.subject}] 读取成功 [${resObj.message}]`);
 				await utils.randomSleepAsync();
 				// 2.2 BBS vote post
@@ -202,10 +209,12 @@ export async function mysSign(e) {
 						return retry(e);
 					});
 				}, RETRY_OPTIONS);
+				if(resObj?.message){
+					Vote++;
+				}
 				// Bot.logger.mark(`${forum.name} [${post.subject}] 点赞成功 [${resObj.message}]`);
 				await utils.randomSleepAsync();
 			}
-
 			// 2.3 BBS share post
 			let sharePost = postList[0].post;
 			resObj = await promiseRetry((retry, number) => {
@@ -215,13 +224,17 @@ export async function mysSign(e) {
 					return retry(e);
 				});
 			}, RETRY_OPTIONS);
+			if(resObj?.message){
+				Share++;
+			}
 		} catch (e) {
 			Bot.logger.error(`${forum.name} 读帖点赞分享失败 [${e.message}]`);
 			resultMessage += `读帖点赞分享: 失败 [${e.message}]\n`;
 		}
-		resultMessage += `读帖点赞分享: 成功\n`;
+		resultMessage += `共读取帖子记录${20*sumcount}\n浏览成功：${trueDetail}\n点赞成功：${Vote}\n分享成功：${Share}`;
 		await utils.randomSleepAsync();
 	}
+	Bot.logger.mark(`用户qq${e.user_id}${resultMessage}`);
 	await replyMsg(e, resultMessage);
 	return true
 }

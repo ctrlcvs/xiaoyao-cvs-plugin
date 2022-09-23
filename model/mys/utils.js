@@ -10,7 +10,7 @@ export async function sleepAsync(sleepms) {
 
 
 export async function randomSleepAsync() {
-	let sleep = 2 * 1000 + _.random(3 * 1000);
+	let sleep = 3 * 1000 + _.random(5 * 1000);
 	await sleepAsync(sleep);
 }
 
@@ -58,7 +58,6 @@ export async function replyMake(e, _msg, lenght) {
 	}else {
 		e.reply(await Bot.makeForwardMsg(msgList));
 	}
-
 }
 export async function getCookieMap(cookie) {
 	let cookiePattern = /^(\S+)=(\S+)$/;
