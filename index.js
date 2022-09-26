@@ -10,6 +10,7 @@ let index = {
 	atlas: {}
 }
 if (isV3) {
+	Bot.logger=logger
 	index = await Data.importModule('/plugins/xiaoyao-cvs-plugin/adapter', 'index.js')
 }
 export const atlas = index.atlas || {}

@@ -19,6 +19,7 @@ const salt = "6J1hde1Wu02eF1DFlLpMjeg2dMloAytL";
 const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
 const saltWeb = "Qqx8cyv7kuyD8fTw11SmvXSFHp7iZD29";
 const oldsalt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
+const osSaltWeb='';  //os 浏览帖子需要用到的salt
 
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
@@ -26,8 +27,11 @@ const _path = process.cwd();
 const YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
 const web_api = `https://api-takumi.mihoyo.com`
 const os_web_api = `https://api-os-takumi.mihoyo.com`
+const os_hk4_api=`https://hk4e-api-os.hoyoverse.com`;
 const hk4_api = `https://hk4e-api.mihoyo.com`;
 const bbs_api = `https://bbs-api.mihoyo.com`;
+
+let HttpsProxyAgent = ''
 // 米游社的版块
 const boards = {
 	honkai3rd: {
@@ -274,15 +278,18 @@ export default class MihoYoApi {
 	}
 	async updCookie() {
 		let url = `${web_api}/auth/api/getCookieAccountInfoBySToken?game_biz=hk4e_cn`;
-		// if(this.e.region.includes("os")){
-		//os接口暂时先不接入
-		// 	url=`${os_web_api}/binding/api/getUserGameRolesByCookie?game_biz=hk4e_global`;
-		// }
-		// console.log(url)
+		if (this.e.region.includes("os")) {
+			url = `${os_web_api}/auth/api/getCookieAccountInfoBySToken?game_biz=hk4e_global`;
+		}
 		let map = this.getCookieMap(this.cookies)
 		url += `&stoken=${map.get("stoken")}&uid=${map.get("stuid")}`;
-		let res = await superagent.get(url);
-		let resObj = JSON.parse(res.text);
+		let param = {
+			agent: await this.getAgent(),
+			timeout: 10000,
+			method:'get'
+		}
+		let res = await fetch(url, param);
+		let resObj = await res.json()
 		return resObj;
 	}
 	async stoken(cookie, e) {
@@ -362,10 +369,12 @@ export default class MihoYoApi {
 	//社区签到ds
 	get_ds2(q = "", b) {
 		let n = salt2
+	     // n ="6cqshh5dhw73bzxn20oexa9k516chk7s"
 		let i = Math.floor(Date.now() / 1000)
 		let r = _.random(100001, 200000)
 		let add = `&b=${b}&q=${q}`
 		let c = md5("salt=" + n + "&t=" + i + "&r=" + r + add)
+		// this.e.reply("md5"+c)
 		return `${i},${r},${c}`
 	}
 
@@ -428,35 +437,63 @@ export default class MihoYoApi {
 		}
 	}
 	old_version_get_ds_token() {
-		let n = 'N50pqm7FSy2AkFz2B3TqtuZMJ5TOl3Ep'
+		// 1  测试过的salt很显然都不是 也可能是header参数错误导致无法使用的 另外一个salt加密方法 get_ds
+		// xV8v4Qu44lUKrEYFZkJhB8cuOh9Asafs
+		// 2
+		// t0qEgfub6cvueAPgR5m9aQWWVciEer7v
+		// 3
+		// 599uqkwc0dlqu3h6epzjzfhgyyrd44PR
+		// 4
+		// rk4xg2hakoi26nljpr099fv9fck1ah10
+		// 5 6cqshh5dhw73bzxn20oexa9k516chk7s 签到salt?? 6s25p5ox5y14umn1p61aqyyvbvvl3lrt
+		let n = this.e.region.startsWith('os')?osSaltWeb:'N50pqm7FSy2AkFz2B3TqtuZMJ5TOl3Ep'
 		let i = Math.floor(Date.now() / 1000)
-		let r = utils.randomString(6)
-		let c = md5('salt=' + n + '&t=' + i + '&r=' + r)
+		let r =utils.randomString(6)
+		let c = md5('salt=' + n + '&t=' + i + '&r=' + r )
+		// this.e.reply("md5"+c)
 		return i + ',' + r + ',' + c
 	}
 	async authkey(e) {
-		let url = `${web_api}/binding/api/genAuthKey`;
+		let isos=this.e.region.startsWith('os')?true:false;
+		let url = `${(isos?os_web_api:web_api)}/binding/api/genAuthKey`;
 		let HEADER = this.getHeader();
 		HEADER['Cookie'] = this.cookies
-		HEADER['DS'] = this.old_version_get_ds_token()
+		// HEADER['DS'] = this.get_ds2("", JSON.stringify({
+		// 		gids: 26
+		// 	}));
+		 HEADER['DS'] =this.old_version_get_ds_token()
 		HEADER['User-Agent'] = 'okhttp/4.8.0'
-		HEADER['x-rpc-app_version'] = '2.35.2'
+		HEADER['x-rpc-app_version'] =isos? '2.18.1':'2.35.2'
 		HEADER['x-rpc-sys_version'] = '12'
 		HEADER['x-rpc-client_type'] = '5'
-		HEADER['x-rpc-channel'] = 'mihoyo'
+		HEADER['x-rpc-channel'] =isos?'hoyolab':'mihoyo'
 		HEADER['x-rpc-device_id'] = utils.randomString(32).toUpperCase();
 		HEADER['x-rpc-device_name'] = utils.randomString(_.random(1, 10));
 		HEADER['x-rpc-device_model'] = 'Mi 10'
-		HEADER['Referer'] = 'https://app.mihoyo.com'
-		HEADER['Host'] = 'api-takumi.mihoyo.com'
+		// HEADER['Referer'] = 'https://app.mihoyo.com'
+		// HEADER['Host'] = 'api-takumi.mihoyo.com'
+		HEADER['Referer'] = isos?'https://app.hoyolab.com':'https://app.mihoyo.com'
+		HEADER['Host'] = (isos?os_web_api:web_api).replace(/https:\/\//,"")
+		HEADER['Origin']=(isos?'https://webstatic-sea.hoyolab.com':'https://webstatic.mihoyo.com')
 		let data = {
 			'auth_appid': 'webview_gacha',
-			'game_biz': 'hk4e_cn',
+			'game_biz': isos?'hk4e_global':'hk4e_cn',
 			'game_uid': this.e.uid * 1,
 			'region': this.e.region,
 		}
-		let res = await superagent.post(url).set(HEADER).send(JSON.stringify(data));
-		let resObj = JSON.parse(res.text);
+		let param = {
+			headers:HEADER,
+			agent: await this.getAgent(),
+			timeout: 10000,
+			body:JSON.stringify(data),
+			method:'post'
+		}
+		let res = await fetch(url, param);
+		// console.log(res)
+		let resObj = await res.json()
+		// headers
+		// let res = await superagent.post(url).set(HEADER).send(JSON.stringify(data));
+		// let resObj = JSON.parse(res.text);
 		return resObj
 	}
 	getCookieMap(cookie) {
@@ -494,14 +531,14 @@ export default class MihoYoApi {
 	async getUserInfo(board) {
 		let url = `${web_api}/binding/api/getUserGameRolesByCookie?game_biz=${board.biz}`
 		// if(this.e.region.includes("os")){
-		//os接口暂时先不接入
+		// 暂时先不接入
 		// 	url=`${os_web_api}/binding/api/getUserGameRolesByCookie?game_biz=hk4e_global`;
 		// }
 		let res = await superagent.get(url)
 			.set(this
 				.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
-		let data = resObj.data
+		// console.log(resObj)
 		if (resObj.retcode != 0) {
 			return resObj
 		}
@@ -541,5 +578,26 @@ export default class MihoYoApi {
 		return resObj
 	}
 
+	async getAgent() {
+		if (isV3) {
+			let cfg = await import(`file://${_path}/lib/config/config.js`);
+			let proxyAddress = cfg.default.bot.proxyAddress
+			if (!proxyAddress) return null
+			if (proxyAddress === 'http://0.0.0.0:0') return null
 
+			if (!this.e.region.startsWith('os')) return null
+
+			if (HttpsProxyAgent === '') {
+				HttpsProxyAgent = await import('https-proxy-agent').catch((err) => {
+					logger.error(err)
+				})
+
+				HttpsProxyAgent = HttpsProxyAgent ? HttpsProxyAgent.default : undefined
+			}
+			if (HttpsProxyAgent) {
+				return new HttpsProxyAgent(proxyAddress)
+			}
+		}
+		return null
+	}
 }

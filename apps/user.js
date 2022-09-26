@@ -93,10 +93,11 @@ export async function gclog(e) {
 		return true;
 	}
 	let kkbody = await miHoYoApi.getbody("原神");
-	const objData = await miHoYoApi.getUserInfo(kkbody)
-	let data = objData.data
-	e.region = e.uid[0] * 1 == 5 ? "cn_qd01" : "cn_gf01"
-	let authkeyrow = await miHoYoApi.authkey(data);
+	e.region = getServer(e.uid)
+	// const objData = await miHoYoApi.getUserInfo(kkbody)
+	// let data = objData.data
+	// console.log(data)
+	let authkeyrow = await miHoYoApi.authkey(e);
 	if (!authkeyrow?.data) {
 		e.reply("authkey获取失败：" + authkeyrow.message)
 		return true;
@@ -125,6 +126,7 @@ export async function gclog(e) {
 		url += `${item}=${postdata[item]}&`
 	}
 	e.msg = url.substring(0, url.length - 1);
+	// e.reply(e.msg)
 	let sendMsg = [];
 	e.reply("抽卡记录获取中请稍等...")
 	e._reply = e.reply;
@@ -228,6 +230,7 @@ export async function updCookie(e) {
 		sendMsg.push(msg)
 	}
 	for(let item of  Object.keys(stoken)){
+		e.region = getServer(stoken[item].uid)
 		miHoYoApi.cookies= `stuid=${stoken[item].stuid};stoken=${stoken[item].stoken};ltoken=${stoken[item].ltoken};`;
 		let resObj = await miHoYoApi.updCookie();
 		if (!resObj?.data) {
@@ -251,4 +254,23 @@ export async function updCookie(e) {
 	}
 	await utils.replyMake(e, sendMsg, 0)
 	return true;
+}
+
+function getServer (uid) {
+    switch (String(uid)[0]) {
+      case '1':
+      case '2':
+        return 'cn_gf01' // 官服
+      case '5':
+        return 'cn_qd01' // B服
+      case '6':
+        return 'os_usa' // 美服
+      case '7':
+        return 'os_euro' // 欧服
+      case '8':
+        return 'os_asia' // 亚服
+      case '9':
+        return 'os_cht' // 港澳台服
+    }
+    return 'cn_gf01'
 }

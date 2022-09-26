@@ -25,15 +25,15 @@ const RETRY_OPTIONS = {
 	maxTimeout: 10000
 };
 let YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
-let yunpath=`${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`;
-let configSign=gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config");
-configSign.signlist=configSign.signlist||"原神|崩坏3|崩坏2|未定事件簿".split("|")
+let yunpath = `${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`;
+let configSign = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config");
+configSign.signlist = configSign.signlist || "原神|崩坏3|崩坏2|未定事件簿".split("|")
 export const rule = {
 	mysSign: {
 		reg: `^#*(米游社|mys|社区)(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零|全部)签到$`,
 		describe: "米游社米游币签到（理论上会签到全部所以区分开了）"
 	},
-	bbsSeach:{
+	bbsSeach: {
 		reg: "^#*(米游币|米币)查询$",
 		describe: "米币查询"
 	},
@@ -57,7 +57,7 @@ export const rule = {
 		reg: "^#云原神全部签到$",
 		describe: "云原神全部签到"
 	},
-	yuntoken:{
+	yuntoken: {
 		reg: "^(.*)ct(.*)$",
 		describe: "云原神签到token获取"
 	},
@@ -65,14 +65,15 @@ export const rule = {
 		reg: "^#*(米游社|cookies|米游币|stoken|Stoken)(帮助|教程|绑定)$",
 		describe: "cookies获取帮助"
 	},
-	yunHelp:{
+	yunHelp: {
 		reg: "^#*(云原神|云)帮助$",
 		describe: "cookies获取帮助"
 	}
 };
 init()
+
 function init() {
-	Data.createDir("",yunpath , false);
+	Data.createDir("", yunpath, false);
 }
 export async function sign(e) {
 	let {
@@ -123,9 +124,13 @@ export async function mysSign(e) {
 	}
 	let iscount = "";
 	let miHoYoApi = new MihoYoApi(e);
-	let stokens=await miHoYoApi.getStoken(e.user_id)
-	if (Object.keys(stokens).length==0) {
+	let stokens = await miHoYoApi.getStoken(e.user_id)
+	if (Object.keys(stokens).length == 0) {
 		e.reply("未读取到stoken\n请发送【stoken帮助】查看配置教程配置~")
+		return true;
+	}
+	if (e.uid[0] * 1 > 5) {
+		e.reply("暂不支持hoyolab社区签到~")
 		return true;
 	}
 	START = moment().unix();
@@ -160,7 +165,7 @@ export async function mysSign(e) {
 					return retry(e);
 				});
 			}, RETRY_OPTIONS);
-			Bot.logger.mark(`${e.user_id}:${forum.name} 签到结果: [${resObj.message}]`);
+			Bot.logger.mark(`${e.user_id}:${e.uid}:${forum.name} 签到结果: [${resObj.message}]`);
 			resultMessage += `签到: [${resObj.message}]\n`;
 		} catch (e) {
 			Bot.logger.error(`${forum.name} 签到失败 [${e.message}]`);
@@ -168,11 +173,11 @@ export async function mysSign(e) {
 		}
 		await utils.randomSleepAsync();
 	}
-	let trueDetail=0;
-	let Vote=0;
-	let Share=0;
-	let sumcount=0;
 	for (let forum of ForumData) {
+		let trueDetail = 0;
+		let Vote = 0;
+		let Share = 0;
+		let sumcount = 0;
 		resultMessage += `\n**${forum.name}**\n`
 		try {
 			// 2 BBS list post
@@ -196,7 +201,7 @@ export async function mysSign(e) {
 						return retry(e);
 					});
 				}, RETRY_OPTIONS);
-				if(resObj?.message){
+				if (resObj?.message) {
 					trueDetail++;
 				}
 				// Bot.logger.info(`${forum.name} [${post.subject}] 读取成功 [${resObj.message}]`);
@@ -209,7 +214,7 @@ export async function mysSign(e) {
 						return retry(e);
 					});
 				}, RETRY_OPTIONS);
-				if(resObj?.message){
+				if (resObj?.message) {
 					Vote++;
 				}
 				// Bot.logger.mark(`${forum.name} [${post.subject}] 点赞成功 [${resObj.message}]`);
@@ -224,7 +229,7 @@ export async function mysSign(e) {
 					return retry(e);
 				});
 			}, RETRY_OPTIONS);
-			if(resObj?.message){
+			if (resObj?.message) {
 				Share++;
 			}
 		} catch (e) {
@@ -234,55 +239,55 @@ export async function mysSign(e) {
 		resultMessage += `共读取帖子记录${20*sumcount}\n浏览成功：${trueDetail}\n点赞成功：${Vote}\n分享成功：${Share}`;
 		await utils.randomSleepAsync();
 	}
-	Bot.logger.mark(`用户qq${e.user_id}${resultMessage}`);
+	Bot.logger.mark(`用户qq${e.user_id}:${e.uid}:${resultMessage}`);
 	await replyMsg(e, resultMessage);
 	return true
 }
 
-export async function bbsSeach(e){
+export async function bbsSeach(e) {
 	START = moment().unix();
 	let isck = await cookie(e);
 	if (!isck) {
 		return true;
 	}
 	let miHoYoApi = new MihoYoApi(e);
-	let stokens=await miHoYoApi.getStoken(e.user_id)
-	if (Object.keys(stokens).length==0) {
+	let stokens = await miHoYoApi.getStoken(e.user_id)
+	if (Object.keys(stokens).length == 0) {
 		let cookiesDoc = await getcookiesDoc()
-		await replyMsg(e, "未读取到stoken请检查cookies是否包含login_ticket，请先绑定stoken再查询~\n"+cookiesDoc);
+		await replyMsg(e, "未读取到stoken请检查cookies是否包含login_ticket，请先绑定stoken再查询~\n" + cookiesDoc);
 		return true;
 	}
-	let resObj=await mysSeach(e)
-	if(!resObj?.data){
+	let resObj = await mysSeach(e)
+	if (!resObj?.data) {
 		await replyMsg(e, `登录Stoken失效请重新获取cookies或stoken保存~`);
-		fs.unlink(`${YamlDataUrl}/${e.user_id}.yaml`,function(error){
-			if(error){
+		fs.unlink(`${YamlDataUrl}/${e.user_id}.yaml`, function(error) {
+			if (error) {
 				return ""
 			}
 		})
 		return true;
 	}
-	await replyMsg(e,`当前米游币数量为：${resObj.data.total_points},今日剩余可获取：${resObj.data.can_get_points}`);
+	await replyMsg(e, `当前米游币数量为：${resObj.data.total_points},今日剩余可获取：${resObj.data.can_get_points}`);
 	return true;
 }
-async function mysSeach(e){
+async function mysSeach(e) {
 	let miHoYoApi = new MihoYoApi(e);
-	try{
+	try {
 		let resObj = await promiseRetry((retry, number) => {
 			return miHoYoApi.getTasksList().catch((e) => {
 				return retry(e);
 			});
 		}, RETRY_OPTIONS);
 		return resObj
-	}catch(e){
-		
+	} catch (e) {
+
 	}
 }
 async function replyMsg(e, resultMessage) {
 	const END = moment().unix();
 	Bot.logger.info(`运行结束, 用时 ${END - START} 秒`);
 	resultMessage += `\n用时 ${END - START} 秒`;
-	e.reply([segment.at(e.user_id),"\n"+resultMessage]);
+	e.reply([segment.at(e.user_id), "\n" + resultMessage]);
 }
 
 async function getDataList(name) {
@@ -298,7 +303,8 @@ async function getDataList(name) {
 async function cookie(e) {
 	let {
 		cookie,
-		uid,skuid
+		uid,
+		skuid
 	} = await getCookie(e);
 	let miHoYoApi = new MihoYoApi(e);
 	let cookiesDoc = await getcookiesDoc();
@@ -306,8 +312,8 @@ async function cookie(e) {
 		e.reply("cookie失效请重新绑定~【教程】\n" + cookiesDoc)
 		return false;
 	}
-    let stokens=miHoYoApi.getStoken(e.user_id)
-	if (Object.keys(stokens).length>0) {
+	let stokens = miHoYoApi.getStoken(e.user_id)
+	if (Object.keys(stokens).length > 0) {
 		return true;
 	}
 	if (!cookie.includes("login_ticket") && (isV3 && !skuid?.login_ticket)) {
@@ -360,30 +366,34 @@ export async function allMysSign() {
 	Bot.logger.mark(`开始米社米币签到任务`);
 	let stoken = await gsCfg.getBingStoken();
 	let isPushSign = await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").isPushSign
+
 	//获取需要签到的用户
 	for (let dataUid of stoken) {
-		for(let uuId in dataUid){
-		let data=dataUid[uuId]
-		let user_id = data.userId*1;
-		let e = {
-			user_id,
-			isTask: true
-		};
-		e.cookie = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
-		Bot.logger.mark(`正在为qq${user_id}进行米游币签到中...`);
-		e.msg = "全部"
-		e.reply = (msg) => {
-			//关闭签到消息推送
-			if (!isPushSign||ismysbool) {
-				return;
+		for (let uuId in dataUid) {
+			if (uuId[0] * 1 > 5) {
+				continue;
 			}
-			if (msg.includes("OK")) { //签到成功并且不是已签到的才推送
-				// msg = msg.replace("签到成功", "自动签到成功");
-				utils.relpyPrivate(user_id, msg + "uid:"+uuId+"\n自动签到成功");
-			}
-		};
-		await mysSign(e);
-		await utils.sleepAsync(10000);
+			let data = dataUid[uuId]
+			let user_id = data.userId * 1;
+			let e = {
+				user_id,
+				isTask: true
+			};
+			e.cookie = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
+			Bot.logger.mark(`正在为qq${user_id}：uid:${uuId}进行米游币签到中...`);
+			e.msg = "全部"
+			e.reply = (msg) => {
+				//关闭签到消息推送
+				if (!isPushSign || ismysbool) {
+					return;
+				}
+				if (msg.includes("OK")) { //签到成功并且不是已签到的才推送
+					// msg = msg.replace("签到成功", "自动签到成功");
+					utils.relpyPrivate(user_id, msg + "uid:" + uuId + "\n自动签到成功");
+				}
+			};
+			await mysSign(e);
+			await utils.sleepAsync(10000);
 		}
 	}
 	Bot.logger.mark(`米社米币签到任务完成`);
@@ -391,7 +401,7 @@ export async function allMysSign() {
 }
 
 //定时签到任务
-export async function allSign(e="") {
+export async function allSign(e = "") {
 	Bot.logger.mark(`开始米社签到任务`);
 	let isAllSign = await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").isAllSign
 	let userIdList = [];
@@ -404,7 +414,7 @@ export async function allSign(e="") {
 			userIdList.push(user_id)
 		}
 	}
-	let msg=e?.msg;
+	let msg = e?.msg;
 	for (let qq of userIdList) {
 		let user_id = qq;
 		let e = {
@@ -412,14 +422,14 @@ export async function allSign(e="") {
 			qq,
 			isTask: true
 		};
-		if(msg){
-			e.msg=msg.replace(/全部|签到|米社/g,"");
-		}else{
+		if (msg) {
+			e.msg = msg.replace(/全部|签到|米社/g, "");
+		} else {
 			e.msg = "全部"
 		}
 		Bot.logger.mark(`正在为qq${user_id}米社签到中...`);
 		e.reply = (msg) => {
-			if (!isAllSign||isbool) {
+			if (!isAllSign || isbool) {
 				return;
 			}
 			if (msg.includes("OK")) {
@@ -455,39 +465,39 @@ export async function signlist(e) {
 	let msg = e.msg.replace(/#|全部签到/g, "")
 	e.reply(`开始执行${msg}签到中，请勿重复执行`);
 	if (msg == "米游币") {
-		if(!fs.existsSync(YamlDataUrl)){
+		if (!fs.existsSync(YamlDataUrl)) {
 			Data.createDir("", YamlDataUrl, false);
 			e.reply("未读取到可签到文件")
 			return true;
 		}
-		ismysbool=true;
+		ismysbool = true;
 		await allMysSign()
 	} else {
 		isbool = true;
 		await allSign(e)
 	}
 	e.reply(`${msg}签到任务已完成`);
-	ismysbool=false;
+	ismysbool = false;
 	isbool = false;
 	return true;
 }
-let isYun=false;
-export async function yunAllSign(e){
+let isYun = false;
+export async function yunAllSign(e) {
 	if (!await checkAuth(e)) {
 		return true;
 	}
-	
+
 	e.reply(`开始执行云原神签到中，请勿重复执行`);
-	if(isYun){
+	if (isYun) {
 		e.reply(`云原神签到中请勿重复执行`)
 		return true;
 	}
-	isYun=true;
+	isYun = true;
 	await yunSignlist(e);
 	e.reply(`云原神签到任务已完成`);
 }
 
-export async function yunSignlist(e){
+export async function yunSignlist(e) {
 	Bot.logger.mark(`云原神签到任务开始`);
 	let files = fs.readdirSync(yunpath).filter(file => file.endsWith('.yaml'))
 	let isYunSignMsg = await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").isYunSignMsg
@@ -502,7 +512,7 @@ export async function yunSignlist(e){
 		Bot.logger.mark(`正在为qq${user_id}云原神签到中...`);
 		e.msg = "全部"
 		e.reply = (msg) => {
-			if (!isYunSignMsg||isYun) {
+			if (!isYunSignMsg || isYun) {
 				return;
 			}
 			if (msg.includes("领取奖励")) {
@@ -516,56 +526,56 @@ export async function yunSignlist(e){
 }
 
 
-export async function yunSign(e){
-	if(!(await getyunToken(e))){
-		e.reply("尚未绑定云原神token\n"+await yunDoc())
+export async function yunSign(e) {
+	if (!(await getyunToken(e))) {
+		e.reply("尚未绑定云原神token\n" + await yunDoc())
 		return true;
 	}
 	let miHoYoApi = new MihoYoApi(e);
 	e.reply((await miHoYoApi.yunGenshen()).sendMSg)
 	return;
 }
-const getyunToken=async function(e){
+const getyunToken = async function(e) {
 	let file = `${yunpath}/${e.user_id}.yaml`
 	try {
 		let ck = fs.readFileSync(file, 'utf-8')
 		ck = YAML.parse(ck)
-		e.devId=ck.devId;
-		e.yuntoken=ck.yuntoken;
+		e.devId = ck.devId;
+		e.yuntoken = ck.yuntoken;
 		return ck
 	} catch (error) {
 		return ""
 	}
 }
-export async function sendyunTime(e){
-	if(!(await getyunToken(e))){
-		e.reply("尚未绑定云原神token\n"+await yunDoc())
+export async function sendyunTime(e) {
+	if (!(await getyunToken(e))) {
+		e.reply("尚未绑定云原神token\n" + await yunDoc())
 		return true;
 	}
 	let miHoYoApi = new MihoYoApi(e);
 	e.reply((await miHoYoApi.logyunGenshen()).log_msg)
 	return;
 }
-export async function yuntoken(e){
-	if(e.msg.includes("ltoken")||e.msg.includes("_MHYUUID")){ //防止拦截米社cookie
+export async function yuntoken(e) {
+	if (e.msg.includes("ltoken") || e.msg.includes("_MHYUUID")) { //防止拦截米社cookie
 		return false;
 	}
-	if (["ct","si","devId"].includes(e.msg)) {
+	if (["ct", "si", "devId"].includes(e.msg)) {
 		e.reply(`格式支持\nai=*;ci=*;oi=*;ct=***********;si=**************;bi=***********;devId=***********`)
-	  return false;
-	}
-	let msg=e.msg.split("devId")
-	
-	if(msg.length<2){
 		return false;
 	}
-	let devId=msg[1].replace(/=/,"")
-	let yuntoken=msg[0];
-	e.devId=devId;
-	e.yuntoken=yuntoken;
+	let msg = e.msg.split("devId")
+
+	if (msg.length < 2) {
+		return false;
+	}
+	let devId = msg[1].replace(/=/, "")
+	let yuntoken = msg[0];
+	e.devId = devId;
+	e.yuntoken = yuntoken;
 	let miHoYoApi = new MihoYoApi(e);
-	let objData=(await miHoYoApi.logyunGenshen()) //校验token是否有效
-	if(objData.retcode!=0){
+	let objData = (await miHoYoApi.logyunGenshen()) //校验token是否有效
+	if (objData.retcode != 0) {
 		e.reply(objData.message)
 		return true;
 	}
@@ -583,11 +593,11 @@ export async function yuntoken(e){
 }
 
 
-export async  function yunHelp(e){
-	e.reply("云原神帮助：\n"+await yunDoc())
+export async function yunHelp(e) {
+	e.reply("云原神帮助：\n" + await yunDoc())
 	return true;
 }
 
-const yunDoc=async function(){
+const yunDoc = async function() {
 	return await gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config").yunDoc
 }
