@@ -39,7 +39,7 @@ export async function AtlasAlias(e) {
 
 
 export async function roleInfo(e) {
-	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|突破/g, "");
+	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋/g, "");
 	let Botcfg;
 	let id;
 	if (isV3) {

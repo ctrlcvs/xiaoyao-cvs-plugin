@@ -18,8 +18,8 @@ export class atlas extends plugin {
       rule: [rule],
     })
 	Object.defineProperty(rule, 'log', {
-	  // get: () => !!this.isDispatch
-	   get: () =>true
+	  get: () => !!this.isDispatch
+	   // get: () =>true
 	})
   }
   accept () {
