@@ -25,7 +25,7 @@ export const rule = {
 		describe: "用户个人信息查询"
 	},
 	gclog: {
-		reg: "^#*更新抽卡记录$",
+		reg: "^#*(更新|获取|导出)抽卡记录$",
 		describe: "更新抽卡记录"
 	},
 	mytoken: {
@@ -41,7 +41,7 @@ export const rule = {
 		describe: "删除云原神、stoken数据"
 	},
 	updCookie: {
-		reg: "^#*(刷新|更新)(ck|cookie)$",
+		reg: "^#*(刷新|更新|获取)(ck|cookie)$",
 		describe: "刷新cookie"
 	}
 }
@@ -87,16 +87,20 @@ export async function gclog(e) {
 		e.reply(`请求过快,请${time}秒后重试...`);
 		return true;
 	}
+	let isGet= /导出|获取/.test(e.msg)
+	if (!e.isPrivate&&isGet) {
+		e.reply("请私聊发送")
+		return true;
+	}
 	let miHoYoApi = new MihoYoApi(e);
 	if (!e.cookies || e.cookies.includes("undefined")) {
 		e.reply(`请先绑定stoken\n发送【stoken帮助】查看配置教程`)
 		return true;
 	}
-	let kkbody = await miHoYoApi.getbody("原神");
+	// let kkbody = await miHoYoApi.getbody("原神");
 	e.region = getServer(e.uid)
 	// const objData = await miHoYoApi.getUserInfo(kkbody)
 	// let data = objData.data
-	// console.log(data)
 	let authkeyrow = await miHoYoApi.authkey(e);
 	if (!authkeyrow?.data) {
 		e.reply("authkey获取失败：" + authkeyrow.message)
@@ -133,15 +137,20 @@ export async function gclog(e) {
 	e.reply = (msg) => {
 		sendMsg.push(msg)
 	}
-	if (isV3) {
-		let gclog = (await import(`file:///${_path}/plugins/genshin/model/gachaLog.js`)).default
-		await (new gclog(e)).logUrl()
-	} else {
-		let {
-			bing
-		} = (await import(`file:///${_path}/lib/app/gachaLog.js`))
-		e.isPrivate = true;
-		await bing(e)
+	if(isGet){
+
+		sendMsg=[...sendMsg,...[1,`uid:${e.uid}`,e.msg]]
+	}else {
+		if (isV3) {
+			let gclog = (await import(`file:///${_path}/plugins/genshin/model/gachaLog.js`)).default
+			await (new gclog(e)).logUrl()
+		} else {
+			let {
+				bing
+			} = (await import(`file:///${_path}/lib/app/gachaLog.js`))
+			e.isPrivate = true;
+			await bing(e)
+		}
 	}
 	await utils.replyMake(e, sendMsg, 1)
 	let time = (configData.gclogEx || 5) * 60
@@ -180,11 +189,13 @@ export async function bindStoken(e) {
 	}
 	let msg = e.msg;
 	let user = new User(e);
+	await user.cookie(e)
 	let miHoYoApi = new MihoYoApi(e);
+	e.region = getServer(e.uid)
 	miHoYoApi.cookies = msg;
-	let resObj = await miHoYoApi.getTasksList();
+	let resObj = await miHoYoApi.updCookie();
 	if (!resObj?.data) {
-		await e.reply(`登录Stoken失效\n请发送【stoken帮助】查看配置教程重新配置~`);
+		await e.reply(`绑定Stoken失败，异常：${resObj?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
 		return true;
 	}
 	await user.getCookie(e)
@@ -195,7 +206,7 @@ export async function bindStoken(e) {
 		userId: e.user_id,
 		is_sign: true
 	};
-	for (var item of sk.entries()) {
+	for (let item of sk.entries()) {
 		data[e.uid][item[0]] = item[1];
 	}
 	await gsCfg.saveBingStoken(e.user_id, data)
@@ -223,6 +234,11 @@ export async function updCookie(e) {
 		e.reply("请先绑定stoken\n发送【stoken帮助】查看配置教程")
 		return true;
 	}
+	let isGet= e.msg.includes("获取")
+	if (!e.isPrivate&&isGet) {
+		e.reply("请私聊发送")
+		return true;
+	}
 	let miHoYoApi = new MihoYoApi(e);
 	let sendMsg = [];
 	e._reply = e.reply;
@@ -234,22 +250,26 @@ export async function updCookie(e) {
 		miHoYoApi.cookies= `stuid=${stoken[item].stuid};stoken=${stoken[item].stoken};ltoken=${stoken[item].ltoken};`;
 		let resObj = await miHoYoApi.updCookie();
 		if (!resObj?.data) {
-			e._reply(`请求异常：${resObj.message}`)
-			return false;
+			e.reply(`uid:${stoken[item].uid},请求异常：${resObj.message}`)
+			continue;
 		}
 		let sk = await utils.getCookieMap(miHoYoApi.cookies)
 		let ck = resObj["data"]["cookie_token"];
 		e.msg = `ltoken=${sk.get("ltoken")};ltuid=${sk.get("stuid")};cookie_token=${ck}; account_id=${sk.get("stuid")};`
-		if (isV3) {
-			let userck = (await import(`file:///${_path}/plugins/genshin/model/user.js`)).default
-			e.ck = e.msg;
-			await (new userck(e)).bing()
-		} else {
-			let {
-				bingCookie
-			} = (await import(`file:///${_path}/lib/app/dailyNote.js`))
-			e.isPrivate = true;
-			await bingCookie(e)
+		if(isGet){
+			sendMsg=[...sendMsg,...[`uid:${stoken[item].uid}`,e.msg]]
+		}else {
+			if (isV3) {
+				let userck = (await import(`file:///${_path}/plugins/genshin/model/user.js`)).default
+				e.ck = e.msg;
+				await (new userck(e)).bing()
+			} else {
+				let {
+					bingCookie
+				} = (await import(`file:///${_path}/lib/app/dailyNote.js`))
+				e.isPrivate = true;
+				await bingCookie(e)
+			}
 		}
 	}
 	await utils.replyMake(e, sendMsg, 0)
