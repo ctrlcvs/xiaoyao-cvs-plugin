@@ -59,8 +59,26 @@ export async function replyMake(e, _msg, lenght) {
 		e.reply(await Bot.makeForwardMsg(msgList));
 	}
 }
+
+export function getServer (uid) {
+	switch (String(uid)[0]) {
+		case '1':
+		case '2':
+			return 'cn_gf01' // 官服
+		case '5':
+			return 'cn_qd01' // B服
+		case '6':
+			return 'os_usa' // 美服
+		case '7':
+			return 'os_euro' // 欧服
+		case '8':
+			return 'os_asia' // 亚服
+		case '9':
+			return 'os_cht' // 港澳台服
+	}
+	return 'cn_gf01'
+}
 export async function getCookieMap(cookie) {
-	let cookiePattern = /^(\S+)=(\S+)$/;
 	let cookieArray = cookie.replace(/\s*/g, "").split(";");
 	let cookieMap = new Map();
 	for (let item of cookieArray) {
@@ -71,7 +89,7 @@ export async function getCookieMap(cookie) {
 	return cookieMap||{};
 }
 export default {
-	sleepAsync,
+	sleepAsync,getServer,
 	randomSleepAsync,
 	replyMake,
 	randomString,

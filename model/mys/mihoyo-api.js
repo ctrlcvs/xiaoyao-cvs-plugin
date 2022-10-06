@@ -12,12 +12,11 @@ import {
 	isV3
 } from '../../components/Changelog.js';
 import fetch from "node-fetch"
-
-const APP_VERSION = "2.37.1";
+const APP_VERSION = "2.38.1";
 const mhyVersion = "2.11.1";
-const salt = "6J1hde1Wu02eF1DFlLpMjeg2dMloAytL";
+const salt = "PVeGWIZACpxXZ1ibMVJPi9inCY4Nd4y2";
 const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
-const saltWeb = "Qqx8cyv7kuyD8fTw11SmvXSFHp7iZD29";
+const saltWeb = "yUZ3s0Sna1IrSNfk29Vo6vRapdOyqyhB";
 const oldsalt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
 const osSaltWeb='';  //os 浏览帖子需要用到的salt
 
@@ -102,6 +101,8 @@ export default class MihoYoApi {
 			this.userId = String(e.user_id)
 			this.yuntoken = e.yuntoken
 			this.devId = e.devId
+			this.e.region=utils.getServer(e.uid)
+			this.isOs= this.e.region>5
 			// //初始化配置文件
 			let data = this.getStoken(this.e.user_id);
 			if (data) {
@@ -114,7 +115,7 @@ export default class MihoYoApi {
 	}
 	getbody(name) {
 		for (let item in boards) {
-			if (boards[item].name === name) {
+			if (boards[item]?.name === name) {
 				return boards[item]
 			}
 		}
@@ -156,7 +157,7 @@ export default class MihoYoApi {
 				const SignInfo = await this.getSignInfo(kkbody)
 				if (SignInfo) {
 					let awards = SignInfo.data.awards[item.total_sign_day - 1];
-					item.awards = awards.name + "*" + awards.cnt
+					item.awards = awards?.name + "*" + awards?.cnt
 				}
 				upData.push(item)
 				await utils.randomSleepAsync();
@@ -189,7 +190,7 @@ export default class MihoYoApi {
 	// 获取签到状态和奖励信息
 	async getSignInfo(board) {
 		let url = `${web_api}/event/luna/home?lang=zh-cn&`
-		if (board.name == "原神") {
+		if (board?.name == "原神") {
 			url = `${web_api}/event/bbs_sign_reward/home?`
 		}
 		// if (board.name == "崩坏2" || board.name == "未定事件簿") {
@@ -449,7 +450,7 @@ export default class MihoYoApi {
 		let n = this.e.region.startsWith('os')?osSaltWeb:'N50pqm7FSy2AkFz2B3TqtuZMJ5TOl3Ep'
 		let i = Math.floor(Date.now() / 1000)
 		let r =utils.randomString(6)
-		let c = md5('salt=' + n + '&t=' + i + '&r=' + r )
+	    let c = md5('salt=' + n + '&t=' + i + '&r=' + r )
 		// this.e.reply("md5"+c)
 		return i + ',' + r + ',' + c
 	}
@@ -458,10 +459,7 @@ export default class MihoYoApi {
 		let url = `${(isos?os_web_api:web_api)}/binding/api/genAuthKey`;
 		let HEADER = this.getHeader();
 		HEADER['Cookie'] = this.cookies
-		// HEADER['DS'] = this.get_ds2("", JSON.stringify({
-		// 		gids: 26
-		// 	}));
-		 HEADER['DS'] =this.old_version_get_ds_token()
+	    HEADER['DS'] =this.old_version_get_ds_token()
 		HEADER['User-Agent'] = 'okhttp/4.8.0'
 		HEADER['x-rpc-app_version'] =isos? '2.18.1':'2.35.2'
 		HEADER['x-rpc-sys_version'] = '12'
@@ -481,6 +479,7 @@ export default class MihoYoApi {
 			'game_uid': this.e.uid * 1,
 			'region': this.e.region,
 		}
+		
 		let param = {
 			headers:HEADER,
 			agent: await this.getAgent(),
@@ -497,7 +496,6 @@ export default class MihoYoApi {
 		return resObj
 	}
 	getCookieMap(cookie) {
-		let cookiePattern = /^(\S+)=(\S+)$/;
 		let cookieArray = cookie.replace(/\s*/g, "").split(";");
 		let cookieMap = new Map();
 		for (let item of cookieArray) {
@@ -551,13 +549,13 @@ export default class MihoYoApi {
 	async isPostSign(board, game_uid, region) {
 		let url =
 			`${web_api}/event/luna/info?lang=zh-cn`
-		if (board.name == "原神") {
+		if (board?.name == "原神") {
 			url = `${web_api}/event/bbs_sign_reward/info`
 		}
-		if (board.name == "崩坏2" || board.name == "未定事件簿") {
+		if (board?.name == "崩坏2" || board.name == "未定事件簿") {
 			url = `${web_api}/event/luna/info?lang=zh-cn`
 		}
-		url += `${board.name == "原神"?"?":"&"}region=${region}&act_id=${board.actid}&uid=${game_uid}`
+		url += `${board?.name == "原神"?"?":"&"}region=${region}&act_id=${board.actid}&uid=${game_uid}`
 		let res = await superagent.get(url).set(this.getpubHeaders(board)).timeout(10000);
 		let resObj = JSON.parse(res.text);
 		return resObj
@@ -566,10 +564,10 @@ export default class MihoYoApi {
 	async postSign(board, game_uid, region) {
 		let url =
 			`${web_api}/event/luna/sign`
-		if (board.name == "原神") {
+		if (board?.name == "原神") {
 			url = `${web_api}/event/bbs_sign_reward/sign`
 		}
-		if (board.name == "崩坏2" || board.name == "未定事件簿") {
+		if (board?.name == "崩坏2" || board?.name == "未定事件簿") {
 			url = `${web_api}/event/luna/sign`
 		}
 		url += `?region=${region}&act_id=${board.actid}&uid=${game_uid}`
