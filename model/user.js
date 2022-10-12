@@ -584,7 +584,7 @@ export default class user {
 		if (Object.keys(datalist).length > 0) {
 			return true;
 		}
-		const map = this.getCookieMap(cookie);
+		const map = utils.getCookieMap(cookie);
 		let loginTicket = map.get("login_ticket");
 		const loginUid = map.get("login_uid") ? map.get("login_uid") : map.get("ltuid");
 		if (isV3) {
