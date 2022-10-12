@@ -33,3 +33,5 @@ isYunSignMsg: false
 yunDoc: docs.qq.com/doc/DTnJIREZwTmxEVHBl
 #更新抽卡记录缓存时间默认5分钟
 gclogEx: 5
+# 体力设置开启关闭权限  1-群管理员才能开启关闭 2-主人才能开启关闭
+noteSetAuth: 1

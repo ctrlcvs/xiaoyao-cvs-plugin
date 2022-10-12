@@ -32,6 +32,7 @@ export default class user {
 		this.e = e;
 		this.stokenPath = `./plugins/${plugin}/data/yaml/`
 		this.yunPath = `./plugins/${plugin}/data/yunToken/`;
+		Data.createDir("",this.yunPath,false)
 		this.ForumData = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/defSet/json`, "mys")
 		this.configSign = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config");
 		this.configSign.signlist = this.configSign.signlist || "原神|崩坏3|崩坏2|未定事件簿".split("|")
