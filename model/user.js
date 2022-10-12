@@ -58,7 +58,6 @@ export default class user {
 		}
 		let resSign = await this.multiSign(this.ForumData);
 		if (resSign?.upData) {
-			// console.log(resSign?.upData)
 			for (let item of resSign?.upData) {
 				let num = lodash.random(0, 9999);
 				item.upName = item.upName == "原神" ? "ys" : item.upName == "崩坏3" ? "bh3" : item.upName ==
@@ -109,8 +108,21 @@ export default class user {
 					} else {
 						res = await this.getData("sign", data)
 						if (res?.data?.gt) {
-							item.is_sign = false;
-							message += `${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
+							let validate = await geetest(res.data)
+							if (validate) {
+								let header = {}
+								header["x-rpc-challenge"] = res["data"]["challenge"]
+								header["x-rpc-validate"] = validate
+								header["x-rpc-seccode"] = `${validate}|jordan`
+								data.headers = header
+								res = await this.getData("sign", data)
+								if (!res?.data?.gt) {
+									message += `${item.nickname}-${item.game_uid}:验证码签到成功~`
+								} else {
+									item.is_sign = false;
+									message += `${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
+								}
+							}
 						} else {
 							item.total_sign_day++;
 							message +=
@@ -169,6 +181,7 @@ export default class user {
 	}
 	async getbbsSign(forumData) {
 		let message = '',
+			challenge = '',
 			res;
 		try {
 			if (bbsTask) {
@@ -184,6 +197,13 @@ export default class user {
 				res = await this.getData("bbsSign", forum)
 				if (res?.retcode == 1034) {
 					message += `社区签到: 验证码失败\n`;
+					challenge = await this.bbsGeetest()
+					if (challenge) {
+						forum["headers"] = {
+							"x-rpc-challenge": challenge
+						}
+						await this.getData("bbsSign", forum)
+					}
 				} else {
 					message += `社区签到: ${res.message}\n`;
 				}
@@ -202,11 +222,29 @@ export default class user {
 					if (res?.message && res?.retcode == 0) {
 						trueDetail++;
 					}
+					if (res?.retcode == 1034) {
+						challenge = await this.bbsGeetest()
+						if (challenge) {
+							forum["headers"] = {
+								"x-rpc-challenge": challenge
+							}
+							await this.getData("bbsSign", forum)
+						}
+					}
 					res = await this.getData("bbsVotePost", {
 						postId
 					})
 					if (res?.message && res?.retcode == 0) {
 						Vote++;
+					}
+					if (res?.retcode == 1034) {
+						challenge = await this.bbsGeetest()
+						if (challenge) {
+							forum["headers"] = {
+								"x-rpc-challenge": challenge
+							}
+							await this.getData("bbsSign", forum)
+						}
 					}
 					await utils.randomSleepAsync(2);
 				}
@@ -447,8 +485,30 @@ export default class user {
 		}
 		bbsTask = false;
 	}
-	async bbsGeetest(){
-		let res=await this.getData('bbsGetCaptcha')//?????????????????????????????
+	async bbsGeetest() {
+		let res = await this.getData('bbsGetCaptcha') //?????????????????????????????
+		let challenge = res.data["challenge"]
+		res = await this.getData("bbsValidate", res.data)
+		if (res?.data?.validate) {
+			let validate = res?.data?.validate
+			res = await this.getData("bbsCaptchaVerify", {
+				headers: {
+					"geetest_challenge": challenge,
+					"geetest_seccode": validate + "|jordan",
+					"geetest_validate": validate
+				}
+			})
+			return res["data"]["challenge"]
+		}
+		return ""
+	}
+	async geetest(data) {
+		let res = await this.getData("validate", data)
+		if (res?.data?.validate) {
+			let validate = res?.data?.validate
+			return validate
+		}
+		return ""
 	}
 	getyunToken(e) {
 		let file = `${this.yunPath}${e.user_id}.yaml`
@@ -482,8 +542,7 @@ export default class user {
 			// e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket【教程】 " + cookiesDoc)
 			return false;
 		}
-		// let flot = (await miHoYoApi.stoken(cookie, e));
-		// console.log(flot)
+		let flot = this.stoken(cookie, e)
 		await utils.sleepAsync(1000); //延迟加载防止文件未生成
 		if (!flot) {
 			e.reply("登录失效请重新登录获取cookie发送机器人~")
