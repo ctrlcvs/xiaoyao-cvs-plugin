@@ -62,7 +62,7 @@ export async function signTask(e){
 }
 export async function cookiesDocHelp(e){
 	let user = new User(e);
-	e.reply(`【${e.msg.replace(/帮助|教程|绑定/g,"")}帮助】${await user.docHelp(e.msg)}\ncookies必须包含login_ticket获取后请私发机器人`);
+	e.reply(`【${e.msg.replace(/帮助|教程|绑定/g,"")}帮助】${await user.docHelp(e.msg)}`);
 	return true;
 }
 export async function seach(e){
@@ -82,8 +82,9 @@ export async function bbsSign(e) {
 	START = moment().unix();
 	let res = await user.bbsSeachSign()
 	if(res.isOk&&res?.data?.can_get_points!==0){
-		let forumData = await user.getDataList(e.msg);
-		e.reply(`开始尝试${e.msg}社区签到预计${e.msg=='全部'?"10-20":"1-3"}分钟~`)
+		let msg=e.msg.replace(/(米游社|mys|社区|签到|#)/g,"")
+		let forumData = await user.getDataList(msg);
+		e.reply(`开始尝试${msg}社区签到预计${msg=='全部'?"10-20":"1-3"}分钟~`)
 		res=await user.getbbsSign(forumData)
 	}
 	await replyMsg(e, res.message);

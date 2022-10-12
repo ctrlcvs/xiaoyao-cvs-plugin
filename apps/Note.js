@@ -285,7 +285,7 @@ async function dateTime_(time) {
 		"深夜";
 }
 async function getDailyNote(uid, cookie) {
-	let mysApi = new MysApi(uid, cookie)
+	let mysApi = (await import(`file://${_path}/lib/app/mysApi.js`))
 	let {
 		url,
 		headers,
@@ -294,8 +294,7 @@ async function getDailyNote(uid, cookie) {
 	} = mysApi.getUrl("dailyNote", uid);
 	headers.Cookie = cookie;
 	const response = await fetch(url, {
-		method: "get",
-		headers
+		method: "get",		headers
 	});
 	return response;
 }

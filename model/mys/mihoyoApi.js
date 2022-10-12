@@ -13,21 +13,9 @@ import {
 import fetch from "node-fetch"
 import mys from "./mysTool.js"
 const _path = process.cwd();
-// const APP_VERSION = "2.37.1";
-// const mhyVersion = "2.11.1";
-// const salt = "6J1hde1Wu02eF1DFlLpMjeg2dMloAytL";
-// const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
-// const saltWeb = "Qqx8cyv7kuyD8fTw11SmvXSFHp7iZD29";
-// const oldsalt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
-// const osSaltWeb = ''; //os 浏览帖子需要用到的salt
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
 const yamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
-// const web_api = `https://api-takumi.mihoyo.com`
-// const os_web_api = `https://api-os-takumi.mihoyo.com`
-// const os_hk4_api = `https://hk4e-api-os.hoyoverse.com`;
-// const hk4_api = `https://hk4e-api.mihoyo.com`;
-// const bbs_api = `https://bbs-api.mihoyo.com`;
 let HttpsProxyAgent = ''
 // 米游社的版块
 
@@ -39,17 +27,17 @@ export default class miHoYoApi {
 			this.userId = String(e.user_id)
 			this.yuntoken = e.yuntoken
 			this.devId = e.devId
-			this.isOs= this.e?.uid[0]*1>5
-			this.apiMap={
-				apiWeb:mys.web_api,
-				saltweb:mys.saltWeb,
-				saltSign:mys.salt
+			this.isOs = this.e?.uid[0] * 1 > 5
+			this.apiMap = {
+				apiWeb: mys.web_api,
+				saltweb: mys.saltWeb,
+				saltSign: mys.salt
 			}
-			if(this.isOs){
-				this.apiMap={
-					apiWeb:mys.os_web_api,
-					saltweb:mys.saltWeb, //os websalt待定中
-					saltSign:mys.salt
+			if (this.isOs) {
+				this.apiMap = {
+					apiWeb: mys.os_web_api,
+					saltweb: mys.saltWeb, //os websalt待定中
+					saltSign: mys.salt
 				}
 			}
 			// //初始化配置文件
@@ -109,8 +97,13 @@ export default class miHoYoApi {
 			Bot.logger.error(`[接口][${type}][${this.e.uid}] ${response.status} ${response.statusText}`)
 			return false
 		}
-		Bot.logger.mark(`[接口][${type}][${this.e.uid}] ${Date.now() - start}ms`)
-		const res = await response.json()
+		// Bot.logger.mark(`[接口][${type}][${this.e.uid}] ${Date.now() - start}ms`)
+		let res = await response.text();
+		if (res.startsWith('(')) {
+			res = JSON.parse((res).replace(/\(|\)/g, ""))
+		} else {
+			res = JSON.parse(res)
+		}
 		if (!res) {
 			Bot.logger.mark('mys接口没有返回')
 			return false
@@ -119,7 +112,7 @@ export default class miHoYoApi {
 			Bot.logger.debug(`[米游社接口][请求参数] ${url} ${JSON.stringify(param)}`)
 		}
 		res.api = type
-		
+
 		return res
 	}
 	getUrl(type, board, data) {
@@ -129,9 +122,9 @@ export default class miHoYoApi {
 				query: `game_biz=${board?.biz}`,
 				types: 'sign'
 			},
-			isSign: board?.signUrl(data, "isSign",this.apiMap.apiWeb)||{},
-			sign: board?.signUrl(data, "sign",this.apiMap.apiWeb)||{},
-			home: board?.signUrl(data, "home",this.apiMap.apiWeb)||{},
+			isSign: board?.signUrl(data, "isSign", this.apiMap.apiWeb) || {},
+			sign: board?.signUrl(data, "sign", this.apiMap.apiWeb) || {},
+			home: board?.signUrl(data, "home", this.apiMap.apiWeb) || {},
 			//bbs接口 hoyolab那边不是很需要 这边不进行优化处理
 			bbsisSign: { //bbs 签到 （状态查询 米游币查询）
 				url: `${mys.bbs_api}/apihub/sapi/getUserMissionsState`,
@@ -140,24 +133,27 @@ export default class miHoYoApi {
 			bbsSign: { //bbs讨论区签到
 				url: `${mys.bbs_api}/apihub/app/api/signIn`,
 				body: {
-					gids: data.forumId*1
+					gids: data.forumId * 1
 				},
 				sign: true,
 				types: 'bbs'
 			},
-			//人啊不能总想着跳脸 ~~这块给你们留个念想
-			bbsGetCaptcha:{
-				url:`???????????????????????????????????????????????????`,
+			bbsGetCaptcha: {
+				url: `${mys.bbs_api}/misc/api/createVerification`,
+				query: `is_high=true`,
+				types: 'bbs'
 			},
-			bbsValidate:{
-				url:`???????????????????????????????????????????????????`,
+			bbsValidate: {
+				url: `https://apiv6.geetest.com/ajax.php`,
+				query: `gt=${data.gt}&challenge=${data.challenge}&lang=zh-cn&pt=3&client_type=web_mobile`,
 			},
-			bbsCaptchaVerify:{
-				url:`???????????????????????????????????????????????????`
+			bbsCaptchaVerify: {
+				url: `${mys.bbs_api}/misc/api/verifyVerification`
 			},
-			bbs_Businesses_url:{
-				url:`${mys.bbs_api}/user/api/getUserBusinesses`,
-				query:`uid={}` //????
+			//待定接口 用于获取用户米游社顶部的模块栏
+			bbs_Businesses_url: {
+				url: `${mys.bbs_api}/user/api/getUserBusinesses`,
+				query: `uid={}` //????
 			},
 			bbsPostList: { //bbs讨论区签到
 				url: `${mys.bbs_api}/post/api/getForumPostList`,
@@ -212,9 +208,9 @@ export default class miHoYoApi {
 			},
 			authKey: {
 				url: `${this.apiMap.apiWeb}/binding/api/genAuthKey`,
-				body:{
+				body: {
 					'auth_appid': 'webview_gacha',
-					'game_biz': this.isOs?'hk4e_global':'hk4e_cn',
+					'game_biz': this.isOs ? 'hk4e_global' : 'hk4e_cn',
 					'game_uid': this.e.uid * 1,
 					'region': this.e.region,
 				},
@@ -225,7 +221,7 @@ export default class miHoYoApi {
 		let {
 			url,
 			query = '',
-			body ='',
+			body = '',
 			types = '',
 			sign = ''
 		} = urlMap[type]
@@ -253,7 +249,7 @@ export default class miHoYoApi {
 					'x-rpc-device_name': DEVICE_NAME,
 					'x-rpc-client_type': '2', // 1 - iOS, 2 - Android, 4 - Web
 					'DS': (sign ? this.getDs2("", JSON.stringify({
-						gids: board.forumid*1
+						gids: board.forumid * 1
 					}), mys.salt2) : this.getDs(mys.salt)),
 					"Referer": "https://app.mihoyo.com",
 					"x-rpc-sys_version": "12",
@@ -277,8 +273,8 @@ export default class miHoYoApi {
 					DS: this.getDs(),
 					'Cookie': this.cookie
 				}
-				if(this.isOs){
-					let os_Header={
+				if (this.isOs) {
+					let os_Header = {
 						app_version: '2.9.0',
 						User_Agent: `Mozilla/5.0 (Linux; Android 9.0; SAMSUNG SM-F900U Build/PPR1.180610.011) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.73 Mobile Safari/537.36 miHoYoBBSOversea/2.9.0`,
 						client_type: '2',
@@ -286,7 +282,7 @@ export default class miHoYoApi {
 						X_Requested_With: 'com.mihoyo.hoyolab',
 						Referer: 'https://webstatic-sea.hoyolab.com'
 					}
-					header=Object.assign({},header,os_Header)
+					header = Object.assign({}, header, os_Header)
 				}
 				break;
 			case "cloud":
