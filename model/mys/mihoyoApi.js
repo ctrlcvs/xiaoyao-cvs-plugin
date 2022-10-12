@@ -27,7 +27,10 @@ export default class miHoYoApi {
 			this.userId = String(e.user_id)
 			this.yuntoken = e.yuntoken
 			this.devId = e.devId
-			this.isOs = this.e?.uid[0] * 1 > 5
+			this.isOs=false;
+			if(this.e?.uid){
+				this.isOs=this.e?.uid[0] * 1 > 5
+			}
 			this.apiMap = {
 				apiWeb: mys.web_api,
 				saltweb: mys.saltWeb,
@@ -183,7 +186,6 @@ export default class miHoYoApi {
 				query: `game_biz=hk4e_cn&${data.cookies}`,
 				types: ''
 			},
-		
 			bbsStoken: {
 				url: `${this.apiMap.apiWeb}/auth/api/getMultiTokenByLoginTicket`,
 				query: `login_ticket=${data.loginTicket}&token_types=3&uid=${data.loginUid}`,
@@ -313,13 +315,28 @@ export default class miHoYoApi {
 					Referer: 'https://app.mihoyo.com',
 					Origin: 'https://webstatic.mihoyo.com',
 					Cookie: this.cookies,
-					DS: this.getDs(mys.saltWeb),
+					DS: this.getDs(this.isOs?mys.osSalt:mys.saltWeb),
 					'x-rpc-sys_version': '12',
 					'x-rpc-channel': 'mihoyo',
-					'x-rpc-device_id': 'HX6J7YCE7H1C9W5UQXTS6OYCLIYK5HTL',
-					'x-rpc-device_name': 'gsy4dp',
+					'x-rpc-device_id': DEVICE_ID,
+					'x-rpc-device_name': DEVICE_NAME,
 					'x-rpc-device_model': 'Mi 10',
 					Host: 'api-takumi.mihoyo.com'
+				}
+				if (this.isOs) {
+					let os_Header = {
+						'x-rpc-app_version':'2.9.0',
+						app_version: '2.9.0',
+						// User_Agent: `Mozilla/5.0 (Linux; Android 9.0; SAMSUNG SM-F900U Build/PPR1.180610.011) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.73 Mobile Safari/537.36 miHoYoBBSOversea/2.9.0`,
+						client_type: '2',
+						'x-rpc-client_type': '2',
+						Origin: 'https://webstatic-sea.hoyolab.com',
+						X_Requested_With: 'com.mihoyo.hoyolab',
+						Referer: 'https://app.hoyolab.com',
+						Host: 'api-os-takumi.mihoyo.com',
+						'x-rpc-channel':'hoyolab'
+					}
+					header = Object.assign({}, header, os_Header)
 				}
 				break;
 			case "stoken":
