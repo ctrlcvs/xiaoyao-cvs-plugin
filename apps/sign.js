@@ -44,7 +44,7 @@ export async function cloudSign(e){
 }
 export async function signTask(e){
 	let user = new User(e);
-	let task=e?.msg?.includes("米游币")?'bbs':e.msg.includes("云原神")?'cloud':'mys'
+	let task=e?.msg?.includes("米游币")?'bbs':e?.msg?.includes("云原神")?'cloud':e?.msg?.includes("米社")?'mys':''
 	if(!task){
 		task=e;
 		e='';
