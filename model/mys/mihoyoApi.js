@@ -183,6 +183,7 @@ export default class miHoYoApi {
 				query: `game_biz=hk4e_cn&${data.cookies}`,
 				types: ''
 			},
+		
 			bbsStoken: {
 				url: `${this.apiMap.apiWeb}/auth/api/getMultiTokenByLoginTicket`,
 				query: `login_ticket=${data.loginTicket}&token_types=3&uid=${data.loginUid}`,
