@@ -14,7 +14,6 @@ import {
 	Data
 } from "../components/index.js";
 import moment from 'moment';
-import MysApi from "../model/mys/mysApi.js";
 import utils from "../model/mys/utils.js";
 const _path = process.cwd();
 let role_user = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/json/`, "dispatch_time");
@@ -28,7 +27,6 @@ init()
 function init() {
 	Data.createDir("", tempDataUrl, false);
 	tempData = Data.readJSON(tempDataUrl, "tempData")
-	// console.log(tempData)
 }
 //#体力
 export async function Note(e, {
@@ -39,7 +37,7 @@ export async function Note(e, {
 	}
 	let cookie, uid, res;
 	if (isV3) {
-		let MysInfo =await import(`file://${_path}/plugins/genshin/model/mys/mysInfo.js`);
+		let MysInfo = await import(`file://${_path}/plugins/genshin/model/mys/mysInfo.js`);
 		res = await MysInfo.default.get(e, 'dailyNote')
 		if (!res || res.retcode !== 0) return true
 		uid = e.uid;
@@ -118,7 +116,6 @@ export async function Note(e, {
 		resinMaxTime = moment(maxDate).format("HH:mm");
 		let Time_day = await dateTime_(maxDate)
 		resinMaxTime_mb2 = Time_day + moment(maxDate).format("hh:mm");
-		// console.log(format("dd", maxDate))
 		if (moment(maxDate).format("DD") != nowDay) {
 			resinMaxTime_mb2Day = `明天`;
 			resinMaxTime = `明天 ${resinMaxTime}`;
@@ -127,7 +124,6 @@ export async function Note(e, {
 			resinMaxTime = ` ${resinMaxTime}`;
 		}
 	}
-	// console.log(data.expeditions)
 	for (let val of data.expeditions) {
 		if (val.remained_time <= 0) {
 			val.percentage = 0;
@@ -265,13 +261,13 @@ export async function Note(e, {
 		uid: uid,
 		coinTime_mb2Day,
 		coinTime_mb2,
-		urlType:encodeURIComponent(urlType),
+		urlType: encodeURIComponent(urlType),
 		resinMaxTime_mb2Day,
 		resinMaxTime,
 		resinMaxTime_mb2,
 		remained_time,
 		coinTime,
-		imgs:encodeURIComponent(imgs),
+		imgs: encodeURIComponent(imgs),
 		day_mb2,
 		day,
 		...data,
@@ -285,7 +281,7 @@ export async function Note(e, {
 
 async function dateTime_(time) {
 	return moment(time).format("HH") < 6 ? "凌晨" : moment(time).format("HH") < 12 ? "上午" : moment(time).format(
-		"HH") < 17.5 ? "下午" : moment(time).format("HH") < 19.5 ? "傍晚" : moment(time).format("HH") < 22 ? "晚上" :
+			"HH") < 17.5 ? "下午" : moment(time).format("HH") < 19.5 ? "傍晚" : moment(time).format("HH") < 22 ? "晚上" :
 		"深夜";
 }
 async function getDailyNote(uid, cookie) {
@@ -315,7 +311,7 @@ export async function DailyNoteTask() {
 	let sendResin = 120;
 	//推送cd，12小时一次
 	let sendCD = 12 * 3600;
-	if(isV3){
+	if (isV3) {
 		return true;
 	}
 	//获取需要推送的用户
@@ -352,23 +348,35 @@ export async function DailyNoteTask() {
 			redis.set(sendkey, "1", {
 				EX: sendCD
 			});
-			if(isV3){
-				let {getRender} = await import(`file://${_path}/plugins/xiaoyao-cvs-plugin/render.js`);
-				await Note(e, {render:await getRender()});
-			}else{
-				let {getPluginRender} = await import(`file://${_path}/lib/render.js`);
-				await Note(e, {render:await getPluginRender()});
+			if (isV3) {
+				let {
+					getRender
+				} = await import(`file://${_path}/plugins/xiaoyao-cvs-plugin/render.js`);
+				await Note(e, {
+					render: await getRender()
+				});
+			} else {
+				let {
+					getPluginRender
+				} = await import(`file://${_path}/lib/render.js`);
+				await Note(e, {
+					render: await getPluginRender()
+				});
 			}
-			
+
 		}
 	}
 }
 
-export async function pokeNote(e,{render}) {
+export async function pokeNote(e, {
+	render
+}) {
 	if (!Cfg.get("note.poke")) {
 		return false;
 	}
-	return await Note(e,{render}, "poke");
+	return await Note(e, {
+		render
+	}, "poke");
 }
 
 
@@ -387,12 +395,12 @@ export async function Note_appoint(e) {
 	}
 	let type = 0;
 	if (msg.includes("列表")) {
-		let xlmsg=msg.replace("列表","")*1 || 1
-		let sumCount=(urlType.length/80+0.49).toFixed(0);
-		xlmsg=sumCount-xlmsg>-1?xlmsg:sumCount==0?1:sumCount;
-		let xxmsg=(xlmsg-1)<=0?0:80*(xlmsg-1)
-		let count=0;
-		let msgData=[`模板列表共，第${xlmsg}页，共${urlType.length}张，\n您可通过【#体力模板设置1】来绑定你需要的体力模板~\n请选择序号~~\n当前支持选择的模板有:`];
+		let xlmsg = msg.replace("列表", "") * 1 || 1
+		let sumCount = (urlType.length / 80 + 0.49).toFixed(0);
+		xlmsg = sumCount - xlmsg > -1 ? xlmsg : sumCount == 0 ? 1 : sumCount;
+		let xxmsg = (xlmsg - 1) <= 0 ? 0 : 80 * (xlmsg - 1)
+		let count = 0;
+		let msgData = [`模板列表共，第${xlmsg}页，共${urlType.length}张，\n您可通过【#体力模板设置1】来绑定你需要的体力模板~\n请选择序号~~\n当前支持选择的模板有:`];
 		for (let [index, item] of urlType.entries()) {
 			let msg_pass = [];
 			let imgurl;
@@ -404,12 +412,12 @@ export async function Note_appoint(e) {
 					`file:///${mbPath}Template/${item}/icon/bg/${fs.readdirSync(`${mbPath}/Template/${item}/icon/bg/`)[0]}`
 				)
 			}
-			item = index+1 + "." + item
+			item = index + 1 + "." + item
 			count++;
-			if(msgData.length==81){
+			if (msgData.length == 81) {
 				break;
 			}
-			if(index<xxmsg){
+			if (index < xxmsg) {
 				continue;
 			}
 			msg_pass.push(item)
@@ -418,18 +426,18 @@ export async function Note_appoint(e) {
 			}
 			msgData.push(msg_pass)
 		}
-		let endMsg="";
-		if(count<urlType.length){
-			endMsg= `更多内容请翻页查看\n如：#体力模板列表2`
-		}else{
-			endMsg= `已经到底了~~`
+		let endMsg = "";
+		if (count < urlType.length) {
+			endMsg = `更多内容请翻页查看\n如：#体力模板列表2`
+		} else {
+			endMsg = `已经到底了~~`
 		}
 		msgData.push(endMsg)
 		await utils.replyMake(e, msgData, 0)
 		return true;
 	}
-	if(urlType.includes(msg+".png")){
-		msg=msg+".png";
+	if (urlType.includes(msg + ".png")) {
+		msg = msg + ".png";
 	}
 	if (!urlType.includes(msg) && !All.includes(msg)) {
 		e.reply("没有找到你想要的模板昵！可输入 【#体力模板列表】 查询当前支持的模板哦~~")
@@ -459,7 +467,7 @@ const note_file = function(xiaoyao) {
 		if (val.includes(".")) continue;
 		urlType.push(val)
 	}
-	if(!xiaoyao){
+	if (!xiaoyao) {
 		var urlFileOne = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/`);
 		for (let val of urlFileOne) {
 			if (!val.includes(".")) continue;

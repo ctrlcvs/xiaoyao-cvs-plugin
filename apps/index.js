@@ -24,34 +24,27 @@ import {
 } from "../components/Changelog.js";
 import {
 	rule as userRule,delSign,updCookie,
-	userInfo,gclog,mytoken,bindStoken
+	userInfo,gclog,mytoken,bindStoken,cloudToken
 } from "./user.js"
 import {
 	rule as signRule,
-	sign,
-	mysSign,
-	cookiesDocHelp,
-	signlist,yunSignlist,yunAllSign,
-	allMysSign,yunSign,sendyunTime,yuntoken,yunHelp,
-	allSign,bbsSeach
+	sign,bbsSign,cloudSign,seach,cookiesDocHelp,signTask
 } from "./sign.js"
+
 export {
-	updateRes,yunSignlist,delSign,
-	signlist,gclog,mytoken,bindStoken,
+	updateRes,delSign,cloudSign,seach,bbsSign,
+	gclog,mytoken,bindStoken,
 	updateMiaoPlugin,userInfo,
-	sign,bbsSeach,
-	versionInfo,yunAllSign,
-	Note_appoint,
-	pokeNote,yunSign,sendyunTime,yuntoken,
-	cookiesDocHelp,yunHelp,
+	sign,
+	versionInfo,cloudToken,
+	Note_appoint,signTask,
+	pokeNote,
+	cookiesDocHelp,
 	sysCfg,
 	help,updCookie,
 	DailyNoteTask,
-	allMysSign,
-	allSign,
 	AtlasAlias,
 	Note,
-	mysSign
 };
 import gsCfg from '../model/gsCfg.js';
 const _path = process.cwd();
@@ -98,18 +91,18 @@ async function task() {
 	let set = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config")
 	schedule.scheduleJob(set.mysBbsTime, function() {
 			if (set.ismysSign) {
-				allMysSign()
+				signTask('bbs')
 			}
 		}
 	);
 	schedule.scheduleJob(set.allSignTime, function() {
 		if (set.isSign) {
-			allSign()
+			signTask('mys')
 		}
 	});
 	schedule.scheduleJob(set.YunSignTime, function() {
 		if (set.isYunSign) {
-			yunSignlist()
+			signTask('cloud')
 		}
 	});
 }

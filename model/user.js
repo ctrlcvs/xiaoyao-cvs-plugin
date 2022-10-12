@@ -1,14 +1,18 @@
 import YAML from 'yaml'
 import chokidar from 'chokidar'
-import MihoYoApi from "../model/mys/mihoyo-api.js"
+import miHoYoApi from "../model/mys/mihoyoApi.js"
 import fs from 'node:fs'
-import promiseRetry from 'promise-retry';
 import lodash from 'lodash'
 import utils from '../model/mys/utils.js';
 import gsCfg from './gsCfg.js';
 import {
 	isV3
 } from '../components/Changelog.js';
+import {
+	Cfg,
+	Data
+} from "../components/index.js";
+import moment from 'moment'
 const _path = process.cwd();
 const plugin = "xiaoyao-cvs-plugin"
 const RETRY_OPTIONS = {
@@ -17,65 +21,435 @@ const RETRY_OPTIONS = {
 	maxTimeout: 10000
 };
 const nameData = ["原神", "崩坏3", "崩坏2", "未定事件簿"];
-const YamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
+const yamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
+const cloudDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`
+let bbsTask = false;
+let cloudTask = false;
+let mysTask = false;
 /** 配置文件 */
 export default class user {
 	constructor(e) {
 		this.e = e;
 		this.stokenPath = `./plugins/${plugin}/data/yaml/`
 		this.yunPath = `./plugins/${plugin}/data/yunToken/`;
+		this.ForumData = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/defSet/json`, "mys")
+		this.configSign = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config");
+		this.configSign.signlist = this.configSign.signlist || "原神|崩坏3|崩坏2|未定事件簿".split("|")
 		this.getyunToken(this.e)
 	}
 	async getCkData() {
 		let sumData = {};
-		await this.cookie(this.e)
-		this.miHoYoApi = new MihoYoApi(this.e);
-		if (this.e.yuntoken) {
-			let yunres = await this.miHoYoApi.logyunGenshen();
-			let yundata = yunres.data
-			if (yunres.retcode === 0) {
-				sumData["云原神"] = {
-					"今日可获取": yundata?.coin?.coin_num,
-					"免费时长": yundata?.free_time?.free_time,
-					"总时长": yundata.total_time
-				}
+		let yunres = await this.cloudSeach();
+		let yundata = yunres.data
+		if (yunres.retcode === 0) {
+			sumData["云原神"] = {
+				"今日可获取": yundata?.coin?.coin_num,
+				"免费时长": yundata?.free_time?.free_time,
+				"总时长": yundata.total_time
 			}
 		}
-		if (this.e.cookies) {
-			let mysres = await this.miHoYoApi.getTasksList();
-			if (mysres.retcode === 0) {
-				sumData["米游社"] = {
-					"米游币任务": mysres.data.can_get_points != 0 ? "未完成" : "已完成",
-					"米游币余额": mysres.data.total_points,
-					"今日剩余可获取": mysres.data.can_get_points
-				}
+		let mysres = await this.bbsSeachSign();
+		if (mysres.retcode === 0) {
+			sumData["米游社"] = {
+				"米游币任务": mysres.data.can_get_points != 0 ? "未完成" : "已完成",
+				"米游币余额": mysres.data.total_points,
+				"今日剩余可获取": mysres.data.can_get_points
 			}
-
 		}
-		if (this.e.cookie) {
-			for (let name of nameData) {
-				let resSign = await this.miHoYoApi.honkai3rdSignTask(name);
-				if (resSign?.upData) {
-					// console.log(resSign?.upData)
-					for (let item of resSign?.upData) {
-						let num = lodash.random(0, 9999);
-						item.upName = item.upName == "原神" ? "ys" : item.upName == "崩坏3" ? "bh3" : item.upName ==
-							"崩坏2" ? "bh2" : item.upName == "未定事件簿" ? "wdy" : ""
-						sumData[item.upName + "" + num] = {
-							"uid": item.game_uid,
-							"游戏昵称": item.nickname,
-							"等级": item.level,
-							"今日签到": item.is_sign ? "已签到" : "未签到",
-							"累计签到": item.total_sign_day + "天",
-							"今天奖励": item.awards
-						}
-					}
+		let resSign = await this.multiSign(this.ForumData);
+		if (resSign?.upData) {
+			// console.log(resSign?.upData)
+			for (let item of resSign?.upData) {
+				let num = lodash.random(0, 9999);
+				item.upName = item.upName == "原神" ? "ys" : item.upName == "崩坏3" ? "bh3" : item.upName ==
+					"崩坏2" ? "bh2" : item.upName == "未定事件簿" ? "wdy" : ""
+				sumData[item.upName + "" + num] = {
+					"uid": item.game_uid,
+					"游戏昵称": item.nickname,
+					"等级": item.level,
+					"今日签到": item.is_sign ? "已签到" : "未签到",
+					"累计签到": item.total_sign_day + "天",
+					"今天奖励": item.awards
 				}
 			}
 		}
 		return sumData;
 	}
-	
+	async getData(type, data = {}) {
+		await this.cookie(this.e)
+		this.miHoYoApi = new miHoYoApi(this.e);
+		let res = await this.miHoYoApi.getData(type, data)
+		return res
+	}
+	async multiSign(forumData) {
+		let upData = [],
+			message = '';
+		for (let forum of forumData) {
+			if (!(this.configSign.signlist.includes(forum.name))) {
+				continue;
+			}
+			message += `**${forum.name}**\n`
+			let res
+			try {
+				res = await this.getData("userGameInfo", forum)
+				await utils.sleepAsync(300) //等几毫秒免得请求太频繁了
+				if (res?.data?.list?.length === 0 || !res?.data?.list) {
+					message += `签到: 未绑定${forum.name}信息\n`;
+					continue;
+				}
+				message += `${forum.name}共计${res?.data?.list.length}个账号\n`;
+				for (let item of res?.data?.list) {
+					let data = Object.assign({}, forum, item)
+					item.is_sign = true;
+					item.upName = forum.name
+					res = await this.getData("isSign", data)
+					item.total_sign_day = res?.data?.total_sign_day
+					if (res?.data?.is_sign) {
+						message += `${item.nickname}-${item.game_uid}：今日已签到~\n`;
+					} else {
+						res = await this.getData("sign", data)
+						if (res?.data?.gt) {
+							item.is_sign = false;
+							message += `${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
+						} else {
+							item.total_sign_day++;
+							message +=
+								`${item.nickname}-${item.game_uid}：${res.message=="OK"?"签到成功":res.message}\n`
+						}
+					}
+					//获取签到信息和奖励信息
+					const SignInfo = await this.getData("home", data)
+					if (SignInfo) {
+						let awards = SignInfo.data.awards[item.total_sign_day - 1];
+						item.awards = awards?.name + "*" + awards?.cnt
+					}
+					upData.push(item)
+					await utils.sleepAsync(500) //等几毫秒免得请求太频繁了
+				}
+			} catch (e) {
+				Bot.logger.error(`${forum.name} 签到失败 [${res?.message}]`);
+				message += `签到失败: [${res?.message}]\n`;
+			}
+		}
+		return {
+			message,
+			upData
+		}
+	}
+	async docHelp(type) {
+		return this.configSign[type.includes("云") ? "yunDoc" : "cookiesDoc"]
+	}
+
+	async cloudSeach() {
+		let res = await this.getData("cloudGet") //这样会算签到？具体待测试
+		if (res?.retcode == -100) {
+			res.message = "云原神token失效/防沉迷"
+			res.isOk = false;
+		} else {
+			res.isOk = true;
+			res.message =
+				`米云币:${res?.data?.coin?.coin_num},免费时长:${res?.data?.free_time?.free_time}分钟,总时长:${res?.data.total_time}分钟`;
+		}
+		return res;
+	}
+	async bbsSeachSign() {
+		let message = '';
+		let res = await this.getData("bbsisSign", {
+			name: "原神"
+		})
+		if (!res?.data) {
+			res.message = `登录Stoken失效请重新获取cookies或stoken保存~`;
+			res.isOk = false;
+			this.delSytk(yamlDataUrl, this.e)
+		} else {
+			res.message = `当前米游币数量为：${res.data.total_points},今日剩余可获取：${res.data.can_get_points}`
+			res.isOk = true;
+		}
+		return res;
+	}
+	async getbbsSign(forumData) {
+		let message = '',
+			res;
+		try {
+			if (bbsTask) {
+				this.e.reply(`米游币自动签到任务进行中、暂不支持手动签到`);
+				return false;
+			}
+			for (let forum of forumData) {
+				let trueDetail = 0;
+				let Vote = 0;
+				let Share = 0;
+				let sumcount = 0;
+				message += `\n**${forum.name}**\n`
+				res = await this.getData("bbsSign", forum)
+				if (res?.retcode == 1034) {
+					message += `社区签到: 验证码失败\n`;
+				} else {
+					message += `社区签到: ${res.message}\n`;
+				}
+				Bot.logger.mark(`${this.e.user_id}:${this.e.uid}:${forum.name} 社区签到结果: [${res.message}]`);
+				await utils.randomSleepAsync();
+				res = await this.getData("bbsPostList", forum)
+				sumcount++;
+				let postList = res.data.list;
+				let postId
+				for (let post of postList) {
+					post = post.post;
+					postId = post['post_id']
+					res = await this.getData("bbsPostFull", {
+						postId
+					})
+					if (res?.message && res?.retcode == 0) {
+						trueDetail++;
+					}
+					res = await this.getData("bbsVotePost", {
+						postId
+					})
+					if (res?.message && res?.retcode == 0) {
+						Vote++;
+					}
+					await utils.randomSleepAsync(2);
+				}
+				let sharePost = postList[0].post;
+				res = await this.getData("bbsShareConf", {
+					postId
+				})
+				if (res?.message && res?.retcode == 0) {
+					Share++;
+				}
+				message += `共读取帖子记录${20*sumcount}\n浏览成功：${trueDetail}\n点赞成功：${Vote}\n分享成功：${Share}`;
+				await utils.randomSleepAsync(3);
+			}
+		} catch (ex) {
+			Bot.logger.error(`出问题了：${ex}`);
+			message += `${this.e.user_id}获取米游币异常`;
+		}
+		return {
+			message
+		}
+	}
+	async signTask(e = "") {
+		let mul = e;
+		//暂不支持多个uid签到
+		Bot.logger.mark(`开始米社签到任务`);
+		let isAllSign = this.configSign.isAllSign
+		let userIdList = [];
+		let dir = './data/MysCookie/'
+		if (isV3) {
+			let files = fs.readdirSync(dir).filter(file => file.endsWith('.yaml'))
+			userIdList = (files.join(",").replace(/.yaml/g, "").split(","))
+		} else {
+			for (let [user_id, cookie] of Object.entries(NoteCookie)) {
+				userIdList.push(user_id)
+			}
+		}
+		if (mysTask) {
+			e.reply(`米社自动签到任务进行中，请勿重复触发指令`)
+			return false
+		}
+		mysTask = true;
+
+		let tips = ['开始米社签到任务']
+		let time = userIdList.length * 3.5 + 5
+		let finishTime = moment().add(time, 's').format('MM-DD HH:mm:ss')
+		tips.push(`\n签到用户：${userIdList.length}个`)
+		tips.push(`\n预计需要：${this.countTime(time)}`)
+		if (time > 120) {
+			tips.push(`\n完成时间：${finishTime}`)
+		}
+		logger.mark(`签到用户:${userIdList.length}个，预计需要${this.countTime(time)} ${finishTime} 完成`)
+		if (mul) {
+			await this.e.reply(tips)
+			if (this.e.msg.includes('force')) this.force = true
+		} else {
+			await utils.relpyPrivate(await gsCfg.getMasterQQ(), tips)
+			await utils.sleepAsync(lodash.random(1, 20) * 1000)
+		}
+		let _reply = e.reply
+		let msg = e?.msg;
+		for (let qq of userIdList) {
+			let user_id = qq;
+			// let cklist={};
+			// if(isV3){
+			// 	let ck=`${dir}${qq*1}.yaml`
+			// 	let cklis=fs.readFileSync(ck, 'utf-8')
+			// 	cklist=YAML.parse(cklis)
+			// 	console.log(cklist)
+			// }else{
+			// 	cklist=NoteCookie[qq*1]
+			// }
+			// for(let uid in cklist){
+			// 	console.log(item)
+			// }
+			let e = {
+				user_id,
+				qq,
+				isTask: true
+			};
+			if (msg) {
+				e.msg = msg.replace(/全部|签到|米社/g, "");
+			} else {
+				e.msg = "全部"
+			}
+			Bot.logger.mark(`正在为qq${user_id}米社签到中...`);
+			e.reply = (msg) => {
+				if (!isAllSign || isbool) {
+					return;
+				}
+				if (msg.includes("OK")) {
+					utils.relpyPrivate(qq, msg + "\n自动签到成功");
+				}
+			};
+			this.e = e;
+			let res = await this.multiSign(this.getDataList(e.msg));
+			Bot.logger.mark(`${res.message}`)
+			await utils.sleepAsync(10000);
+		}
+		msg = `米社签到任务完成`
+		Bot.logger.mark(msg);
+		if (mul) {
+			_reply(msg)
+		} else {
+			await utils.relpyPrivate(await gsCfg.getMasterQQ(), msg)
+		}
+		mysTask = false;
+	}
+	async cloudTask(e = "") {
+		let mul = e;
+		Bot.logger.mark(`云原神签到任务开始`);
+		let files = fs.readdirSync(this.yunPath).filter(file => file.endsWith('.yaml'))
+		let isYunSignMsg = this.configSign.isYunSignMsg
+		let userIdList = (files.join(",").replace(/.yaml/g, "").split(","))
+		if (cloudTask) {
+			e.reply(`云原神自动签到任务进行中，请勿重复触发指令`)
+			return false
+		}
+		let tips = ['开始云原神签到任务']
+		let time = userIdList.length * 3.5 + 5
+		let finishTime = moment().add(time, 's').format('MM-DD HH:mm:ss')
+		tips.push(`\n签到用户：${userIdList.length}个`)
+		tips.push(`\n预计需要：${this.countTime(time)}`)
+		if (time > 120) {
+			tips.push(`\n完成时间：${finishTime}`)
+		}
+		logger.mark(`签到用户:${userIdList.length}个，预计需要${this.countTime(time)} ${finishTime} 完成`)
+		if (mul) {
+			await this.e.reply(tips)
+			if (this.e.msg.includes('force')) this.force = true
+		} else {
+			await utils.relpyPrivate(await gsCfg.getMasterQQ(), tips)
+			await utils.sleepAsync(lodash.random(1, 20) * 1000)
+		}
+		cloudTask = true;
+		let _reply = e.reply
+		for (let qq of userIdList) {
+			let user_id = qq;
+			let e = {
+				user_id,
+				qq,
+				isTask: true
+			};
+			Bot.logger.mark(`正在为qq${user_id}云原神签到中...`);
+			e.msg = "全部"
+			e.reply = (msg) => {
+				if (!isYunSignMsg || isYun) {
+					return;
+				}
+				if (msg.includes("领取奖励")) {
+					utils.relpyPrivate(qq, msg + "\n云原神自动签到成功");
+				}
+			};
+			await this.cloudSeach(e);
+			await utils.sleepAsync(10000);
+		}
+		let msg = `云原神签到任务完成`
+		Bot.logger.mark(msg);
+		if (mul) {
+			_reply(msg)
+		} else {
+			await utils.relpyPrivate(await gsCfg.getMasterQQ(), msg)
+		}
+		cloudTask = false;
+	}
+	countTime(time) {
+		let hour = Math.floor((time / 3600) % 24)
+		let min = Math.floor((time / 60) % 60)
+		let sec = Math.floor(time % 60)
+		let msg = ''
+		if (hour > 0) msg += `${hour}小时`
+		if (min > 0) msg += `${min}分钟`
+		if (sec > 0) msg += `${sec}秒`
+		return msg
+	}
+	async bbsTask(e = "") {
+		let mul = e;
+		Bot.logger.mark(`开始米社米币签到任务`);
+		let stoken = await gsCfg.getBingStoken();
+		let isPushSign = this.configSign.isPushSign
+		let userIdList = Object.keys(stoken)
+		if (bbsTask) {
+			e.reply(`云原神自动签到任务进行中，请勿重复触发指令`)
+			return false
+		}
+		let tips = ['开始米游币签到任务']
+		let time = userIdList.length * 3.5 + 5
+		let finishTime = moment().add(time, 's').format('MM-DD HH:mm:ss')
+		tips.push(`\n签到用户：${userIdList.length}个`)
+		tips.push(`\n预计需要：${this.countTime(time)}`)
+		if (time > 120) {
+			tips.push(`\n完成时间：${finishTime}`)
+		}
+		logger.mark(`签到用户:${userIdList.length}个，预计需要${this.countTime(time)} ${finishTime} 完成`)
+		if (mul) {
+			await this.e.reply(tips)
+			if (this.e.msg.includes('force')) this.force = true
+		} else {
+			await utils.relpyPrivate(await gsCfg.getMasterQQ(), tips)
+			await utils.sleepAsync(lodash.random(1, 20) * 1000)
+		}
+		bbsTask = true;
+		let _reply = e.reply
+		//获取需要签到的用户
+		for (let dataUid of stoken) {
+			for (let uuId in dataUid) {
+				if (uuId[0] * 1 > 5) {
+					continue;
+				}
+				let data = dataUid[uuId]
+				let user_id = data.userId * 1;
+				let e = {
+					user_id,
+					isTask: true
+				};
+				e.cookie = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
+				Bot.logger.mark(`正在为qq${user_id}：uid:${uuId}进行米游币签到中...`);
+				e.msg = "全部"
+				e.reply = (msg) => {
+					//关闭签到消息推送
+					if (!isPushSign || ismysbool) {
+						return;
+					}
+					if (msg.includes("OK")) { //签到成功并且不是已签到的才推送
+						utils.relpyPrivate(user_id, msg + "uid:" + uuId + "\n自动签到成功");
+					}
+				};
+				this.e = e;
+				await this.getbbsSign(this.ForumData);
+				await utils.sleepAsync(10000);
+			}
+		}
+		let msg = `米社米币签到任务完成`
+		Bot.logger.mark(msg);
+		if (mul) {
+			_reply(msg)
+		} else {
+			await utils.relpyPrivate(await gsCfg.getMasterQQ(), msg)
+		}
+		bbsTask = false;
+	}
+	async bbsGeetest(){
+		let res=await this.getData('bbsGetCaptcha')//?????????????????????????????
+	}
 	getyunToken(e) {
 		let file = `${this.yunPath}${e.user_id}.yaml`
 		try {
@@ -95,7 +469,7 @@ export default class user {
 			skuid
 		} = await this.getCookie(e);
 		let cookiesDoc = await this.getcookiesDoc();
-		let miHoYoApi = new MihoYoApi(this.e);
+		// let miHoYoApi = new MihoYoApi(this.e);
 		if (!cookie) {
 			e.reply("请先#绑定cookie\n发送【体力帮助】查看配置教程")
 			return false;
@@ -108,7 +482,7 @@ export default class user {
 			// e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket【教程】 " + cookiesDoc)
 			return false;
 		}
-		let flot = (await miHoYoApi.stoken(cookie, e));
+		// let flot = (await miHoYoApi.stoken(cookie, e));
 		// console.log(flot)
 		await utils.sleepAsync(1000); //延迟加载防止文件未生成
 		if (!flot) {
@@ -145,8 +519,38 @@ export default class user {
 			skuid
 		}
 	}
+	async stoken(cookie, e) {
+		this.e = e;
+		let datalist = this.getStoken(e.user_id) || {}
+		if (Object.keys(datalist).length > 0) {
+			return true;
+		}
+		const map = this.getCookieMap(cookie);
+		let loginTicket = map.get("login_ticket");
+		const loginUid = map.get("login_uid") ? map.get("login_uid") : map.get("ltuid");
+		if (isV3) {
+			loginTicket = gsCfg.getBingCookie(e.user_id).login_ticket
+		}
+
+		let res = this.getData("bbsStoken", {
+			loginUid,
+			loginTicket
+		})
+		if (res?.data) {
+			datalist[e.uid] = {
+				stuid: map.get("account_id"),
+				stoken: data.data.list[0].token,
+				ltoken: data.data.list[1].token,
+				uid: e.uid,
+				userId: e.user_id,
+				is_sign: true
+			}
+			gsCfg.saveBingStoken(e.user_id, datalist)
+		}
+		return true;
+	}
 	getStoken(userId) {
-		let file = `${YamlDataUrl}/${userId}.yaml`
+		let file = `${yamlDataUrl}/${userId}.yaml`
 		try {
 			let ck = fs.readFileSync(file, 'utf-8')
 			ck = YAML.parse(ck)
@@ -162,8 +566,11 @@ export default class user {
 			return {}
 		}
 	}
-	async delSytk(path,e){
+	async delSytk(path = yamlDataUrl, e, type = "stoken") {
 		await this.getCookie(e);
+		if (type != "stoken") {
+			path = cloudDataUrl
+		}
 		let file = `${path}/${e.user_id}.yaml`
 		fs.exists(file, (exists) => {
 			if (!exists) {
@@ -171,16 +578,16 @@ export default class user {
 			}
 			let ck = fs.readFileSync(file, 'utf-8')
 			ck = YAML.parse(ck)
-			if(ck?.yuntoken){
+			if (ck?.yuntoken) {
 				fs.unlinkSync(file);
-			}else if(ck){
-				if(!ck[e.uid]) {
+			} else if (ck) {
+				if (!ck[e.uid]) {
 					return true;
 				}
 				delete ck[e.uid];
-				if(Object.keys(ck)==0){
+				if (Object.keys(ck) == 0) {
 					fs.unlinkSync(file);
-				}else{
+				} else {
 					ck = YAML.stringify(ck)
 					fs.writeFileSync(file, ck, 'utf8')
 				}
@@ -188,5 +595,13 @@ export default class user {
 			e.reply(`已删除${e.msg}`)
 			return true;
 		})
+	}
+	getDataList(name) {
+		for (let item of this.ForumData) {
+			if (item.name == name) { //循环结束未找到的时候返回原数组签到全部
+				return [item]
+			}
+		}
+		return this.ForumData;
 	}
 }

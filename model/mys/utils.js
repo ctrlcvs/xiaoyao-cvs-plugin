@@ -9,15 +9,14 @@ export async function sleepAsync(sleepms) {
 }
 
 
-export async function randomSleepAsync() {
-	let sleep = 3 * 1000 + _.random(5 * 1000);
+export async function randomSleepAsync(end) {
+	let sleep = 3 * 1000 + _.random((end||5) * 1000);
 	await sleepAsync(sleep);
 }
-
-export function randomString(length) {
+export function randomString(length,os=false) {
 	let randomStr = '';
 	for (let i = 0; i < length; i++) {
-		randomStr += _.sample('abcdefghijklmnopqrstuvwxyz0123456789');
+		randomStr += _.sample(os?'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz':'abcdefghijklmnopqrstuvwxyz0123456789');
 	}
 	return randomStr;
 }

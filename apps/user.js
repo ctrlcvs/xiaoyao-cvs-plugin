@@ -1,6 +1,4 @@
-import MihoYoApi from "../model/mys/mihoyo-api.js"
 import utils from '../model/mys/utils.js';
-import promiseRetry from 'promise-retry';
 import {
 	Cfg,
 	Data
@@ -18,6 +16,7 @@ import {
 } from "oicq";
 import YAML from 'yaml'
 import User from "../model/user.js"
+import user from '../model/user.js';
 
 export const rule = {
 	userInfo: {
@@ -35,6 +34,10 @@ export const rule = {
 	bindStoken: {
 		reg: "^(.*)stoken=(.*)$",
 		describe: "绑定stoken"
+	},
+	cloudToken: {
+		reg: "^(.*)ct(.*)$",
+		describe: "云原神签到token获取"
 	},
 	delSign: {
 		reg: "^#*删除(我的)*(stoken|(云原神|云ck))$",
@@ -57,6 +60,7 @@ export async function userInfo(e, {
 	let week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 	let day = moment(new Date()).format("yyyy年MM月DD日 HH:mm") + " " + week[new Date().getDay()];
 	if (Object.keys(sumData).length == 0) {
+		e.reply("未获取到角色信息~")
 		return true;
 	}
 	let ck = "";
@@ -92,44 +96,15 @@ export async function gclog(e) {
 		e.reply("请私聊发送")
 		return true;
 	}
-	let miHoYoApi = new MihoYoApi(e);
-	if (!e.cookies || e.cookies.includes("undefined")) {
-		e.reply(`请先绑定stoken\n发送【stoken帮助】查看配置教程`)
-		return true;
-	}
-	// let kkbody = await miHoYoApi.getbody("原神");
 	e.region = getServer(e.uid)
-	// const objData = await miHoYoApi.getUserInfo(kkbody)
-	// let data = objData.data
-	let authkeyrow = await miHoYoApi.authkey(e);
+	let authkeyrow = await user.getData("authKey");
 	if (!authkeyrow?.data) {
 		e.reply("authkey获取失败：" + authkeyrow.message)
 		return true;
 	}
 	let authkey = authkeyrow.data["authkey"]
-	let postdata = {
-		'authkey_ver': '1',
-		'sign_type': '2',
-		'auth_appid': 'webview_gacha',
-		'init_type': '301',
-		'gacha_id': 'fecafa7b6560db5f3182222395d88aaa6aaac1bc',
-		'timestamp': Math.floor(Date.now() / 1000), //当前时间搓
-		'lang': 'zh-cn',
-		'device_type': 'mobile',
-		'plat_type': 'ios',
-		'region': e.region,
-		'authkey': encodeURIComponent(authkey),
-		'game_biz': 'hk4e_cn',
-		'gacha_type': "301",
-		'page': 1,
-		'size': 5,
-		'end_id': 0,
-	}
-	let url = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?`
-	for (let item of Object.keys(postdata)) {
-		url += `${item}=${postdata[item]}&`
-	}
-	e.msg = url.substring(0, url.length - 1);
+	let url = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?authkey_ver=1&sign_type=2&auth_appid=webview_gacha&init_type=301&gacha_id=fecafa7b6560db5f3182222395d88aaa6aaac1bc&timestamp=${Math.floor(Date.now() / 1000)}&lang=zh-cn&device_type=mobile&plat_type=ios&region=${e.region}&authkey=${encodeURIComponent(authkey)}&game_biz=hk4e_cn&gacha_type=301&page=1&size=5&end_id=0`
+	e.msg = url
 	// e.reply(e.msg)
 	let sendMsg = [];
 	e.reply("抽卡记录获取中请稍等...")
@@ -138,7 +113,6 @@ export async function gclog(e) {
 		sendMsg.push(msg)
 	}
 	if(isGet){
-
 		sendMsg=[...sendMsg,...[1,`uid:${e.uid}`,e.msg]]
 	}else {
 		if (isV3) {
@@ -190,12 +164,10 @@ export async function bindStoken(e) {
 	let msg = e.msg;
 	let user = new User(e);
 	await user.cookie(e)
-	let miHoYoApi = new MihoYoApi(e);
 	e.region = getServer(e.uid)
-	miHoYoApi.cookies = msg;
-	let resObj = await miHoYoApi.updCookie();
-	if (!resObj?.data) {
-		await e.reply(`绑定Stoken失败，异常：${resObj?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
+	let res= await user.getData("bbsGetCookie",{cookies:msg.replace(/;/g,'&').replace(/stuid/,"uid")} )
+	if (!res?.data) {
+		await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
 		return true;
 	}
 	await user.getCookie(e)
@@ -220,6 +192,40 @@ export async function bindStoken(e) {
 	await e.reply(msg);
 	return true;
 }
+export async function cloudToken(e) {
+	if (e.msg.includes("ltoken") || e.msg.includes("_MHYUUID")) { //防止拦截米社cookie
+		return false;
+	}
+	if (["ct", "si", "devId"].includes(e.msg)) {
+		e.reply(`格式支持\nai=*;ci=*;oi=*;ct=***********;si=**************;bi=***********;devId=***********`)
+		return false;
+	}
+	let msg = e.msg.split("devId")
+	if (msg.length < 2) {
+		return false;
+	}
+	let devId = msg[1].replace(/=/, "")
+	let user = new User(e);
+	let yuntoken = msg[0];
+	e.devId = devId;
+	e.yuntoken = yuntoken;
+	let res=await user.cloudSeach()
+	if (res.retcode != 0) {
+		e.reply(objData.message)
+		return true;
+	}
+	let datalist = {
+		devId: devId,
+		yuntoken: yuntoken,
+		qq: e.user_id,
+		uid: e.uid,
+		sign: true
+	}
+	let yamlStr = YAML.stringify(datalist);
+	fs.writeFileSync(`${yunpath}${e.user_id}.yaml`, yamlStr, 'utf8');
+	e.reply("云原神cookie保存成功~\n您后续可发送【#云原神查询】获取使用时间~")
+	return true;
+}
 
 export async function delSign(e) {
 	let user = new User(e);
@@ -239,7 +245,7 @@ export async function updCookie(e) {
 		e.reply("请私聊发送")
 		return true;
 	}
-	let miHoYoApi = new MihoYoApi(e);
+	let user = new User(e);
 	let sendMsg = [];
 	e._reply = e.reply;
 	e.reply = (msg) => {
@@ -247,15 +253,13 @@ export async function updCookie(e) {
 	}
 	for(let item of  Object.keys(stoken)){
 		e.region = getServer(stoken[item].uid)
-		miHoYoApi.cookies= `stuid=${stoken[item].stuid};stoken=${stoken[item].stoken};ltoken=${stoken[item].ltoken};`;
-		let resObj = await miHoYoApi.updCookie();
-		if (!resObj?.data) {
-			e.reply(`uid:${stoken[item].uid},请求异常：${resObj.message}`)
+		let res= await user.getData("bbsGetCookie",{cookies:`uid=${stoken[item].stuid}&stoken=${stoken[item].stoken}`})
+		if (!res?.data) {
+			e.reply(`uid:${stoken[item].uid},请求异常：${res.message}`)
 			continue;
 		}
-		let sk = await utils.getCookieMap(miHoYoApi.cookies)
-		let ck = resObj["data"]["cookie_token"];
-		e.msg = `ltoken=${sk.get("ltoken")};ltuid=${sk.get("stuid")};cookie_token=${ck}; account_id=${sk.get("stuid")};`
+		let ck = res["data"]["cookie_token"];
+		e.msg = `ltoken=${stoken[item].ltoken};ltuid=${stoken[item].stuid};cookie_token=${ck}; account_id=${stoken[item].stuid};`
 		if(isGet){
 			sendMsg=[...sendMsg,...[`uid:${stoken[item].uid}`,e.msg]]
 		}else {

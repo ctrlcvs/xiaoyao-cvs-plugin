@@ -29,6 +29,16 @@ class GsCfg {
 			fs.readFileSync(path + name + ".yaml", 'utf8')
 		)
 	}
+	async getMasterQQ(){
+		let qq;
+		if(isV3){
+			let config=(await import(`file://${_path}/plugins/genshin/model/gsCfg.js`)).default
+			qq=config.masterQQ[0]
+		}else{
+			qq=BotConfig.masterQQ[0]
+		}
+		return qq
+	}
 	/** 读取用户绑定的ck */
 	async getBingCk() {
 		let ck = {}

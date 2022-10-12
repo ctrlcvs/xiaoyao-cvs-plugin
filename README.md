@@ -27,28 +27,7 @@ git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cv
 
 
 #### 使用说明
-
-1.  配合云崽使用, https://gitee.com/Le-niao/Yunzai-Bot
-2.  V3版本安装报错的话请用指令引入包
-```
-pnpm add superagent -w
-```
-
-```
-pnpm add promise-retry -w
-```
-3.  V2版本安装报错指令引入包
-```
-cnpm i yaml
-```
-
-```
-cnpm i superagent
-```
-
-```
-cnpm i promise-retry
-```
+ 配合云崽使用, https://gitee.com/Le-niao/Yunzai-Bot
 #### 命令说明
 1. 发送 【#图鉴更新】 获取最新的图鉴记录。(必须)
 2. 发送 【#**图鉴】 进行触发，例如发送 #刻晴图鉴，即可返回对应的图片信息。
@@ -62,7 +41,6 @@ cnpm i promise-retry
 10. 发送 #崩坏3签到 可签到崩坏3游戏模块 具体支持【崩坏3、崩坏2、未定义事件】
 11. 发送 #云原神签到 可签到云原神游戏
 12. 默认配置文件位于 ./plugins/xiaoyao-cvs-plugin/defSet/config/config.yaml
- 
 ## 其他
 <!---
 - 有什么问题、Bug，或有其它建议，欢迎提 [issue](https://github.com/Ctrlcvs/xiaoyao-cvs-plugin/issues)
