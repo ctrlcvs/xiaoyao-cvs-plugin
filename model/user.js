@@ -140,7 +140,7 @@ export default class user {
 						item.awards = awards?.name + "*" + awards?.cnt
 					}
 					upData.push(item)
-					await utils.sleepAsync(500) //等几毫秒免得请求太频繁了
+					await utils.randomSleepAsync()
 				}
 			} catch (e) {
 				Bot.logger.error(`${forum.name} 签到失败 [${res?.message}]`);
