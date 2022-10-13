@@ -169,6 +169,7 @@ export default class user {
 			}
 			res.message = sendMsg;
 		}
+		Bot.logger.mark(`\n云原神签到用户:${this.e.user_id}:${res.message}\n`)
 		return res
 	}
 	async cloudSeach() {
@@ -203,6 +204,12 @@ export default class user {
 			challenge = '',
 			res;
 		try {
+			res=await this.bbsSeachSign()
+			if(res?.data?.can_get_points==0){
+				return {
+					message:`签到任务已完成，无需重复签到`
+				}
+			}
 			for (let forum of forumData) {
 				let trueDetail = 0;
 				let Vote = 0;
@@ -396,7 +403,6 @@ export default class user {
 		logger.mark(`签到用户:${userIdList.length}个，预计需要${this.countTime(time)} ${finishTime} 完成`)
 		if (mul) {
 			await this.e.reply(tips)
-			if (this.e.msg.includes('force')) this.force = true
 		} else {
 			await utils.relpyPrivate(await gsCfg.getMasterQQ(), tips)
 			await utils.sleepAsync(lodash.random(1, 20) * 1000)
@@ -420,7 +426,8 @@ export default class user {
 					utils.relpyPrivate(qq, msg + "\n云原神自动签到成功");
 				}
 			};
-			await this.cloudSign(e);
+			this.getyunToken(e)
+			await this.cloudSign();
 			await utils.sleepAsync(10000);
 		}
 		let msg = `云原神签到任务完成`

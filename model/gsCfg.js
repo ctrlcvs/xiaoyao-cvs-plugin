@@ -19,6 +19,7 @@ const pathPlugin=`./plugins/${plugin}/data/`
  * 配置文件
  * 主要用于处理 stoken以及云原神账号数据
  */
+const _path = process.cwd();
 class GsCfg {
 	constructor() {
 
@@ -32,7 +33,7 @@ class GsCfg {
 	async getMasterQQ(){
 		let qq;
 		if(isV3){
-			let config=(await import(`file://${_path}/plugins/genshin/model/gsCfg.js`)).default
+			let config=(await import(`file://${_path}/lib/config/config.js`)).default
 			qq=config.masterQQ[0]
 		}else{
 			qq=BotConfig.masterQQ[0]
