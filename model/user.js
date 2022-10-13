@@ -32,7 +32,7 @@ export default class user {
 		this.e = e;
 		this.stokenPath = `./plugins/${plugin}/data/yaml/`
 		this.yunPath = `./plugins/${plugin}/data/yunToken/`;
-		Data.createDir("",this.yunPath,false)
+		Data.createDir("", this.yunPath, false)
 		this.ForumData = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/defSet/json`, "mys")
 		this.configSign = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config");
 		this.configSign.signlist = this.configSign.signlist || "原神|崩坏3|崩坏2|未定事件簿".split("|")
@@ -45,7 +45,7 @@ export default class user {
 		if (yunres.retcode === 0) {
 			sumData["云原神"] = {
 				"今日可获取": yundata?.coin?.free_coin_num,
-				"米云币":yundata?.coin?.coin_num,
+				"米云币": yundata?.coin?.coin_num,
 				"免费时长": yundata?.free_time?.free_time,
 				"总时长": yundata.total_time
 			}
@@ -121,8 +121,8 @@ export default class user {
 							// 	if (!res?.data?.gt) {
 							// 		message += `${item.nickname}-${item.game_uid}:验证码签到成功~`
 							// 	} else {
-									item.is_sign = false;
-									message += `${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
+							item.is_sign = false;
+							message += `${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
 							// 	}
 							// }
 						} else {
@@ -153,19 +153,21 @@ export default class user {
 	async docHelp(type) {
 		return this.configSign[type.includes("云") ? "yunDoc" : "cookiesDoc"]
 	}
-	async cloudSign(){
+	async cloudSign() {
 		let res = await this.getData("cloudReward")
-		if(res?.data?.list?.length==0||!res?.data?.list){
-			res.message=`您今天的奖励已经领取了~`
-		}else{
-			let sendMsg=``
-			for(let item of res?.data?.list){
+		if (res?.data?.list?.length == 0 || !res?.data?.list) {
+			res.message = `您今天的奖励已经领取了~`
+		} else {
+			let sendMsg = ``
+			for (let item of res?.data?.list) {
 				let reward_id = item.id;
 				let reward_msg = item.msg;
-				res = await this.getData("cloudGamer",{reward_id})
-				sendMsg+=`\n领取奖励,ID:${reward_id},Msg:${reward_msg}`
+				res = await this.getData("cloudGamer", {
+					reward_id
+				})
+				sendMsg += `\n领取奖励,ID:${reward_id},Msg:${reward_msg}`
 			}
-			res.message=sendMsg;
+			res.message = sendMsg;
 		}
 		return res
 	}
@@ -238,12 +240,16 @@ export default class user {
 					if (res?.retcode == 1034) {
 						challenge = await this.bbsGeetest()
 						if (challenge) {
-							forum["headers"] = {
-								"x-rpc-challenge": challenge
+							let data = {
+								postId,
+								headers: {
+									"x-rpc-challenge": challenge,
+								}
 							}
-							await this.getData("bbsSign", forum)
+							await this.getData("bbsPostFull", data)
 						}
 					}
+					await utils.randomSleepAsync(10);
 					res = await this.getData("bbsVotePost", {
 						postId
 					})
@@ -253,10 +259,13 @@ export default class user {
 					if (res?.retcode == 1034) {
 						challenge = await this.bbsGeetest()
 						if (challenge) {
-							forum["headers"] = {
-								"x-rpc-challenge": challenge
+							let data = {
+								postId,
+								headers: {
+									"x-rpc-challenge": challenge,
+								}
 							}
-							await this.getData("bbsSign", forum)
+							await this.getData("bbsVotePost", data)
 						}
 					}
 					await utils.randomSleepAsync(2);
@@ -269,6 +278,7 @@ export default class user {
 					Share++;
 				}
 				message += `共读取帖子记录${20*sumcount}\n浏览成功：${trueDetail}\n点赞成功：${Vote}\n分享成功：${Share}`;
+				Bot.logger.mark(`\n用户${this.e.user_id}:\n${message}`)
 				await utils.randomSleepAsync(3);
 			}
 		} catch (ex) {
@@ -499,7 +509,7 @@ export default class user {
 		bbsTask = false;
 	}
 	async bbsGeetest() {
-		let res = await this.getData('bbsGetCaptcha') 
+		let res = await this.getData('bbsGetCaptcha')
 		let challenge = res.data["challenge"]
 		res = await this.getData("bbsValidate", res.data)
 		if (res?.data?.validate) {
@@ -543,7 +553,6 @@ export default class user {
 		} = await this.getCookie(e);
 		let cookiesDoc = await this.getcookiesDoc();
 		if (!cookie) {
-			e.reply("请先#绑定cookie\n发送【体力帮助】查看配置教程")
 			return false;
 		}
 		let stokens = this.getStoken(e.user_id)
@@ -551,13 +560,11 @@ export default class user {
 			return true;
 		}
 		if (!cookie.includes("login_ticket") && (isV3 && !skuid?.login_ticket)) {
-			// e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket【教程】 " + cookiesDoc)
 			return false;
 		}
-		let flot =await this.stoken(cookie, e)
+		let flot = await this.stoken(cookie, e)
 		await utils.sleepAsync(1000); //延迟加载防止文件未生成
 		if (!flot) {
-			e.reply("登录失效请重新登录获取cookie发送机器人~")
 			return false;
 		}
 		return true;
@@ -596,13 +603,13 @@ export default class user {
 		if (Object.keys(datalist).length > 0) {
 			return true;
 		}
-		const map =await utils.getCookieMap(cookie);
+		const map = await utils.getCookieMap(cookie);
 		let loginTicket = map?.get("login_ticket");
 		const loginUid = map?.get("login_uid") ? map?.get("login_uid") : map?.get("ltuid");
 		if (isV3) {
 			loginTicket = gsCfg.getBingCookie(e.user_id).login_ticket
 		}
-	    let mhyapi = new miHoYoApi(this.e);
+		let mhyapi = new miHoYoApi(this.e);
 		let res = await mhyapi.getData("bbsStoken", {
 			loginUid,
 			loginTicket
