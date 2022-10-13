@@ -254,7 +254,7 @@ export async function updCookie(e) {
 	for(let item of  Object.keys(stoken)){
 		e.region = getServer(stoken[item].uid)
 		e.uid=stoken[item].uid
-		let res= await user.getData("bbsGetCookie",{cookies:`uid=${stoken[item].stuid}&stoken=${stoken[item].stoken}`})
+		let res= await user.getData("bbsGetCookie",{cookies:`uid=${stoken[item].stuid}&stoken=${stoken[item].stoken}`},false)
 		if (!res?.data) {
 			e.reply(`uid:${stoken[item].uid},请求异常：${res.message}`)
 			continue;

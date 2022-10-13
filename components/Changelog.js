@@ -71,6 +71,6 @@ try {
 }
 
 const yunzaiVersion = packageJson.version
-const isV3 = yunzaiVersion[0] === '3'
+const isV3 = yunzaiVersion[0]*1 > 2
 
 export { currentVersion, yunzaiVersion, isV3, changelogs }

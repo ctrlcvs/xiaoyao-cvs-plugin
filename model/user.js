@@ -76,8 +76,10 @@ export default class user {
 		}
 		return sumData;
 	}
-	async getData(type, data = {}) {
-		await this.cookie(this.e)
+	async getData(type, data = {},isck=true) {
+		if(isck){
+			await this.cookie(this.e)
+		}
 		this.miHoYoApi = new miHoYoApi(this.e);
 		let res = await this.miHoYoApi.getData(type, data)
 		return res
