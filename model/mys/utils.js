@@ -20,6 +20,15 @@ export function randomString(length,os=false) {
 	}
 	return randomStr;
 }
+
+export async function redisGet(userId,type='bbs'){
+	 await redis.get(`xiaoyao:${type}:${userId}`);
+}
+export async function redisSet(userId,type='bbs',data){
+	var time = moment(Date.now()).add('days', 1).format('YYYY-MM-DD 00:00:00')
+	var new_date = (new Date(time).getTime() - new Date().getTime()) / 1000  //获取隔天凌晨的时间差
+	await redis.set(`xiaoyao:${type}:${userId}`,JSON.stringify(data),{EX:parseInt(new_date)});
+}
 /**
  * 发送私聊消息，仅给好友发送
  * @param user_id qq号
@@ -91,7 +100,7 @@ export default {
 	sleepAsync,getServer,
 	randomSleepAsync,
 	replyMake,
-	randomString,
+	randomString,redisGet,redisSet,
 	relpyPrivate,
 	getCookieMap
 }

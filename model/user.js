@@ -44,7 +44,8 @@ export default class user {
 		let yundata = yunres.data
 		if (yunres.retcode === 0) {
 			sumData["云原神"] = {
-				"今日可获取": yundata?.coin?.coin_num,
+				"今日可获取": yundata?.coin?.free_coin_num,
+				"米云币":yundata?.coin?.coin_num,
 				"免费时长": yundata?.free_time?.free_time,
 				"总时长": yundata.total_time
 			}
@@ -88,9 +89,9 @@ export default class user {
 			if (!(this.configSign.signlist.includes(forum.name))) {
 				continue;
 			}
-			message += `**${forum.name}**\n`
 			let res
 			try {
+				message += `**${forum.name}**\n`
 				res = await this.getData("userGameInfo", forum)
 				await utils.sleepAsync(300) //等几毫秒免得请求太频繁了
 				if (res?.data?.list?.length === 0 || !res?.data?.list) {
@@ -152,7 +153,22 @@ export default class user {
 	async docHelp(type) {
 		return this.configSign[type.includes("云") ? "yunDoc" : "cookiesDoc"]
 	}
-
+	async cloudSign(){
+		let res = await this.getData("cloudReward")
+		if(res?.data?.list?.length==0||!res?.data?.list){
+			res.message=`您今天的奖励已经领取了~`
+		}else{
+			let sendMsg=``
+			for(let item of res?.data?.list){
+				let reward_id = item.id;
+				let reward_msg = item.msg;
+				res = await this.getData("cloudGamer",{reward_id})
+				sendMsg+=`\n领取奖励,ID:${reward_id},Msg:${reward_msg}`
+			}
+			res.message=sendMsg;
+		}
+		return res
+	}
 	async cloudSeach() {
 		let res = await this.getData("cloudGet") //这样会算签到？具体待测试
 		if (res?.retcode == -100) {
@@ -185,10 +201,6 @@ export default class user {
 			challenge = '',
 			res;
 		try {
-			if (bbsTask) {
-				this.e.reply(`米游币自动签到任务进行中、暂不支持手动签到`);
-				return false;
-			}
 			for (let forum of forumData) {
 				let trueDetail = 0;
 				let Vote = 0;
@@ -398,7 +410,7 @@ export default class user {
 					utils.relpyPrivate(qq, msg + "\n云原神自动签到成功");
 				}
 			};
-			await this.cloudSeach(e);
+			await this.cloudSign(e);
 			await utils.sleepAsync(10000);
 		}
 		let msg = `云原神签到任务完成`
@@ -487,7 +499,7 @@ export default class user {
 		bbsTask = false;
 	}
 	async bbsGeetest() {
-		let res = await this.getData('bbsGetCaptcha') //?????????????????????????????
+		let res = await this.getData('bbsGetCaptcha') 
 		let challenge = res.data["challenge"]
 		res = await this.getData("bbsValidate", res.data)
 		if (res?.data?.validate) {
@@ -530,7 +542,6 @@ export default class user {
 			skuid
 		} = await this.getCookie(e);
 		let cookiesDoc = await this.getcookiesDoc();
-		// let miHoYoApi = new MihoYoApi(this.e);
 		if (!cookie) {
 			e.reply("请先#绑定cookie\n发送【体力帮助】查看配置教程")
 			return false;
@@ -543,7 +554,7 @@ export default class user {
 			// e.reply("米游社登录cookie不完整，请前往米游社通行证处重新获取cookie~\ncookies必须包含login_ticket【教程】 " + cookiesDoc)
 			return false;
 		}
-		let flot = this.stoken(cookie, e)
+		let flot =await this.stoken(cookie, e)
 		await utils.sleepAsync(1000); //延迟加载防止文件未生成
 		if (!flot) {
 			e.reply("登录失效请重新登录获取cookie发送机器人~")
@@ -585,20 +596,24 @@ export default class user {
 		if (Object.keys(datalist).length > 0) {
 			return true;
 		}
-		const map = utils.getCookieMap(cookie);
-		let loginTicket = map.get("login_ticket");
-		const loginUid = map.get("login_uid") ? map.get("login_uid") : map.get("ltuid");
+		const map =await utils.getCookieMap(cookie);
+		let loginTicket = map?.get("login_ticket");
+		const loginUid = map?.get("login_uid") ? map?.get("login_uid") : map?.get("ltuid");
 		if (isV3) {
 			loginTicket = gsCfg.getBingCookie(e.user_id).login_ticket
 		}
-
-		let res = this.getData("bbsStoken", {
+	    let mhyapi = new miHoYoApi(this.e);
+		let res = await mhyapi.getData("bbsStoken", {
 			loginUid,
 			loginTicket
 		})
+		// this.getData("bbsStoken", {
+		// 	loginUid,
+		// 	loginTicket
+		// })
 		if (res?.data) {
 			datalist[e.uid] = {
-				stuid: map.get("account_id"),
+				stuid: map?.get("account_id"),
 				stoken: data.data.list[0].token,
 				ltoken: data.data.list[1].token,
 				uid: e.uid,

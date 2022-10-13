@@ -38,8 +38,9 @@ export const rule = {
 }
 export async function cloudSign(e){
 	let user = new User(e);
-	let res= await user.cloudSeach()
-	await replyMsg(e, "云原神签到成功\n当前"+res.message);
+	START = moment().unix();
+	let res= await user.cloudSign()
+	await replyMsg(e, res.message);
 	return true;
 }
 export async function signTask(e){

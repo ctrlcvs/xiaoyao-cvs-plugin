@@ -202,7 +202,7 @@ export default class miHoYoApi {
 			},
 			cloudGamer: {
 				url: `${mys.cloud_api}/hk4e_cg_cn/gamer/api/ackNotification`,
-				query: `id=${data.reward_id}`,
+				body: {id:data.reward_id},
 				types: 'cloud'
 			},
 			cloudGet: {
