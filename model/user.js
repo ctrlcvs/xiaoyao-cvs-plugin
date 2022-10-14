@@ -95,7 +95,7 @@ export default class user {
 			try {
 				message += `**${forum.name}**\n`
 				res = await this.getData("userGameInfo", forum)
-				await utils.sleepAsync(300) //等几毫秒免得请求太频繁了
+				await utils.sleepAsync(3000) //等几毫秒免得请求太频繁了
 				if (res?.data?.list?.length === 0 || !res?.data?.list) {
 					message += `签到: 未绑定${forum.name}信息\n`;
 					continue;
@@ -106,6 +106,7 @@ export default class user {
 					item.is_sign = true;
 					item.upName = forum.name
 					res = await this.getData("isSign", data)
+					await utils.sleepAsync(500)
 					item.total_sign_day = res?.data?.total_sign_day
 					if (res?.data?.is_sign) {
 						message += `${item.nickname}-${item.game_uid}：今日已签到~\n`;
@@ -146,6 +147,7 @@ export default class user {
 								item.total_sign_day++;
 								message +=
 									`${item.nickname}-${item.game_uid}：${res.message=="OK"?"签到成功":res.message}\n`
+								break;
 							}
 						}
 						await utils.sleepAsync(2000)
