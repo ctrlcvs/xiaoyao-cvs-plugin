@@ -648,8 +648,8 @@ export default class user {
 		if (res?.data) {
 			datalist[e.uid] = {
 				stuid: map?.get("account_id"),
-				stoken: data.data.list[0].token,
-				ltoken: data.data.list[1].token,
+				stoken: res.data.list[0].token,
+				ltoken: res.data.list[1].token,
 				uid: e.uid,
 				userId: e.user_id,
 				is_sign: true

@@ -99,7 +99,7 @@ export async function gclog(e) {
 	e.region = getServer(e.uid)
 	let authkeyrow = await user.getData("authKey");
 	if (!authkeyrow?.data) {
-		e.reply("authkey获取失败：" + authkeyrow.message)
+		e.reply("authkey获取失败：" + authkeyrow.message?.includes("登录失效")?"请重新绑定stoken":authkeyrow.message)
 		return true;
 	}
 	let authkey = authkeyrow.data["authkey"]
