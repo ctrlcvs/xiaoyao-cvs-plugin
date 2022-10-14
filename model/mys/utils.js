@@ -10,24 +10,30 @@ export async function sleepAsync(sleepms) {
 
 
 export async function randomSleepAsync(end) {
-	let sleep = 3 * 1000 + _.random((end||5) * 1000);
+	let sleep = 3 * 1000 + _.random((end || 5) * 1000);
 	await sleepAsync(sleep);
 }
-export function randomString(length,os=false) {
+export function randomString(length, os = false) {
 	let randomStr = '';
 	for (let i = 0; i < length; i++) {
-		randomStr += _.sample(os?'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz':'abcdefghijklmnopqrstuvwxyz0123456789');
+		randomStr += _.sample(os ? '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' :
+			'abcdefghijklmnopqrstuvwxyz0123456789');
 	}
 	return randomStr;
 }
 
-export async function redisGet(userId,type='bbs'){
-	 await redis.get(`xiaoyao:${type}:${userId}`);
+export async function redisGet(userId, type = 'bbs') {
+	await redis.get(`xiaoyao:${type}:${userId}`);
 }
-export async function redisSet(userId,type='bbs',data){
+export async function redisSet(userId="all", type = 'bbs', data, time=0) {
 	var time = moment(Date.now()).add('days', 1).format('YYYY-MM-DD 00:00:00')
-	var new_date = (new Date(time).getTime() - new Date().getTime()) / 1000  //获取隔天凌晨的时间差
-	await redis.set(`xiaoyao:${type}:${userId}`,JSON.stringify(data),{EX:parseInt(new_date)});
+	var new_date = (new Date(time).getTime() - new Date().getTime()) / 1000 //获取隔天凌晨的时间差
+	if (time!==0) {
+		new_date = time
+	}
+	await redis.set(`xiaoyao:${type}:${userId}`, JSON.stringify(data), {
+		EX: parseInt(new_date)
+	});
 }
 /**
  * 发送私聊消息，仅给好友发送
@@ -61,14 +67,14 @@ export async function replyMake(e, _msg, lenght) {
 			user_id: Bot.uin
 		})
 	}
-	if(e._reply){
+	if (e._reply) {
 		e._reply(await Bot.makeForwardMsg(msgList));
-	}else {
+	} else {
 		e.reply(await Bot.makeForwardMsg(msgList));
 	}
 }
 
-export function getServer (uid) {
+export function getServer(uid) {
 	switch (String(uid)[0]) {
 		case '1':
 		case '2':
@@ -94,13 +100,16 @@ export async function getCookieMap(cookie) {
 		if (!entry[0]) continue;
 		cookieMap.set(entry[0], entry[1]);
 	}
-	return cookieMap||{};
+	return cookieMap || {};
 }
 export default {
-	sleepAsync,getServer,
+	sleepAsync,
+	getServer,
 	randomSleepAsync,
 	replyMake,
-	randomString,redisGet,redisSet,
+	randomString,
+	redisGet,
+	redisSet,
 	relpyPrivate,
 	getCookieMap
 }

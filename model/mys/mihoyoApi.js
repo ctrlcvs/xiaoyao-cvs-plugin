@@ -27,9 +27,9 @@ export default class miHoYoApi {
 			this.userId = String(e.user_id)
 			this.yuntoken = e.yuntoken
 			this.devId = e.devId
-			this.isOs=false;
-			if(this.e?.uid){
-				this.isOs=this.e?.uid[0] * 1 > 5
+			this.isOs = false;
+			if (this.e?.uid) {
+				this.isOs = this.e?.uid[0] * 1 > 5
 			}
 			this.apiMap = {
 				apiWeb: mys.web_api,
@@ -191,6 +191,10 @@ export default class miHoYoApi {
 				query: `login_ticket=${data.loginTicket}&token_types=3&uid=${data.loginUid}`,
 				types: 'stoken'
 			},
+			validate: {
+				url: `https://api.geetest.com/ajax.php`,
+				query: `gt=${data?.gt}&challenge=${data?.challenge}&lang=zh-cn&pt=3&client_type=web_mobile`
+			},
 			cloudLogin: {
 				url: `${mys.cloud_api}/hk4e_cg_cn/gamer/api/login`,
 				types: 'cloud'
@@ -202,7 +206,9 @@ export default class miHoYoApi {
 			},
 			cloudGamer: {
 				url: `${mys.cloud_api}/hk4e_cg_cn/gamer/api/ackNotification`,
-				body: {id:data.reward_id},
+				body: {
+					id: data.reward_id
+				},
 				types: 'cloud'
 			},
 			cloudGet: {
@@ -315,7 +321,7 @@ export default class miHoYoApi {
 					Referer: 'https://app.mihoyo.com',
 					Origin: 'https://webstatic.mihoyo.com',
 					Cookie: this.cookies,
-					DS: this.getDs(this.isOs?mys.osSalt:mys.saltWeb),
+					DS: this.getDs(this.isOs ? mys.osSalt : mys.saltWeb),
 					'x-rpc-sys_version': '12',
 					'x-rpc-channel': 'mihoyo',
 					'x-rpc-device_id': DEVICE_ID,
@@ -325,16 +331,15 @@ export default class miHoYoApi {
 				}
 				if (this.isOs) {
 					let os_Header = {
-						'x-rpc-app_version':'2.9.0',
-						app_version: '2.9.0',
-						// User_Agent: `Mozilla/5.0 (Linux; Android 9.0; SAMSUNG SM-F900U Build/PPR1.180610.011) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.73 Mobile Safari/537.36 miHoYoBBSOversea/2.9.0`,
+						'x-rpc-app_version': '2.18.1',
+						app_version: '2.18.1',
 						client_type: '2',
 						'x-rpc-client_type': '2',
-						Origin: 'https://webstatic-sea.hoyolab.com',
+						Origin: 'https://app.hoyolab.com',
 						X_Requested_With: 'com.mihoyo.hoyolab',
 						Referer: 'https://app.hoyolab.com',
 						Host: 'api-os-takumi.mihoyo.com',
-						'x-rpc-channel':'hoyolab'
+						'x-rpc-channel': 'hoyolab'
 					}
 					header = Object.assign({}, header, os_Header)
 				}

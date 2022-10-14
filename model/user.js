@@ -76,8 +76,8 @@ export default class user {
 		}
 		return sumData;
 	}
-	async getData(type, data = {},isck=true) {
-		if(isck){
+	async getData(type, data = {}, isck = true) {
+		if (isck) {
 			await this.cookie(this.e)
 		}
 		this.miHoYoApi = new miHoYoApi(this.e);
@@ -110,28 +110,45 @@ export default class user {
 					if (res?.data?.is_sign) {
 						message += `${item.nickname}-${item.game_uid}：今日已签到~\n`;
 					} else {
-						res = await this.getData("sign", data)
-						if (res?.data?.gt) { //去除geetest
-							// let validate = await geetest(res.data)
-							// if (validate) {
-							// 	let header = {}
-							// 	header["x-rpc-challenge"] = res["data"]["challenge"]
-							// 	header["x-rpc-validate"] = validate
-							// 	header["x-rpc-seccode"] = `${validate}|jordan`
-							// 	data.headers = header
-							// 	res = await this.getData("sign", data)
-							// 	if (!res?.data?.gt) {
-							// 		message += `${item.nickname}-${item.game_uid}:验证码签到成功~`
-							// 	} else {
-							item.is_sign = false;
-							message += `${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
-							// 	}
-							// }
-						} else {
-							item.total_sign_day++;
-							message +=
-								`${item.nickname}-${item.game_uid}：${res.message=="OK"?"签到成功":res.message}\n`
+						for (let i = 0; i < 2; i++) { //循环请求
+							let signTime = await redis.get(`xiaoyao:sign`)
+							if (signTime) {
+								//有数据的时候不得行必须出去
+								if (!mysTask) {
+									message += "${item.nickname}-${item.game_uid}:验证码失败请等待6分钟后重试或者手动上米游社签到~";
+									break;
+								} else {
+									await utils.sleepAsync(60000 * 6) //等6分钟再说 
+									//ps：你要是觉得改有加高过的概率就改吧，随便你反正到时候黑IP的不是我
+								}
+							}
+							res = await this.getData("sign", data)
+							await utils.sleepAsync(2000)
+							if (res?.data?.gt) { //进行3次验证码访问签到加高通过概率
+								let validate = await this.geetest(res.data)
+								if (validate) {
+									let header = {}
+									header["x-rpc-challenge"] = res["data"]["challenge"]
+									header["x-rpc-validate"] = validate
+									header["x-rpc-seccode"] = `${validate}|jordan`
+									data.headers = header
+									res = await this.getData("sign", data)
+									if (!res?.data?.gt) {
+										message += `${item.nickname}-${item.game_uid}:验证码签到成功~\n`
+										break;
+									} else {
+										item.is_sign = false;
+										message +=
+											`${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
+									}
+								}
+							} else {
+								item.total_sign_day++;
+								message +=
+									`${item.nickname}-${item.game_uid}：${res.message=="OK"?"签到成功":res.message}\n`
+							}
 						}
+						await utils.sleepAsync(2000)
 					}
 					//获取签到信息和奖励信息
 					const SignInfo = await this.getData("home", data)
@@ -206,10 +223,10 @@ export default class user {
 			challenge = '',
 			res;
 		try {
-			res=await this.bbsSeachSign()
-			if(res?.data?.can_get_points==0){
+			res = await this.bbsSeachSign()
+			if (res?.data?.can_get_points == 0) {
 				return {
-					message:`签到任务已完成，无需重复签到`
+					message: `签到任务已完成，无需重复签到`
 				}
 			}
 			for (let forum of forumData) {
@@ -344,7 +361,6 @@ export default class user {
 			// 	let ck=`${dir}${qq*1}.yaml`
 			// 	let cklis=fs.readFileSync(ck, 'utf-8')
 			// 	cklist=YAML.parse(cklis)
-			// 	console.log(cklist)
 			// }else{
 			// 	cklist=NoteCookie[qq*1]
 			// }
@@ -539,6 +555,10 @@ export default class user {
 		if (res?.data?.validate) {
 			let validate = res?.data?.validate
 			return validate
+		} else if (res?.data?.result !== "slide") {
+			await redis.set(`xiaoyao:sign`, 1, { //写入缓存 过不了了
+				EX: 60 * 6 //等6分钟后再给用指令 避免ddos
+			});
 		}
 		return ""
 	}
@@ -623,10 +643,6 @@ export default class user {
 			loginUid,
 			loginTicket
 		})
-		// this.getData("bbsStoken", {
-		// 	loginUid,
-		// 	loginTicket
-		// })
 		if (res?.data) {
 			datalist[e.uid] = {
 				stuid: map?.get("account_id"),
