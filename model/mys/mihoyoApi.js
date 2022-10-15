@@ -91,6 +91,7 @@ export default class miHoYoApi {
 		let response = {}
 		let start = Date.now()
 		try {
+			console.log(url, param)
 			response = await fetch(url, param)
 		} catch (error) {
 			logger.error(error.toString())
