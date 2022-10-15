@@ -447,6 +447,7 @@ export default class user {
 				}
 			};
 			this.getyunToken(e)
+			this.e=e
 			await this.cloudSign();
 			await utils.sleepAsync(10000);
 		}
@@ -480,7 +481,7 @@ export default class user {
 			return false
 		}
 		let tips = ['开始米游币签到任务']
-		let time = userIdList.length * 3.5 + 5
+		let time = userIdList.length * 100 + 5
 		let finishTime = moment().add(time, 's').format('MM-DD HH:mm:ss')
 		tips.push(`\n签到用户：${userIdList.length}个`)
 		tips.push(`\n预计需要：${this.countTime(time)}`)
