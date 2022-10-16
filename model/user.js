@@ -98,6 +98,8 @@ export default class user {
 				await utils.sleepAsync(3000) //等几毫秒免得请求太频繁了
 				if (res?.data?.list?.length === 0 || !res?.data?.list) {
 					message += `签到: 未绑定${forum.name}信息\n`;
+					this.allSign[forum.name].bindGame++;
+					utils.randomSleepAsync()
 					continue;
 				}
 				message += `${forum.name}共计${res?.data?.list.length}个账号\n`;
@@ -109,6 +111,7 @@ export default class user {
 					await utils.sleepAsync(500)
 					item.total_sign_day = res?.data?.total_sign_day
 					if (res?.data?.is_sign) {
+						this.allSign[forum.name].isSign++;
 						message += `${item.nickname}-${item.game_uid}：今日已签到~\n`;
 					} else {
 						for (let i = 0; i < 2; i++) { //循环请求
@@ -135,6 +138,7 @@ export default class user {
 									data.headers = header
 									res = await this.getData("sign", data)
 									if (!res?.data?.gt) {
+										this.allSign[forum.name].sign++;
 										message += `${item.nickname}-${item.game_uid}:验证码签到成功~\n`
 										break;
 									} else {
@@ -144,6 +148,7 @@ export default class user {
 									}
 								}
 							} else {
+								this.allSign[forum.name].sign++;
 								item.total_sign_day++;
 								message +=
 									`${item.nickname}-${item.game_uid}：${res.message=="OK"?"签到成功":res.message}\n`
@@ -162,6 +167,7 @@ export default class user {
 					await utils.randomSleepAsync()
 				}
 			} catch (e) {
+				this.allSign[forum.name].error++;
 				Bot.logger.error(`${forum.name} 签到失败 [${res?.message}]`);
 				message += `签到失败: [${res?.message}]\n`;
 			}
@@ -339,7 +345,7 @@ export default class user {
 		mysTask = true;
 
 		let tips = ['开始米社签到任务']
-		let time = userIdList.length * 3.5 + 5
+		let time = userIdList.length * 25 + 5
 		let finishTime = moment().add(time, 's').format('MM-DD HH:mm:ss')
 		tips.push(`\n签到用户：${userIdList.length}个`)
 		tips.push(`\n预计需要：${this.countTime(time)}`)
@@ -356,6 +362,40 @@ export default class user {
 		}
 		let _reply = e.reply
 		let msg = e?.msg;
+		this.allSign={
+			findModel:["崩坏3","崩坏2",'原神','未定事件簿'],
+			"崩坏3":{
+				bindGame:0,
+				sign:0,
+				isSign:0,
+				error:0,
+			},
+			"崩坏2":{
+				bindGame:0,
+				sign:0,
+				isSign:0,
+				error:0,
+			},
+			"原神":{
+				bindGame:0,
+				sign:0,
+				isSign:0,
+				error:0,
+			},
+			"未定事件簿":{
+				bindGame:0,
+				sign:0,
+				isSign:0,
+				error:0,
+			},
+			sendReply(){
+				let msg=""
+				for (let item of this.findModel){
+					msg+=`**${item}**\n已签：${this[item].isSign}\n签到成功：${this[item].sign}\n未绑定信息：${this[item].bindGame}\n签到失败异常：${this[item].error}\n`
+				}
+				return msg
+			}
+		}
 		for (let qq of userIdList) {
 			let user_id = qq;
 			// let cklist={};
@@ -381,7 +421,7 @@ export default class user {
 			}
 			Bot.logger.mark(`正在为qq${user_id}米社签到中...`);
 			e.reply = (msg) => {
-				if (!isAllSign || isbool) {
+				if (!isAllSign || mul) {
 					return;
 				}
 				if (msg.includes("OK")) {
@@ -391,9 +431,10 @@ export default class user {
 			this.e = e;
 			let res = await this.multiSign(this.getDataList(e.msg));
 			Bot.logger.mark(`${res.message}`)
-			await utils.sleepAsync(10000);
+			this.e.reply(res.message)
+			await utils.sleepAsync(15000);
 		}
-		msg = `米社签到任务完成`
+		msg = `米社签到任务完成\n`+this.allSign.sendReply()
 		Bot.logger.mark(msg);
 		if (mul) {
 			_reply(msg)
@@ -439,7 +480,7 @@ export default class user {
 			Bot.logger.mark(`正在为qq${user_id}云原神签到中...`);
 			e.msg = "全部"
 			e.reply = (msg) => {
-				if (!isYunSignMsg || isYun) {
+				if (!isYunSignMsg || mul) {
 					return;
 				}
 				if (msg.includes("领取奖励")) {
@@ -448,7 +489,8 @@ export default class user {
 			};
 			this.getyunToken(e)
 			this.e=e
-			await this.cloudSign();
+			let res= await this.cloudSign();
+			this.e.reply(res.message)
 			await utils.sleepAsync(10000);
 		}
 		let msg = `云原神签到任务完成`
@@ -515,7 +557,7 @@ export default class user {
 				e.msg = "全部"
 				e.reply = (msg) => {
 					//关闭签到消息推送
-					if (!isPushSign || ismysbool) {
+					if (!isPushSign || mul) {
 						return;
 					}
 					if (msg.includes("OK")) { //签到成功并且不是已签到的才推送
