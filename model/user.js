@@ -98,7 +98,9 @@ export default class user {
 				await utils.sleepAsync(3000) //等几毫秒免得请求太频繁了
 				if (res?.data?.list?.length === 0 || !res?.data?.list) {
 					message += `签到: 未绑定${forum.name}信息\n`;
-					this.allSign[forum.name].bindGame++;
+					if(this.allSign){
+						this.allSign[forum.name].bindGame++;
+					}
 					utils.randomSleepAsync()
 					continue;
 				}
@@ -111,7 +113,9 @@ export default class user {
 					await utils.sleepAsync(500)
 					item.total_sign_day = res?.data?.total_sign_day
 					if (res?.data?.is_sign) {
-						this.allSign[forum.name].isSign++;
+						if(this.allSign){
+							this.allSign[forum.name].isSign++;
+						}
 						message += `${item.nickname}-${item.game_uid}：今日已签到~\n`;
 					} else {
 						for (let i = 0; i < 2; i++) { //循环请求
@@ -138,17 +142,24 @@ export default class user {
 									data.headers = header
 									res = await this.getData("sign", data)
 									if (!res?.data?.gt) {
-										this.allSign[forum.name].sign++;
+										if(this.allSign){
+											this.allSign[forum.name].sign++;
+										}
 										message += `${item.nickname}-${item.game_uid}:验证码签到成功~\n`
 										break;
 									} else {
+										if(this.allSign){
+											this.allSign[forum.name].error++;
+										}
 										item.is_sign = false;
 										message +=
 											`${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
 									}
 								}
 							} else {
-								this.allSign[forum.name].sign++;
+								if(this.allSign){
+									this.allSign[forum.name].sign++;
+								}
 								item.total_sign_day++;
 								message +=
 									`${item.nickname}-${item.game_uid}：${res.message=="OK"?"签到成功":res.message}\n`
@@ -167,7 +178,9 @@ export default class user {
 					await utils.randomSleepAsync()
 				}
 			} catch (e) {
-				this.allSign[forum.name].error++;
+				if(this.allSign){
+					this.allSign[forum.name].error++;
+				}
 				Bot.logger.error(`${forum.name} 签到失败 [${res?.message}]`);
 				message += `签到失败: [${res?.message}]\n`;
 			}
