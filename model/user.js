@@ -101,7 +101,7 @@ export default class user {
 					if(this.allSign){
 						this.allSign[forum.name].bindGame++;
 					}
-					utils.randomSleepAsync()
+					await utils.randomSleepAsync()
 					continue;
 				}
 				message += `${forum.name}共计${res?.data?.list.length}个账号\n`;
@@ -130,8 +130,8 @@ export default class user {
 									//ps：你要是觉得改有加高过的概率就改吧，随便你反正到时候黑IP的不是我
 								}
 							}
-							res = await this.getData("sign", data)
 							await utils.sleepAsync(2000)
+							res = await this.getData("sign", data)
 							if (res?.data?.gt) { //进行3次验证码访问签到加高通过概率
 								let validate = await this.geetest(res.data)
 								if (validate) {
@@ -433,6 +433,10 @@ export default class user {
 				e.msg = "全部"
 			}
 			Bot.logger.mark(`正在为qq${user_id}米社签到中...`);
+			
+			this.e = e;
+			let res = await this.multiSign(this.getDataList(e.msg));
+			Bot.logger.mark(`${res.message}`)
 			e.reply = (msg) => {
 				if (!isAllSign || mul) {
 					return;
@@ -441,9 +445,7 @@ export default class user {
 					utils.relpyPrivate(qq, msg + "\n自动签到成功");
 				}
 			};
-			this.e = e;
-			let res = await this.multiSign(this.getDataList(e.msg));
-			Bot.logger.mark(`${res.message}`)
+			e.reply(res.message)
 			this.e.reply(res.message)
 			await utils.sleepAsync(15000);
 		}
