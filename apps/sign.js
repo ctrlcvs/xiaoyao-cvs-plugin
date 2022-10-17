@@ -43,7 +43,19 @@ export async function cloudSign(e){
 	await replyMsg(e, res.message);
 	return true;
 }
+const checkAuth = async function (e) {
+  if (!e.isMaster) {
+    e.reply(`只有主人才能命令我哦~
+    (*/ω＼*)`)
+    return false
+  }
+  return true;
+}
+
 export async function signTask(e){
+	if (!await checkAuth(e)) {
+		return true;
+	}
 	let user = new User(e);
 	let task=e?.msg?.includes("米游币")?'bbs':e?.msg?.includes("云原神")?'cloud':e?.msg?.includes("米社")?'mys':''
 	if(!task){
