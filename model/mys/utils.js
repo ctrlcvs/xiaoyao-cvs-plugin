@@ -10,7 +10,7 @@ export async function sleepAsync(sleepms) {
 
 
 export async function randomSleepAsync(end) {
-	let sleep = 3 * 1000 + _.random((end || 5) * 1000);
+	let sleep = 4 * 1000 + _.random((end || 5) * 1000);
 	await sleepAsync(sleep);
 }
 export function randomString(length, os = false) {
@@ -35,6 +35,7 @@ export async function redisSet(userId="all", type = 'bbs', data, time=0) {
 		EX: parseInt(new_date)
 	});
 }
+
 /**
  * 发送私聊消息，仅给好友发送
  * @param user_id qq号

@@ -211,7 +211,7 @@ export async function cloudToken(e) {
 	e.yuntoken = yuntoken;
 	let res=await user.cloudSeach()
 	if (res.retcode != 0) {
-		e.reply(objData.message)
+		e.reply(res.message)
 		return true;
 	}
 	let datalist = {

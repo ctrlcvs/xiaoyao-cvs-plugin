@@ -94,7 +94,7 @@ export default class user {
 			let res
 			try {
 				message += `**${forum.name}**\n`
-				res = await this.getData("userGameInfo", forum)
+				res = await this.getData("userGameInfo", forum )
 				await utils.sleepAsync(3000) //等几毫秒免得请求太频繁了
 				if (res?.data?.list?.length === 0 || !res?.data?.list) {
 					message += `签到: 未绑定${forum.name}信息\n`;
@@ -109,7 +109,7 @@ export default class user {
 					let data = Object.assign({}, forum, item)
 					item.is_sign = true;
 					item.upName = forum.name
-					res = await this.getData("isSign", data)
+					res = await this.getData("isSign", data,false)
 					await utils.sleepAsync(500)
 					item.total_sign_day = res?.data?.total_sign_day
 					if (res?.data?.is_sign) {
@@ -123,7 +123,7 @@ export default class user {
 							if (signTime) {
 								//有数据的时候不得行必须出去
 								if (!mysTask) {
-									message += "${item.nickname}-${item.game_uid}:验证码失败请等待6分钟后重试或者手动上米游社签到~";
+									message += `${item.nickname}-${item.game_uid}:验证码失败请等待6分钟后重试或者手动上米游社签到~`;
 									break;
 								} else {
 									await utils.sleepAsync(60000 * 6) //等6分钟再说 
@@ -131,7 +131,7 @@ export default class user {
 								}
 							}
 							await utils.sleepAsync(2000)
-							res = await this.getData("sign", data)
+							res = await this.getData("sign", data,false)
 							if (res?.data?.gt) { //进行3次验证码访问签到加高通过概率
 								let validate = await this.geetest(res.data)
 								if (validate) {
@@ -140,7 +140,7 @@ export default class user {
 									header["x-rpc-validate"] = validate
 									header["x-rpc-seccode"] = `${validate}|jordan`
 									data.headers = header
-									res = await this.getData("sign", data)
+									res = await this.getData("sign", data,false)
 									if (!res?.data?.gt) {
 										if(this.allSign){
 											this.allSign[forum.name].sign++;
@@ -166,10 +166,9 @@ export default class user {
 								break;
 							}
 						}
-						await utils.sleepAsync(2000)
 					}
 					//获取签到信息和奖励信息
-					const SignInfo = await this.getData("home", data)
+					const SignInfo = await this.getData("home", data,false)
 					if (SignInfo) {
 						let awards = SignInfo.data.awards[item.total_sign_day - 1];
 						item.awards = awards?.name + "*" + awards?.cnt
@@ -256,7 +255,7 @@ export default class user {
 				let Share = 0;
 				let sumcount = 0;
 				message += `\n**${forum.name}**\n`
-				res = await this.getData("bbsSign", forum)
+				res = await this.getData("bbsSign", forum,false)
 				if (res?.retcode == 1034) {
 					message += `社区签到: 验证码失败\n`;
 					challenge = await this.bbsGeetest()
@@ -264,14 +263,14 @@ export default class user {
 						forum["headers"] = {
 							"x-rpc-challenge": challenge
 						}
-						await this.getData("bbsSign", forum)
+						await this.getData("bbsSign", forum,false)
 					}
 				} else {
 					message += `社区签到: ${res.message}\n`;
 				}
 				Bot.logger.mark(`${this.e.user_id}:${this.e.uid}:${forum.name} 社区签到结果: [${res.message}]`);
 				await utils.randomSleepAsync();
-				res = await this.getData("bbsPostList", forum)
+				res = await this.getData("bbsPostList", forum,false)
 				sumcount++;
 				let postList = res.data.list;
 				let postId
@@ -293,13 +292,13 @@ export default class user {
 									"x-rpc-challenge": challenge,
 								}
 							}
-							await this.getData("bbsPostFull", data)
+							await this.getData("bbsPostFull", data,false)
 						}
 					}
 					await utils.randomSleepAsync(10);
 					res = await this.getData("bbsVotePost", {
 						postId
-					})
+					},false)
 					if (res?.message && res?.retcode == 0) {
 						Vote++;
 					}
@@ -312,7 +311,7 @@ export default class user {
 									"x-rpc-challenge": challenge,
 								}
 							}
-							await this.getData("bbsVotePost", data)
+							await this.getData("bbsVotePost", data,false)
 						}
 					}
 					await utils.randomSleepAsync(2);
@@ -320,7 +319,7 @@ export default class user {
 				let sharePost = postList[0].post;
 				res = await this.getData("bbsShareConf", {
 					postId
-				})
+				},false)
 				if (res?.message && res?.retcode == 0) {
 					Share++;
 				}
@@ -358,7 +357,7 @@ export default class user {
 		mysTask = true;
 
 		let tips = ['开始米社签到任务']
-		let time = userIdList.length * 25 + 5
+		let time = userIdList.length * 25 + 5+ (userIdList.length/3 * 60)
 		let finishTime = moment().add(time, 's').format('MM-DD HH:mm:ss')
 		tips.push(`\n签到用户：${userIdList.length}个`)
 		tips.push(`\n预计需要：${this.countTime(time)}`)
@@ -580,7 +579,8 @@ export default class user {
 					}
 				};
 				this.e = e;
-				await this.getbbsSign(this.ForumData);
+				let res= await this.getbbsSign(this.ForumData);
+				e.reply(res.message)
 				await utils.sleepAsync(10000);
 			}
 		}
