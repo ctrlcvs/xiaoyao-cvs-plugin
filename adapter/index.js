@@ -40,7 +40,7 @@ export class atlas extends plugin {
     e.getMysApi = async function (cfg) {
       return await getMysApi(e, cfg)
     }
-    msg = '#' + msg.replace(/#|＃/, '').trim()
+    msg = msg.replace(/#|＃/, '#').trim()
     for (let fn in Atlas.rule) {
       let cfg = Atlas.rule[fn]
       if (Atlas[fn] && new RegExp(cfg.reg).test(msg)) {

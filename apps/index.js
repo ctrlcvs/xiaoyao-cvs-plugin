@@ -68,13 +68,14 @@ let rule = {
 		reg: "^#*(体力|树脂|查询体力|便笺|便签)$",
 		describe: "体力",
 	},
-	genShenMap:{
-		reg: "^#*(.*)(在(哪|那)里)$",
-		describe: "地图资源查询 #**在哪里",
-	},
+	
 	Note_appoint: {
 		reg: "^#体力模板(设置(.*)|列表(.*))$",
 		describe: "体力模板设置",
+	},
+	genShenMap:{
+		reg: "^#(.*)(在(哪|那)里)$",
+		describe: "地图资源查询 #**在哪里",
 	},
 	pokeNote: {
 		reg: "#poke#",

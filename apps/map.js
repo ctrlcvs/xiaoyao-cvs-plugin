@@ -23,7 +23,7 @@ export async function genShenMap(e){
 	try{
 		res=await res.json()
 		if(res.retcode==-1){
-			await e.reply(`${msg}:${res.message}`)
+			await e.reply(`${res.message}`)
 			return true;
 		}
 	}catch(ex){
