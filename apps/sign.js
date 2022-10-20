@@ -44,8 +44,8 @@ export async function cloudSign(e){
 	return true;
 }
 const checkAuth = async function (e) {
-  if (!e.isMaster) {
-    e.reply(`只有主人才能命令我哦~
+  if (!e?.isMaster&&e?.reply) {
+    e?.reply(`只有主人才能命令我哦~
     (*/ω＼*)`)
     return false
   }
@@ -53,7 +53,7 @@ const checkAuth = async function (e) {
 }
 
 export async function signTask(e){
-	if (!await checkAuth(e)) {
+	if (e&&!await checkAuth(e)) {
 		return true;
 	}
 	let user = new User(e);
