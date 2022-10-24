@@ -30,6 +30,16 @@ class GsCfg {
 			fs.readFileSync(path + name + ".yaml", 'utf8')
 		)
 	}
+	cpCfg (app, name) {
+	  if (!fs.existsSync(`./plugins/${plugin}/config`)) {
+	    fs.mkdirSync(`./plugins/${plugin}/config`)
+	  }
+	
+	  let set = `./plugins/${plugin}/config/${name}.yaml`
+	  if (!fs.existsSync(set)) {
+	    fs.copyFileSync(`./plugins/${plugin}/defSet/${app}/${name}.yaml`, set)
+	  }
+	}
 	async getMasterQQ(){
 		let qq;
 		if(isV3){

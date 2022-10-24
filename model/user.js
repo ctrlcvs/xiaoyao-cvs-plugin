@@ -87,6 +87,7 @@ export default class user {
 	async multiSign(forumData) {
 		let upData = [],
 			message = '';
+		await this.getCookie(this.e);
 		for (let forum of forumData) {
 			if (!(this.configSign.signlist.includes(forum.name))) {
 				continue;
@@ -94,7 +95,7 @@ export default class user {
 			let res
 			try {
 				message += `**${forum.name}**\n`
-				res = await this.getData("userGameInfo", forum )
+				res = await this.getData("userGameInfo", forum,false)
 				await utils.sleepAsync(3000) //等几毫秒免得请求太频繁了
 				if (res?.data?.list?.length === 0 || !res?.data?.list) {
 					message += `签到: 未绑定${forum.name}信息\n`;
