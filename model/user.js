@@ -106,6 +106,7 @@ export default class user {
 					continue;
 				}
 				message += `${forum.name}共计${res?.data?.list.length}个账号\n`;
+				
 				for (let item of res?.data?.list) {
 					let data = Object.assign({}, forum, item)
 					item.is_sign = true;
@@ -280,7 +281,7 @@ export default class user {
 					postId = post['post_id']
 					res = await this.getData("bbsPostFull", {
 						postId
-					})
+					},false)
 					if (res?.message && res?.retcode == 0) {
 						trueDetail++;
 					}
@@ -595,9 +596,9 @@ export default class user {
 		bbsTask = false;
 	}
 	async bbsGeetest() {
-		let res = await this.getData('bbsGetCaptcha')
+		let res = await this.getData('bbsGetCaptcha',false)
 		let challenge = res.data["challenge"]
-		res = await this.getData("bbsValidate", res.data)
+		res = await this.getData("bbsValidate", res.data,false)
 		if (res?.data?.validate) {
 			let validate = res?.data?.validate
 			res = await this.getData("bbsCaptchaVerify", {
@@ -606,13 +607,13 @@ export default class user {
 					"geetest_seccode": validate + "|jordan",
 					"geetest_validate": validate
 				}
-			})
+			},false)
 			return res["data"]["challenge"]
 		}
 		return ""
 	}
 	async geetest(data) {
-		let res = await this.getData("validate", data)
+		let res = await this.getData("validate", data,false)
 		if (res?.data?.validate) {
 			let validate = res?.data?.validate
 			return validate
@@ -703,7 +704,7 @@ export default class user {
 		let res = await mhyapi.getData("bbsStoken", {
 			loginUid,
 			loginTicket
-		})
+		},false)
 		if (res?.data) {
 			datalist[e.uid] = {
 				stuid: map?.get("account_id"),
