@@ -164,20 +164,34 @@ export async function mytoken(e) {
 export async function bindLogin_ticket(e){
 	let user = new User(e);
 	let ckMap=await utils.getCookieMap(e.original_msg.replace(/'|"/g,""))
+	let stuid=ckMap?.get("login_uid") ? ckMap?.get("login_uid") : ckMap?.get("ltuid")
+	if(!stuid) stuid= ckMap?.get("account_id");
 	if(ckMap&&Cfg.get("ck.sk")){
 		let res= await user.getData("bbsStoken", {
-			loginUid:ckMap?.get("login_uid") ? ckMap?.get("login_uid") : ckMap?.get("ltuid"),
+			loginUid:stuid,
 			loginTicket:ckMap.get("login_ticket"),
-		},false)
+		})
 		if(res?.retcode===0){
-			let msg = 'stoken绑定成功您可通过下列指令进行操作:';
-			msg += '\n【#米币查询】查询米游币余额'
-			msg += '\n【#mys原神签到】获取米游币'
-			msg += '\n【#更新抽卡记录】更新抽卡记录'
-			msg += '\n【#刷新ck】刷新失效cookie'
-			msg += '\n【#我的stoken】查看绑定信息'
-			msg += '\n【#删除stoken】删除绑定信息'
-			e.reply(msg)
+			if (res?.data) {
+				let datalist={}
+				datalist[e.uid] = {
+					stuid:stuid,
+					stoken: res.data.list[0].token,
+					ltoken: res.data.list[1].token,
+					uid: e.uid,
+					userId: e.user_id,
+					is_sign: true
+				}
+				gsCfg.saveBingStoken(e.user_id, datalist)
+				let msg = 'stoken绑定成功您可通过下列指令进行操作:';
+				msg += '\n【#米币查询】查询米游币余额'
+				msg += '\n【#mys原神签到】获取米游币'
+				msg += '\n【#更新抽卡记录】更新抽卡记录'
+				msg += '\n【#刷新ck】刷新失效cookie'
+				msg += '\n【#我的stoken】查看绑定信息'
+				msg += '\n【#删除stoken】删除绑定信息'
+				e.reply(msg)
+			}
 		}
 	}
 	return false;
