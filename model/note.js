@@ -21,13 +21,7 @@ export default class note {
 		this.cfg = gsCfg.getfileYaml(`./plugins/xiaoyao-cvs-plugin/config/`, "config");
 	}
 	addNote() {
-		if (!this.noteCfg[this.e.group_id]) {
-			this.noteCfg[this.e.group_id] = {
-				"task": [],
-				"isTask": true,
-				"sendResin": 120
-			}
-		}
+		this.isGroup()
 		if (!this.isTaskAdmin()) return true;
 		let userId = this.noteCfg[this.e.group_id]["task"] || [];
 		if (!userId.includes(this.e.user_id)) {
@@ -38,14 +32,6 @@ export default class note {
 		this.e.reply("体力推送开启成功~\n后续每天会为您推送体力")
 	}
 	delNote() {
-		if (!this.noteCfg[this.e.group_id]) { //首次直接设置
-			this.noteCfg[this.e.group_id] = {
-				"task": [],
-				"isTask": true,
-				"sendResin": 120
-			}
-			this.saveNote(this.noteCfg)
-		}
 		try {
 			if (this.noteCfg[this.e.group_id]) {
 				if (!this.isTaskAdmin()) return true;
@@ -61,6 +47,7 @@ export default class note {
 		} catch (e) {}
 	}
 	updNote() {
+		this.isGroup()
 		if (this.cfg.noteSetAuth === 2) {
 			if (!this.e.isMaster) {
 				this.e.reply('只有主人才能操作。')
@@ -90,10 +77,20 @@ export default class note {
 		fs.writeFileSync(`${this.Cfg}note.yaml`, yaml, 'utf8')
 	}
 	isTaskAdmin() {
+		this.isGroup()
 		if (!this.noteCfg[this.e.group_id]["isTask"]) {
 			this.e.reply("群体力推送关闭了~\n请联系管理员开启功能~")
 			return false;
 		}
 		return true;
+	}
+	isGroup(){
+		if (!this.noteCfg[this.e.group_id]) { //首次直接设置
+			this.noteCfg[this.e.group_id] = {
+				"task": [],
+				"isTask": true,
+				"sendResin": 120
+			}
+		}
 	}
 }
