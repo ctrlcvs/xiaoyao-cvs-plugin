@@ -232,9 +232,13 @@ export async function Note(e, {
 		objFile = objFile[lodash.random(0, objFile.length - 1)]
 	}
 	let img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
-	if (tempData[e.user_id] && tempData[e.user_id].type > -1) {
+	if (tempData[e.user_id] && tempData[e.user_id].type > -1&&tempData[e.user_id]?.temp?.length!==0) {
 		// mb = tempData[e.user_id].type;
-		objFile = tempData[e.user_id].temp[lodash.random(0, tempData[e.user_id].temp.length - 1)];
+		if (typeof tempData[e.user_id]["temp"] === "string") {
+			objFile = tempData[e.user_id]["temp"]
+		} else {
+			objFile = tempData[e.user_id].temp[lodash.random(0, tempData[e.user_id].temp.length - 1)];
+		}
 		if (objFile.includes(".")) { //对于模板类型处理
 			mb = 0;
 		} else {
@@ -400,8 +404,8 @@ export async function pokeNote(e, {
 
 export async function Note_appoint(e) {
 	let mbPath = `${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/`;
-	let msg = e.msg.replace(/#|井|体力|模板|设置/g, "");
-
+	let isDel= e.msg.includes("移除")
+	let msg = e.msg.replace(/#|井|体力|模板|设置|移除/g, "");
 	let All = ["默认", "随机", "0"];
 	let urlType = note_file();
 	let keyType = Object.keys(urlType);
@@ -416,7 +420,7 @@ export async function Note_appoint(e) {
 	if (msg.includes("列表")) {
 		let isUser = msg.includes('我的')
 		let temp = tempData[e.user_id]?.temp;
-		if (!temp && isUser) {
+		if ((!temp||temp?.length===0) && isUser) {
 			e.reply("未获取到您设置的模板信息哦~")
 			return true;
 		}
@@ -430,7 +434,7 @@ export async function Note_appoint(e) {
 		for (let [index, item] of keyType.entries()) {
 			let msg_pass = [];
 			let imgurl;
-			let pathFile=urlType[item].replace(/\./,_path)
+			let pathFile = urlType[item].replace(/\./, _path)
 			if (item.includes(".")) {
 				imgurl = await segment.image(`file:///${pathFile}`);
 				item = item.split(".")[0];
@@ -490,8 +494,16 @@ export async function Note_appoint(e) {
 	if (typeof tempData[e.user_id]["temp"] === "string") {
 		temp = [tempData[e.user_id]["temp"], msg]
 	} else {
+		temp =tempData[e.user_id]["temp"]
 		if (!tempData[e.user_id]["temp"]?.includes(msg)) {
-			temp = [...tempData[e.user_id]["temp"], msg]
+			temp.push(msg)
+		}
+	}
+	let sendMsg="诶~这是你选的模板吗，模板设置成功了快用指令来试试吧~！"
+	if(isDel){
+		if(temp.includes(msg)){
+			temp.splice(temp.indexOf(msg),1) 
+			sendMsg=`模板${msg}已移除~`
 		}
 	}
 	tempData[e.user_id] = {
@@ -500,7 +512,7 @@ export async function Note_appoint(e) {
 	}
 	fs.writeFileSync(tempDataUrl + "/tempData.json", JSON.stringify(tempData));
 	init()
-	e.reply("诶~这是你选的模板吗，模板设置成功了快用指令来试试吧~！")
+	e.reply(sendMsg)
 	return true;
 }
 
