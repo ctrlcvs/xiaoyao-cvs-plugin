@@ -33,7 +33,7 @@ import {
 	userInfo,
 	gclog,
 	mytoken,
-	bindStoken,
+	bindStoken,bindLogin_ticket,
 	cloudToken
 } from "./user.js"
 import {
@@ -50,7 +50,7 @@ export {
 	updateRes,updateTemp,
 	delSign,
 	cloudSign,
-	seach,
+	seach,bindLogin_ticket,
 	bbsSign,
 	gclog,
 	mytoken,

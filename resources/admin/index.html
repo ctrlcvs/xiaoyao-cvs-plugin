@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css" />
 <style>
 	.container {
-		background: url("{{_res_path}}/admin/imgs/bg/{{bg}}") #000144  top  !important;
+		background: url("{{_res_path}}/admin/imgs/bg/{{bg}}") #000144 top !important;
 		background-size: 520px auto;
 		width: 800px;
 	}
@@ -20,33 +20,33 @@
 	</div>
 </div>
 <div class="cfg-box">
-  <div class="cfg-group">游戏图鉴卡片展示</div>
-  <ul class="cfg-ul">
-    <li class="cfg-li">
-      <div class="cfg-line">
-        图鉴匹配查询
-        <span class="cfg-hint"> #图鉴设置匹配 + 开启/关闭</span>
-        {{@Atlas}}
-      </div>
-	  <div class="cfg-desc">图鉴匹配规则需要 开启：图鉴结尾 关闭：原魔、圣遗物、食物无需图鉴结尾</div>
-    </li>
-	<li class="cfg-li">
-	  <div class="cfg-line">
-	    图鉴目录开关
-	    <span class="cfg-hint"> #图鉴设置目录 + 开启/关闭</span>
-	    {{@Atlasall}}
-	  </div>
-	  <div class="cfg-desc">图鉴目录 为兼容之前用js版本插件用户可以用指令关闭功能</div>
-	</li>
-	<li class="cfg-li">
-	  <div class="cfg-line">
-	    戳一戳卡片
-	    <span class="cfg-hint"> #图鉴设置戳一戳 + 开启/关闭</span>
-	    {{@poke}}
-	  </div>
-	</li>
-	
-  <!--  <li class="cfg-li">
+	<div class="cfg-group">游戏图鉴卡片展示</div>
+	<ul class="cfg-ul">
+		<li class="cfg-li">
+			<div class="cfg-line">
+				图鉴匹配查询
+				<span class="cfg-hint"> #图鉴设置匹配 + 开启/关闭</span>
+				{{@Atlas}}
+			</div>
+			<div class="cfg-desc">图鉴匹配规则需要 开启：图鉴结尾 关闭：原魔、圣遗物、食物无需图鉴结尾</div>
+		</li>
+		<li class="cfg-li">
+			<div class="cfg-line">
+				图鉴目录开关
+				<span class="cfg-hint"> #图鉴设置目录 + 开启/关闭</span>
+				{{@Atlasall}}
+			</div>
+			<div class="cfg-desc">图鉴目录 为兼容之前用js版本插件用户可以用指令关闭功能</div>
+		</li>
+		<li class="cfg-li">
+			<div class="cfg-line">
+				戳一戳卡片
+				<span class="cfg-hint"> #图鉴设置戳一戳 + 开启/关闭</span>
+				{{@poke}}
+			</div>
+		</li>
+
+		<!--  <li class="cfg-li">
       <div class="cfg-line">
         面板查询
         <span class="cfg-hint"> #喵喵设置面板 + 开启/关闭</span>
@@ -69,7 +69,7 @@
       <div class="cfg-desc">面板查询暂不支持查他人</div>
     </li> -->
 
-  </ul>
+	</ul>
 </div>
 <div class="cfg-box">
 	<div class="cfg-group">图鉴扩展包</div>
@@ -111,7 +111,14 @@
       </div>
       <div class="cfg-desc">可选值50~200，建议100。设置高精度会提高图片的精细度，但因图片较大可能会影响渲染与发送速度</div>
     </li> -->
-
+		<li class="cfg-li">
+			<div class="cfg-line">
+				拦截绑定ck自动获取stoken
+				<span class="cfg-hint">#图鉴设置获取sk + 开启/关闭</span>
+				{{@isSk}}
+			</div>
+			<div class="cfg-desc">开启后将拦截login_ticket自动获取stoken</div>
+		</li>
 		<li class="cfg-li">
 			<div class="cfg-line">
 				图鉴作为默认帮助
@@ -132,18 +139,11 @@
 			<div class="cfg-line">
 				设置体力模板类型
 				<span class="cfg-hint">#图鉴设置模板 + (0-2)</span>
-				  <div class="cfg-status">{{@len}}</div>
+				<div class="cfg-status">{{@len}}</div>
 			</div>
 			<div class="cfg-desc">需开启图鉴版体力作为Yunzai的默认体力,当前模板支持0(随机)以及1-2</div>
 		</li>
-		<!-- <li class="cfg-li">
-       <div class="cfg-line">
-         更新版本
-         <div class="cfg-status">#喵喵更新</div>
-       </div>
-       <div class="cfg-desc">更新喵喵Plugin，可能需要重启Yunzai-Bot</div>
-     </li>-->
-	</ul>
+
 
 </div>
 {{/block}}

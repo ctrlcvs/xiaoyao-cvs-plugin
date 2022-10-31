@@ -430,15 +430,16 @@ export async function Note_appoint(e) {
 		for (let [index, item] of keyType.entries()) {
 			let msg_pass = [];
 			let imgurl;
+			let pathFile=urlType[item].replace(/\./,_path)
 			if (item.includes(".")) {
-				imgurl = await segment.image(`file:///${urlType[item]}`);
+				imgurl = await segment.image(`file:///${pathFile}`);
 				item = item.split(".")[0];
 			} else {
 				imgurl = await segment.image(
-					`file:///${urlType[item]}/icon/bg/${fs.readdirSync(`${urlType[item]}/icon/bg/`)[0]}`
+					`file:///${pathFile}/icon/bg/${fs.readdirSync(`${pathFile}/icon/bg/`)[0]}`
 				)
 			}
-			if (isUser && !temp.includes(item)) {
+			if (isUser && !temp?.includes(item)) {
 				continue;
 			}
 			item = index + 1 + "." + item
@@ -489,7 +490,7 @@ export async function Note_appoint(e) {
 	if (typeof tempData[e.user_id]["temp"] === "string") {
 		temp = [tempData[e.user_id]["temp"], msg]
 	} else {
-		if (!tempData[e.user_id]["temp"].includes(msg)) {
+		if (!tempData[e.user_id]["temp"]?.includes(msg)) {
 			temp = [...tempData[e.user_id]["temp"], msg]
 		}
 	}

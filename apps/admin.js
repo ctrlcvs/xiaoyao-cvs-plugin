@@ -23,6 +23,7 @@ let cfgMap = {
 	"匹配": "sys.Atlas",
 	"戳一戳":"note.poke",
 	"模板": "mb.len",
+	"获取sk":"ck.sk",
 	"目录":"Atlas.all",
 };
 let sysCfgReg = `^#图鉴设置\s*(${lodash.keys(cfgMap).join("|")})?\s*(.*)$`;
@@ -67,6 +68,7 @@ export async function sysCfg(e, {
 	if (!regRet) {
 		return true;
 	}
+
 	if (regRet[1]) {
 
 		// 设置模式
@@ -85,14 +87,13 @@ export async function sysCfg(e, {
 			Cfg.set(cfgKey, val);
 		}
 	}
-	// e.reply("设置成功！！");
-	// return true;
 	let cfg = {
 		help: getStatus("sys.help", false),
 		Note: getStatus("sys.Note",false),
 		Atlas: getStatus("sys.Atlas",false),
 		len:Cfg.get("mb.len", 0),
 		poke: getStatus("note.poke",false),
+		isSk: getStatus("ck.sk",false),
 		imgPlus: fs.existsSync(plusPath),
 		notePlus: fs.existsSync(notePlus),
 		bg: await rodom(), //获取底图

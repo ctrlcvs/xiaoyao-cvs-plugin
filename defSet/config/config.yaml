@@ -34,6 +34,6 @@ gclogEx: 5
 # 体力设置开启关闭权限  1-群管理员才能开启关闭 2-主人才能开启关闭
 noteSetAuth: 2
 # 体力推送 间隔 10分钟检索一次
-noteTask: 0 0/10 * * ? 
+noteTask: 0 0/10 * * * ? 
 # 全局开关体力推送  关闭后不可操作体力推送相关内容 true开启 false 关闭
 isNoteTask: false

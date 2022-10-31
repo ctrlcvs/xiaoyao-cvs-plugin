@@ -35,6 +35,10 @@ export const rule = {
 		reg: "^(.*)stoken=(.*)$",
 		describe: "绑定stoken"
 	},
+	bindLogin_ticket: {
+		reg: "^(.*)login_ticket=(.*)$",
+		describe: "绑定ck自动获取sk"
+	},
 	cloudToken: {
 		reg: "^(.*)ct(.*)$",
 		describe: "云原神签到token获取"
@@ -156,6 +160,29 @@ export async function mytoken(e) {
 	e.reply(sendMsg)
 	return true;
 }
+
+export async function bindLogin_ticket(e){
+	let user = new User(e);
+	let ckMap=await utils.getCookieMap(e.original_msg.replace(/'|"/g,""))
+	if(ckMap&&Cfg.get("ck.sk")){
+		let res= await user.getData("bbsStoken", {
+			loginUid:ckMap?.get("login_uid") ? ckMap?.get("login_uid") : ckMap?.get("ltuid"),
+			loginTicket:ckMap.get("login_ticket"),
+		},false)
+		if(res?.retcode===0){
+			let msg = 'stoken绑定成功您可通过下列指令进行操作:';
+			msg += '\n【#米币查询】查询米游币余额'
+			msg += '\n【#mys原神签到】获取米游币'
+			msg += '\n【#更新抽卡记录】更新抽卡记录'
+			msg += '\n【#刷新ck】刷新失效cookie'
+			msg += '\n【#我的stoken】查看绑定信息'
+			msg += '\n【#删除stoken】删除绑定信息'
+			e.reply(msg)
+		}
+	}
+	return false;
+}
+
 export async function bindStoken(e) {
 	if (!e.isPrivate) {
 		e.reply("请私聊发送")
