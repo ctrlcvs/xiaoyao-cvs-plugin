@@ -412,7 +412,11 @@ export async function Note_appoint(e) {
 	let type = 0;
 	if (msg.includes("列表")) {
 		let isUser= msg.includes('我的')
-		let temp =tempData[e.user_id]["temp"];
+		let temp =tempData[e.user_id]?.temp;
+		if(!temp&&isUser){
+			e.reply("未获取到您设置的模板信息哦~")
+			return true;
+		}
 		let xlmsg = msg.replace(/列表|我的/g, "") * 1 || 1
 		let listLength=isUser?temp.length:keyType.length
 		let sumCount = (listLength / 80 + 0.49).toFixed(0);
@@ -501,25 +505,27 @@ const note_file = function(xiaoyao) {
 	let url2 = `./plugins/xiaoyao-cvs-plugin/resources/BJT-Templet/` //冤种情况。。
 	let url3 = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/`
 	var urlFile = fs.readdirSync(url1);
-	var bJTurlFile = fs.readdirSync(url2);
 	var urlType = {};
 	for (let val of urlFile) {
 		if (val.includes(".")) continue;
 		urlType[val] = url1 + val
 	}
-	for (let val of bJTurlFile) {
-		if (!val.includes("Template")) continue;
-		let file = fs.readdirSync(`${url2}${val}`);
-		for (let va of file) {
-			if (va.includes(".")) continue;
-			urlType[va] = url2 + val + "/" + va
+	if (fs.existsSync(url2)) {
+		var bJTurlFile = fs.readdirSync(url2);
+		for (let val of bJTurlFile) {
+			if (!val.includes("Template")) continue;
+			let file = fs.readdirSync(`${url2}${val}`);
+			for (let va of file) {
+				if (va.includes(".")) continue;
+				urlType[va] = url2 + val + "/" + va
+			}
 		}
 	}
 	if (!xiaoyao) {
 		var urlFileOne = fs.readdirSync(url3);
 		for (let val of urlFileOne) {
 			if (!val.includes(".")) continue;
-			urlType[val] = url3 + "background_image/" + val
+			urlType[val] = url3  + val
 		}
 	}
 	return urlType;

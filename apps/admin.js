@@ -53,7 +53,7 @@ export const rule = {
 const _path = process.cwd();
 const resPath = `${_path}/plugins/xiaoyao-cvs-plugin/resources/`;
 const plusPath = `${resPath}/xiaoyao-plus/`;
-
+const notePlus=`${resPath}/BJT-Templet/`;
 export async function sysCfg(e, {
 	render
 }) {
@@ -92,8 +92,9 @@ export async function sysCfg(e, {
 		Note: getStatus("sys.Note",false),
 		Atlas: getStatus("sys.Atlas",false),
 		len:Cfg.get("mb.len", 0),
-		 poke: getStatus("note.poke",false),
+		poke: getStatus("note.poke",false),
 		imgPlus: fs.existsSync(plusPath),
+		notePlus: fs.existsSync(notePlus),
 		bg: await rodom(), //获取底图
 		Atlasall:getStatus("Atlas.all",false),
 	}
