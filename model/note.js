@@ -38,6 +38,14 @@ export default class note {
 		this.e.reply("体力推送开启成功~\n后续每天会为您推送体力")
 	}
 	delNote() {
+		if (!this.noteCfg[this.e.group_id]) { //首次直接设置
+			this.noteCfg[this.e.group_id] = {
+				"task": [],
+				"isTask": true,
+				"sendResin": 120
+			}
+			this.saveNote(this.noteCfg)
+		}
 		try {
 			if (this.noteCfg[this.e.group_id]) {
 				if (!this.isTaskAdmin()) return true;
