@@ -233,8 +233,13 @@ export async function Note(e, {
 	}
 	let img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
 	if (tempData[e.user_id] && tempData[e.user_id].type > -1) {
-		mb = tempData[e.user_id].type;
-		objFile = tempData[e.user_id].temp;
+		// mb = tempData[e.user_id].type;
+		objFile = tempData[e.user_id].temp[lodash.random(0, tempData[e.user_id].temp.length - 1)];
+		if (objFile.includes(".")) { //对于模板类型处理
+			mb = 0;
+		} else {
+			mb = 1
+		}
 	}
 	if (mb == 1) {
 		for (var i = 0; i < 5 - data.expeditions.length; i++) {
@@ -409,14 +414,14 @@ export async function Note_appoint(e) {
 	}
 	let type = 0;
 	if (msg.includes("列表")) {
-		let isUser= msg.includes('我的')
-		let temp =tempData[e.user_id]?.temp;
-		if(!temp&&isUser){
+		let isUser = msg.includes('我的')
+		let temp = tempData[e.user_id]?.temp;
+		if (!temp && isUser) {
 			e.reply("未获取到您设置的模板信息哦~")
 			return true;
 		}
 		let xlmsg = msg.replace(/列表|我的/g, "") * 1 || 1
-		let listLength=isUser?temp.length:keyType.length
+		let listLength = isUser ? temp.length : keyType.length
 		let sumCount = (listLength / 80 + 0.49).toFixed(0);
 		xlmsg = sumCount - xlmsg > -1 ? xlmsg : sumCount == 0 ? 1 : sumCount;
 		let xxmsg = (xlmsg - 1) <= 0 ? 0 : 80 * (xlmsg - 1)
@@ -433,7 +438,7 @@ export async function Note_appoint(e) {
 					`file:///${urlType[item]}/icon/bg/${fs.readdirSync(`${urlType[item]}/icon/bg/`)[0]}`
 				)
 			}
-			if(isUser&&!temp.includes(item)){
+			if (isUser && !temp.includes(item)) {
 				continue;
 			}
 			item = index + 1 + "." + item
@@ -475,7 +480,7 @@ export async function Note_appoint(e) {
 		}
 	}
 	let temp = [];
-	if(!tempData[e.user_id]){
+	if (!tempData[e.user_id]) {
 		tempData[e.user_id] = {
 			temp: [],
 			type: type,
@@ -484,7 +489,7 @@ export async function Note_appoint(e) {
 	if (typeof tempData[e.user_id]["temp"] === "string") {
 		temp = [tempData[e.user_id]["temp"], msg]
 	} else {
-		if(!tempData[e.user_id]["temp"].includes(msg)){
+		if (!tempData[e.user_id]["temp"].includes(msg)) {
 			temp = [...tempData[e.user_id]["temp"], msg]
 		}
 	}
@@ -504,26 +509,26 @@ const note_file = function(xiaoyao) {
 	let url3 = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/`
 	var urlFile = fs.readdirSync(url1);
 	var urlType = {};
-		for (let val of urlFile) {
-			if (val.includes(".")) continue;
-			urlType[val] = url1 + val
-		}
-		if (fs.existsSync(url2)) {
-			var bJTurlFile = fs.readdirSync(url2);
-			for (let val of bJTurlFile) {
-				if (!val.includes("Template")) continue;
-				let file = fs.readdirSync(`${url2}${val}`);
-				for (let va of file) {
-					if (va.includes(".")) continue;
-					urlType[va] = url2 + val + "/" + va
-				}
+	for (let val of urlFile) {
+		if (val.includes(".")) continue;
+		urlType[val] = url1 + val
+	}
+	if (fs.existsSync(url2)) {
+		var bJTurlFile = fs.readdirSync(url2);
+		for (let val of bJTurlFile) {
+			if (!val.includes("Template")) continue;
+			let file = fs.readdirSync(`${url2}${val}`);
+			for (let va of file) {
+				if (va.includes(".")) continue;
+				urlType[va] = url2 + val + "/" + va
 			}
 		}
+	}
 	if (!xiaoyao) {
 		var urlFileOne = fs.readdirSync(url3);
 		for (let val of urlFileOne) {
 			if (!val.includes(".")) continue;
-			urlType[val] = url3  + val
+			urlType[val] = url3 + val
 		}
 	}
 	return urlType;
