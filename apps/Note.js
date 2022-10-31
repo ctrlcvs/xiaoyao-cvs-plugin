@@ -226,13 +226,12 @@ export async function Note(e, {
 	if (mb < 0) {
 		mb = lodash.random(0, path_url.length - 1);
 	}
-
 	let urlType = note_file("xiaoyao");
 	let objFile = Object.keys(urlType)
 	if (objFile.length > 0) {
 		objFile = objFile[lodash.random(0, objFile.length - 1)]
 	}
-	let img_path = `${urlType[objFile]}`;
+	let img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
 	if (tempData[e.user_id] && tempData[e.user_id].type > -1) {
 		mb = tempData[e.user_id].type;
 		objFile = tempData[e.user_id].temp;
@@ -248,7 +247,6 @@ export async function Note(e, {
 		}
 		img_path = `${urlType[objFile]}${path_img[mb]}`;
 	}
-	
 	var image = fs.readdirSync(img_path);
 	// console.log(fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/BJT-Templet/Template2`))
 	var list_img = [];
@@ -506,21 +504,21 @@ const note_file = function(xiaoyao) {
 	let url3 = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/`
 	var urlFile = fs.readdirSync(url1);
 	var urlType = {};
-	for (let val of urlFile) {
-		if (val.includes(".")) continue;
-		urlType[val] = url1 + val
-	}
-	if (fs.existsSync(url2)) {
-		var bJTurlFile = fs.readdirSync(url2);
-		for (let val of bJTurlFile) {
-			if (!val.includes("Template")) continue;
-			let file = fs.readdirSync(`${url2}${val}`);
-			for (let va of file) {
-				if (va.includes(".")) continue;
-				urlType[va] = url2 + val + "/" + va
+		for (let val of urlFile) {
+			if (val.includes(".")) continue;
+			urlType[val] = url1 + val
+		}
+		if (fs.existsSync(url2)) {
+			var bJTurlFile = fs.readdirSync(url2);
+			for (let val of bJTurlFile) {
+				if (!val.includes("Template")) continue;
+				let file = fs.readdirSync(`${url2}${val}`);
+				for (let va of file) {
+					if (va.includes(".")) continue;
+					urlType[va] = url2 + val + "/" + va
+				}
 			}
 		}
-	}
 	if (!xiaoyao) {
 		var urlFileOne = fs.readdirSync(url3);
 		for (let val of urlFileOne) {
