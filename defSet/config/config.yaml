@@ -1,6 +1,4 @@
-#此文件为默认配置请勿修改此文件
-
-# cookies教程
+# 配置文件修改后需要重启生效
 # stoken 教程2由 @逍遥 提供  https://docs.qq.com/doc/DVFdKVHBRR3RaUWxL
 cookiesDoc: docs.qq.com/doc/DV2tDY2ltSFdtbU9z
 # 米币签到成功是否推送
@@ -8,14 +6,14 @@ isPushSign: false
 # 米游社米币签到定时任务，Cron表达式，默认00:02开始执行签到
 mysBbsTime: 0 2 0 * * ? 
 # 米币是否自动签到
-ismysSign: true
+ismysSign: false
 
 # 签到成功是否推送
 isAllSign: false
 # 米游社签到定时任务，Cron表达式，默认00:02开始执行签到
 allSignTime: 0 2 0 * * ? 
 # 是否自动签到
-isSign: true
+isSign: false
 # 默认签到游戏模板 仅支持 原神|崩坏3|崩坏2|未定事件簿
 signlist:
  - 原神
@@ -24,14 +22,18 @@ signlist:
  - 未定事件簿
 
 # 云原神是否自动签到
-isYunSign: true
+isCloudSign: false
 # 米游社签到定时任务，Cron表达式，默认04:02开始执行签到
-YunSignTime: 0 2 4 * * ? 
+cloudSignTime: 0 2 4 * * ? 
 # 云原神签到成功是否推送
-isYunSignMsg: false
+isCloudSignMsg: false
 # 云原神帮助 由 @FanSky_Qs 提供
-yunDoc: docs.qq.com/doc/DTnJIREZwTmxEVHBl
+cloudDoc: docs.qq.com/doc/DTnJIREZwTmxEVHBl
 #更新抽卡记录缓存时间默认5分钟
 gclogEx: 5
 # 体力设置开启关闭权限  1-群管理员才能开启关闭 2-主人才能开启关闭
-noteSetAuth: 1
+noteSetAuth: 2
+# 体力推送 间隔 10分钟检索一次
+noteTask: 0 0/10 * * ? 
+# 全局开关体力推送  关闭后不可操作体力推送相关内容 true开启 false 关闭
+isNoteTask: false

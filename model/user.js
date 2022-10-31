@@ -192,7 +192,7 @@ export default class user {
 		}
 	}
 	async docHelp(type) {
-		return this.configSign[type.includes("云") ? "yunDoc" : "cookiesDoc"]
+		return this.configSign[type.includes("云") ? "cloudDoc" : "cookiesDoc"]
 	}
 	async cloudSign() {
 		let res = await this.getData("cloudReward")
@@ -463,7 +463,7 @@ export default class user {
 		let mul = e;
 		Bot.logger.mark(`云原神签到任务开始`);
 		let files = fs.readdirSync(this.yunPath).filter(file => file.endsWith('.yaml'))
-		let isYunSignMsg = this.configSign.isYunSignMsg
+		let Msg = this.configSign.isCloudSignMsg
 		let userIdList = (files.join(",").replace(/.yaml/g, "").split(","))
 		if (cloudTask) {
 			e.reply(`云原神自动签到任务进行中，请勿重复触发指令`)

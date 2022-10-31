@@ -26,6 +26,7 @@ class GsCfg {
 	}
 	/** 通用yaml读取*/
 	getfileYaml(path, name) {
+		this.cpCfg('config', 'config')
 		return YAML.parse(
 			fs.readFileSync(path + name + ".yaml", 'utf8')
 		)
@@ -80,6 +81,43 @@ class GsCfg {
 			ckQQ
 		}
 	}
+	
+	/** 读取所有用户绑定的ck */
+	async getBingAllCk () {
+	  let ck = {}
+	  let ckQQ = {}
+	  let qqCk={}
+	  let dir = './data/MysCookie/'
+	  let files = fs.readdirSync(dir).filter(file => file.endsWith('.yaml'))
+	
+	  const readFile = promisify(fs.readFile)
+	
+	  let promises = []
+	
+	  files.forEach((v) => promises.push(readFile(`${dir}${v}`, 'utf8')))
+	
+	  const res = await Promise.all(promises)
+	
+	  res.forEach((v) => {
+	    let tmp = YAML.parse(v)
+	    let qq
+	    lodash.forEach(tmp, (item, uid) => {
+	      qq = item.qq
+	      ck[String(uid)] = item
+		  if(!qqCk[String(item.qq)]) qqCk[String(item.qq)]=[]
+		  qqCk[String(item.qq)].push(item)
+	      if (item.isMain && !ckQQ[String(item.qq)]) {
+	        ckQQ[String(item.qq)] = item
+	      }
+	    })
+	    if (qq && !ckQQ[String(qq)]) {
+	      ckQQ[String(qq)] = Object.values(tmp)[0]
+	    }
+	  })
+	
+	  return { ck, ckQQ,qqCk }
+	}
+	
 	async getUserStoken(userId){
 		try {
 			let ck=YAML.parse(

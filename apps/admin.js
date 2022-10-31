@@ -37,6 +37,11 @@ export const rule = {
 		reg: "^#图鉴插件(强制)?更新",
 		describe: "【#管理】图鉴更新",
 	},
+	updateTemp:{
+		hashMark: true,
+		reg: "^#图鉴模板(强制)?更新$",
+		describe: "【#管理】更新素材",
+	},
 	sysCfg: {
 		hashMark: true,
 		reg: sysCfgReg,
@@ -233,5 +238,57 @@ export async function updateMiaoPlugin(e) {
 		}, 1000);
 
 	});
+	return true;
+}
+
+export async function updateTemp(e){
+	if (!await checkAuth(e)) {
+		return true;
+	}
+	let command = "";
+	let url=`${resPath}/BJT-Templet/`
+	if (fs.existsSync(url)) {
+		e.reply("开始尝试更新，请耐心等待~");
+		command = `git pull`;
+		let isForce = e.msg.includes("强制");
+		if (isForce) {
+			command = "git  checkout . && git  pull";
+			// command="git fetch --all && git reset --hard origin/master && git pull "
+			e.reply("正在执行强制更新操作，请稍等");
+		} else {
+			e.reply("正在执行更新操作，请稍等");
+		}
+		exec(command, {
+			cwd: url
+		}, function(error, stdout, stderr) {
+			//console.log(stdout);
+			if (/Already up to date/.test(stdout)||stdout.includes("最新")) {
+				e.reply("目前所有模板都已经是最新了~");
+				return true;
+			}
+			let numRet = /(\d*) files changed,/.exec(stdout);
+			if (numRet && numRet[1]) {
+				e.reply(`报告主人，更新成功，此次更新了${numRet[1]}个图片~`);
+				return true;
+			}
+			if (error) {
+				e.reply("更新失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。");
+			} else {
+				e.reply("体力扩展包更新成功~");
+			}
+		});
+	} else {
+		//@gitee  @SunRyK @diqiushengwu @逍遥
+		command = `git clone https://gitee.com/SmallK111407/BJT-Template.git "${url}"`
+		// command = `git clone https://github.com/SmallK111407/BJT-Template.git "${resPath}/xiaoyao-plus/"`;\n此链接为github图床,如异常请请求多次
+		e.reply("开始尝试安装体力扩展包，可能会需要一段时间，请耐心等待~");
+		exec(command, function(error, stdout, stderr) {
+			if (error) {
+				e.reply("角色体力扩展包安装失败！\nError code: " + error.code + "\n" + error.stack + "\n 请稍后重试。");
+			} else {
+				e.reply("角色体力扩展包安装成功！您后续也可以通过 #图鉴模板更新 命令来更新图像");
+			}
+		});
+	}
 	return true;
 }

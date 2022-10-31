@@ -7,43 +7,69 @@ import {
 	versionInfo,
 	help
 } from "./help.js";
-import {genShenMap} from './map.js'
+import {
+	genShenMap
+} from './map.js'
 import {
 	Note,
 	DailyNoteTask,
 	Note_appoint,
+	noteTask,
 	pokeNote
 } from "./Note.js";
 import {
 	rule as adminRule,
 	updateRes,
-	sysCfg,
+	sysCfg,updateTemp,
 	updateMiaoPlugin
 } from "./admin.js";
 import {
 	currentVersion
 } from "../components/Changelog.js";
 import {
-	rule as userRule,delSign,updCookie,
-	userInfo,gclog,mytoken,bindStoken,cloudToken
+	rule as userRule,
+	delSign,
+	updCookie,
+	userInfo,
+	gclog,
+	mytoken,
+	bindStoken,
+	cloudToken
 } from "./user.js"
 import {
 	rule as signRule,
-	sign,bbsSign,cloudSign,seach,cookiesDocHelp,signTask
+	sign,
+	bbsSign,
+	cloudSign,
+	seach,
+	cookiesDocHelp,
+	signTask
 } from "./sign.js"
 
 export {
-	updateRes,delSign,cloudSign,seach,bbsSign,
-	gclog,mytoken,bindStoken,
-	updateMiaoPlugin,userInfo,
+	updateRes,updateTemp,
+	delSign,
+	cloudSign,
+	seach,
+	bbsSign,
+	gclog,
+	mytoken,
+	bindStoken,
+	updateMiaoPlugin,
+	userInfo,
 	sign,
-	versionInfo,cloudToken,
-	Note_appoint,signTask,
-	pokeNote,genShenMap,
+	versionInfo,
+	cloudToken,
+	Note_appoint,
+	signTask,
+	pokeNote,
+	genShenMap,
 	cookiesDocHelp,
 	sysCfg,
-	help,updCookie,
+	help,
+	updCookie,
 	DailyNoteTask,
+	noteTask,
 	AtlasAlias,
 	Note,
 };
@@ -68,13 +94,16 @@ let rule = {
 		reg: "^#*(体力|树脂|查询体力|便笺|便签)$",
 		describe: "体力",
 	},
-	
+	noteTask: {
+		reg: "^#*((开启|关闭)体力推送|体力设置群(推送(开启|关闭)|(阈值|上限)(\\d*)))$",
+		describe: "体力推送",
+	},
 	Note_appoint: {
-		reg: "^#体力模板(设置(.*)|列表(.*))$",
+		reg: "^#体力模板(设置(.*)|列表(.*))|(#我的体力模板列表)$",
 		describe: "体力模板设置",
 	},
-	genShenMap:{
-		reg: "^#(.*)(在(哪|那)里)$",
+	genShenMap: {
+		reg: "^#(.*)(在(哪|那)里*)$",
 		describe: "地图资源查询 #**在哪里",
 	},
 	pokeNote: {
@@ -94,26 +123,28 @@ lodash.forEach(rule, (r) => {
 task();
 //定时任务
 async function task() {
-	
 	if (typeof test != "undefined") return;
 	let set = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config")
 	schedule.scheduleJob(set.mysBbsTime, function() {
-			if (set.ismysSign) {
-				signTask('bbs')
-			}
+		if (set.ismysSign) {
+			signTask('bbs')
 		}
-	);
+	});
 	schedule.scheduleJob(set.allSignTime, function() {
 		if (set.isSign) {
 			signTask('mys')
 		}
 	});
-	schedule.scheduleJob(set.YunSignTime, function() {
-		if (set.isYunSign) {
+	schedule.scheduleJob(set.cloudSignTime, function() {
+		if (set.isCloudSign) {
 			signTask('cloud')
 		}
 	});
-	
+	schedule.scheduleJob(set.noteTask, function() {
+		if (set.isNoteTask) {
+			DailyNoteTask()
+		}
+	});
 }
 
 

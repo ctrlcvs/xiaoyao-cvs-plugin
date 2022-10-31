@@ -50,5 +50,5 @@ git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cv
 - 图片素材来源于网络，仅供交流学习使用
 - 严禁用于任何商业用途和非法行为
 - Yunzai-Bot 官方QQ群：213938015 （暂时停止新加入）
-- 喵喵Miao-Plugin QQ群：607710456 （暂时停止新加入）
-- 图鉴xiaoyao-cvs-Plugin QQ群：544570609(暂时不支持加入)
+- 喵喵Miao-Plugin QQ群：755269874 
+- 图鉴xiaoyao-cvs-Plugin QQ群：544570609

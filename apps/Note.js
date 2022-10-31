@@ -15,6 +15,8 @@ import {
 } from "../components/index.js";
 import moment from 'moment';
 import utils from "../model/mys/utils.js";
+import note from '../model/note.js'
+import User from "../model/user.js";
 const _path = process.cwd();
 let role_user = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/json/`, "dispatch_time");
 
@@ -99,13 +101,11 @@ export async function Note(e, {
 	let data = res.data;
 	//推送任务
 	if (e.isTask && data.current_resin < e.sendResin) {
-		return;
+		return false;
 	}
-
 	if (e.isTask) {
 		Bot.logger.mark(`体力推送:${e.user_id}`);
 	}
-
 	let nowDay = moment(new Date()).format("DD");
 	let resinMaxTime;
 	let resinMaxTime_mb2;
@@ -160,7 +160,6 @@ export async function Note(e, {
 		}
 	}
 
-
 	let remained_time = "";
 	if (data.expeditions && data.expeditions.length >= 1) {
 		remained_time = lodash.map(data.expeditions, "remained_time");
@@ -188,7 +187,8 @@ export async function Note(e, {
 		let coinMin = Math.floor((data.home_coin_recovery_time / 60) % 60);
 		if (coinDay > 0) {
 			coinTime = `${coinDay}天${coinHour}小时${coinMin}分钟`;
-			coinTime_mb2Day = chnNumChar[coinDay * 1] + "天";
+			let dayTime = (24 - moment(new Date()).format('HH') + moment(coinDate).diff(new Date(), 'hours')) / 24
+			coinTime_mb2Day = chnNumChar[dayTime.toFixed(0)] + "天";
 			let Time_day = await dateTime_(coinDate)
 			coinTime_mb2 = Time_day + moment(coinDate).format("hh:mm");
 		} else {
@@ -228,13 +228,14 @@ export async function Note(e, {
 	}
 
 	let urlType = note_file("xiaoyao");
-	if (urlType.length > 0) {
-		urlType = urlType[lodash.random(0, urlType.length - 1)]
+	let objFile = Object.keys(urlType)
+	if (objFile.length > 0) {
+		objFile = objFile[lodash.random(0, objFile.length - 1)]
 	}
-	let img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
+	let img_path = `${urlType[objFile]}`;
 	if (tempData[e.user_id] && tempData[e.user_id].type > -1) {
 		mb = tempData[e.user_id].type;
-		urlType = tempData[e.user_id].temp;
+		objFile = tempData[e.user_id].temp;
 	}
 	if (mb == 1) {
 		for (var i = 0; i < 5 - data.expeditions.length; i++) {
@@ -245,23 +246,26 @@ export async function Note(e, {
 				mb2_icon: ""
 			})
 		}
-		img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/${urlType}${path_img[mb]}`;
+		img_path = `${urlType[objFile]}${path_img[mb]}`;
 	}
+	
 	var image = fs.readdirSync(img_path);
+	// console.log(fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/BJT-Templet/Template2`))
 	var list_img = [];
 	for (let val of image) {
 		list_img.push(val)
 	}
 	var imgs = list_img.length == 1 ? list_img[0] : list_img[lodash.random(0, list_img.length - 1)];
-	if (mb == 0 && urlType.includes(".")) {
-		imgs = urlType
+	if (mb == 0 && objFile.includes(".")) {
+		imgs = objFile
 	}
 	return await Common.render(`dailyNote/${path_url[mb]}`, {
 		save_id: uid,
 		uid: uid,
 		coinTime_mb2Day,
 		coinTime_mb2,
-		urlType: encodeURIComponent(urlType),
+		urlType: encodeURIComponent(img_path.replace(
+			/(\.\/plugins\/xiaoyao-cvs-plugin\/resources\/|\/icon\/bg)/g, '')).replace(/%2F/g, "/"),
 		resinMaxTime_mb2Day,
 		resinMaxTime,
 		resinMaxTime_mb2,
@@ -294,7 +298,8 @@ async function getDailyNote(uid, cookie) {
 	} = mysApi.getUrl("dailyNote", uid);
 	headers.Cookie = cookie;
 	const response = await fetch(url, {
-		method: "get",		headers
+		method: "get",
+		headers
 	});
 	return response;
 }
@@ -303,66 +308,77 @@ export async function saveJson() {
 	fs.writeFileSync(path, JSON.stringify(NoteCookie, "", "\t"));
 }
 
+export async function noteTask(e) {
+	if (e.isPrivate) {
+		return true;
+	}
+	let notes = new note(e);
+	let user = new User(e)
+	let {
+		cookie
+	} = await user.getCookie(e)
+	e.isbool = e.msg.includes("开启")
+	e.isgl = e.msg.includes("群")
+	if (!cookie && e.isbool && !e.isgl) {
+		e.reply("请先#绑定ck\n发送【体力帮助】获取教程")
+		return false;
+	}
+	if (e.isgl) {
+		notes.updNote(e)
+	} else if (e.isbool && e.msg.includes("体力推送")) {
+		notes.addNote()
+	} else {
+		notes.delNote()
+	}
+	return true;
+}
 
 //体力定时推送
 export async function DailyNoteTask() {
-	//体力大于多少时推送
-	let sendResin = 120;
 	//推送cd，12小时一次
 	let sendCD = 12 * 3600;
-	if (isV3) {
-		return true;
-	}
-	//获取需要推送的用户
-	for (let [user_id, cookie] of Object.entries(NoteCookie)) {
-		user_id = cookie.qq || user_id;
-		//没有开启推送
-		if (!cookie.isPush) {
-			continue;
-		}
-
-		//今天已经提醒
-		let sendkey = `genshin:dailyNote:send:${user_id}`;
-		let send = await redis.get(sendkey);
-		if (send) {
-			continue;
-		}
-
-		let e = {
-			sendResin,
-			user_id,
-			isTask: true
-		};
-
-		e.reply = (msg) => {
-			Bot.pickUser(user_id * 1).sendMsg(msg).catch((err) => {
-				Bot.logger.mark(err)
-			})
-			// common.relpyPrivate(user_id, msg);
-		};
-		//判断今天是否推送
-		if (cookie.maxTime && cookie.maxTime > 0 && new Date().getTime() > cookie.maxTime - (160 - sendResin) * 8 *
-			60 * 1000) {
-			Bot.logger.mark(`体力推送:${user_id}`);
-			redis.set(sendkey, "1", {
-				EX: sendCD
-			});
+	let notes = new note();
+	for (let item in notes.noteCfg) {
+		let group = notes.noteCfg[item]
+		if (!group?.isTask) continue;
+		let taskUser = group.task;
+		for (let i of taskUser) {
+			let e = {
+				user_id: i,
+				qq: i,
+				msg: "体力",
+				sendResin: group.sendResin,
+				isTask: true,
+			}
+			//今天已经提醒
+			let sendkey = `xiaoyao:dailyNote:send:${i}`;
+			let send = await redis.get(sendkey);
+			if (!Bot.pickGroup(item).pickMember(i) || send) continue;
+			let sendMsg = [segment.at(i * 1), "哥哥（姐姐）你的体力快满了哦~"]
+			e.reply = (msg) => {
+				sendMsg.push(msg)
+			};
+			let render;
 			if (isV3) {
 				let {
 					getRender
-				} = await import(`file://${_path}/plugins/xiaoyao-cvs-plugin/render.js`);
-				await Note(e, {
-					render: await getRender()
-				});
+				} = await import(`file://${_path}/plugins/xiaoyao-cvs-plugin/adapter/render.js`);
+				render = await getRender()
 			} else {
 				let {
 					getPluginRender
 				} = await import(`file://${_path}/lib/render.js`);
-				await Note(e, {
-					render: await getPluginRender()
-				});
+				render = await getPluginRender()
 			}
-
+			let task = await Note(e, {
+				render
+			});
+			if (task) {
+				redis.set(sendkey, "1", {
+					EX: sendCD
+				});
+				Bot.pickGroup(item).sendMsg(sendMsg)
+			}
 		}
 	}
 }
@@ -385,31 +401,38 @@ export async function Note_appoint(e) {
 
 	let All = ["默认", "随机", "0"];
 	let urlType = note_file();
+	let keyType = Object.keys(urlType);
 	if (!isNaN(msg) && msg != 0) {
-		if (msg > urlType.length) {
+		if (msg > keyType.length) {
 			e.reply(`没有${msg}的索引序号哦~`)
 			return true;
 		}
-		msg = urlType[msg - 1];
+		msg = keyType[msg - 1];
 	}
 	let type = 0;
 	if (msg.includes("列表")) {
-		let xlmsg = msg.replace("列表", "") * 1 || 1
-		let sumCount = (urlType.length / 80 + 0.49).toFixed(0);
+		let isUser= msg.includes('我的')
+		let temp =tempData[e.user_id]["temp"];
+		let xlmsg = msg.replace(/列表|我的/g, "") * 1 || 1
+		let listLength=isUser?temp.length:keyType.length
+		let sumCount = (listLength / 80 + 0.49).toFixed(0);
 		xlmsg = sumCount - xlmsg > -1 ? xlmsg : sumCount == 0 ? 1 : sumCount;
 		let xxmsg = (xlmsg - 1) <= 0 ? 0 : 80 * (xlmsg - 1)
 		let count = 0;
-		let msgData = [`模板列表共，第${xlmsg}页，共${urlType.length}张，\n您可通过【#体力模板设置1】来绑定你需要的体力模板~\n请选择序号~~\n当前支持选择的模板有:`];
-		for (let [index, item] of urlType.entries()) {
+		let msgData = [`模板列表共，第${xlmsg}页，共${listLength}张，\n您可通过【#体力模板设置1】来绑定你需要的体力模板~\n请选择序号~~\n当前支持选择的模板有:`];
+		for (let [index, item] of keyType.entries()) {
 			let msg_pass = [];
 			let imgurl;
 			if (item.includes(".")) {
-				imgurl = await segment.image(`file:///${mbPath}background_image/${item}`);
+				imgurl = await segment.image(`file:///${urlType[item]}`);
 				item = item.split(".")[0];
 			} else {
 				imgurl = await segment.image(
-					`file:///${mbPath}Template/${item}/icon/bg/${fs.readdirSync(`${mbPath}/Template/${item}/icon/bg/`)[0]}`
+					`file:///${urlType[item]}/icon/bg/${fs.readdirSync(`${urlType[item]}/icon/bg/`)[0]}`
 				)
+			}
+			if(isUser&&!temp.includes(item)){
+				continue;
 			}
 			item = index + 1 + "." + item
 			count++;
@@ -426,7 +449,7 @@ export async function Note_appoint(e) {
 			msgData.push(msg_pass)
 		}
 		let endMsg = "";
-		if (count < urlType.length) {
+		if (count < listLength) {
 			endMsg = `更多内容请翻页查看\n如：#体力模板列表2`
 		} else {
 			endMsg = `已经到底了~~`
@@ -435,10 +458,10 @@ export async function Note_appoint(e) {
 		await utils.replyMake(e, msgData, 0)
 		return true;
 	}
-	if (urlType.includes(msg + ".png")) {
+	if (keyType.includes(msg + ".png")) {
 		msg = msg + ".png";
 	}
-	if (!urlType.includes(msg) && !All.includes(msg)) {
+	if (!keyType.includes(msg) && !All.includes(msg)) {
 		e.reply("没有找到你想要的模板昵！可输入 【#体力模板列表】 查询当前支持的模板哦~~")
 		return true;
 	} else if (All.includes(msg)) {
@@ -449,8 +472,22 @@ export async function Note_appoint(e) {
 			type = 0
 		}
 	}
+	let temp = [];
+	if(!tempData[e.user_id]){
+		tempData[e.user_id] = {
+			temp: [],
+			type: type,
+		}
+	}
+	if (typeof tempData[e.user_id]["temp"] === "string") {
+		temp = [tempData[e.user_id]["temp"], msg]
+	} else {
+		if(!tempData[e.user_id]["temp"].includes(msg)){
+			temp = [...tempData[e.user_id]["temp"], msg]
+		}
+	}
 	tempData[e.user_id] = {
-		temp: msg,
+		temp: temp,
 		type: type,
 	}
 	fs.writeFileSync(tempDataUrl + "/tempData.json", JSON.stringify(tempData));
@@ -460,18 +497,29 @@ export async function Note_appoint(e) {
 }
 
 const note_file = function(xiaoyao) {
-	var urlFile = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/`);
-	var urlType = [];
+	let url1 = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/`
+	let url2 = `./plugins/xiaoyao-cvs-plugin/resources/BJT-Templet/` //冤种情况。。
+	let url3 = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/`
+	var urlFile = fs.readdirSync(url1);
+	var bJTurlFile = fs.readdirSync(url2);
+	var urlType = {};
 	for (let val of urlFile) {
 		if (val.includes(".")) continue;
-		urlType.push(val)
+		urlType[val] = url1 + val
+	}
+	for (let val of bJTurlFile) {
+		if (!val.includes("Template")) continue;
+		let file = fs.readdirSync(`${url2}${val}`);
+		for (let va of file) {
+			if (va.includes(".")) continue;
+			urlType[va] = url2 + val + "/" + va
+		}
 	}
 	if (!xiaoyao) {
-		var urlFileOne = fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/`);
+		var urlFileOne = fs.readdirSync(url3);
 		for (let val of urlFileOne) {
 			if (!val.includes(".")) continue;
-			urlType.push(val)
-
+			urlType[val] = url3 + "background_image/" + val
 		}
 	}
 	return urlType;

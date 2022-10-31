@@ -3,10 +3,10 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 		<link rel="shortcut icon" href="#" />
-		<link rel="stylesheet" type="text/css" href="{{_res_path}}dailyNote/Template/{{urlType}}/css/xiaoyao_Note.css?v=1.0" />
+		<link rel="stylesheet" type="text/css" href="{{_res_path}}{{urlType}}/css/xiaoyao_Note.css?v=1.0" />
 	</head>
 	<body>
-		<div class="container" id="container" style=" background-image: url({{_res_path}}/dailyNote/Template/{{urlType}}/icon/bg/{{imgs}});">
+		<div class="container" id="container" style=" background-image: url({{_res_path}}{{urlType}}/icon/bg/{{imgs}});">
 			<div class="left_model">
 				<div class="list">
 					<div class="div">
@@ -107,7 +107,7 @@
 							</div>
 						</div> -->
 						<div class="jdt">
-							<img src="{{_res_path}}/dailyNote/Template/{{urlType}}/speed/{{100-list.percentage}}.png"/>
+							<img src="{{_res_path}}{{urlType}}/speed/{{100-list.percentage}}.png"/>
 						</div>
 						<div class="icon {{list.mb2_icon==''?'user_null':''}}" >
 							{{if list.mb2_icon==''}}
