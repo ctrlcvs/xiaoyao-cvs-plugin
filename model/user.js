@@ -1,4 +1,4 @@
-import YAML from 'yaml'
+	import YAML from 'yaml'
 import chokidar from 'chokidar'
 import miHoYoApi from "../model/mys/mihoyoApi.js"
 import fs from 'node:fs'
@@ -87,7 +87,6 @@ export default class user {
 	async multiSign(forumData) {
 		let upData = [],
 			message = '';
-		await this.getCookie(this.e);
 		for (let forum of forumData) {
 			if (!(this.configSign.signlist.includes(forum.name))) {
 				continue;
@@ -97,6 +96,10 @@ export default class user {
 				message += `**${forum.name}**\n`
 				res = await this.getData("userGameInfo", forum, false)
 				await utils.sleepAsync(3000) //等几毫秒免得请求太频繁了
+				if(res.retcode===-100){
+					message=`用户：${this.e.user_id}：cookie失效`
+					return {message,upData};
+				}
 				if (res?.data?.list?.length === 0 || !res?.data?.list) {
 					message += `签到: 未绑定${forum.name}信息\n`;
 					if (this.allSign) {
@@ -349,28 +352,25 @@ export default class user {
 		let userIdList = [];
 		let dir = './data/MysCookie/'
 		if (isV3) {
-			let files = fs.readdirSync(dir).filter(file => file.endsWith('.yaml'))
-			userIdList = (files.join(",").replace(/.yaml/g, "").split(","))
+			userIdList = (await gsCfg.getBingAllCk()).ckQQ
 		} else {
-			for (let [user_id, cookie] of Object.entries(NoteCookie)) {
-				userIdList.push(user_id)
-			}
+			userIdList=NoteCookie;
 		}
 		if (mysTask) {
 			e.reply(`米社自动签到任务进行中，请勿重复触发指令`)
 			return false
 		}
 		mysTask = true;
-
+		let userIdkeys=Object.keys(userIdList);
 		let tips = ['开始米社签到任务']
-		let time = userIdList.length * 25 + 5 + (userIdList.length / 3 * 60)
+		let time = userIdkeys.length * 25 + 5 + (userIdkeys.length / 3 * 60)
 		let finishTime = moment().add(time, 's').format('MM-DD HH:mm:ss')
-		tips.push(`\n签到用户：${userIdList.length}个`)
+		tips.push(`\n签到用户：${userIdkeys.length}个`)
 		tips.push(`\n预计需要：${this.countTime(time)}`)
 		if (time > 120) {
 			tips.push(`\n完成时间：${finishTime}`)
 		}
-		logger.mark(`签到用户:${userIdList.length}个，预计需要${this.countTime(time)} ${finishTime} 完成`)
+		Bot.logger.mark(`签到用户:${userIdkeys.length}个，预计需要${this.countTime(time)} ${finishTime} 完成`)
 		if (mul) {
 			await this.e.reply(tips)
 			if (this.e.msg.includes('force')) this.force = true
@@ -415,23 +415,14 @@ export default class user {
 				return msg
 			}
 		}
-		for (let qq of userIdList) {
+		for (let qq of userIdkeys) {
 			let user_id = qq;
-			// let cklist={};
-			// if(isV3){
-			// 	let ck=`${dir}${qq*1}.yaml`
-			// 	let cklis=fs.readFileSync(ck, 'utf-8')
-			// 	cklist=YAML.parse(cklis)
-			// }else{
-			// 	cklist=NoteCookie[qq*1]
-			// }
-			// for(let uid in cklist){
-			// 	console.log(item)
-			// }
 			let e = {
 				user_id,
 				qq,
-				isTask: true
+				isTask: true,
+				uid:userIdList[qq].uid,
+				cookie:userIdList[qq].cookie||userIdList[qq].ck,
 			};
 			if (msg) {
 				e.msg = msg.replace(/全部|签到|米社/g, "");
@@ -468,7 +459,7 @@ export default class user {
 		let mul = e;
 		Bot.logger.mark(`云原神签到任务开始`);
 		let files = fs.readdirSync(this.yunPath).filter(file => file.endsWith('.yaml'))
-		let Msg = this.configSign.isCloudSignMsg
+		let isCloudSignMsg = this.configSign.isCloudSignMsg
 		let userIdList = (files.join(",").replace(/.yaml/g, "").split(","))
 		if (cloudTask) {
 			e.reply(`云原神自动签到任务进行中，请勿重复触发指令`)
@@ -482,7 +473,7 @@ export default class user {
 		if (time > 120) {
 			tips.push(`\n完成时间：${finishTime}`)
 		}
-		logger.mark(`签到用户:${userIdList.length}个，预计需要${this.countTime(time)} ${finishTime} 完成`)
+		Bot.logger.mark(`签到用户:${userIdList.length}个，预计需要${this.countTime(time)} ${finishTime} 完成`)
 		if (mul) {
 			await this.e.reply(tips)
 		} else {
@@ -501,7 +492,7 @@ export default class user {
 			Bot.logger.mark(`正在为qq${user_id}云原神签到中...`);
 			e.msg = "全部"
 			e.reply = (msg) => {
-				if (!isYunSignMsg || mul) {
+				if (!isCloudSignMsg || mul) {
 					return;
 				}
 				if (msg.includes("领取奖励")) {
@@ -551,7 +542,7 @@ export default class user {
 		if (time > 120) {
 			tips.push(`\n完成时间：${finishTime}`)
 		}
-		logger.mark(`签到用户:${userIdList.length}个，预计需要${this.countTime(time)} ${finishTime} 完成`)
+		Bot.logger.mark(`签到用户:${userIdList.length}个，预计需要${this.countTime(time)} ${finishTime} 完成`)
 		if (mul) {
 			await this.e.reply(tips)
 			if (this.e.msg.includes('force')) this.force = true
