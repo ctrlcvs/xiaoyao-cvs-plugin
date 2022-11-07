@@ -111,7 +111,7 @@ export async function sign(e) {
 	let msg = e.msg.replace(/#|签到|井|米游社|mys|社区/g, "");
 	let ForumData = await user.getDataList(msg);
 	e.reply(`开始尝试${msg}签到\n预计${msg=='全部'?"60":"5-10"}秒~`)
-	let res = await user.multiSign(ForumData);
+	let res = await user.multiSign(ForumData,true);
 	await replyMsg(e, res.message);
 	return true;
 }

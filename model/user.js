@@ -84,9 +84,13 @@ export default class user {
 		let res = await this.miHoYoApi.getData(type, data)
 		return res
 	}
-	async multiSign(forumData) {
+	
+	async multiSign(forumData,isCk=false) {
 		let upData = [],
 			message = '';
+		if(isCk){
+			await this.cookie(this.e)
+		}
 		for (let forum of forumData) {
 			if (!(this.configSign.signlist.includes(forum.name))) {
 				continue;
