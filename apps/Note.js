@@ -37,6 +37,23 @@ export async function Note(e, {
 	let notes = new note(e);
 	let cookie, uid, res;
 	if (isV3) {
+		if(e.msg.replace(/全|全部/g,'多').includes('多')){
+			let ck=await gsCfg.getBingCkSingle(e.user_id)
+			let sendMsg=[]
+			e._reply=e.reply;
+			e.reply=((msg)=>{
+				sendMsg.push(msg)
+			})
+			if(Object.keys(ck).length>1){
+				e._reply(`多账号体力查询中请稍等...`)
+			}
+			for(let item of Object.keys(ck)){
+				let res=await (await e.runtime.createMysApi(ck[item].uid,ck[item].ck)).getData('dailyNote')
+				await notes.getNote(ck[item].ck,ck[item].uid,res,{render})
+			}
+			e._reply(sendMsg)
+			return true;
+		}
 		let MysInfo = await import(`file://${_path}/plugins/genshin/model/mys/mysInfo.js`);
 		res = await MysInfo.default.get(e, 'dailyNote')
 		if (!res || res.retcode !== 0) return true
