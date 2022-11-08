@@ -87,7 +87,7 @@ const send_Msg = function(e, type, name) {
 	if (type == "all") {
 		for (let [index, val] of list.entries()) {
 			name = e.msg.replace(new RegExp(reglist[index], "g"), "");
-			let new_name = info_img(e, Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`,
+			let new_name = info_img(e, gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`,
 				val), name)
 			if (new_name) {
 				name = new_name
@@ -104,7 +104,7 @@ const send_Msg = function(e, type, name) {
 	return true;
 }
 export async function Atlas_list(e) {
-	let list = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`, "Atlas_list");
+	let list = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`,'Atlas_list')
 	let name = e.msg.replace(/#|井/g, "")
 	for (let i in list) {
 		let title = i.split("|");
