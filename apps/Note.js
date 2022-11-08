@@ -18,10 +18,7 @@ import utils from "../model/mys/utils.js";
 import note from '../model/note.js'
 import User from "../model/user.js";
 const _path = process.cwd();
-let role_user = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/json/`, "dispatch_time");
 
-let path_url = ["dailyNote", "xiaoyao_Note"];
-let path_img = ["background_image", "/icon/bg"];
 let tempDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/NoteTemp`
 let tempData = {};
 init()
@@ -37,6 +34,7 @@ export async function Note(e, {
 	if (!Cfg.get("sys.Note") && !poke) {
 		return false;
 	}
+	let notes = new note(e);
 	let cookie, uid, res;
 	if (isV3) {
 		let MysInfo = await import(`file://${_path}/plugins/genshin/model/mys/mysInfo.js`);
@@ -83,218 +81,25 @@ export async function Note(e, {
 				e.reply(`体力查询错误：${res.message}`);
 				Bot.logger.mark(`体力查询错误:${JSON.stringify(res)}`);
 			}
-
+	
 			return true;
 		}
-
+	
 		//redis保存uid
 		redis.set(`genshin:uid:${e.user_id}`, uid, {
 			EX: 2592000
 		});
-
+	
 		//更新
 		if (NoteCookie[e.user_id]) {
 			NoteCookie[e.user_id].maxTime = new Date().getTime() + res.data.resin_recovery_time * 1000;
 			saveJson();
 		}
 	}
-	let data = res.data;
-	//推送任务
-	if (e.isTask && data.current_resin < e.sendResin) {
-		return false;
-	}
-	if (e.isTask) {
-		Bot.logger.mark(`体力推送:${e.user_id}`);
-	}
-	let nowDay = moment(new Date()).format("DD");
-	let resinMaxTime;
-	let resinMaxTime_mb2;
-	let resinMaxTime_mb2Day;
-	if (data.resin_recovery_time > 0) {
-		resinMaxTime = new Date().getTime() + data.resin_recovery_time * 1000;
-		let maxDate = new Date(resinMaxTime);
-		resinMaxTime = moment(maxDate).format("HH:mm");
-		let Time_day = await dateTime_(maxDate)
-		resinMaxTime_mb2 = Time_day + moment(maxDate).format("hh:mm");
-		if (moment(maxDate).format("DD") != nowDay) {
-			resinMaxTime_mb2Day = `明天`;
-			resinMaxTime = `明天 ${resinMaxTime}`;
-		} else {
-			resinMaxTime_mb2Day = `今天`;
-			resinMaxTime = ` ${resinMaxTime}`;
-		}
-	}
-	for (let val of data.expeditions) {
-		if (val.remained_time <= 0) {
-			val.percentage = 0;
-		}
-		if (val.remained_time > 0) {
-			val.dq_time = val.remained_time;
-			val.remained_time = new Date().getTime() + val.remained_time * 1000;
-			var urls_avatar_side = val.avatar_side_icon.split("_");
-			let Botcfg;
-			if (isV3) {
-				Botcfg = (await import(`file://${_path}/plugins/genshin/model/gsCfg.js`)).default;
-			} else {
-				Botcfg = YunzaiApps.mysInfo
-			}
-			let id = Botcfg.roleIdToName(urls_avatar_side[urls_avatar_side.length - 1].replace(
-				/(.png|.jpg)/g, ""));
-			let name = Botcfg.roleIdToName(id, true);
-			var time_cha = 20;
-			if (role_user["12"].includes(name)) {
-				time_cha = 15;
-			}
-			val.percentage = ((val.dq_time / 60 / 60 * 1 / time_cha) * 100 / 10).toFixed(0) * 10;
-			let remainedDate = new Date(val.remained_time);
-			val.remained_time = moment(remainedDate).format("HH:mm");
-			let Time_day = await dateTime_(remainedDate)
-			if (moment(remainedDate).format("DD") != nowDay) {
-				val.remained_mb2 = "明天" + Time_day + moment(remainedDate).format("hh:mm");
-				val.remained_time = `明天 ${val.remained_time}`;
-			} else {
-				val.remained_mb2 = "今天" + Time_day + moment(remainedDate).format("hh:mm");
-				val.remained_time = ` ${val.remained_time}`;
-			}
-			val.mb2_icon = val.avatar_side_icon
-		}
-	}
-
-	let remained_time = "";
-	if (data.expeditions && data.expeditions.length >= 1) {
-		remained_time = lodash.map(data.expeditions, "remained_time");
-		remained_time = lodash.min(remained_time);
-		if (remained_time > 0) {
-			remained_time = new Date().getTime() + remained_time * 1000;
-			let remainedDate = new Date(remained_time);
-			remained_time = moment(remainedDate).format("hh:mm");
-			if (moment(remainedDate).format("DD") != nowDay) {
-				remained_time = `明天 ${remained_time}`;
-			} else {
-				remained_time = ` ${remained_time}`;
-			}
-		}
-	}
-
-	let coinTime_mb2 = "";
-	let coinTime_mb2Day = "";
-	let coinTime = "";
-	var chnNumChar = ["零", "明", "后", "三", "四", "五", "六", "七", "八", "九"];
-	if (data.home_coin_recovery_time > 0) {
-		let coinDate = new Date(new Date().getTime() + data.home_coin_recovery_time * 1000);
-		let coinDay = Math.floor(data.home_coin_recovery_time / 3600 / 24);
-		let coinHour = Math.floor((data.home_coin_recovery_time / 3600) % 24);
-		let coinMin = Math.floor((data.home_coin_recovery_time / 60) % 60);
-		if (coinDay > 0) {
-			coinTime = `${coinDay}天${coinHour}小时${coinMin}分钟`;
-			let dayTime = (24 - moment(new Date()).format('HH') + moment(coinDate).diff(new Date(), 'hours')) / 24
-			coinTime_mb2Day = chnNumChar[dayTime.toFixed(0)] + "天";
-			let Time_day = await dateTime_(coinDate)
-			coinTime_mb2 = Time_day + moment(coinDate).format("hh:mm");
-		} else {
-			coinTime_mb2 = moment(coinDate).format("hh:mm");
-			if (moment(coinDate).format("DD") != nowDay) {
-				coinTime_mb2Day = "明天";
-				coinTime = `明天 ${ moment(coinDate).format("hh:mm")}`;
-			} else {
-				coinTime_mb2Day = "今天";
-				coinTime = moment(coinDate).format("hh:mm", coinDate);
-			}
-		}
-	}
-
-	let day = moment(new Date()).format("MM-DD HH:mm");
-	let week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
-	day += " " + week[new Date().getDay()];
-	let day_mb2 = moment(new Date()).format("yyyy年MM月DD日 HH:mm") + " " + week[new Date().getDay()];
-	//参量质变仪
-	if (data?.transformer?.obtained) {
-		data.transformer.reached = data.transformer.recovery_time.reached;
-		let recovery_time = "";
-		if (data.transformer.recovery_time.Day > 0) {
-			recovery_time += `${data.transformer.recovery_time.Day}天`;
-		}
-		if (data.transformer.recovery_time.Hour > 0) {
-			recovery_time += `${data.transformer.recovery_time.Hour}小时`;
-		}
-		if (data.transformer.recovery_time.Minute > 0) {
-			recovery_time += `${data.transformer.recovery_time.Minute}分钟`;
-		}
-		data.transformer.recovery_time = recovery_time;
-	}
-	let mb = Cfg.get("mb.len", 0) - 1;
-	if (mb < 0) {
-		mb = lodash.random(0, path_url.length - 1);
-	}
-	let urlType = note_file("xiaoyao");
-	let objFile = Object.keys(urlType)
-	if (objFile.length > 0) {
-		objFile = objFile[lodash.random(0, objFile.length - 1)]
-	}
-	let img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
-	if (tempData[e.user_id] && tempData[e.user_id].type > -1&&tempData[e.user_id]?.temp?.length!==0) {
-		// mb = tempData[e.user_id].type;
-		if (typeof tempData[e.user_id]["temp"] === "string") {
-			objFile = tempData[e.user_id]["temp"]
-		} else {
-			objFile = tempData[e.user_id].temp[lodash.random(0, tempData[e.user_id].temp.length - 1)];
-		}
-		if (objFile.includes(".")) { //对于模板类型处理
-			mb = 0;
-		} else {
-			mb = 1
-		}
-	}
-	if (mb == 1) {
-		for (var i = 0; i < 5 - data.expeditions.length; i++) {
-			data.expeditions.push({
-				remained_time: 0,
-				remained_mb2: 0,
-				percentage: 0,
-				mb2_icon: ""
-			})
-		}
-		img_path = `${urlType[objFile]}${path_img[mb]}`;
-	}
-	var image = fs.readdirSync(img_path);
-	// console.log(fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/BJT-Templet/Template2`))
-	var list_img = [];
-	for (let val of image) {
-		list_img.push(val)
-	}
-	var imgs = list_img.length == 1 ? list_img[0] : list_img[lodash.random(0, list_img.length - 1)];
-	if (mb == 0 && objFile.includes(".")) {
-		imgs = objFile
-	}
-	return await Common.render(`dailyNote/${path_url[mb]}`, {
-		save_id: uid,
-		uid: uid,
-		coinTime_mb2Day,
-		coinTime_mb2,
-		urlType: encodeURIComponent(img_path.replace(
-			/(\.\/plugins\/xiaoyao-cvs-plugin\/resources\/|\/icon\/bg)/g, '')).replace(/%2F/g, "/"),
-		resinMaxTime_mb2Day,
-		resinMaxTime,
-		resinMaxTime_mb2,
-		remained_time,
-		coinTime,
-		imgs: encodeURIComponent(imgs),
-		day_mb2,
-		day,
-		...data,
-	}, {
-		e,
-		render,
-		scale: 1.2
-	})
+	await notes.getNote(cookie,uid,res,{render})
 	return true;
 }
 
-async function dateTime_(time) {
-	return moment(time).format("HH") < 6 ? "凌晨" : moment(time).format("HH") < 12 ? "上午" : moment(time).format(
-			"HH") < 17.5 ? "下午" : moment(time).format("HH") < 19.5 ? "傍晚" : moment(time).format("HH") < 22 ? "晚上" :
-		"深夜";
-}
 async function getDailyNote(uid, cookie) {
 	let mysApi = (await import(`file://${_path}/lib/app/mysApi.js`))
 	let {

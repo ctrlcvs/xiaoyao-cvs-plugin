@@ -87,6 +87,7 @@ const send_Msg = function(e, type, name) {
 	if (type == "all") {
 		for (let [index, val] of list.entries()) {
 			name = e.msg.replace(new RegExp(reglist[index], "g"), "");
+			if(val.includes('juese_tujian')) continue;
 			let new_name = info_img(e, gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`,
 				val), name)
 			if (new_name) {
