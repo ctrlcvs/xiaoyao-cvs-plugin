@@ -103,7 +103,7 @@ export default class note {
 	}
 	
 	async getNote(cookie, uid, res,{render}){
-		if (!res || res.retcode !== 0) return true
+		if (!res || res.retcode !== 0) return false
 		
 		let data = res.data;
 		//推送任务
@@ -294,6 +294,7 @@ export default class note {
 			render,
 			scale: 1.2
 		})
+		return true;
 	}
 	
 	async dateTime_(time) {

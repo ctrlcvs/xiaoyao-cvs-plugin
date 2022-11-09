@@ -39,6 +39,10 @@ export async function Note(e, {
 	if (isV3) {
 		if(e.msg.replace(/全|全部/g,'多').includes('多')){
 			let ck=await gsCfg.getBingCkSingle(e.user_id)
+			if(Object.keys(ck).length==0){
+				e.reply(`请先【#绑定cookie】`)
+				return true;
+			}
 			let sendMsg=[]
 			e._reply=e.reply;
 			e.reply=((msg)=>{
@@ -113,8 +117,7 @@ export async function Note(e, {
 			saveJson();
 		}
 	}
-	await notes.getNote(cookie,uid,res,{render})
-	return true;
+	return await notes.getNote(cookie,uid,res,{render})
 }
 
 async function getDailyNote(uid, cookie) {
