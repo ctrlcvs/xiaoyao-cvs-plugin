@@ -205,7 +205,7 @@ export async function DailyNoteTask() {
 			let task = await Note(e, {
 				render
 			});
-			if (task) {
+			if (!task) {
 				redis.set(sendkey, "1", {
 					EX: sendCD
 				});

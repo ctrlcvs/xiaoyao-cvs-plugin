@@ -103,12 +103,12 @@ export default class note {
 	}
 	
 	async getNote(cookie, uid, res,{render}){
-		if (!res || res.retcode !== 0) return false
+		if (!res || res.retcode !== 0) return true
 		
 		let data = res.data;
 		//推送任务
 		if (this.e.isTask && data.current_resin < this.e.sendResin) {
-			return false;
+			return true;
 		}
 		if (this.e.isTask) {
 			Bot.logger.mark(`体力推送:${this.e.user_id}`);
@@ -294,7 +294,7 @@ export default class note {
 			render,
 			scale: 1.2
 		})
-		return true;
+		return !this.e?.isTask; 
 	}
 	
 	async dateTime_(time) {
