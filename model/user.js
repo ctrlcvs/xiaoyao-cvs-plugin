@@ -1,4 +1,4 @@
-	import YAML from 'yaml'
+import YAML from 'yaml'
 import chokidar from 'chokidar'
 import miHoYoApi from "../model/mys/mihoyoApi.js"
 import fs from 'node:fs'
@@ -84,11 +84,11 @@ export default class user {
 		let res = await this.miHoYoApi.getData(type, data)
 		return res
 	}
-	
-	async multiSign(forumData,isCk=false) {
+
+	async multiSign(forumData, isCk = false) {
 		let upData = [],
 			message = '';
-		if(isCk){
+		if (isCk) {
 			await this.cookie(this.e)
 		}
 		for (let forum of forumData) {
@@ -100,9 +100,12 @@ export default class user {
 				message += `**${forum.name}**\n`
 				res = await this.getData("userGameInfo", forum, false)
 				await utils.sleepAsync(3000) //等几毫秒免得请求太频繁了
-				if(res.retcode===-100){
-					message=`用户：${this.e.user_id}：cookie失效`
-					return {message,upData};
+				if (res.retcode === -100) {
+					message = `用户：${this.e.user_id}：cookie失效`
+					return {
+						message,
+						upData
+					};
 				}
 				if (res?.data?.list?.length === 0 || !res?.data?.list) {
 					message += `签到: 未绑定${forum.name}信息\n`;
@@ -358,14 +361,14 @@ export default class user {
 		if (isV3) {
 			userIdList = (await gsCfg.getBingAllCk()).ckQQ
 		} else {
-			userIdList=NoteCookie;
+			userIdList = NoteCookie;
 		}
 		if (mysTask) {
 			e.reply(`米社自动签到任务进行中，请勿重复触发指令`)
 			return false
 		}
 		mysTask = true;
-		let userIdkeys=Object.keys(userIdList);
+		let userIdkeys = Object.keys(userIdList);
 		let tips = ['开始米社签到任务']
 		let time = userIdkeys.length * 25 + 5 + (userIdkeys.length / 3 * 60)
 		let finishTime = moment().add(time, 's').format('MM-DD HH:mm:ss')
@@ -425,8 +428,8 @@ export default class user {
 				user_id,
 				qq,
 				isTask: true,
-				uid:userIdList[qq].uid,
-				cookie:userIdList[qq].cookie||userIdList[qq].ck,
+				uid: userIdList[qq].uid,
+				cookie: userIdList[qq].cookie || userIdList[qq].ck,
 			};
 			if (msg) {
 				e.msg = msg.replace(/全部|签到|米社/g, "");
@@ -733,6 +736,41 @@ export default class user {
 			return ck[this.e.uid] || {}
 		} catch (error) {
 			return {}
+		}
+	}
+	async seachUid(data) {
+		if (data?.data) {
+			let datalist = {}
+			let res;
+			if (this.e.sk) {
+				this.e.cookie =
+					`ltoken=${this.e.sk.get('ltoken')};ltuid=${this.e.sk.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk.get('stuid')};`
+			} else {
+				this.e.cookie = this.e.original_msg
+			}
+			res = await this.getData("userGameInfo", this.ForumData[1], false)
+			let uids=[]
+			for (let s of res.data.list) {
+				let uid = s.game_uid
+				uids.push(uid)
+				datalist[uid] = {
+					stuid: this.e?.sk?.get('stuid') || this.e.stuid,
+					stoken: this.e?.sk?.get('stoken') || data?.data?.list[0].token,
+					ltoken: this.e?.sk?.get('ltoken') || data?.data?.list[1].token,
+					uid: uid,
+					userId: this.e.user_id,
+					is_sign: true
+				}
+				await gsCfg.saveBingStoken(this.e.user_id, datalist)
+			}
+			let msg = `uid:${uids.join(',')}\nstoken绑定成功您可通过下列指令进行操作:`;
+			msg += '\n【#米币查询】查询米游币余额'
+			msg += '\n【#mys原神签到】获取米游币'
+			msg += '\n【#更新抽卡记录】更新抽卡记录'
+			msg += '\n【#刷新ck】刷新失效cookie'
+			msg += '\n【#我的stoken】查看绑定信息'
+			msg += '\n【#删除stoken】删除绑定信息'
+			this.e.reply(msg)
 		}
 	}
 	async delSytk(path = yamlDataUrl, e, type = "stoken") {

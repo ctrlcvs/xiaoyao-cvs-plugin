@@ -39,6 +39,10 @@ export const rule = {
 export async function cloudSign(e){
 	let user = new User(e);
 	START = moment().unix();
+	if(!e.yuntoken){
+		e.reply('尚未绑定云原神账号！')
+		return true;
+	}
 	let res= await user.cloudSign()
 	await replyMsg(e, res.message);
 	return true;
