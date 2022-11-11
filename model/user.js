@@ -171,6 +171,7 @@ export default class user {
 								if (this.allSign) {
 									this.allSign[forum.name].error++;
 								}
+								message += `${item.nickname}-${item.game_uid}:验证码失败~\n`
 							}
 						} else {
 							if (this.allSign) {
@@ -179,7 +180,6 @@ export default class user {
 							item.total_sign_day++;
 							message +=
 								`${item.nickname}-${item.game_uid}：${res.message=="OK"?"签到成功":res.message}\n`
-							break;
 						}
 					}
 					// }

@@ -273,7 +273,7 @@ export default class note {
 		if (mb == 0 && objFile.includes(".")) {
 			imgs = objFile
 		}
-		return await Common.render(`dailyNote/${path_url[mb]}`, {
+		await Common.render(`dailyNote/${path_url[mb]}`, {
 			save_id: uid,
 			uid: uid,
 			coinTime_mb2Day,
