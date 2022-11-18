@@ -18,7 +18,7 @@ export async function genShenMap(e){
 		await e.reply(segment.image(`file://${msgPath}`))
 		return true;
 	}
-	let url=`https://map.minigg.cn/map/get_map?resource_name=${msg}&map_id=2&is_cluster=false`
+	let url=`https://map.minigg.cn/map/get_map?resource_name=${msg}&is_cluster=false`
 	let res=await fetch(url,{method:'get'})
 	try{
 		res=await res.json()
