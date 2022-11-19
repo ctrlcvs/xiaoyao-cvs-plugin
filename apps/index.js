@@ -32,7 +32,7 @@ import {
 	updCookie,
 	userInfo,
 	gclog,
-	mytoken,
+	mytoken,gcPaylog,
 	bindStoken,bindLogin_ticket,
 	cloudToken
 } from "./user.js"
@@ -48,7 +48,7 @@ import {
 
 export {
 	updateRes,updateTemp,
-	delSign,
+	delSign,gcPaylog,
 	cloudSign,
 	seach,bindLogin_ticket,
 	bbsSign,

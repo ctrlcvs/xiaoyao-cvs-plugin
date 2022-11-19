@@ -27,6 +27,10 @@ export const rule = {
 		reg: "^#*(更新|获取|导出)抽卡记录$",
 		describe: "更新抽卡记录"
 	},
+	gcPaylog: { //避免指令冲突
+		reg: "^#*(刷新|获取|导出)(充值|氪金)记录$",
+		describe: "刷新充值记录"
+	},
 	mytoken: {
 		reg: "^#*我的(stoken|云ck)$",
 		describe: "查询绑定数据"
@@ -86,6 +90,63 @@ export async function userInfo(e, {
 	return true;
 }
 let configData = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config");
+export async function gcPaylog(e){
+	let user = new User(e);
+	await user.cookie(e)
+	let redis_Data = await redis.get(`xiaoyao:gcPaylog:${e.user_id}`);
+	if (redis_Data) {
+		let time = redis_Data * 1 - Math.floor(Date.now() / 1000);
+		e.reply(`请求过快,请${time}秒后重试...`);
+		return true;
+	}
+	let isGet= /导出|获取/.test(e.msg)
+	if (!e.isPrivate&&isGet) {
+		e.reply("请私聊发送")
+		return true;
+	}
+	let authkey =await getAuthKey(e,user)
+	if(!authkey){
+		return true;
+	}
+	let url =`https://hk4e-api.mihoyo.com/ysulog/api/getCrystalLog?selfquery_type=3&lang=zh-cn&sign_type=2&auth_appid=csc&authkey_ver=1&authkey=${encodeURIComponent(authkey)}&game_biz=hk4e_cn&app_client=bbs&type=3&size=6&region=${e.region}&end_id=`
+	e.msg = url
+	// e.reply(e.msg)
+	let sendMsg = [];
+	e.reply("充值记录获取中请稍等...")
+	e._reply = e.reply;
+	e.reply = (msg) => {
+		sendMsg.push(msg)
+	}
+	if(isGet){
+		sendMsg=[...sendMsg,...[1,`uid:${e.uid}`,e.msg]]
+	}else {
+		let time = (configData.gclogEx || 5) * 60
+		redis.set(`xiaoyao:gcPaylog:${e.user_id}`, Math.floor(Date.now() / 1000) + time, { //数据写入缓存避免重复请求
+			EX: time
+		});
+		if (isV3) {
+			let {payLog} = (await import(`file:///${_path}/plugins/genshin/apps/payLog.js`))
+			let pl= (new payLog())
+			e.isGroup=false; 
+			pl.e=e
+			await pl.getAuthKey(e)
+			e._reply(sendMsg[1]);
+			return true;
+			// await (new payLog()).payLog(e)
+		} else {
+			e._reply(`V2暂不支持`);
+			return false
+			//V2暂不支持
+			// let {
+			// 	bing
+			// } = (await import(`file:///${_path}/lib/app/gachaLog.js`))
+			// e.isPrivate = true;
+			// await bing(e)
+		}
+	}
+	await utils.replyMake(e, sendMsg, 1)
+	return true;
+}
 export async function gclog(e) {
 	let user = new User(e);
 	await user.cookie(e)
@@ -100,13 +161,10 @@ export async function gclog(e) {
 		e.reply("请私聊发送")
 		return true;
 	}
-	e.region = getServer(e.uid)
-	let authkeyrow = await user.getData("authKey");
-	if (!authkeyrow?.data) {
-		e.reply("authkey获取失败：" + authkeyrow.message?.includes("登录失效")?"请重新绑定stoken":authkeyrow.message)
+	let authkey =await getAuthKey(e,user)
+	if(!authkey){
 		return true;
 	}
-	let authkey = authkeyrow.data["authkey"]
 	let url = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?authkey_ver=1&sign_type=2&auth_appid=webview_gacha&init_type=301&gacha_id=fecafa7b6560db5f3182222395d88aaa6aaac1bc&timestamp=${Math.floor(Date.now() / 1000)}&lang=zh-cn&device_type=mobile&plat_type=ios&region=${e.region}&authkey=${encodeURIComponent(authkey)}&game_biz=hk4e_cn&gacha_type=301&page=1&size=5&end_id=0`
 	e.msg = url
 	// e.reply(e.msg)
@@ -136,6 +194,15 @@ export async function gclog(e) {
 		EX: time
 	});
 	return true;
+}
+async function getAuthKey(e,user){
+	e.region = getServer(e.uid)
+	let authkeyrow = await user.getData("authKey");
+	if (!authkeyrow?.data) {
+		e.reply("authkey获取失败：" +(authkeyrow.message.includes("登录失效")?"请重新绑定stoken":authkeyrow.message))
+		return false;
+	}
+	return authkeyrow.data["authkey"];
 }
 export async function mytoken(e) {
 	if (!e.isPrivate) {
