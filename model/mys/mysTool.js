@@ -58,6 +58,7 @@ const boards = {
 		forumid: 26,
 		key: 'genshin',
 		biz: 'hk4e_cn',
+		osbiz:'hk4e_global',
 		actid: 'e202009291139501',
 		name: '原神',
 		url: "https://bbs.mihoyo.com/ys/",

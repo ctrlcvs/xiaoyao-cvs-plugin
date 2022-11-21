@@ -740,7 +740,6 @@ export default class user {
 	}
 	async seachUid(data) {
 		if (data?.data) {
-			let datalist = {}
 			let res;
 			if (this.e.sk) {
 				this.e.cookie =
@@ -751,6 +750,7 @@ export default class user {
 			res = await this.getData("userGameInfo", this.ForumData[1], false)
 			let uids=[]
 			for (let s of res.data.list) {
+				let datalist = {}
 				let uid = s.game_uid
 				uids.push(uid)
 				datalist[uid] = {

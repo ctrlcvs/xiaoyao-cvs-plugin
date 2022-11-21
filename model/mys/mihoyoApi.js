@@ -100,8 +100,8 @@ export default class miHoYoApi {
 			Bot.logger.error(`[接口][${type}][${this.e.uid}] ${response.status} ${response.statusText}`)
 			return false
 		}
-		// Bot.logger.mark(`[接口][${type}][${this.e.uid}] ${Date.now() - start}ms`)
 		let res = await response.text();
+		//Bot.logger.mark(`[接口][${type}][${this.e.uid}] ${Date.now() - start}ms\n${res}`)
 		if (res.startsWith('(')) {
 			res = JSON.parse((res).replace(/\(|\)/g, ""))
 		} else {
@@ -122,7 +122,7 @@ export default class miHoYoApi {
 		let urlMap = {
 			userGameInfo: { //通用查询
 				url: `${this.apiMap.apiWeb}/binding/api/getUserGameRolesByCookie`,
-				query: `game_biz=${board?.biz}`,
+				query: `game_biz=${this.isOs?board?.osbiz:board?.biz}`,
 				types: 'sign'
 			},
 			isSign: board?.signUrl(data, "isSign", this.apiMap.apiWeb) || {},
@@ -152,6 +152,10 @@ export default class miHoYoApi {
 			},
 			bbsCaptchaVerify: {
 				url: `${mys.bbs_api}/misc/api/verifyVerification`
+			},
+			bbsCaptchaVerify: {
+				url: `https://api.geetest.com/gettype.php`,
+				query:``
 			},
 			//待定接口 用于获取用户米游社顶部的模块栏
 			bbs_Businesses_url: {
@@ -216,6 +220,7 @@ export default class miHoYoApi {
 				types: 'cloud'
 			},
 			authKey: {
+				///account/auth/api/genAuthKey
 				url: `${this.apiMap.apiWeb}/binding/api/genAuthKey`,
 				body: {
 					'auth_appid': 'webview_gacha',
@@ -252,6 +257,7 @@ export default class miHoYoApi {
 				header = {
 					'Cookie': this.cookies,
 					"x-rpc-channel": "miyousheluodi",
+					"x-rpc-auto_test": true,
 					'x-rpc-device_id': DEVICE_ID,
 					'x-rpc-app_version': mys.APP_VERSION,
 					"x-rpc-device_model": "Mi 10",
@@ -264,7 +270,6 @@ export default class miHoYoApi {
 					"x-rpc-sys_version": "12",
 					"Host": "bbs-api.mihoyo.com",
 					"User-Agent": "okhttp/4.8.0",
-					// 'DS': `1602569298,k0xfEh,07f4545f5d88eac59cb1257aef74a570`
 				}
 				break;
 			case "sign":
@@ -287,11 +292,14 @@ export default class miHoYoApi {
 						app_version: '2.9.0',
 						User_Agent: `Mozilla/5.0 (Linux; Android 9.0; SAMSUNG SM-F900U Build/PPR1.180610.011) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.73 Mobile Safari/537.36 miHoYoBBSOversea/2.9.0`,
 						client_type: '2',
+						'x-rpc-app_version': '2.9.0',
 						Origin: 'https://webstatic-sea.hoyolab.com',
 						X_Requested_With: 'com.mihoyo.hoyolab',
-						Referer: 'https://webstatic-sea.hoyolab.com'
+						Referer: 'https://webstatic-sea.hoyolab.com',
+						DS: this.getDs(),
+						'Cookie': this.cookie
 					}
-					header = Object.assign({}, header, os_Header)
+					header = os_Header
 				}
 				break;
 			case "cloud":
