@@ -143,7 +143,7 @@ export default class miHoYoApi {
 			},
 			bbsGetCaptcha: {
 				url: `${mys.bbs_api}/misc/api/createVerification`,
-				query: `is_high=true`,
+				query: `is_high=false`,
 				types: 'bbs'
 			},
 			bbsValidate: {
@@ -151,7 +151,8 @@ export default class miHoYoApi {
 				query: `gt=${data.gt}&challenge=${data.challenge}&lang=zh-cn&pt=3&client_type=web_mobile`,
 			},
 			bbsCaptchaVerify: {
-				url: `${mys.bbs_api}/misc/api/verifyVerification`
+				url: `${mys.bbs_api}/misc/api/verifyVerification`,
+				types:'bbs'
 			},
 			bbsCaptchaVerify: {
 				url: `https://api.geetest.com/gettype.php`,
@@ -196,8 +197,8 @@ export default class miHoYoApi {
 				types: 'stoken'
 			},
 			validate: {
-				url: `https://api.geetest.com/ajax.php`,
-				query: `gt=${data?.gt}&challenge=${data?.challenge}&lang=zh-cn&pt=3&client_type=web_mobile`
+				url: ``,
+				query: ``
 			},
 			cloudLogin: {
 				url: `${mys.cloud_api}/hk4e_cg_cn/gamer/api/login`,
@@ -229,6 +230,10 @@ export default class miHoYoApi {
 					'region': this.e.region,
 				},
 				types: 'authKey'
+			},
+			getLtoken: {
+				url: `${mys.pass_api}/account/auth/api/getLTokenBySToken`,
+				query: `${data.cookies}`,
 			},
 		}
 		if (!urlMap[type]) return false

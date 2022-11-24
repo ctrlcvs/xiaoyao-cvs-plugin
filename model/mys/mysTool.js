@@ -4,6 +4,7 @@ const salt = "PVeGWIZACpxXZ1ibMVJPi9inCY4Nd4y2";
 const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
 const saltWeb = "yUZ3s0Sna1IrSNfk29Vo6vRapdOyqyhB";
 const oldsalt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
+const passSalt='JwYDpKvLj6MrMqqYU6jTKF17KNO2PXoS';
 const osSalt= ''; //599uqkwc0dlqu3h6epzjzfhgyyrd44ae rk4xg2hakoi26nljpr099fv9fck1ah10
 const osSaltWeb = ''; //os 浏览帖子需要用到的salt
 const web_api = `https://api-takumi.mihoyo.com`
@@ -12,6 +13,7 @@ const os_hk4_api = `https://hk4e-api-os.hoyoverse.com`;
 const hk4_api = `https://hk4e-api.mihoyo.com`;
 const bbs_api = `https://bbs-api.mihoyo.com`;
 const cloud_api = `https://api-cloudgame.mihoyo.com`
+const pass_api=`https://passport-api.mihoyo.com`
 const boards = {
 	honkai3rd: {
 		forumid: 1,
@@ -218,5 +220,6 @@ export default {
 	os_hk4_api,
 	hk4_api,
 	bbs_api,
+	pass_api,
 	boards
 }

@@ -272,6 +272,11 @@ export default class user {
 				let sumcount = 0;
 				message += `\n**${forum.name}**\n`
 				res = await this.getData("bbsSign", forum, false)
+				if (res?.retcode == -100) {
+					return {
+						message: '登录失效'
+					}
+				}
 				if (res?.retcode == 1034) {
 					message += `社区签到: 验证码失败\n`;
 					challenge = await this.bbsGeetest()
@@ -279,13 +284,19 @@ export default class user {
 						forum["headers"] = {
 							"x-rpc-challenge": challenge
 						}
-						await this.getData("bbsSign", forum, false)
+						res = await this.getData("bbsSign", forum, false)
+						if (res?.retcode == 1034) {
+							message += `社区签到: 验证码失败\n`;
+						} else {
+							message += `社区签到: 验证码成功\n`;
+						}
+					} else {
+						message += `社区签到: 验证码失败\n`;
 					}
 				} else {
 					message += `社区签到: ${res.message}\n`;
 				}
 				Bot.logger.mark(`${this.e.user_id}:${this.e.uid}:${forum.name} 社区签到结果: [${res.message}]`);
-				await utils.randomSleepAsync();
 				res = await this.getData("bbsPostList", forum, false)
 				sumcount++;
 				let postList = res.data.list;
@@ -311,7 +322,6 @@ export default class user {
 							await this.getData("bbsPostFull", data, false)
 						}
 					}
-					await utils.randomSleepAsync(10);
 					res = await this.getData("bbsVotePost", {
 						postId
 					}, false)
@@ -601,6 +611,7 @@ export default class user {
 	async bbsGeetest() {
 		let res = await this.getData('bbsGetCaptcha', false)
 		let challenge = res.data["challenge"]
+		await this.getData("geeType", res.data, false)
 		res = await this.getData("bbsValidate", res.data, false)
 		if (res?.data?.validate) {
 			let validate = res?.data?.validate
@@ -739,16 +750,25 @@ export default class user {
 		}
 	}
 	async seachUid(data) {
+		let ltoken = ''
 		if (data?.data) {
 			let res;
 			if (this.e.sk) {
+				// if(this.e.sk.get('stoken').includes('v2_')){
+				// 	res=await this.getData('getLtoken',{cookies:this.e.raw_message},false)
+				// 	ltoken=res?.data?.ltoken
+				// }
 				this.e.cookie =
-					`ltoken=${this.e.sk.get('ltoken')};ltuid=${this.e.sk.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk.get('stuid')};`
+					`ltoken=${this.e.sk?.get('ltoken')||ltoken};ltuid=196576671;cookie_token=${data.data.cookie_token}; account_id=196576671;`
+				// if(this.e.sk?.get('mid')){
+				// 	this.e.cookie =
+				// 		`ltoken_v2=${this.e.sk?.get('ltoken')||ltoken};cookie_token_v2=${data.data.cookie_token}; account_mid_v2=${this.e.sk.get('mid')};ltmid_v2=${this.e.sk.get('mid')}`
+				// }
 			} else {
 				this.e.cookie = this.e.original_msg
 			}
 			res = await this.getData("userGameInfo", this.ForumData[1], false)
-			let uids=[]
+			let uids = []
 			for (let s of res.data.list) {
 				let datalist = {}
 				let uid = s.game_uid
@@ -756,7 +776,8 @@ export default class user {
 				datalist[uid] = {
 					stuid: this.e?.sk?.get('stuid') || this.e.stuid,
 					stoken: this.e?.sk?.get('stoken') || data?.data?.list[0].token,
-					ltoken: this.e?.sk?.get('ltoken') || data?.data?.list[1].token,
+					ltoken: this.e?.sk?.get('ltoken') || ltoken || data?.data?.list[1].token,
+					mid: this.e?.sk?.get('mid'),
 					uid: uid,
 					userId: this.e.user_id,
 					is_sign: true

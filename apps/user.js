@@ -255,7 +255,8 @@ export async function bindStoken(e) {
 	let user = new User(e);
 	await user.cookie(e)
 	e.region = getServer(e.uid)
-	let res= await user.getData("bbsGetCookie",{cookies:msg.replace(/;/g,'&').replace(/stuid/,"uid")} )
+	e.cks=msg.replace(/;/g,'&').replace(/stuid/,"uid")
+	let res= await user.getData("bbsGetCookie",{cookies:e.cks})
 	if (!res?.data) {
 		await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
 		return true;
