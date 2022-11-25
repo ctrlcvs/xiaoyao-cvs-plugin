@@ -759,7 +759,7 @@ export default class user {
 				// 	ltoken=res?.data?.ltoken
 				// }
 				this.e.cookie =
-					`ltoken=${this.e.sk?.get('ltoken')||ltoken};ltuid=196576671;cookie_token=${data.data.cookie_token}; account_id=196576671;`
+					`ltoken=${this.e.sk?.get('ltoken')||ltoken};ltuid=${this.e.sk?.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk?.get('stuid')};`
 				// if(this.e.sk?.get('mid')){
 				// 	this.e.cookie =
 				// 		`ltoken_v2=${this.e.sk?.get('ltoken')||ltoken};cookie_token_v2=${data.data.cookie_token}; account_mid_v2=${this.e.sk.get('mid')};ltmid_v2=${this.e.sk.get('mid')}`
@@ -768,6 +768,9 @@ export default class user {
 				this.e.cookie = this.e.original_msg
 			}
 			res = await this.getData("userGameInfo", this.ForumData[1], false)
+			if(res?.retcode!=0){
+				return false;
+			}
 			let uids = []
 			for (let s of res.data.list) {
 				let datalist = {}
