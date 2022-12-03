@@ -1,5 +1,4 @@
 import YAML from 'yaml'
-import chokidar from 'chokidar'
 import miHoYoApi from "../model/mys/mihoyoApi.js"
 import fs from 'node:fs'
 import lodash from 'lodash'
@@ -15,11 +14,6 @@ import {
 import moment from 'moment'
 const _path = process.cwd();
 const plugin = "xiaoyao-cvs-plugin"
-const RETRY_OPTIONS = {
-	retries: 3,
-	minTimeout: 5000,
-	maxTimeout: 10000
-};
 const nameData = ["原神", "崩坏3", "崩坏2", "未定事件簿"];
 const yamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
 const cloudDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yunToken/`

@@ -122,7 +122,7 @@ export default class miHoYoApi {
 		let urlMap = {
 			userGameInfo: { //通用查询
 				url: `${this.apiMap.apiWeb}/binding/api/getUserGameRolesByCookie`,
-				query: `game_biz=${this.isOs?board?.osbiz:board?.biz}`,
+				query: `game_biz=${this.isOs ? board?.osbiz : board?.biz}`,
 				types: 'sign'
 			},
 			isSign: board?.signUrl(data, "isSign", this.apiMap.apiWeb) || {},
@@ -152,11 +152,11 @@ export default class miHoYoApi {
 			},
 			bbsCaptchaVerify: {
 				url: `${mys.bbs_api}/misc/api/verifyVerification`,
-				types:'bbs'
+				types: 'bbs'
 			},
 			bbsCaptchaVerify: {
 				url: `https://api.geetest.com/gettype.php`,
-				query:``
+				query: ``
 			},
 			//待定接口 用于获取用户米游社顶部的模块栏
 			bbs_Businesses_url: {

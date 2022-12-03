@@ -1,9 +1,6 @@
 import {
 	Cfg
 } from "../components/index.js";
-import {
-	segment
-} from "oicq";
 import lodash from "lodash";
 import {
 	currentVersion,

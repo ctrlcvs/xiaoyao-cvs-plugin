@@ -1,6 +1,3 @@
-import {
-	segment
-} from "oicq";
 import fs from "fs";
 import lodash from "lodash";
 import {
@@ -14,9 +11,6 @@ import {
 } from "../components/index.js";
 import Common from "../components/Common.js";
 
-
-const require = createRequire(
-	import.meta.url);
 let cfgMap = {
 	"体力": "sys.Note",
 	"帮助": "sys.help",

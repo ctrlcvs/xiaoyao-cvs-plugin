@@ -1,15 +1,8 @@
-import miHoYoApi from "../model/mys/mihoyoApi.js"
-import utils from '../model/mys/utils.js';
 import User from "../model/user.js"
 import moment from 'moment';
 import {
-	Cfg,
-	Data
-} from "../components/index.js";
-import {
 	segment
 } from "oicq";
-import user from "../model/user.js";
 export const rule = {
 	sign: {
 		reg: `^#*(原神|崩坏3|崩坏2|未定事件簿)签到$`,
@@ -107,7 +100,6 @@ export async function bbsSign(e) {
 	await replyMsg(e, res.message);
 	return true;
 }
-const _path = process.cwd();
 let START;
 export async function sign(e) {
 	let user = new User(e);
