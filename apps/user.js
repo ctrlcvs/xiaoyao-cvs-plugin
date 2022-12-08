@@ -184,10 +184,13 @@ export async function gclog(e) {
 	return true;
 }
 async function getAuthKey(e, user) {
+	if(!e.uid){
+		e.uid=e?.runtime?.user?._regUid
+	}
 	e.region = getServer(e.uid)
-	let authkeyrow = await user.getData("authKey");
+	let authkeyrow = await user.getData("authKey",{});
 	if (!authkeyrow?.data) {
-		e.reply("authkey获取失败：" + (authkeyrow.message.includes("登录失效") ? "请重新绑定stoken" : authkeyrow.message))
+		e.reply(`uid:${e.uid},authkey获取失败：` + (authkeyrow.message.includes("登录失效") ? "请重新绑定stoken" : authkeyrow.message))
 		return false;
 	}
 	return authkeyrow.data["authkey"];

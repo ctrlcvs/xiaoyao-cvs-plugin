@@ -173,7 +173,7 @@ export default class user {
 							}
 							item.total_sign_day++;
 							message +=
-								`${item.nickname}-${item.game_uid}：${res.message=="OK"?"签到成功":res.message}\n`
+								`${item.nickname}-${item.game_uid}：${res.message == "OK" ? "签到成功" : res.message}\n`
 						}
 					}
 					// }
@@ -222,14 +222,16 @@ export default class user {
 		return res
 	}
 	async cloudSeach() {
-		let res = await this.getData("cloudGet") //这样会算签到？具体待测试
+		let res = await this.getData("cloudGet")
 		if (res?.retcode == -100) {
 			res.message = "云原神token失效/防沉迷"
 			res.isOk = false;
-		} else {
+		} else { 
 			res.isOk = true;
-			res.message =
-				`米云币:${res?.data?.coin?.coin_num},免费时长:${res?.data?.free_time?.free_time}分钟,总时长:${res?.data.total_time}分钟`;
+			if (res?.data?.total_time) {
+				res.message =
+					`米云币:${res?.data?.coin?.coin_num},免费时长:${res?.data?.free_time?.free_time}分钟,总时长:${res?.data?.total_time}分钟`;
+			}
 		}
 		return res;
 	}
@@ -343,7 +345,7 @@ export default class user {
 				if (res?.message && res?.retcode == 0) {
 					Share++;
 				}
-				message += `共读取帖子记录${20*sumcount}\n浏览成功：${trueDetail}\n点赞成功：${Vote}\n分享成功：${Share}`;
+				message += `共读取帖子记录${20 * sumcount}\n浏览成功：${trueDetail}\n点赞成功：${Vote}\n分享成功：${Share}`;
 				Bot.logger.mark(`\n用户${this.e.user_id}:\n${message}`)
 				await utils.randomSleepAsync(3);
 			}
@@ -688,6 +690,9 @@ export default class user {
 				skuid = BotConfig.NoteCookie[e.user_id];
 			}
 		}
+		if (!uid) {
+			uid = e.runtime?.user?._regUid
+		}
 		this.e.uid = uid;
 		this.e.cookie = cookie;
 		return {
@@ -753,7 +758,7 @@ export default class user {
 				// 	ltoken=res?.data?.ltoken
 				// }
 				this.e.cookie =
-					`ltoken=${this.e.sk?.get('ltoken')||ltoken};ltuid=${this.e.sk?.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk?.get('stuid')};`
+					`ltoken=${this.e.sk?.get('ltoken') || ltoken};ltuid=${this.e.sk?.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk?.get('stuid')};`
 				// if(this.e.sk?.get('mid')){
 				// 	this.e.cookie =
 				// 		`ltoken_v2=${this.e.sk?.get('ltoken')||ltoken};cookie_token_v2=${data.data.cookie_token}; account_mid_v2=${this.e.sk.get('mid')};ltmid_v2=${this.e.sk.get('mid')}`
@@ -762,7 +767,7 @@ export default class user {
 				this.e.cookie = this.e.original_msg
 			}
 			res = await this.getData("userGameInfo", this.ForumData[1], false)
-			if(res?.retcode!=0){
+			if (res?.retcode != 0) {
 				return false;
 			}
 			let uids = []
