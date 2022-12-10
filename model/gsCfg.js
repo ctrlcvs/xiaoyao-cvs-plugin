@@ -190,6 +190,9 @@ class GsCfg {
 					if(!ck[Object.keys(data)[0]]){
 						ck = YAML.stringify(ck)
 						fs.writeFileSync(file, yaml + ck, 'utf8')
+					}else{
+						ck[Object.keys(data)[0]] = data[Object.keys(data)[0]]
+						fs.writeFileSync(file,YAML.stringify(ck), 'utf8')
 					}
 				}
 			})

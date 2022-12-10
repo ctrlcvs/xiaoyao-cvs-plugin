@@ -133,7 +133,6 @@ export default class user {
 						// 		break;
 						// 	} else {
 						// 		// await utils.sleepAsync(60000 * 6) // 由于这个方法已经无法过验证码了所以不在处理
-						// 		//ps：你要是觉得改有加高过的概率就改吧，随便你反正到时候黑IP的不是我
 						// 	}
 						// }
 						await utils.sleepAsync(2000)
@@ -241,6 +240,7 @@ export default class user {
 			name: "原神"
 		})
 		if (!res?.data) {
+			console.log(res)
 			res.message = `登录Stoken失效请重新获取cookies或stoken保存~`;
 			res.isOk = false;
 			this.delSytk(yamlDataUrl, this.e)
@@ -753,10 +753,10 @@ export default class user {
 		if (data?.data) {
 			let res;
 			if (this.e.sk) {
-				// if(this.e.sk.get('stoken').includes('v2_')){
-				// 	res=await this.getData('getLtoken',{cookies:this.e.raw_message},false)
-				// 	ltoken=res?.data?.ltoken
-				// }
+				if(this.e.sk.get('stoken').includes('v2_')){
+					res=await this.getData('getLtoken',{cookies:this.e.raw_message},false)
+					ltoken=res?.data?.ltoken
+				}
 				this.e.cookie =
 					`ltoken=${this.e.sk?.get('ltoken') || ltoken};ltuid=${this.e.sk?.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk?.get('stuid')};`
 				// if(this.e.sk?.get('mid')){

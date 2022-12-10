@@ -97,7 +97,7 @@ export async function getCookieMap(cookie) {
 	let cookieArray = cookie.replace(/\s*/g, "").split(";");
 	let cookieMap = new Map();
 	for (let item of cookieArray) {
-		let entry = item.split("=");
+		let entry = item.replace('=','~').split("~");
 		if (!entry[0]) continue;
 		cookieMap.set(entry[0], entry[1]);
 	}

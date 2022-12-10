@@ -24,9 +24,6 @@ import {
 	updateMiaoPlugin
 } from "./admin.js";
 import {
-	currentVersion
-} from "../components/Changelog.js";
-import {
 	rule as userRule,
 	delSign,
 	updCookie,
@@ -74,7 +71,6 @@ export {
 	Note,
 };
 import gsCfg from '../model/gsCfg.js';
-import Data from "../components/Data.js";
 const _path = process.cwd();
 
 let rule = {

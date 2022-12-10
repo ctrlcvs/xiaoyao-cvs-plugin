@@ -184,11 +184,11 @@ export async function gclog(e) {
 	return true;
 }
 async function getAuthKey(e, user) {
-	if(!e.uid){
-		e.uid=e?.runtime?.user?._regUid
+	if (!e.uid) {
+		e.uid = e?.runtime?.user?._regUid
 	}
 	e.region = getServer(e.uid)
-	let authkeyrow = await user.getData("authKey",{});
+	let authkeyrow = await user.getData("authKey", {});
 	if (!authkeyrow?.data) {
 		e.reply(`uid:${e.uid},authkey获取失败：` + (authkeyrow.message.includes("登录失效") ? "请重新绑定stoken" : authkeyrow.message))
 		return false;
@@ -323,7 +323,9 @@ export async function updCookie(e) {
 	for (let item of Object.keys(stoken)) {
 		e.region = getServer(stoken[item].uid)
 		e.uid = stoken[item].uid
-		let res = await user.getData("bbsGetCookie", { cookies: `uid=${stoken[item].stuid}&stoken=${stoken[item].stoken}` }, false)
+		let cookies = `uid=${stoken[item].stuid}&stoken=${stoken[item].stoken}`
+		if (stoken[item]?.mid) cookies += `&mid=${stoken[item]?.mid}`
+		let res = await user.getData("bbsGetCookie", { cookies: cookies }, false)
 		if (!res?.data) {
 			e.reply(`uid:${stoken[item].uid},请求异常：${res.message}`)
 			continue;

@@ -47,6 +47,9 @@ export default class miHoYoApi {
 			let data = this.getStoken(this.e.user_id);
 			if (data) {
 				this.cookies = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
+				if(data?.mid){
+					this.cookies = `stuid=${data.stuid};stoken=${data.stoken};mid=${data.mid};`;
+				}
 				this.e.cookies = this.cookies
 			}
 		}
