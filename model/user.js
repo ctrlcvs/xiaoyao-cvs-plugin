@@ -240,7 +240,6 @@ export default class user {
 			name: "原神"
 		})
 		if (!res?.data) {
-			console.log(res)
 			res.message = `登录Stoken失效请重新获取cookies或stoken保存~`;
 			res.isOk = false;
 			this.delSytk(yamlDataUrl, this.e)
@@ -749,13 +748,15 @@ export default class user {
 		}
 	}
 	async seachUid(data) {
-		let ltoken = ''
+		let ltoken = '',v2Sk;
 		if (data?.data) {
 			let res;
 			if (this.e.sk) {
 				if(this.e.sk.get('stoken').includes('v2_')){
 					res=await this.getData('getLtoken',{cookies:this.e.raw_message},false)
 					ltoken=res?.data?.ltoken
+				}else{
+					v2Sk=await this.getData('getByStokenV2',{headers:{Cookie:this.e.raw_message}},false)
 				}
 				this.e.cookie =
 					`ltoken=${this.e.sk?.get('ltoken') || ltoken};ltuid=${this.e.sk?.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk?.get('stuid')};`
@@ -763,6 +764,7 @@ export default class user {
 				// 	this.e.cookie =
 				// 		`ltoken_v2=${this.e.sk?.get('ltoken')||ltoken};cookie_token_v2=${data.data.cookie_token}; account_mid_v2=${this.e.sk.get('mid')};ltmid_v2=${this.e.sk.get('mid')}`
 				// }
+				
 			} else {
 				this.e.cookie = this.e.original_msg
 			}
@@ -777,9 +779,9 @@ export default class user {
 				uids.push(uid)
 				datalist[uid] = {
 					stuid: this.e?.sk?.get('stuid') || this.e.stuid,
-					stoken: this.e?.sk?.get('stoken') || data?.data?.list[0].token,
+					stoken:v2Sk?.data?.token?.token || this.e?.sk?.get('stoken') || data?.data?.list[0].token,
 					ltoken: this.e?.sk?.get('ltoken') || ltoken || data?.data?.list[1].token,
-					mid: this.e?.sk?.get('mid'),
+					mid: this.e?.sk?.get('mid')||v2Sk?.data?.user_info?.mid,
 					uid: uid,
 					userId: this.e.user_id,
 					is_sign: true

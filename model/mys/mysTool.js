@@ -1,8 +1,8 @@
-const APP_VERSION = "2.38.1";
+const APP_VERSION = "2.40.1";
 const mhyVersion = "2.11.1";
-const salt = "PVeGWIZACpxXZ1ibMVJPi9inCY4Nd4y2";
-const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v";
-const saltWeb = "yUZ3s0Sna1IrSNfk29Vo6vRapdOyqyhB";
+const salt = "fdv0fY9My9eA7MR0NpjGP9RjueFvjUSQ"; //k2
+const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v"; //x6
+const saltWeb = "jEpJb9rRARU2rXDA9qYbZ3selxkuct9a";//lk2
 const oldsalt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
 const passSalt='JwYDpKvLj6MrMqqYU6jTKF17KNO2PXoS';
 const osSalt= ''; //599uqkwc0dlqu3h6epzjzfhgyyrd44ae rk4xg2hakoi26nljpr099fv9fck1ah10
@@ -220,6 +220,6 @@ export default {
 	os_hk4_api,
 	hk4_api,
 	bbs_api,
-	pass_api,
+	pass_api,passSalt,
 	boards
 }

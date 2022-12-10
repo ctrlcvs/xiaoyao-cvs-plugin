@@ -207,6 +207,7 @@ export async function mytoken(e) {
 		await user.getCookie(e)
 		ck = await user.getStoken(e.user_id)
 		sendMsg = `stuid=${ck.stuid};stoken=${ck.stoken};ltoken=${ck.ltoken};`;
+		if (ck?.mid) sendMsg += `mid=${ck?.mid};`
 	} else {
 		ck = await user.getyunToken(e);
 		sendMsg = `${ck.yuntoken}devId=${ck.devId}`

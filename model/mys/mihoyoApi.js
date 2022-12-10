@@ -47,7 +47,7 @@ export default class miHoYoApi {
 			let data = this.getStoken(this.e.user_id);
 			if (data) {
 				this.cookies = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
-				if(data?.mid){
+				if (data?.mid) {
 					this.cookies = `stuid=${data.stuid};stoken=${data.stoken};mid=${data.mid};`;
 				}
 				this.e.cookies = this.cookies
@@ -104,7 +104,7 @@ export default class miHoYoApi {
 			return false
 		}
 		let res = await response.text();
-		//Bot.logger.mark(`[接口][${type}][${this.e.uid}] ${Date.now() - start}ms\n${res}`)
+		// Bot.logger.mark(`[接口][${type}][${this.e.uid}] ${Date.now() - start}ms\n${res}`)
 		if (res.startsWith('(')) {
 			res = JSON.parse((res).replace(/\(|\)/g, ""))
 		} else {
@@ -238,6 +238,12 @@ export default class miHoYoApi {
 				url: `${mys.pass_api}/account/auth/api/getLTokenBySToken`,
 				query: `${data.cookies}`,
 			},
+			getByStokenV2: {
+				url: `${mys.pass_api}/account/ma-cn-session/app/getTokenBySToken`,
+				body: {},
+				types: 'pass'
+			},
+
 		}
 		if (!urlMap[type]) return false
 		let {
@@ -371,6 +377,26 @@ export default class miHoYoApi {
 					"Referer": "cors",
 					"Accept-Encoding": "gzip, deflate, br",
 					"x-rpc-channel": "appstore",
+				}
+				break;
+			case "pass":
+				header = {
+					'x-rpc-device_id': DEVICE_ID,
+					'x-rpc-app_id': "bll8iq97cem8",
+					'x-rpc-device_name': DEVICE_NAME,
+					'x-rpc-app_version': mys.APP_VERSION,
+					'x-rpc-game_biz': 'bbs_cn',
+					"Content-Type": "application/json;",
+					"x-rpc-client_type": "2",
+					"DS": this.getDs2('', {}, mys.passSalt),
+					"x-rpc-sdk_version": '1.3.1.2',
+					"User-Agent": "okhttp/4.9.3",
+					"Referer": "cors",
+					'Host': 'passport-api.mihoyo.com',
+					"Connection": 'Keep-Alive',
+					"Accept-Encoding": "gzip, deflate, br",
+					"x-rpc-channel": "appstore",
+					Cookie: this.cookies,
 				}
 				break;
 			default:
