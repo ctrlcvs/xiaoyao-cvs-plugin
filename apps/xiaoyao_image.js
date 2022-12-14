@@ -33,11 +33,9 @@ export async function AtlasAlias(e) {
 	return send_Msg(e, "all", "");
 }
 
-
 export async function roleInfo(e) {
-	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋/g, "");
-	let Botcfg;
-	let id;
+	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|原牌|七圣/g, "");
+	let Botcfg,id,type='juese_tujian';
 	if (isV3) {
 		Botcfg = (await import(`file://${_path}/plugins/genshin/model/gsCfg.js`)).default;
 		id = Botcfg.roleNameToID(msg)
@@ -56,7 +54,10 @@ export async function roleInfo(e) {
 		name = Botcfg.roleIdToName(id, true);
 		if (!name) return false;
 	}
-	send_Msg(e, "juese_tujian", name)
+	if(/原牌|七圣/.test(e.msg)) {
+		type=`basicInfo_tujian/role/${name}`
+	}
+	send_Msg(e, type, name)
 	return true;
 }
 
@@ -114,6 +115,7 @@ export async function Atlas_list(e) {
 	}
 	return false;
 }
+
 const info_img = function(e, list, name) {
 	for (let i in list) {
 		for (let val of list[i]) {
