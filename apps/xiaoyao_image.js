@@ -16,6 +16,7 @@ const list = ["wuqi_tujian", "shiwu_tujian", "yuanmo_tujian", "mijin_tujian", "s
 const reglist = ["(#|专武|武器|图鉴)", "(#|食物|特殊料理|特色|料理|食材|图鉴)", "(#|原魔|怪物|图鉴|信息)", "(#|秘境|信息|图鉴)", "(#|圣遗物|图鉴|本|套)",
 	"(#|图鉴|道具)"
 ]
+let pathPlus = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/`
 export async function AtlasAlias(e) {
 	if (!Cfg.get("Atlas.all")) {
 		return false;
@@ -52,11 +53,15 @@ export async function roleInfo(e) {
 		name = msg;
 	} else {
 		name = Botcfg.roleIdToName(id, true);
-		if (!name) return false;
 	}
 	if(/原牌|七圣/.test(e.msg)) {
+		if(!name){
+			let list = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`,'yuanmo_tujian')
+			name= info_img(e,list,msg)
+		}
 		type=`basicInfo_tujian/role/${name}`
 	}
+	if (!name) return false;
 	send_Msg(e, type, name)
 	return true;
 }
@@ -71,7 +76,7 @@ const filePath = async function(e) {
 		}else {
 			msg=e.msg.replace(/#|＃|信息|图鉴|命座|天赋/g, "");
 		}
-		let path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${val}/${msg}.png`
+		let path = `${pathPlus}${val}/${msg}.png`
 		if (fs.existsSync(path)) {
 			e.reply(segment.image(`file:///${path}`));
 			return true;
@@ -94,7 +99,7 @@ const send_Msg = function(e, type, name) {
 			}
 		}
 	}
-	path = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/${type}/${name}.png`
+	path = `${pathPlus}${type}/${name}.png`
 	if (!fs.existsSync(path)) {
 		return false;
 	}
