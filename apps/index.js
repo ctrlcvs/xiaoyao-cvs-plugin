@@ -1,7 +1,7 @@
 import lodash from "lodash";
 import schedule from "node-schedule";
 import {
-	AtlasAlias
+	AtlasAlias,getBasicVoide
 } from "./xiaoyao_image.js";
 import {
 	versionInfo,
@@ -20,7 +20,7 @@ import {
 import {
 	rule as adminRule,
 	updateRes,
-	sysCfg,updateTemp,
+	sysCfg, updateTemp,
 	updateMiaoPlugin
 } from "./admin.js";
 import {
@@ -29,8 +29,8 @@ import {
 	updCookie,
 	userInfo,
 	gclog,
-	mytoken,gcPaylog,
-	bindStoken,bindLogin_ticket,
+	mytoken, gcPaylog,
+	bindStoken, bindLogin_ticket,
 	cloudToken
 } from "./user.js"
 import {
@@ -44,13 +44,13 @@ import {
 } from "./sign.js"
 
 export {
-	updateRes,updateTemp,
-	delSign,gcPaylog,
+	updateRes, updateTemp,
+	delSign, gcPaylog,
 	cloudSign,
-	seach,bindLogin_ticket,
+	seach, bindLogin_ticket,
 	bbsSign,
 	gclog,
-	mytoken,
+	mytoken, getBasicVoide,
 	bindStoken,
 	updateMiaoPlugin,
 	userInfo,
@@ -106,6 +106,10 @@ let rule = {
 		reg: "#poke#",
 		describe: "体力",
 	},
+	getBasicVoide: {
+		reg: '#?(动态)',
+		describe: "动态",
+	},
 	...userRule,
 	...signRule,
 	...adminRule
@@ -121,22 +125,22 @@ task();
 async function task() {
 	if (typeof test != "undefined") return;
 	let set = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config")
-	schedule.scheduleJob(set.mysBbsTime, function() {
+	schedule.scheduleJob(set.mysBbsTime, function () {
 		if (set.ismysSign) {
 			signTask('bbs')
 		}
 	});
-	schedule.scheduleJob(set.allSignTime, function() {
+	schedule.scheduleJob(set.allSignTime, function () {
 		if (set.isSign) {
 			signTask('mys')
 		}
 	});
-	schedule.scheduleJob(set.cloudSignTime, function() {
+	schedule.scheduleJob(set.cloudSignTime, function () {
 		if (set.isCloudSign) {
 			signTask('cloud')
 		}
 	});
-	schedule.scheduleJob(set.noteTask, function() {
+	schedule.scheduleJob(set.noteTask, function () {
 		if (set.isNoteTask) {
 			DailyNoteTask()
 		}
