@@ -57,7 +57,6 @@ export async function getBasicVoide(e) {
 	}
 	if (source) {
 		let imgPath = await redis.get(`xiaoyao:basic:${source.message_id}`)
-		console.log(imgPath)
 		if (imgPath) {
 			e.reply([segment.video(`file:///${imgPath}`)])
 			return true
@@ -75,7 +74,7 @@ export async function getBasicVoide(e) {
 	return true
 }
 export async function roleInfo(e) {
-	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|原牌|七圣|动态/g, "");
+	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|原牌|七圣|动态|幻影/g, "");
 	let Botcfg, id, type = 'juese_tujian';
 	if (isV3) {
 		Botcfg = (await import(`file://${_path}/plugins/genshin/model/gsCfg.js`)).default;
@@ -145,7 +144,7 @@ const send_Msg = async function (e, type, name) {
 	}
 	let msg = segment.image(`file:///${path}`)
 	try {
-		if (/动态/.test(e.msg)) msg = segment.video(`file:///${path.replace(/\.png|\.jpg/, '.mp4')}`)
+		if (/动态|幻影/.test(e.msg)) msg = segment.video(`file:///${path.replace(/\.png|\.jpg/, '.mp4')}`)
 	} catch (error) {
 		Bot.logger.error(`发送七圣动态数据失败:` + error)
 		// error

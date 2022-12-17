@@ -273,7 +273,6 @@ export default class user {
 					}
 				}
 				if (res?.retcode == 1034) {
-					message += `社区签到: 验证码失败\n`;
 					challenge = await this.bbsGeetest()
 					if (challenge) {
 						forum["headers"] = {

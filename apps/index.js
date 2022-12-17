@@ -107,7 +107,7 @@ let rule = {
 		describe: "体力",
 	},
 	getBasicVoide: {
-		reg: '#?(动态)',
+		reg: '#?(动态|幻影)',
 		describe: "动态",
 	},
 	...userRule,
