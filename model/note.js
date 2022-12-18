@@ -235,8 +235,10 @@ export default class note {
 		}
 		let urlType = this.note_file("xiaoyao");
 		let objFile = Object.keys(urlType)
+		let defFile;
 		if (objFile.length > 0) {
 			objFile = objFile[lodash.random(0, objFile.length - 1)]
+			defFile=objFile;
 		}
 		let img_path = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/${path_img[mb]}`;
 		if (this.tempData[this.e.user_id] && this.tempData[this.e.user_id].type > -1&&this.tempData[this.e.user_id]?.temp?.length!==0) {
@@ -261,10 +263,13 @@ export default class note {
 					mb2_icon: ""
 				})
 			}
+			// console.log(urlType,objFile,path_img)
 			img_path = `${urlType[objFile]}${path_img[mb]}`;
+			if (!fs.existsSync(img_path)) {
+				img_path=`${urlType[defFile]}${path_img[mb]}`;
+			}
 		}
 		var image = fs.readdirSync(img_path);
-		// console.log(fs.readdirSync(`./plugins/xiaoyao-cvs-plugin/resources/dailyNote/BJT-Templet/Template2`))
 		var list_img = [];
 		for (let val of image) {
 			list_img.push(val)
