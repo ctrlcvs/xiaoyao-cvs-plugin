@@ -74,7 +74,7 @@ export async function getBasicVoide(e) {
 	return true
 }
 export async function roleInfo(e) {
-	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|原牌|七圣|动态|幻影/g, "");
+	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|原牌|七圣|动态|幻影|七圣召唤/g, "");
 	let Botcfg, id, type = 'juese_tujian';
 	if (isV3) {
 		Botcfg = (await import(`file://${_path}/plugins/genshin/model/gsCfg.js`)).default;

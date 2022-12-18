@@ -235,7 +235,6 @@ export default class user {
 		return res;
 	}
 	async bbsSeachSign() {
-		let message = '';
 		let res = await this.getData("bbsisSign", {
 			name: "原神"
 		})
@@ -627,7 +626,7 @@ export default class user {
 			return validate
 		} else if (res?.data?.result !== "slide") {
 			await redis.set(`xiaoyao:sign`, 1, { //写入缓存 过不了了
-				EX: 60 * 6 //等6分钟后再给用指令 避免ddos
+				EX: 60 * 6 //等6分钟后再给用指令 
 			});
 		}
 		return ""
@@ -763,9 +762,11 @@ export default class user {
 				// 	this.e.cookie =
 				// 		`ltoken_v2=${this.e.sk?.get('ltoken')||ltoken};cookie_token_v2=${data.data.cookie_token}; account_mid_v2=${this.e.sk.get('mid')};ltmid_v2=${this.e.sk.get('mid')}`
 				// }
-				
 			} else {
-				this.e.cookie = this.e.original_msg
+				this.e.cookie = this.e.original_msg //发送的为cookies
+				this.cookies=`stuid=${this.e.stuid};stoken=${data?.data?.list[0].token};ltoken=${data?.data?.list[1].token}`
+				res=await this.getData('getLtoken',{cookies:this.cookies},false)
+				v2Sk=await this.getData('getByStokenV2',{headers:{Cookie:this.cookies}},false)
 			}
 			res = await this.getData("userGameInfo", this.ForumData[1], false)
 			if (res?.retcode != 0) {
