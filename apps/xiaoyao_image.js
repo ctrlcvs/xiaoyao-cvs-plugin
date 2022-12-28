@@ -30,10 +30,23 @@ export async function AtlasAlias(e) {
 	}
 	if (await Atlas_list(e)) return true;
 	if (await roleInfo(e)) return true;
+	if (await getBasicEvent(e)) return true;
 	if (await filePath(e)) return true;
 	return send_Msg(e, "all", "");
 }
 
+async function getBasicEvent(e){
+	if(!/原牌|七圣召唤|七圣|动态|幻影/.test(e.msg)) return false; //为了避免抢夺其他指令
+	let msg = e.msg.replace(/#|＃|信息|图鉴|原牌|七圣召唤|七圣|动态|幻影/g, "");
+	let name,type;
+	if (!name) {
+		let list = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`, 'wuqi_tujian')
+		name = info_img(e, list, msg)
+	}
+	type = `basicInfo_tujian/event`
+	send_Msg(e, type, name)
+	return true;
+}
 
 /** 获取角色卡片的原图 */
 export async function getBasicVoide(e) {
@@ -74,7 +87,7 @@ export async function getBasicVoide(e) {
 	return true
 }
 export async function roleInfo(e) {
-	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|原牌|七圣|动态|幻影|七圣召唤/g, "");
+	let msg = e.msg.replace(/#|＃|信息|图鉴|命座|天赋|原牌|七圣召唤|七圣|动态|幻影/g, "");
 	let Botcfg, id, type = 'juese_tujian';
 	if (isV3) {
 		Botcfg = (await import(`file://${_path}/plugins/genshin/model/gsCfg.js`)).default;
@@ -139,6 +152,7 @@ const send_Msg = async function (e, type, name) {
 		}
 	}
 	path = `${pathPlus}${type}/${name}.png`
+	if(/原牌|七圣召唤|七圣|动态|幻影/.test(e.msg)) path= path.replace(/\.png/,'.jpg')
 	if (!fs.existsSync(path)) {
 		return false;
 	}
