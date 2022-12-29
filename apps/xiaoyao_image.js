@@ -152,7 +152,7 @@ const send_Msg = async function (e, type, name) {
 		}
 	}
 	path = `${pathPlus}${type}/${name}.png`
-	if(/原牌|七圣召唤|七圣|动态|幻影/.test(e.msg)) path= path.replace(/\.png/,'.jpg')
+	if(/原牌|七圣召唤|七圣|动态|幻影/.test(e.msg)&&!type.includes('role')) path= path.replace(/\.png/,'.jpg')
 	if (!fs.existsSync(path)) {
 		return false;
 	}
