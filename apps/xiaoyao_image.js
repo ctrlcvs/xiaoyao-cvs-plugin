@@ -35,12 +35,14 @@ export async function AtlasAlias(e) {
 	return send_Msg(e, "all", "");
 }
 
-async function getBasicEvent(e){
-	if(!/原牌|七圣召唤|七圣|动态|幻影/.test(e.msg)) return false; //为了避免抢夺其他指令
+async function getBasicEvent(e) {
+	if (!/原牌|七圣召唤|七圣|动态|幻影/.test(e.msg)) return false; //为了避免抢夺其他指令
 	let msg = e.msg.replace(/#|＃|信息|图鉴|原牌|七圣召唤|七圣|动态|幻影/g, "");
-	let name,type;
-	if (!name) {
-		let list = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`, 'wuqi_tujian')
+	let name, type;
+	let list = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`, 'Basic_Event')
+	name = info_img(e, list, msg)
+	if(!name){
+		list=gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/resources/Atlas_alias/`, 'wuqi_tujian')
 		name = info_img(e, list, msg)
 	}
 	type = `basicInfo_tujian/event`
@@ -152,7 +154,6 @@ const send_Msg = async function (e, type, name) {
 		}
 	}
 	path = `${pathPlus}${type}/${name}.png`
-	if(/原牌|七圣召唤|七圣|动态|幻影/.test(e.msg)&&!type.includes('role')) path= path.replace(/\.png/,'.jpg')
 	if (!fs.existsSync(path)) {
 		return false;
 	}
@@ -187,6 +188,13 @@ const info_img = function (e, list, name) {
 		for (let val of list[i]) {
 			if (val == name || i == name) {
 				return i;
+			}
+			if(typeof val!="string"){
+				for (const item of Object.keys(val)) {
+					if(val[item].includes(name)||item==name){
+						return item;
+					}
+				}
 			}
 		}
 	}
