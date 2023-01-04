@@ -162,6 +162,10 @@ export default class miHoYoApi {
 				},
 				types: 'bbs'
 			},
+			geeType: {
+				url: `https://api.geetest.com/gettype.php`,
+				query: `gt=${data.gt}`
+			},
 			//待定接口 用于获取用户米游社顶部的模块栏
 			bbs_Businesses_url: {
 				url: `${mys.bbs_api}/user/api/getUserBusinesses`,

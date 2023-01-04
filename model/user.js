@@ -610,7 +610,7 @@ export default class user {
 		try {
 			let res = await this.getData('bbsGetCaptcha', false)
 			// let challenge = res.data["challenge"]
-			await this.getData("geeType", res.data, false)
+			// await this.getData("geeType", res.data, false) //接入别的平台请把这段代码放出来 否则会一直出现提示拼图失效的情况
 			res = await this.getData("validate", res.data, false)
 			if (res?.data?.validate) {
 				res = await this.getData("bbsCaptchaVerify", res.data, false)
