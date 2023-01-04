@@ -124,58 +124,56 @@ export default class user {
 						}
 						message += `${item.nickname}-${item.game_uid}：今日已签到~\n`;
 					} else {
-						// for (let i = 0; i < 2; i++) { //循环请求
-						// let signTime = await redis.get(`xiaoyao:sign`)
-						// if (signTime) {
-						// 	//有数据的时候不得行必须出去
-						// 	if (!mysTask) {
-						// 		message += `${item.nickname}-${item.game_uid}:验证码失败请等待6分钟后重试或者手动上米游社签到~`;
-						// 		break;
-						// 	} else {
-						// 		// await utils.sleepAsync(60000 * 6) // 由于这个方法已经无法过验证码了所以不在处理
-						// 	}
-						// }
-						await utils.sleepAsync(2000)
-						res = await this.getData("sign", data, false)
-						if (res?.data?.gt) {
-							let validate = await this.geetest(res.data)
-							if (validate) {
-								let header = {}
-								header["x-rpc-challenge"] = res["data"]["challenge"]
-								header["x-rpc-validate"] = validate
-								header["x-rpc-seccode"] = `${validate}|jordan`
-								data.headers = header
-								res = await this.getData("sign", data, false)
-								if (!res?.data?.gt) {
-									if (this.allSign) {
-										this.allSign[forum.name].sign++;
+						let isgt=false
+						let signMsg='';
+						for (let i = 0; i < 2; i++) { //循环请求
+							await utils.sleepAsync(2000)
+							res = await this.getData("sign", data, false)
+							if (res?.data?.gt) {
+								if(!isgt){
+									isgt=true;
+								}
+								let validate = await this.geetest(res.data) 
+								if (validate) {
+									let header = {}
+									header["x-rpc-challenge"] = res["data"]["challenge"]
+									header["x-rpc-validate"] = validate
+									header["x-rpc-seccode"] = `${validate}|jordan`
+									data.headers = header
+									res = await this.getData("sign", data, false)
+									if (!res?.data?.gt) {
+										if (this.allSign&&!isgt) {
+											this.allSign[forum.name].sign++;
+										}
+										signMsg = `${item.nickname}-${item.game_uid}:验证码签到成功~\n`
+										break;
+									} else {
+										if (this.allSign&&!isgt) {
+											this.allSign[forum.name].error++;
+										}
+										item.is_sign = false;
+										signMsg =
+											`${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
 									}
-									message += `${item.nickname}-${item.game_uid}:验证码签到成功~\n`
-									break;
 								} else {
-									if (this.allSign) {
+									if (this.allSign&&!isgt) {
 										this.allSign[forum.name].error++;
 									}
-									item.is_sign = false;
-									message +=
-										`${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
+									signMsg = `${item.nickname}-${item.game_uid}:验证码失败~\n`
 								}
+								
 							} else {
 								if (this.allSign) {
-									this.allSign[forum.name].error++;
+									this.allSign[forum.name].sign++;
 								}
-								message += `${item.nickname}-${item.game_uid}:验证码失败~\n`
+								item.total_sign_day++;
+								signMsg =
+									`${item.nickname}-${item.game_uid}：${res.message == "OK" ? "签到成功" : res.message}\n`
+								break;
 							}
-						} else {
-							if (this.allSign) {
-								this.allSign[forum.name].sign++;
-							}
-							item.total_sign_day++;
-							message +=
-								`${item.nickname}-${item.game_uid}：${res.message == "OK" ? "签到成功" : res.message}\n`
 						}
+						message+=signMsg 
 					}
-					// }
 					//获取签到信息和奖励信息
 					const SignInfo = await this.getData("home", data, false)
 					if (SignInfo) {
@@ -225,7 +223,7 @@ export default class user {
 		if (res?.retcode == -100) {
 			res.message = "云原神token失效/防沉迷"
 			res.isOk = false;
-		} else { 
+		} else {
 			res.isOk = true;
 			if (res?.data?.total_time) {
 				res.message =
@@ -335,7 +333,6 @@ export default class user {
 					}
 					await utils.randomSleepAsync(2);
 				}
-				let sharePost = postList[0].post;
 				res = await this.getData("bbsShareConf", {
 					postId
 				}, false)
@@ -541,7 +538,7 @@ export default class user {
 		let isPushSign = this.configSign.isPushSign
 		let userIdList = Object.keys(stoken)
 		if (bbsTask) {
-			e.reply(`云原神自动签到任务进行中，请勿重复触发指令`)
+			e.reply(`米游币自动签到任务进行中，请勿重复触发指令`)
 			return false
 		}
 		let tips = ['开始米游币签到任务']
@@ -562,34 +559,42 @@ export default class user {
 		}
 		bbsTask = true;
 		let _reply = e.reply
+		let counts=0;
 		//获取需要签到的用户
 		for (let dataUid of stoken) {
 			for (let uuId in dataUid) {
-				if (uuId[0] * 1 > 5) {
-					continue;
+				try {
+					if (uuId[0] * 1 > 5) {
+						continue;
+					}
+					let data = dataUid[uuId]
+					let user_id = data.userId * 1;
+					let e = {
+						user_id,
+						isTask: true
+					};
+					counts++;
+					e.cookie = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
+					Bot.logger.mark(`[米游币签到][第${counts}个]正在为qq${user_id}：uid:${uuId}签到中...`);
+					e.msg = "全部"
+					e.reply = (msg) => {
+						//关闭签到消息推送
+						if (!isPushSign || mul) {
+							return;
+						}
+						if (msg.includes("OK")) { //签到成功并且不是已签到的才推送
+							utils.relpyPrivate(user_id, msg + "uid:" + uuId + "\n自动签到成功");
+						}
+					};
+					this.e = e;
+					//await 代表同步 你可以尝试去除await以进行优化速度  
+					let res = await this.getbbsSign(this.ForumData);
+					e.reply(res.message)
+					await utils.sleepAsync(10000);
+				} catch (error) {
+					logger.error(`米游币签到报错：` + error)
 				}
-				let data = dataUid[uuId]
-				let user_id = data.userId * 1;
-				let e = {
-					user_id,
-					isTask: true
-				};
-				e.cookie = `stuid=${data.stuid};stoken=${data.stoken};ltoken=${data.ltoken};`;
-				Bot.logger.mark(`正在为qq${user_id}：uid:${uuId}进行米游币签到中...`);
-				e.msg = "全部"
-				e.reply = (msg) => {
-					//关闭签到消息推送
-					if (!isPushSign || mul) {
-						return;
-					}
-					if (msg.includes("OK")) { //签到成功并且不是已签到的才推送
-						utils.relpyPrivate(user_id, msg + "uid:" + uuId + "\n自动签到成功");
-					}
-				};
-				this.e = e;
-				let res = await this.getbbsSign(this.ForumData);
-				e.reply(res.message)
-				await utils.sleepAsync(10000);
+
 			}
 		}
 		let msg = `米社米币签到任务完成`
@@ -602,32 +607,33 @@ export default class user {
 		bbsTask = false;
 	}
 	async bbsGeetest() {
-		let res = await this.getData('bbsGetCaptcha', false)
-		let challenge = res.data["challenge"]
-		await this.getData("geeType", res.data, false)
-		res = await this.getData("bbsValidate", res.data, false)
-		if (res?.data?.validate) {
-			let validate = res?.data?.validate
-			res = await this.getData("bbsCaptchaVerify", {
-				headers: {
-					"geetest_challenge": challenge,
-					"geetest_seccode": validate + "|jordan",
-					"geetest_validate": validate
-				}
-			}, false)
-			return res["data"]["challenge"]
+		try {
+			let res = await this.getData('bbsGetCaptcha', false)
+			// let challenge = res.data["challenge"]
+			await this.getData("geeType", res.data, false)
+			res = await this.getData("validate", res.data, false)
+			if (res?.data?.validate) {
+				res = await this.getData("bbsCaptchaVerify", res.data, false)
+				return res["data"]["challenge"]
+			}
+		} catch (error) {
+			//大概率是数据空导致报错这种情况很少见捏，所以你可以忽略不看
+			Bot.logger.error('[validate][接口请求]异常信息：' + error)
+			return ""
 		}
 		return ""
 	}
 	async geetest(data) {
-		let res = await this.getData("validate", data, false)
-		if (res?.data?.validate) {
-			let validate = res?.data?.validate
-			return validate
-		} else if (res?.data?.result !== "slide") {
-			await redis.set(`xiaoyao:sign`, 1, { //写入缓存 过不了了
-				EX: 60 * 6 //等6分钟后再给用指令 
-			});
+		try {
+			let res = await this.getData("validate", data, false)
+			if (res?.data?.validate) {
+				let validate = res?.data?.validate
+				return validate
+			}
+		} catch (error) {
+			//大概率是数据空导致报错这种情况很少见捏，所以你可以忽略不看
+			Bot.logger.error('[validate][接口请求]异常信息：' + error)
+			return ""
 		}
 		return ""
 	}
@@ -746,15 +752,15 @@ export default class user {
 		}
 	}
 	async seachUid(data) {
-		let ltoken = '',v2Sk;
+		let ltoken = '', v2Sk;
 		if (data?.data) {
 			let res;
 			if (this.e.sk) {
-				if(this.e.sk.get('stoken').includes('v2_')){
-					res=await this.getData('getLtoken',{cookies:this.e.raw_message},false)
-					ltoken=res?.data?.ltoken
-				}else{
-					v2Sk=await this.getData('getByStokenV2',{headers:{Cookie:this.e.raw_message}},false)
+				if (this.e.sk.get('stoken').includes('v2_')) {
+					res = await this.getData('getLtoken', { cookies: this.e.raw_message }, false)
+					ltoken = res?.data?.ltoken
+				} else {
+					v2Sk = await this.getData('getByStokenV2', { headers: { Cookie: this.e.raw_message } }, false)
 				}
 				this.e.cookie =
 					`ltoken=${this.e.sk?.get('ltoken') || ltoken};ltuid=${this.e.sk?.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk?.get('stuid')};`
@@ -764,9 +770,9 @@ export default class user {
 				// }
 			} else {
 				this.e.cookie = this.e.original_msg //发送的为cookies
-				this.cookies=`stuid=${this.e.stuid};stoken=${data?.data?.list[0].token};ltoken=${data?.data?.list[1].token}`
-				res=await this.getData('getLtoken',{cookies:this.cookies},false)
-				v2Sk=await this.getData('getByStokenV2',{headers:{Cookie:this.cookies}},false)
+				this.cookies = `stuid=${this.e.stuid};stoken=${data?.data?.list[0].token};ltoken=${data?.data?.list[1].token}`
+				res = await this.getData('getLtoken', { cookies: this.cookies }, false)
+				v2Sk = await this.getData('getByStokenV2', { headers: { Cookie: this.cookies } }, false)
 			}
 			res = await this.getData("userGameInfo", this.ForumData[1], false)
 			if (res?.retcode != 0) {
@@ -779,9 +785,9 @@ export default class user {
 				uids.push(uid)
 				datalist[uid] = {
 					stuid: this.e?.sk?.get('stuid') || this.e.stuid,
-					stoken:v2Sk?.data?.token?.token || this.e?.sk?.get('stoken') || data?.data?.list[0].token,
+					stoken: v2Sk?.data?.token?.token || this.e?.sk?.get('stoken') || data?.data?.list[0].token,
 					ltoken: this.e?.sk?.get('ltoken') || ltoken || data?.data?.list[1].token,
-					mid: this.e?.sk?.get('mid')||v2Sk?.data?.user_info?.mid,
+					mid: this.e?.sk?.get('mid') || v2Sk?.data?.user_info?.mid,
 					uid: uid,
 					userId: this.e.user_id,
 					is_sign: true

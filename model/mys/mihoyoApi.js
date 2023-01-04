@@ -155,11 +155,12 @@ export default class miHoYoApi {
 			},
 			bbsCaptchaVerify: {
 				url: `${mys.bbs_api}/misc/api/verifyVerification`,
+				body: {
+					"geetest_challenge": data.challenge, //challenge,
+					"geetest_validate": data.validate,
+					"geetest_seccode": `${data.validate}|jordan`
+				},
 				types: 'bbs'
-			},
-			bbsCaptchaVerify: {
-				url: `https://api.geetest.com/gettype.php`,
-				query: ``
 			},
 			//待定接口 用于获取用户米游社顶部的模块栏
 			bbs_Businesses_url: {
@@ -199,9 +200,10 @@ export default class miHoYoApi {
 				query: `login_ticket=${data.loginTicket}&token_types=3&uid=${data.loginUid}`,
 				types: 'stoken'
 			},
+			//接口来源于外网扒来的 接口目前暂时免费后续看token是否收费，祝你生活愉快
 			validate: {
-				url: ``,
-				query: ``
+				url: `http://api.fuckmys.tk/geetest`,
+				query: `token=fuckmys&gt=${data.gt}&challenge=${data.challenge}`
 			},
 			cloudLogin: {
 				url: `${mys.cloud_api}/hk4e_cg_cn/gamer/api/login`,
