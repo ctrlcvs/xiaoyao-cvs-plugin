@@ -12,6 +12,7 @@ import {
 } from '../../components/Changelog.js';
 import fetch from "node-fetch"
 import mys from "./mysTool.js"
+import crypto from "crypto";
 const _path = process.cwd();
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
@@ -71,6 +72,7 @@ export default class miHoYoApi {
 			headers,
 			body
 		} = this.getUrl(type, gameBody, data)
+
 		if (!url) return false
 		if (data.headers) {
 			headers = {
@@ -103,6 +105,7 @@ export default class miHoYoApi {
 			Bot.logger.error(`[接口][${type}][${this.e.uid}] ${response.status} ${response.statusText}`)
 			return false
 		}
+
 		let res = await response.text();
 		// Bot.logger.mark(`[接口][${type}][${this.e.uid}] ${Date.now() - start}ms\n${res}`)
 		if (res.startsWith('(')) {
@@ -118,7 +121,9 @@ export default class miHoYoApi {
 			Bot.logger.debug(`[米游社接口][请求参数] ${url} ${JSON.stringify(param)}`)
 		}
 		res.api = type
-
+		if (type == "loginByPassword") {
+			res.aigis_data = JSON.parse(response.headers.get("x-rpc-aigis"))
+		}
 		return res
 	}
 	getUrl(type, board, data) {
@@ -244,10 +249,49 @@ export default class miHoYoApi {
 				url: `${mys.pass_api}/account/auth/api/getLTokenBySToken`,
 				query: `${data.cookies}`,
 			},
-			getByStokenV2: {
-				url: `${mys.pass_api}/account/ma-cn-session/app/getTokenBySToken`,
-				body: {},
+			//用于手动过验证码，账号密码登录需要
+			microgg: {
+				url: `https://s.microgg.cn/gt/https://validate.microgg.cn/`,
+				query: `gt=${data.gt}&challenge=${data.challenge}`
+			},
+			microggVl: {
+				url: `https://validate.microgg.cn/`,
+				query: `callback=${data.challenge}`
+			},
+			loginByPassword: {
+				url: "https://passport-api.mihoyo.com/account/ma-cn-passport/app/loginByPassword",
+				body: {
+					account: this.encrypt_data(data.account),
+					password: this.encrypt_data(data.password)
+				},
 				types: 'pass'
+			},
+			qrCodeLogin: {
+				url: `https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/fetch`,
+				body: {
+					app_id: mys.app_id,
+					device: data.device
+				}
+			},
+			qrCodeQuery: {
+				url: `https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/query`,
+				body: {
+					app_id: mys.app_id,
+					device: data.device,
+					ticket: data.ticket
+				}
+			},
+			getTokenByGameToken: {
+				url: `https://passport-api.mihoyo.com/account/ma-cn-session/app/getTokenByGameToken`,
+				body: {
+					account_id: data.uid * 1,
+					game_token: data.token
+				},
+				types: 'pass'
+			},
+			getCookieAccountInfoByGameToken: {
+				url: `https://api-takumi.mihoyo.com/auth/api/getCookieAccountInfoByGameToken`,
+				query: `account_id=${data.uid}&game_token=${data.token}`
 			},
 
 		}
@@ -261,7 +305,7 @@ export default class miHoYoApi {
 		} = urlMap[type]
 		if (query) url += `?${query}`
 		if (body) body = JSON.stringify(body)
-		let headers = this.getHeaders(board, types, sign)
+		let headers = this.getHeaders(board, types, sign, body, query)
 		return {
 			url,
 			headers,
@@ -270,7 +314,7 @@ export default class miHoYoApi {
 	}
 
 	// 签到的 headers
-	getHeaders(board, type = "bbs", sign) {
+	getHeaders(board, type = "bbs", sign, body = {}, query = '') {
 		let header = {};
 		switch (type) {
 			case "bbs":
@@ -324,20 +368,26 @@ export default class miHoYoApi {
 				break;
 			case "cloud":
 				header = {
-					"x-rpc-combo_token": this.yuntoken, //云原神签到ck
-					"x-rpc-client_type": "2",
-					"x-rpc-app_version": "1.3.0",
-					"x-rpc-sys_version": "11",
-					"x-rpc-channel": "mihoyo",
-					"x-rpc-device_id": this.devId, //设备Id
-					"x-rpc-device_name": "Xiaomi Mi 10 Pro",
-					"x-rpc-device_model": "Mi 10 Pro",
-					"x-rpc-app_id": "1953439974",
-					"Referer": "https://app.mihoyo.com",
-					"Content-Length": "0",
-					"Host": "api-cloudgame.mihoyo.com",
-					"Connection": "Keep-Alive",
-					"Accept-Encoding": "gzip",
+					// "x-rpc-combo_token": this.yuntoken, //云原神签到ck
+					// "x-rpc-client_type": "2",
+					// "x-rpc-app_version": "1.3.0",
+					// "x-rpc-sys_version": "11",
+					// "x-rpc-channel": "mihoyo",
+					// "x-rpc-device_id": this.devId, //设备Id
+					// "x-rpc-device_name": "Xiaomi Mi 10 Pro",
+					// "x-rpc-device_model": "Mi 10 Pro",
+					// "x-rpc-app_id": "1953439974",
+					// "Referer": "https://app.mihoyo.com",
+					// "Content-Length": "0",
+					// "Host": "api-cloudgame.mihoyo.com",
+					// "Connection": "Keep-Alive",
+					// "Accept-Encoding": "gzip",
+					'Host': 'api-cloudgame.mihoyo.com',
+					'Accept': '*/*',
+					'Referer': 'https://app.mihoyo.com',
+					'x-rpc-combo_token': this.yuntoken,
+					'Accept-Encoding': 'gzip, deflate',
+					'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36 HBPC/12.1.1.301',
 					"User-Agent": "okhttp/3.14.9"
 				}
 				break;
@@ -390,11 +440,14 @@ export default class miHoYoApi {
 					'x-rpc-device_id': DEVICE_ID,
 					'x-rpc-app_id': "bll8iq97cem8",
 					'x-rpc-device_name': DEVICE_NAME,
+					"x-rpc-device_fp": utils.randomString(13),
+					"x-rpc-device_model": utils.randomString(16),
 					'x-rpc-app_version': mys.APP_VERSION,
 					'x-rpc-game_biz': 'bbs_cn',
+					"x-rpc-aigis": '',
 					"Content-Type": "application/json;",
 					"x-rpc-client_type": "2",
-					"DS": this.getDs2('', {}, mys.passSalt),
+					"DS": this.getDs2('', body, mys.passSalt),
 					"x-rpc-sdk_version": '1.3.1.2',
 					"User-Agent": "okhttp/4.9.3",
 					"Referer": "cors",
@@ -427,6 +480,13 @@ export default class miHoYoApi {
 		} catch (error) {
 			return {}
 		}
+	}
+	encrypt_data(data) {
+		if (!data) return '';
+		return crypto.publicEncrypt({
+			key: mys.publicKey,
+			padding: crypto.constants.RSA_PKCS1_PADDING
+		}, data).toString("base64")
 	}
 	//社区签到ds
 	getDs2(q = "", b, salt) {

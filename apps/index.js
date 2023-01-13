@@ -23,6 +23,7 @@ import {
 	sysCfg, updateTemp,
 	updateMiaoPlugin
 } from "./admin.js";
+
 import {
 	rule as userRule,
 	delSign,
@@ -42,13 +43,16 @@ import {
 	cookiesDocHelp,
 	signTask
 } from "./sign.js"
-
+import {
+	rule as topupLoginRule,
+	qrCodeLogin,UserPassMsg,UserPassLogin,
+} from './mhyTopUpLogin.js'
 export {
 	updateRes, updateTemp,
 	delSign, gcPaylog,
-	cloudSign,
+	cloudSign,qrCodeLogin,
 	seach, bindLogin_ticket,
-	bbsSign,
+	bbsSign,UserPassMsg,UserPassLogin,
 	gclog,
 	mytoken, getBasicVoide,
 	bindStoken,
@@ -112,7 +116,8 @@ let rule = {
 	},
 	...userRule,
 	...signRule,
-	...adminRule
+	...adminRule,
+	...topupLoginRule
 };
 
 lodash.forEach(rule, (r) => {

@@ -270,8 +270,9 @@ export async function cloudToken(e) {
 		e.reply(`格式支持\nai=*;ci=*;oi=*;ct=***********;si=**************;bi=***********;devId=***********`)
 		return false;
 	}
-	let msg = e.msg.split("devId")
+	let msg = e.msg.replace(/dev(i|l|I|L)d/g,'devId').split("devId")
 	if (msg.length < 2) {
+		Bot.logger.mark(`云原神绑定失败：未包含devId字段~`)
 		return false;
 	}
 	let devId = msg[1].replace(/=/, "")

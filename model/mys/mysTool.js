@@ -14,6 +14,12 @@ const hk4_api = `https://hk4e-api.mihoyo.com`;
 const bbs_api = `https://bbs-api.mihoyo.com`;
 const cloud_api = `https://api-cloudgame.mihoyo.com`
 const pass_api=`https://passport-api.mihoyo.com`
+const app_id = 4
+const publicKey = `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDvekdPMHN3AYhm/vktJT+YJr7cI5DcsNKqdsx5DZX0gDuWFuIjzdwButrIYPNmRJ1G8ybDIF7oDW2eEpm5sMbL9zs
+9ExXCdvqrn51qELbqj0XxtMTIpaCHFSI50PfPpTFV9Xt/hmyVwokoOXFlAEgCn+Q
+CgGs52bFoYMtyi+xEQIDAQAB
+-----END PUBLIC KEY-----`
 const boards = {
 	honkai3rd: {
 		forumid: 1,
@@ -217,9 +223,9 @@ export default {
 	osSaltWeb,
 	web_api,
 	os_web_api,
-	os_hk4_api,
+	os_hk4_api,app_id,
 	hk4_api,
-	bbs_api,
+	bbs_api,publicKey,
 	pass_api,passSalt,
 	boards
 }

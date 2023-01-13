@@ -2,18 +2,15 @@ import {
 	segment
 } from "oicq";
 import fetch from "node-fetch";
-import Common from "../components/Common.js";
 import fs from "fs";
 import {
 	isV3
 } from '../components/Changelog.js'
-import lodash from "lodash";
 import gsCfg from '../model/gsCfg.js'
 import {
 	Cfg,
 	Data
 } from "../components/index.js";
-import moment from 'moment';
 import utils from "../model/mys/utils.js";
 import note from '../model/note.js'
 import User from "../model/user.js";
