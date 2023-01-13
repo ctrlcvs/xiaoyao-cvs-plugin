@@ -55,7 +55,6 @@ export async function UserPassMsg(e) {
 
 export async function UserPassLogin(e) {
 	if (!e.isPrivate) {
-		e.reply("请私聊发送")
 		return true;
 	}
 	let Mys = new mys(e)
