@@ -45,13 +45,13 @@ import {
 } from "./sign.js"
 import {
 	rule as topupLoginRule,
-	qrCodeLogin,UserPassMsg,UserPassLogin,
+	qrCodeLogin,UserPassMsg,UserPassLogin,GetCode,showgoods,checkOrder
 } from './mhyTopUpLogin.js'
 export {
 	updateRes, updateTemp,
 	delSign, gcPaylog,
 	cloudSign,qrCodeLogin,
-	seach, bindLogin_ticket,
+	seach, bindLogin_ticket,GetCode,showgoods,checkOrder,
 	bbsSign,UserPassMsg,UserPassLogin,
 	gclog,
 	mytoken, getBasicVoide,

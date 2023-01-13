@@ -293,7 +293,18 @@ export default class miHoYoApi {
 				url: `https://api-takumi.mihoyo.com/auth/api/getCookieAccountInfoByGameToken`,
 				query: `account_id=${data.uid}&game_token=${data.token}`
 			},
-
+			GetCode:{
+				url:``,
+				query:``
+			},
+			goodsList:{
+				url:``,
+				query:``
+			},
+			checkOrder:{
+				url:``,
+				body:{}
+			}
 		}
 		if (!urlMap[type]) return false
 		let {

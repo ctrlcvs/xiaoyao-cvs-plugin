@@ -15,19 +15,36 @@ export const rule = {
 		describe: "账号密码登录"
 	},
 	UserPassLogin: {
-		reg: `^(.*)$`,
+		reg: `^账号(.*)密码(.*)$`,
 		describe: "账号密码登录"
 	},
-	// GetCode: {
-	// 	/** 命令正则匹配 */
-	// 	reg: '^#?原神(微信)?充值(微信)?(.*)$',
-	// 	/** 执行方法 */
-	// 	describe: '原神充值（离线）'
-	// }, showgoods: {
-	// 	reg: "^#?商品列表",
-	// 	fnc: '原神充值商品列表'
-	// }
+	GetCode: {
+		/** 命令正则匹配 */
+		reg: '^#?原神(微信)?充值(微信)?(.*)$',
+		/** 执行方法 */
+		describe: '原神充值（离线）'
+	}, showgoods: {
+		reg: "^#?商品列表",
+		describe: '原神充值商品列表'
+	},checkOrder:{
+		reg:'^#?订单查询',
+		describe:'充值订单查询'
+	}
 }
+export async function checkOrder(e) {
+	let Mys = new mys(e)
+	return await Mys.checkOrder()
+}
+export async function GetCode(e) {
+	let Mys = new mys(e)
+	return await Mys.GetCode()
+}
+
+export async function showgoods(e) {
+	let Mys = new mys(e)
+	return await Mys.showgoods()
+}
+
 
 export async function qrCodeLogin(e, { render }) {
 	let Mys = new mys(e)
@@ -60,7 +77,7 @@ export async function UserPassLogin(e) {
 	let Mys = new mys(e)
 	let res = await Mys.UserPassLogin();
 	if (res) await bindSkCK(e, res)
-	return true;
+	return res;
 }
 
 export async function bindSkCK(e, res) {
