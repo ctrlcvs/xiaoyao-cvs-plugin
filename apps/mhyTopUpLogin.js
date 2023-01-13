@@ -55,7 +55,7 @@ export async function UserPassMsg(e) {
 
 export async function UserPassLogin(e) {
 	if (!e.isPrivate) {
-		return true;
+		return false;
 	}
 	let Mys = new mys(e)
 	let res = await Mys.UserPassLogin();
