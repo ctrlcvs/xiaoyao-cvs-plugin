@@ -28,8 +28,8 @@ export async function redisGet(userId, type = 'bbs') {
 	return JSON.parse(await redis.get(`xiaoyao:${type}:${userId}`))
 }
 export async function redisSet(userId="all", type = 'bbs', data, time=0) {
-	var time = moment(Date.now()).add('days', 1).format('YYYY-MM-DD 00:00:00')
-	var new_date = (new Date(time).getTime() - new Date().getTime()) / 1000 //获取隔天凌晨的时间差
+	var dayTime = moment(Date.now()).add('days', 1).format('YYYY-MM-DD 00:00:00')
+	var new_date = (new Date(dayTime).getTime() - new Date().getTime()) / 1000 //获取隔天凌晨的时间差
 	if (time!==0) {
 		new_date = time
 	}
