@@ -1,10 +1,5 @@
 import User from "./user.js";
-import fs from "fs";
-import {
-    isV3
-} from '../components/Changelog.js'
 import utils from './mys/utils.js';
-import gsCfg from './gsCfg.js';
 import { segment } from 'oicq'
 export default class mysTopLogin {
     constructor(e) {
@@ -19,6 +14,11 @@ export default class mysTopLogin {
     }
     //
     async qrCodeLogin() {
+        let RedisData=await utils.redisGet(this.e.user_id,"GetQrCode")
+        if(RedisData){
+            this.e.reply([segment.at(this.e.user_id),`前置二维码未扫描，请勿重复触发指令`])
+            return false;
+        }
         this.device = await utils.randomString(64)
         this.e.reply(this.sendMsgUser)
         let res = await this.user.getData("qrCodeLogin", {
@@ -31,21 +31,25 @@ export default class mysTopLogin {
         return res
     }
     async GetQrCode(ticket) {
+        await utils.redisSet(this.e.user_id,"GetQrCode",{GetQrCode:1},60*5) //设置5分钟缓存避免重复触发
         let res;
+        let RedisData=await utils.redisGet(this.e.user_id,"GetQrCode")
         for (let n = 1; n < 60; n++) {
             await utils.sleepAsync(5000)
             res = await this.user.getData("qrCodeQuery", {
                 device: this.device, ticket
             })
-            if (res?.data?.stat == "Scanned") {
+            if (res?.data?.stat == "Scanned"&&RedisData.GetQrCode==1) {
                 Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(res))}`)
                 await this.e.reply("二维码已扫描，请确认登录", true)
+                RedisData.GetQrCode++;
             }
             if (res?.data?.stat == "Confirmed") {
                 Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(res))}`)
                 break
             }
         }
+        await redisDel(this.e.user_id,'GetQrCode')
         if (!res?.data?.payload?.raw) {
             await this.e.reply("验证超时", true)
             return false
@@ -86,7 +90,7 @@ export default class mysTopLogin {
                 this.e.reply('接口效验失败，请重新尝试~')
                 return false
             }
-            let validate=vlData.geetest_validate
+            let validate = vlData.geetest_validate
             let aigis = res.aigis_data.session_id + ";" + Buffer.from(JSON.stringify({
                 geetest_challenge: vlData?.geetest_challenge,
                 geetest_seccode: validate + "|jordan",

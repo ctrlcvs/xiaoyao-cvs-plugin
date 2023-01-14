@@ -1,5 +1,5 @@
 import _ from 'lodash';
-
+import moment from 'moment';
 export async function sleepAsync(sleepms) {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
@@ -21,9 +21,11 @@ export function randomString(length, os = false) {
 	}
 	return randomStr;
 }
-
+export async function redisDel(userId, type = 'bbs') {
+	return await redis.del(`xiaoyao:${type}:${userId}`)
+}
 export async function redisGet(userId, type = 'bbs') {
-	await redis.get(`xiaoyao:${type}:${userId}`);
+	return JSON.parse(await redis.get(`xiaoyao:${type}:${userId}`))
 }
 export async function redisSet(userId="all", type = 'bbs', data, time=0) {
 	var time = moment(Date.now()).add('days', 1).format('YYYY-MM-DD 00:00:00')
@@ -31,7 +33,7 @@ export async function redisSet(userId="all", type = 'bbs', data, time=0) {
 	if (time!==0) {
 		new_date = time
 	}
-	await redis.set(`xiaoyao:${type}:${userId}`, JSON.stringify(data), {
+	return await redis.set(`xiaoyao:${type}:${userId}`, JSON.stringify(data), {
 		EX: parseInt(new_date)
 	});
 }
@@ -121,7 +123,7 @@ export function recallMsg(e,r,times){
 
 
 export default {
-	sleepAsync,
+	sleepAsync,redisDel,
 	getServer,
 	randomSleepAsync,
 	replyMake,
