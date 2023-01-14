@@ -5,14 +5,15 @@ import mys from "../model/mhyTopUpLogin.js"
 import Common from "../components/Common.js";
 import { bindStoken } from './user.js'
 import utils from '../model/mys/utils.js';
+import {segment} from 'oicq'
 const _path = process.cwd();
 export const rule = {
 	qrCodeLogin: {
-		reg: `^#(扫码|二维码|辅助)登录$`,
+		reg: `^#(扫码|二维码|辅助)(登录|绑定|登陆)$`,
 		describe: "扫码登录"
 	},
 	UserPassMsg: {
-		reg: `^#(账号|密码)(密码)?登录$`,
+		reg: `^#(账号|密码)(密码)?(登录|绑定|登陆)$`,
 		describe: "账号密码登录"
 	},
 	UserPassLogin: {
@@ -51,14 +52,20 @@ export async function qrCodeLogin(e, { render }) {
 	let Mys = new mys(e)
 	let res = await Mys.qrCodeLogin()
 	if (!res?.data) return false;
-	let r= await Common.render(`qrCode/index`, {
+	e._reply=e.reply
+	let sendMsg=[segment.at(e.user_id),'\n请扫码以完成绑定\n']
+	e.reply=(msg)=>{
+		sendMsg.push(msg)
+	}
+	await Common.render(`qrCode/index`, {
 		url: res.data.url
 	}, {
 		e,
 		render,
 		scale: 1.2,retMsgId: true 
 	})
-	utils.recallMsg(e,r,60) //默认60，有需要请自行修改
+	let r= await e._reply(sendMsg)
+	utils.recallMsg(e,r,30) //默认30，有需要请自行修改
 	res = await Mys.GetQrCode(res.data.ticket)
 	if (!res) return true;
 	await bindSkCK(e,res)
@@ -67,6 +74,9 @@ export async function qrCodeLogin(e, { render }) {
 
 
 export async function UserPassMsg(e) {
+	if (!e.isPrivate) {
+		return false;
+	}
 	let Mys = new mys(e)
 	await Mys.UserPassMsg()
 	return true;

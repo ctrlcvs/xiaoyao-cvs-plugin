@@ -46,7 +46,7 @@ export default class mysTopLogin {
                 break
             }
         }
-        if (!res) {
+        if (!res?.data?.payload?.raw) {
             await this.e.reply("验证超时", true)
             return false
         }
@@ -61,7 +61,7 @@ export default class mysTopLogin {
 
     async UserPassMsg() {
         this.e.reply(this.sendMsgUserPassLogin)
-        this.e.reply(`请将账号密码用逗号隔开发送以完成绑定\n例：账号xxx@qq.com,密码xxxxx`)
+        this.e.reply(`请将账号密码用逗号隔开私聊发送以完成绑定\n例：账号xxx@qq.com,密码xxxxx`)
     }
     async UserPassLogin() {
         let msg = this.e.msg.replace(/账号|密码|：|:/g, '').replace(/,|，/, ',').split(',');
@@ -76,19 +76,21 @@ export default class mysTopLogin {
         if (res.retcode == -3101) {
             Bot.logger.mark("[米哈游登录] 正在验证")
             this.aigis_captcha_data = JSON.parse(res.aigis_data.data)
-            // let validate = await this.crack_geetest()
-            let validate = await this.user.getData("validate", this.aigis_captcha_data, false)
-            if (validate?.data?.validate) {
+            let vlData = await this.crack_geetest()
+            console.log(vlData)
+            // let validate = await this.user.getData("validate", this.aigis_captcha_data, false)
+            if (vlData?.geetest_validate) {
                 Bot.logger.mark("[米哈游登录] 验证成功")
             } else {
                 Bot.logger.error("[米哈游登录] 验证失败")
                 this.e.reply('接口效验失败，请重新尝试~')
                 return false
             }
+            let validate=vlData.geetest_validate
             let aigis = res.aigis_data.session_id + ";" + Buffer.from(JSON.stringify({
-                geetest_challenge: validate?.data?.challenge,
-                geetest_seccode: validate?.data?.validate + "|jordan",
-                geetest_validate: validate?.data?.validate
+                geetest_challenge: vlData?.geetest_challenge,
+                geetest_seccode: validate + "|jordan",
+                geetest_validate: validate
             })).toString("base64")
             body.headers = {
                 'x-rpc-aigis': aigis,
