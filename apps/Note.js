@@ -28,7 +28,7 @@ function init() {
 export async function Note(e, {
 	render
 }, poke) {
-	if (!Cfg.get("sys.Note") && !poke && !this.e?.isTask) {
+	if (!Cfg.get("sys.Note") && !poke && !e?.isTask) {
 		return false;
 	}
 	let notes = new note(e);
