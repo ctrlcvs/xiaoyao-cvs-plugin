@@ -103,6 +103,23 @@ export async function getCookieMap(cookie) {
 	}
 	return cookieMap || {};
 }
+/**
+ * 
+ * @param {e} e 
+ * @param {撤回的消息id} r 
+ * @param {多久撤回(秒)} times 
+ */
+export function recallMsg(e,r,times){
+	setTimeout(()=>{
+		if(e.group){
+			e.group.recallMsg(r.message_id)
+		}else{
+			e.member.recallMsg(r.message_id)
+		}
+	},1000 * times)
+}
+
+
 export default {
 	sleepAsync,
 	getServer,
@@ -110,7 +127,7 @@ export default {
 	replyMake,
 	randomString,
 	redisGet,
-	redisSet,
+	redisSet,recallMsg,
 	relpyPrivate,
 	getCookieMap
 }

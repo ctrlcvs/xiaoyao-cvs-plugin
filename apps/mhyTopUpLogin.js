@@ -4,6 +4,7 @@ import {
 import mys from "../model/mhyTopUpLogin.js"
 import Common from "../components/Common.js";
 import { bindStoken } from './user.js'
+import utils from '../model/mys/utils.js';
 const _path = process.cwd();
 export const rule = {
 	qrCodeLogin: {
@@ -18,50 +19,52 @@ export const rule = {
 		reg: `^账号(.*)密码(.*)$`,
 		describe: "账号密码登录"
 	},
-	GetCode: {
+	payOrder: {
 		/** 命令正则匹配 */
 		reg: '^#?原神(微信)?充值(微信)?(.*)$',
 		/** 执行方法 */
 		describe: '原神充值（离线）'
-	}, showgoods: {
+	}, payOrder: {
 		reg: "^#?商品列表",
 		describe: '原神充值商品列表'
-	},checkOrder:{
+	},payOrder:{
 		reg:'^#?订单查询',
 		describe:'充值订单查询'
 	}
 }
-export async function checkOrder(e) {
-	let Mys = new mys(e)
-	return await Mys.checkOrder()
-}
-export async function GetCode(e) {
-	let Mys = new mys(e)
-	return await Mys.GetCode()
-}
 
-export async function showgoods(e) {
-	let Mys = new mys(e)
-	return await Mys.showgoods()
-}
 
+export async function payOrder(e){
+	console.log(e)
+	let Mys = new mys(e)
+	if(/商品列表/.test(e.msg)){
+		return await Mys.showgoods()
+	}else if (/订单查询/.test(e.msg)) {
+		return await Mys.checkOrder()
+	}else if(e.msg.includes('充值')){
+		return await Mys.GetCode()
+	}
+	return false;
+} 
 
 export async function qrCodeLogin(e, { render }) {
 	let Mys = new mys(e)
 	let res = await Mys.qrCodeLogin()
 	if (!res?.data) return false;
-	await Common.render(`qrCode/index`, {
+	let r= await Common.render(`qrCode/index`, {
 		url: res.data.url
 	}, {
 		e,
 		render,
-		scale: 1.2
+		scale: 1.2,retMsgId: true 
 	})
+	utils.recallMsg(e,r,60) //默认60，有需要请自行修改
 	res = await Mys.GetQrCode(res.data.ticket)
 	if (!res) return true;
-	await bindSkCK(res)
+	await bindSkCK(e,res)
 	return true;
 }
+
 
 export async function UserPassMsg(e) {
 	let Mys = new mys(e)
@@ -81,18 +84,17 @@ export async function UserPassLogin(e) {
 }
 
 export async function bindSkCK(e, res) {
-	e.msg = res.stoken, e.raw_message = res.stoken
+	e.msg = res?.stoken, e.raw_message = res?.stoken
+	e.isPrivate = true
 	await bindStoken(e)
-	e.ck = res.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
+	e.ck = res?.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
 	if (isV3) {
 		let userck = (await import(`file:///${_path}/plugins/genshin/model/user.js`)).default
-		e.isPrivate = true
 		await (new userck(e)).bing()
 	} else {
 		let {
 			bingCookie
 		} = (await import(`file:///${_path}/lib/app/dailyNote.js`))
-		e.isPrivate = true;
 		await bingCookie(e)
 	}
 }
