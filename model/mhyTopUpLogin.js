@@ -49,7 +49,7 @@ export default class mysTopLogin {
                 break
             }
         }
-        await redisDel(this.e.user_id,'GetQrCode')
+        await utils.redisDel(this.e.user_id,'GetQrCode')
         if (!res?.data?.payload?.raw) {
             await this.e.reply("验证超时", true)
             return false
