@@ -8,18 +8,21 @@
         background-color: rgb(243, 242, 241);
         padding: 20px 0 10px 0 !important;
     }
+    .topTitle table{
+        margin: 0 auto;
+    }
 </style>
 {{/block}}
 {{block 'main'}}
-<div class="topTitle">
+<div class="topTitle" style="margin: 0 auth;">
    
 </div>
 <script src="{{_res_path}}/qrCode/js/jquery-1.10.2.min.js"></script>
 <script src="{{_res_path}}/qrCode/js/jquery.qrcode.min.js"></script>
 <script>
 var config = {
-    width:600,//值是number类型, 表示的单位是px 必须传递
-    height:600,//值是number类型, 表示的单位是px 必须传递
+    width:500,//值是number类型, 表示的单位是px 必须传递
+    height:500,//值是number类型, 表示的单位是px 必须传递
     text:"{{url}}".replace(/#38;/g,''),//text就表示二维码中存储的数据 必须传递
     correctLevel:2,//取值为0|1|2|3 表示二维码的纠错级别0:L/1:M/2:Q/3:H ,默认0 可选参数
     render:"table"//取值:table/canvas , 默认table 可选参数

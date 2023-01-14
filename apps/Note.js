@@ -28,29 +28,29 @@ function init() {
 export async function Note(e, {
 	render
 }, poke) {
-	if (!Cfg.get("sys.Note") && !poke) {
+	if (!Cfg.get("sys.Note") && !poke && !this.e?.isTask) {
 		return false;
 	}
 	let notes = new note(e);
 	let cookie, uid, res;
 	if (isV3) {
-		if(e.msg.replace(/全|全部/g,'多').includes('多')){
-			let ck=await gsCfg.getBingCkSingle(e.user_id)
-			if(Object.keys(ck).length==0){
+		if (e.msg.replace(/全|全部/g, '多').includes('多')) {
+			let ck = await gsCfg.getBingCkSingle(e.user_id)
+			if (Object.keys(ck).length == 0) {
 				e.reply(`请先【#绑定cookie】`)
 				return true;
 			}
-			let sendMsg=[]
-			e._reply=e.reply;
-			e.reply=((msg)=>{
+			let sendMsg = []
+			e._reply = e.reply;
+			e.reply = ((msg) => {
 				sendMsg.push(msg)
 			})
-			if(Object.keys(ck).length>1){
+			if (Object.keys(ck).length > 1) {
 				e._reply(`多账号体力查询中请稍等...`)
 			}
-			for(let item of Object.keys(ck)){
-				let res=await (await e.runtime.createMysApi(ck[item].uid,ck[item].ck)).getData('dailyNote')
-				await notes.getNote(ck[item].ck,ck[item].uid,res,{render})
+			for (let item of Object.keys(ck)) {
+				let res = await (await e.runtime.createMysApi(ck[item].uid, ck[item].ck)).getData('dailyNote')
+				await notes.getNote(ck[item].ck, ck[item].uid, res, { render })
 			}
 			e._reply(sendMsg)
 			return true;
@@ -99,22 +99,22 @@ export async function Note(e, {
 				e.reply(`体力查询错误：${res.message}`);
 				Bot.logger.mark(`体力查询错误:${JSON.stringify(res)}`);
 			}
-	
+
 			return true;
 		}
-	
+
 		//redis保存uid
 		redis.set(`genshin:uid:${e.user_id}`, uid, {
 			EX: 2592000
 		});
-	
+
 		//更新
 		if (NoteCookie[e.user_id]) {
 			NoteCookie[e.user_id].maxTime = new Date().getTime() + res.data.resin_recovery_time * 1000;
 			saveJson();
 		}
 	}
-	return await notes.getNote(cookie,uid,res,{render})
+	return await notes.getNote(cookie, uid, res, { render })
 }
 
 async function getDailyNote(uid, cookie) {
@@ -226,7 +226,7 @@ export async function pokeNote(e, {
 
 export async function Note_appoint(e) {
 	let mbPath = `${_path}/plugins/xiaoyao-cvs-plugin/resources/dailyNote/`;
-	let isDel= e.msg.includes("移除")
+	let isDel = e.msg.includes("移除")
 	let msg = e.msg.replace(/#|井|体力|模板|设置|移除/g, "");
 	let All = ["默认", "随机", "0"];
 	let urlType = note_file();
@@ -242,7 +242,7 @@ export async function Note_appoint(e) {
 	if (msg.includes("列表")) {
 		let isUser = msg.includes('我的')
 		let temp = tempData[e.user_id]?.temp;
-		if ((!temp||temp?.length===0) && isUser) {
+		if ((!temp || temp?.length === 0) && isUser) {
 			e.reply("未获取到您设置的模板信息哦~")
 			return true;
 		}
@@ -316,16 +316,16 @@ export async function Note_appoint(e) {
 	if (typeof tempData[e.user_id]["temp"] === "string") {
 		temp = [tempData[e.user_id]["temp"], msg]
 	} else {
-		temp =tempData[e.user_id]["temp"]
+		temp = tempData[e.user_id]["temp"]
 		if (!tempData[e.user_id]["temp"]?.includes(msg)) {
 			temp.push(msg)
 		}
 	}
-	let sendMsg="诶~这是你选的模板吗，模板设置成功了快用指令来试试吧~！"
-	if(isDel){
-		if(temp.includes(msg)){
-			temp.splice(temp.indexOf(msg),1) 
-			sendMsg=`模板${msg}已移除~`
+	let sendMsg = "诶~这是你选的模板吗，模板设置成功了快用指令来试试吧~！"
+	if (isDel) {
+		if (temp.includes(msg)) {
+			temp.splice(temp.indexOf(msg), 1)
+			sendMsg = `模板${msg}已移除~`
 		}
 	}
 	tempData[e.user_id] = {
@@ -338,7 +338,7 @@ export async function Note_appoint(e) {
 	return true;
 }
 
-const note_file = function(xiaoyao) {
+const note_file = function (xiaoyao) {
 	let url1 = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/Template/`
 	let url2 = `./plugins/xiaoyao-cvs-plugin/resources/BJT-Templet/` //冤种情况。。
 	let url3 = `./plugins/xiaoyao-cvs-plugin/resources/dailyNote/background_image/`

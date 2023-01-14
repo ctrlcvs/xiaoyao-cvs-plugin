@@ -114,7 +114,7 @@ export function recallMsg(e,r,times){
 		if(e.group){
 			e.group.recallMsg(r.message_id)
 		}else{
-			e.member.recallMsg(r.message_id)
+			e.friend.recallMsg(r.message_id)
 		}
 	},1000 * times)
 }
