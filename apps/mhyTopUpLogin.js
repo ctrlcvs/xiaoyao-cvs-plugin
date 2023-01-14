@@ -66,6 +66,7 @@ export async function qrCodeLogin(e, { render }) {
 	})
 	let r= await e._reply(sendMsg)
 	utils.recallMsg(e,r,30) //默认30，有需要请自行修改
+	e.reply=e._reply
 	res = await Mys.GetQrCode(res.data.ticket)
 	if (!res) return true;
 	await bindSkCK(e,res)
