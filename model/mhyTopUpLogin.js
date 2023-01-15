@@ -58,8 +58,8 @@ export default class mysTopLogin {
         let UserData = await this.user.getData("getTokenByGameToken", raw)
         let ck = await this.user.getData("getCookieAccountInfoByGameToken", raw)
         return {
-            cookie: `ltoken=${UserData.data.token.token};ltuid=${UserData.data.user_info.aid};cookie_token=${ck.data.cookie_token}`,
-            stoken: `stoken=${UserData.data.token.token};stuid=${UserData.data.user_info.aid};mid=${UserData.data.user_info.mid}`
+            cookie: `ltoken=${UserData.data?.token?.token};ltuid=${UserData.data?.user_info?.aid};cookie_token=${ck.data?.cookie_token}`,
+            stoken: `stoken=${UserData.data?.token?.token};stuid=${UserData.data?.user_info?.aid};mid=${UserData?.data?.user_info.mid}`
         }
     }
 
