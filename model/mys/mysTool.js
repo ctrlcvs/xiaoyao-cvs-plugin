@@ -4,16 +4,17 @@ const salt = "fdv0fY9My9eA7MR0NpjGP9RjueFvjUSQ"; //k2
 const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v"; //x6
 const saltWeb = "jEpJb9rRARU2rXDA9qYbZ3selxkuct9a";//lk2
 const oldsalt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
-const passSalt='JwYDpKvLj6MrMqqYU6jTKF17KNO2PXoS';
-const osSalt= ''; //599uqkwc0dlqu3h6epzjzfhgyyrd44ae rk4xg2hakoi26nljpr099fv9fck1ah10
+const passSalt = 'JwYDpKvLj6MrMqqYU6jTKF17KNO2PXoS';
+const osSalt = ''; //599uqkwc0dlqu3h6epzjzfhgyyrd44ae rk4xg2hakoi26nljpr099fv9fck1ah10
 const osSaltWeb = ''; //os 浏览帖子需要用到的salt
 const web_api = `https://api-takumi.mihoyo.com`
 const os_web_api = `https://api-os-takumi.mihoyo.com`
 const os_hk4_api = `https://hk4e-api-os.hoyoverse.com`;
 const hk4_api = `https://hk4e-api.mihoyo.com`;
+const hk4_sdk = `https://hk4e-sdk.mihoyo.com`;
 const bbs_api = `https://bbs-api.mihoyo.com`;
 const cloud_api = `https://api-cloudgame.mihoyo.com`
-const pass_api=`https://passport-api.mihoyo.com`
+const pass_api = `https://passport-api.mihoyo.com`
 const app_id = 4
 const publicKey = `-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDvekdPMHN3AYhm/vktJT+YJr7cI5DcsNKqdsx5DZX0gDuWFuIjzdwButrIYPNmRJ1G8ybDIF7oDW2eEpm5sMbL9zs
@@ -41,7 +42,7 @@ const boards = {
 					dataUrl = {
 						url: `${api}/event/luna/sign`,
 						body: {
-							lang:'zh-cn',
+							lang: 'zh-cn',
 							region: data.region,
 							act_id: this.actid,
 							uid: data.game_uid
@@ -66,7 +67,7 @@ const boards = {
 		forumid: 26,
 		key: 'genshin',
 		biz: 'hk4e_cn',
-		osbiz:'hk4e_global',
+		osbiz: 'hk4e_global',
 		actid: 'e202009291139501',
 		name: '原神',
 		url: "https://bbs.mihoyo.com/ys/",
@@ -122,7 +123,7 @@ const boards = {
 					dataUrl = {
 						url: `${api}/event/luna/sign`,
 						body: {
-							lang:'zh-cn',
+							lang: 'zh-cn',
 							region: data.region,
 							act_id: this.actid,
 							uid: data.game_uid
@@ -223,9 +224,9 @@ export default {
 	osSaltWeb,
 	web_api,
 	os_web_api,
-	os_hk4_api,app_id,
-	hk4_api,
-	bbs_api,publicKey,
-	pass_api,passSalt,
+	os_hk4_api, app_id,
+	hk4_api,hk4_sdk,
+	bbs_api, publicKey,
+	pass_api, passSalt,
 	boards
 }

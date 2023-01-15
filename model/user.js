@@ -30,8 +30,10 @@ export default class user {
 		this.ForumData = Data.readJSON(`${_path}/plugins/xiaoyao-cvs-plugin/defSet/json`, "mys")
 		this.configSign = gsCfg.getfileYaml(`${_path}/plugins/xiaoyao-cvs-plugin/config/`, "config");
 		this.configSign.signlist = this.configSign.signlist || "原神|崩坏3|崩坏2|未定事件簿".split("|")
+		this.getToken = this.configSign.getToken || ''
 		this.getyunToken(this.e)
 	}
+
 	async getCkData() {
 		let sumData = {};
 		let yunres = await this.cloudSeach();
@@ -124,16 +126,16 @@ export default class user {
 						}
 						message += `${item.nickname}-${item.game_uid}：今日已签到~\n`;
 					} else {
-						let isgt=false
-						let signMsg='';
+						let isgt = false
+						let signMsg = '';
 						for (let i = 0; i < 2; i++) { //循环请求
 							await utils.sleepAsync(2000)
 							res = await this.getData("sign", data, false)
 							if (res?.data?.gt) {
-								if(!isgt){
-									isgt=true;
+								if (!isgt) {
+									isgt = true;
 								}
-								let validate = await this.geetest(res.data) 
+								let validate = await this.geetest(res.data)
 								if (validate) {
 									let header = {}
 									header["x-rpc-challenge"] = res["data"]["challenge"]
@@ -142,13 +144,13 @@ export default class user {
 									data.headers = header
 									res = await this.getData("sign", data, false)
 									if (!res?.data?.gt) {
-										if (this.allSign&&!isgt) {
+										if (this.allSign && !isgt) {
 											this.allSign[forum.name].sign++;
 										}
 										signMsg = `${item.nickname}-${item.game_uid}:验证码签到成功~\n`
 										break;
 									} else {
-										if (this.allSign&&!isgt) {
+										if (this.allSign && !isgt) {
 											this.allSign[forum.name].error++;
 										}
 										item.is_sign = false;
@@ -156,12 +158,12 @@ export default class user {
 											`${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
 									}
 								} else {
-									if (this.allSign&&!isgt) {
+									if (this.allSign && !isgt) {
 										this.allSign[forum.name].error++;
 									}
 									signMsg = `${item.nickname}-${item.game_uid}:验证码失败~\n`
 								}
-								
+
 							} else {
 								if (this.allSign) {
 									this.allSign[forum.name].sign++;
@@ -172,7 +174,7 @@ export default class user {
 								break;
 							}
 						}
-						message+=signMsg 
+						message += signMsg
 					}
 					//获取签到信息和奖励信息
 					const SignInfo = await this.getData("home", data, false)
@@ -200,6 +202,7 @@ export default class user {
 		return this.configSign[type.includes("云") ? "cloudDoc" : "cookiesDoc"]
 	}
 	async cloudSign() {
+		await this.cloudSeach()
 		let res = await this.getData("cloudReward")
 		if (res?.data?.list?.length == 0 || !res?.data?.list) {
 			res.message = `您今天的奖励已经领取了~`
@@ -559,7 +562,7 @@ export default class user {
 		}
 		bbsTask = true;
 		let _reply = e.reply
-		let counts=0;
+		let counts = 0;
 		//获取需要签到的用户
 		for (let dataUid of stoken) {
 			for (let uuId in dataUid) {
@@ -610,7 +613,8 @@ export default class user {
 		try {
 			let res = await this.getData('bbsGetCaptcha', false)
 			// let challenge = res.data["challenge"]
-			// await this.getData("geeType", res.data, false) //接入别的平台请把这段代码放出来 否则会一直出现提示拼图失效的情况
+			// await this.getData("geeType", res.data, false) 
+			res.data.getToken=this.getToken
 			res = await this.getData("validate", res.data, false)
 			if (res?.data?.validate) {
 				res = await this.getData("bbsCaptchaVerify", res.data, false)
@@ -625,6 +629,7 @@ export default class user {
 	}
 	async geetest(data) {
 		try {
+			data.getToken=this.getToken
 			let res = await this.getData("validate", data, false)
 			if (res?.data?.validate) {
 				let validate = res?.data?.validate

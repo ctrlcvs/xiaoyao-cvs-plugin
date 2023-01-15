@@ -209,10 +209,10 @@ export default class miHoYoApi {
 				query: `login_ticket=${data.loginTicket}&token_types=3&uid=${data.loginUid}`,
 				types: 'stoken'
 			},
-			//接口来源于外网扒来的 接口目前暂时免费后续看token是否收费，祝你生活愉快
+			//很抱歉由于有人恶意倒卖，不得已只能是关闭免费token了 开放免费供人使用还被恶意倒卖指责 开源确实不好弄捏
 			validate: {
 				url: `http://api.fuckmys.tk/geetest`,
-				query: `token=fuckmys&gt=${data.gt}&challenge=${data.challenge}`
+				query: `token=${data?.getToken}&gt=${data.gt}&challenge=${data.challenge}`
 			},
 			cloudLogin: {
 				url: `${mys.cloud_api}/hk4e_cg_cn/gamer/api/login`,
@@ -259,7 +259,7 @@ export default class miHoYoApi {
 				query: `callback=${data.challenge}`
 			},
 			loginByPassword: {
-				url: "https://passport-api.mihoyo.com/account/ma-cn-passport/app/loginByPassword",
+				url: `${mys.pass_api}/account/ma-cn-passport/app/loginByPassword`,
 				body: {
 					account: this.encrypt_data(data.account),
 					password: this.encrypt_data(data.password)
@@ -267,14 +267,14 @@ export default class miHoYoApi {
 				types: 'pass'
 			},
 			qrCodeLogin: {
-				url: `https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/fetch`,
+				url: `${mys.hk4_sdk}/hk4e_cn/combo/panda/qrcode/fetch`,
 				body: {
 					app_id: mys.app_id,
 					device: data.device
 				}
 			},
 			qrCodeQuery: {
-				url: `https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/query`,
+				url: `${mys.hk4_sdk}/hk4e_cn/combo/panda/qrcode/query`,
 				body: {
 					app_id: mys.app_id,
 					device: data.device,
@@ -282,7 +282,7 @@ export default class miHoYoApi {
 				}
 			},
 			getTokenByGameToken: {
-				url: `https://passport-api.mihoyo.com/account/ma-cn-session/app/getTokenByGameToken`,
+				url: `${mys.pass_api}/account/ma-cn-session/app/getTokenByGameToken`,
 				body: {
 					account_id: data.uid * 1,
 					game_token: data.token
@@ -290,7 +290,7 @@ export default class miHoYoApi {
 				types: 'pass'
 			},
 			getCookieAccountInfoByGameToken: {
-				url: `https://api-takumi.mihoyo.com/auth/api/getCookieAccountInfoByGameToken`,
+				url: `${mys.web_api}/auth/api/getCookieAccountInfoByGameToken`,
 				query: `account_id=${data.uid}&game_token=${data.token}`
 			},
 			GetCode:{

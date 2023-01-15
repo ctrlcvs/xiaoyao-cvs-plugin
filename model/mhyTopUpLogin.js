@@ -81,7 +81,6 @@ export default class mysTopLogin {
             Bot.logger.mark("[米哈游登录] 正在验证")
             this.aigis_captcha_data = JSON.parse(res.aigis_data.data)
             let vlData = await this.crack_geetest()
-            console.log(vlData)
             // let validate = await this.user.getData("validate", this.aigis_captcha_data, false)
             if (vlData?.geetest_validate) {
                 Bot.logger.mark("[米哈游登录] 验证成功")
@@ -104,12 +103,12 @@ export default class mysTopLogin {
         }
         if (res.retcode == 0) {
             let cookies = `stoken=${res.data.token.token}&mid=${res.data.user_info.mid}`
-            let cookie_token = this.user.getData("bbsGetCookie", { cookies })
-            let ltoken = await this.user.getData('getLtoken', { cookies: `${cookies};stuid=${res.data.user_info.aid};` }, false)
+            let cookie_token =await this.user.getData("bbsGetCookie", { cookies })
+            let ltoken = await this.user.getData('getLtoken', { cookies: `${cookies}` }, false)
             Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(cookie_token))}`)
             return {
                 cookie: `ltoken=${ltoken?.data?.ltoken};ltuid=${res.data.user_info.aid};cookie_token=${cookie_token?.data?.cookie_token};`,
-                stoken: `${cookies};stuid=${res.data.user_info.aid};`
+                stoken: `${cookies.replace('&',';')};stuid=${res.data.user_info.aid};`
             }
         } else {
             await this.e.reply(`错误：${JSON.stringify(res)}`, true)

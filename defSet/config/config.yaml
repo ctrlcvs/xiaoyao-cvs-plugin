@@ -37,3 +37,5 @@ noteSetAuth: 2
 noteTask: 0 0/10 * * * ? 
 # 全局开关体力推送  关闭后不可操作体力推送相关内容 true开启 false 关闭
 isNoteTask: false
+# 验证码接口token
+getToken: 
