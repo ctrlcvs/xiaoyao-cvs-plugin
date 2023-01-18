@@ -8,7 +8,8 @@ import {
 	help
 } from "./help.js";
 import {
-	genShenMap
+	rule as mapRule,
+	genShenMap,delMapData
 } from './map.js'
 import {
 	Note,
@@ -49,7 +50,7 @@ import {
 } from './mhyTopUpLogin.js'
 export {
 	updateRes, updateTemp,
-	delSign, gcPaylog,
+	delSign, gcPaylog,delMapData,
 	cloudSign,qrCodeLogin,
 	seach, bindLogin_ticket,payOrder,
 	bbsSign,UserPassMsg,UserPassLogin,
@@ -102,10 +103,7 @@ let rule = {
 		reg: "^#(体力模板(设置(.*)|列表(.*))|(我的体力模板列表|体力模板移除(.*)))$",
 		describe: "体力模板设置",
 	},
-	genShenMap: {
-		reg: "^#(.*)(在(哪|那)里*)$",
-		describe: "地图资源查询 #**在哪里",
-	},
+	
 	pokeNote: {
 		reg: "#poke#",
 		describe: "体力",
@@ -117,7 +115,8 @@ let rule = {
 	...userRule,
 	...signRule,
 	...adminRule,
-	...topupLoginRule
+	...topupLoginRule,
+	...mapRule
 };
 
 lodash.forEach(rule, (r) => {

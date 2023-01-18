@@ -14,11 +14,38 @@ let getPath={
 	"&map_id=7":["渊下宫",'渊下'],
 	"&map_id=9":['璃月地下','层岩地下','层岩']
 }
+export const rule = {
+	genShenMap: {
+		reg: "^#(刷新|更新)?(.*)(在(哪|那)里*)$",
+		describe: "地图资源查询 #**在哪里",
+	},
+	delMapData: {
+		reg: "^#(清空|清除)地图(缓存)?数据$",
+		describe: "清空地图下载数据",
+	},
+}
+
+export async function delMapData(e){
+	let urlFile = fs.readdirSync(path);
+	let count=0;
+	for (const item of urlFile) {
+		try {
+			await fs.unlinkSync(`${path}/${item}`)
+			count++;
+		} catch (error) {
+			e.reply('清空地图数据异常~')
+		}
+	}
+	e.reply(`共清除${count}个地图数据~\n您后续可通过直接重新获取地图资源数据~`)
+	return true
+}
+
 export async function genShenMap(e){
-	let msg= e.msg.replace(/#|(哪|那)|里|在/g,"")
-	var urlFile = fs.readdirSync(`./data/map/`);
+	let isBool=/刷新|更新/.test(e.msg)
+	let msg= e.msg.replace(/#|(哪|那)|里|在|刷新|更新/g,"")
+	let urlFile = fs.readdirSync(path);
 	let msgPath=`${path}/${msg}.jpg`
-	if(urlFile.includes(`${msg}.jpg`)){
+	if(urlFile.includes(`${msg}.jpg`)&&!isBool){
 		await e.reply(segment.image(`file://${msgPath}`))
 		return true;
 	}
