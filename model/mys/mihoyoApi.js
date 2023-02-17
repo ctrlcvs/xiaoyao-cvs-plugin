@@ -93,6 +93,10 @@ export default class miHoYoApi {
 		} else {
 			param.method = 'get'
 		}
+		//用于处理特殊情况
+		if(data.method){
+			param.method=data.method
+		}
 		let response = {}
 		let start = Date.now()
 		try {
@@ -251,11 +255,11 @@ export default class miHoYoApi {
 			},
 			//用于手动过验证码，账号密码登录需要
 			microgg: {
-				url: `https://s.microgg.cn/gt/https://validate.microgg.cn/`,
+				url: `https://challenge.minigg.cn/manual/index.html`,
 				query: `gt=${data.gt}&challenge=${data.challenge}`
 			},
 			microggVl: {
-				url: `https://validate.microgg.cn/`,
+				url: `https://challenge.minigg.cn/manual/`,
 				query: `callback=${data.challenge}`
 			},
 			loginByPassword: {

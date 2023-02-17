@@ -82,16 +82,16 @@ export default class mysTopLogin {
             this.aigis_captcha_data = JSON.parse(res.aigis_data.data)
             let vlData = await this.crack_geetest()
             // let validate = await this.user.getData("validate", this.aigis_captcha_data, false)
-            if (vlData?.geetest_validate) {
+            if (vlData?.data?.geetest_seccode) {
                 Bot.logger.mark("[米哈游登录] 验证成功")
             } else {
                 Bot.logger.error("[米哈游登录] 验证失败")
                 this.e.reply('接口效验失败，请重新尝试~')
                 return false
             }
-            let validate = vlData.geetest_validate
+            let validate =vlData?.data?.geetest_seccode.replace("|jordan",'')
             let aigis = res.aigis_data.session_id + ";" + Buffer.from(JSON.stringify({
-                geetest_challenge: vlData?.geetest_challenge,
+                geetest_challenge: vlData?.data?.geetest_challenge,
                 geetest_seccode: validate + "|jordan",
                 geetest_validate: validate
             })).toString("base64")
@@ -116,14 +116,14 @@ export default class mysTopLogin {
         }
     }
     async crack_geetest() {
-        let res = await this.user.getData("microgg", this.aigis_captcha_data, false)
+        let res =""; //await this.user.getData("microgg", this.aigis_captcha_data, false)
         Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(res))}`)
-        await this.e.reply(`请完成验证：${res.shorturl}`, true)
+        await this.e.reply(`请完成验证：https://challenge.minigg.cn/manual/index.html?gt=${this.aigis_captcha_data.gt}&challenge=${this.aigis_captcha_data.challenge}`, true)
         for (let n = 1; n < 60; n++) {
             await utils.sleepAsync(5000)
             try {
                 res = await this.user.getData("microggVl", this.aigis_captcha_data, false)
-                if (res.geetest_validate) {
+                if (res?.data?.geetest_seccode) {
                     return res
                 }
             } catch (err) {

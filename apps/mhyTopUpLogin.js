@@ -36,7 +36,6 @@ export const rule = {
 
 
 export async function payOrder(e){
-	console.log(e)
 	let Mys = new mys(e)
 	if(/商品列表/.test(e.msg)){
 		return await Mys.showgoods()

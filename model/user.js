@@ -610,11 +610,12 @@ export default class user {
 		bbsTask = false;
 	}
 	async bbsGeetest() {
+		if(!this.getToken) return ""
 		try {
 			let res = await this.getData('bbsGetCaptcha', false)
 			// let challenge = res.data["challenge"]
 			// await this.getData("geeType", res.data, false) 
-			res.data.getToken=this.getToken
+			res.data.getToken = this.getToken
 			res = await this.getData("validate", res.data, false)
 			if (res?.data?.validate) {
 				res = await this.getData("bbsCaptchaVerify", res.data, false)
@@ -628,8 +629,9 @@ export default class user {
 		return ""
 	}
 	async geetest(data) {
+		if(!this.getToken) return ""
 		try {
-			data.getToken=this.getToken
+			data.getToken = this.getToken
 			let res = await this.getData("validate", data, false)
 			if (res?.data?.validate) {
 				let validate = res?.data?.validate
@@ -783,6 +785,7 @@ export default class user {
 			if (res?.retcode != 0) {
 				return false;
 			}
+			console.log(res,this.e.sk)
 			let uids = []
 			for (let s of res.data.list) {
 				let datalist = {}
@@ -809,6 +812,7 @@ export default class user {
 			this.e.reply(msg)
 		}
 	}
+
 	async delSytk(path = yamlDataUrl, e, type = "stoken") {
 		await this.getCookie(e);
 		if (type != "stoken") {
