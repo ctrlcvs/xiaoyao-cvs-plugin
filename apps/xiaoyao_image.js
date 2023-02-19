@@ -13,7 +13,7 @@ import utils from "../model/mys/utils.js";
 const _path = process.cwd();
 
 const list = ["wuqi_tujian", "shiwu_tujian", "yuanmo_tujian", "mijin_tujian", "shengyiwu_tujian", "daoju_tujian"]
-const reglist = ["(#|专武|武器|图鉴)", "(#|食物|特殊料理|特色|料理|食材|图鉴)", "(#|原魔|怪物|图鉴|信息)", "(#|秘境|信息|图鉴)", "(#|圣遗物|图鉴|本|套)",
+const reglist = ["(#|专武|武器|图鉴)", "(#|食物|特殊料理|特色|料理|食材|图鉴)", "(#|原魔|怪物|图鉴|信息)", "(#|秘境|信息|图鉴)", "(#|圣遗物|图鉴)",
 	"(#|图鉴|道具)"
 ]
 let pathPlus = `${_path}/plugins/xiaoyao-cvs-plugin/resources/xiaoyao-plus/`

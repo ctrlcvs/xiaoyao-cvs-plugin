@@ -148,6 +148,7 @@ export default class user {
 											this.allSign[forum.name].sign++;
 										}
 										signMsg = `${item.nickname}-${item.game_uid}:验证码签到成功~\n`
+										item.total_sign_day++;
 										break;
 									} else {
 										if (this.allSign && !isgt) {
@@ -214,6 +215,7 @@ export default class user {
 				res = await this.getData("cloudGamer", {
 					reward_id
 				})
+				// let row=JSON.parse(reward_msg);
 				sendMsg += `\n领取奖励,ID:${reward_id},Msg:${reward_msg}`
 			}
 			res.message = sendMsg;
