@@ -333,10 +333,14 @@ export async function updCookie(e) {
 	for (let item of Object.keys(stoken)) {
 		e.region = getServer(stoken[item].uid)
 		e.uid = stoken[item].uid
+		if(!e?.uid){
+			Bot.logger.mark(`[刷新ck][stoken读取]qq:${e?.user_id}；uid:${e?.uid}`)
+			continue; //奇怪的东西
+		} 
 		let cookies = `uid=${stoken[item].stuid}&stoken=${stoken[item].stoken}`
 		if (stoken[item]?.mid) cookies += `&mid=${stoken[item]?.mid}`
 		let data = { cookies: cookies }
-		if(e.uid[0]>5) data.method='post'
+		if(e?.uid[0]>5) data.method='post'
 		let res = await user.getData("bbsGetCookie",data, false)
 		if (!res?.data) {
 			e.reply(`uid:${stoken[item].uid},请求异常：${res.message}`)
