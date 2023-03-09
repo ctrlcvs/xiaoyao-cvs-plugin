@@ -153,7 +153,7 @@ export default class mysTopLogin {
         try {
             let msg = this.e.msg.replace(/,|，|\|/g, ' ').split(' ')
             if (msg.length != 2) {
-                this.e.reply(`格式参考：#原神充值 6(商品ID) 120065390(uid)\n 可通过【#商品列表】获取可操作商品`)
+                this.e.reply(`格式参考：#原神充值 6(商品ID)\n 可通过【#商品列表】获取可操作商品`)
                 return true;
             }
             let iswx = msg[0].includes('微信') ? 'weixin' : 'alipay'

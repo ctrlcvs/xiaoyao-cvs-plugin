@@ -340,7 +340,7 @@ export default class user {
 				if (res?.message && res?.retcode == 0) {
 					Share++;
 				}
-				message += `共读取帖子记录${20 * sumcount}\n浏览：${trueDetail}  点赞：${Vote}  分享：${Share}`;
+				message += `共读取帖子记录${20 * sumcount}\n浏览：${trueDetail}  点赞：${Vote}  分享：${Share}\n`;
 				Bot.logger.mark(`\n用户${this.e.user_id}:\n${message}`)
 				await utils.randomSleepAsync(3);
 			}
