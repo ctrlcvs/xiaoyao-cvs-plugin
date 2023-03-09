@@ -126,15 +126,11 @@ export default class user {
 						}
 						message += `${item.nickname}-${item.game_uid}：今日已签到~\n`;
 					} else {
-						let isgt = false
 						let signMsg = '';
 						for (let i = 0; i < 2; i++) { //循环请求
 							await utils.sleepAsync(2000)
 							res = await this.getData("sign", data, false)
 							if (res?.data?.gt) {
-								if (!isgt) {
-									isgt = true;
-								}
 								let validate = await this.geetest(res.data)
 								if (validate) {
 									let header = {}
@@ -144,14 +140,14 @@ export default class user {
 									data.headers = header
 									res = await this.getData("sign", data, false)
 									if (!res?.data?.gt) {
-										if (this.allSign && !isgt) {
+										if (this.allSign) {
 											this.allSign[forum.name].sign++;
 										}
 										signMsg = `${item.nickname}-${item.game_uid}:验证码签到成功~\n`
 										item.total_sign_day++;
 										break;
 									} else {
-										if (this.allSign && !isgt) {
+										if (this.allSign) {
 											this.allSign[forum.name].error++;
 										}
 										item.is_sign = false;
@@ -159,7 +155,7 @@ export default class user {
 											`${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
 									}
 								} else {
-									if (this.allSign && !isgt) {
+									if (this.allSign ) {
 										this.allSign[forum.name].error++;
 									}
 									signMsg = `${item.nickname}-${item.game_uid}:验证码失败~\n`
@@ -344,7 +340,7 @@ export default class user {
 				if (res?.message && res?.retcode == 0) {
 					Share++;
 				}
-				message += `共读取帖子记录${20 * sumcount}\n浏览成功：${trueDetail}\n点赞成功：${Vote}\n分享成功：${Share}`;
+				message += `共读取帖子记录${20 * sumcount}\n浏览：${trueDetail}  点赞：${Vote}  分享：${Share}`;
 				Bot.logger.mark(`\n用户${this.e.user_id}:\n${message}`)
 				await utils.randomSleepAsync(3);
 			}
@@ -787,7 +783,7 @@ export default class user {
 			if (res?.retcode != 0) {
 				return false;
 			}
-			console.log(res,this.e.sk)
+			// console.log(res,this.e.sk)
 			let uids = []
 			for (let s of res.data.list) {
 				let datalist = {}

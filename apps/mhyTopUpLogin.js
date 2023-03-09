@@ -5,7 +5,7 @@ import mys from "../model/mhyTopUpLogin.js"
 import Common from "../components/Common.js";
 import { bindStoken } from './user.js'
 import utils from '../model/mys/utils.js';
-import {segment} from 'oicq'
+import { segment } from 'oicq'
 const _path = process.cwd();
 export const rule = {
 	qrCodeLogin: {
@@ -22,38 +22,34 @@ export const rule = {
 	},
 	payOrder: {
 		/** 命令正则匹配 */
-		reg: '^#?原神(微信)?充值(微信)?(.*)$',
+		reg: '^#?((原神(微信)?充值(微信)?(.*))|(#?商品列表)|(#?订单查询))$',
 		/** 执行方法 */
 		describe: '原神充值（离线）'
-	}, payOrder: {
-		reg: "^#?商品列表",
-		describe: '原神充值商品列表'
-	},payOrder:{
-		reg:'^#?订单查询',
-		describe:'充值订单查询'
 	}
 }
 
 
-export async function payOrder(e){
+export async function payOrder(e, { render }) {
 	let Mys = new mys(e)
-	if(/商品列表/.test(e.msg)){
+	if (/商品列表/.test(e.msg)) {
 		return await Mys.showgoods()
-	}else if (/订单查询/.test(e.msg)) {
-		return await Mys.checkOrder()
-	}else if(e.msg.includes('充值')){
-		return await Mys.GetCode()
+	} else if (/订单查询/.test(e.msg)) {
+		//容我摆烂会
+		e.reply('作者还在咕咕咕~~~~')
+		//return await Mys.checkOrder()
+	} else if (e.msg.includes('充值')) {
+		return await Mys.GetCode({ render })
 	}
 	return false;
-} 
+}
 
 export async function qrCodeLogin(e, { render }) {
 	let Mys = new mys(e)
 	let res = await Mys.qrCodeLogin()
 	if (!res?.data) return false;
-	e._reply=e.reply
-	let sendMsg=[segment.at(e.user_id),'\n请扫码以完成绑定\n']
-	e.reply=(msg)=>{
+	e._reply = e.reply
+	let sendMsg = [segment.at(e.user_id), '\n请扫码以完成绑定\n']
+	e.reply = (msg) => {
 		sendMsg.push(msg)
 	}
 	await Common.render(`qrCode/index`, {
@@ -61,14 +57,14 @@ export async function qrCodeLogin(e, { render }) {
 	}, {
 		e,
 		render,
-		scale: 1.2,retMsgId: true 
+		scale: 1.2, retMsgId: true
 	})
-	let r= await e._reply(sendMsg)
-	utils.recallMsg(e,r,30) //默认30，有需要请自行修改
-	e.reply=e._reply
+	let r = await e._reply(sendMsg)
+	utils.recallMsg(e, r, 30) //默认30，有需要请自行修改
+	e.reply = e._reply
 	res = await Mys.GetQrCode(res.data.ticket)
 	if (!res) return true;
-	await bindSkCK(e,res)
+	await bindSkCK(e, res)
 	return true;
 }
 

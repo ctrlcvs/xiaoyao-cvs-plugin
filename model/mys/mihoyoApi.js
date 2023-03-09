@@ -241,8 +241,9 @@ export default class miHoYoApi {
 			authKey: {
 				///account/auth/api/genAuthKey
 				url: `${this.apiMap.apiWeb}/binding/api/genAuthKey`,
+				// url:`https://gameapi-account.mihoyo.com/binding/api/genAuthKey`,
 				body: {
-					'auth_appid': 'webview_gacha',
+					'auth_appid':'webview_gacha',//'apicdkey',// 'webview_gacha',
 					'game_biz': this.isOs ? 'hk4e_global' : 'hk4e_cn',
 					'game_uid': this.e.uid * 1,
 					'region': this.e.region,
@@ -297,17 +298,30 @@ export default class miHoYoApi {
 				url: `${mys.web_api}/auth/api/getCookieAccountInfoByGameToken`,
 				query: `account_id=${data.uid}&game_token=${data.token}`
 			},
-			GetCode:{
-				url:``,
-				query:``
+			createOrder:{
+				url:`https://hk4e-sdk.mihoyo.com/hk4e_cn/mdk/atropos/api/createOrder`,
+				body: {
+					// "special_info": "topup_center",
+					"order": data.order,
+					"sign":  this.gen_sign(data.order)
+				},
+				types:'web'
 			},
 			goodsList:{
-				url:``,
-				query:``
+				url:`https://hk4e-sdk.mihoyo.com/hk4e_cn/mdk/shopwindow/shopwindow/fetchGoods`,
+				body:{
+					"released_flag": true,
+					"game": "hk4e_cn",
+					"region": "cn_gf01",
+					"uid": "1",
+					"account": "1"
+				},
+				types:'web'
 			},
 			checkOrder:{
-				url:``,
-				body:{}
+				url:`https://hk4e-sdk.mihoyo.com/hk4e_cn/mdk/atropos/api/checkOrder`,
+				query:`game=hk4e_cn&region=${utils.getServer(data.uid)}&order_no=${data.order_no}&uid=${data.uid}`,
+				types:'web'
 			}
 		}
 		if (!urlMap[type]) return false
@@ -473,12 +487,46 @@ export default class miHoYoApi {
 					Cookie: this.cookies,
 				}
 				break;
+				case "web":
+					header={
+						"Accept": "application/json, text/plain, */*",
+						"Accept-Encoding": "gzip, deflate, br",
+						"Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+						"Cache-Control": "no-cache",
+						"Connection": "keep-alive",
+						"Content-Type": "application/json;charset=UTF-8",
+						"Pragma": "no-cache",
+						"Referer": "https://webstatic.mihoyo.com/",
+						"sec-ch-ua": '"Not?A_Brand";v="8", "Chromium";v="108", "Microsoft Edge";v="108"',
+						"sec-ch-ua-mobile": "?0",
+						"sec-ch-ua-platform": '"Windows"',
+						"Sec-Fetch-Dest": "empty",
+						"Sec-Fetch-Mode": "cors",
+						"Sec-Fetch-Site": "same-site",
+						"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54",
+						"x-rpc-client_type": "4",
+						"x-rpc-device_id": "3b401c79-e221-46b9-8ca5-2e072e367333",
+						"x-rpc-language": "zh-cn",
+						Cookie: this.cookie,
+					}
+					break
 			default:
 				header = {}
 				break;
 		}
 		return header;
 	}
+	gen_sign(data) {
+		if(!data) return ''
+        let d = Object.keys(data).sort()
+        let news = {}
+        for (const item of d) {
+            news[item] = data[item]
+        }
+        // let sign = this.HMCASHA256(Object.values(news).join(''))
+		let sign = crypto.createHmac('sha256','6bdc3982c25f3f3c38668a32d287d16b').update(Object.values(news).join('')).digest('hex')
+        return sign
+    }
 	getStoken(userId) {
 		let file = `${yamlDataUrl}/${userId}.yaml`
 		try {

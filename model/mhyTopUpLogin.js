@@ -1,6 +1,7 @@
 import User from "./user.js";
 import utils from './mys/utils.js';
 import { segment } from 'oicq'
+import Common from "../components/Common.js";
 export default class mysTopLogin {
     constructor(e) {
         this.e = e;
@@ -14,9 +15,9 @@ export default class mysTopLogin {
     }
     //
     async qrCodeLogin() {
-        let RedisData=await utils.redisGet(this.e.user_id,"GetQrCode")
-        if(RedisData){
-            this.e.reply([segment.at(this.e.user_id),`前置二维码未扫描，请勿重复触发指令`])
+        let RedisData = await utils.redisGet(this.e.user_id, "GetQrCode")
+        if (RedisData) {
+            this.e.reply([segment.at(this.e.user_id), `前置二维码未扫描，请勿重复触发指令`])
             return false;
         }
         this.device = await utils.randomString(64)
@@ -31,15 +32,15 @@ export default class mysTopLogin {
         return res
     }
     async GetQrCode(ticket) {
-        await utils.redisSet(this.e.user_id,"GetQrCode",{GetQrCode:1},60*5) //设置5分钟缓存避免重复触发
+        await utils.redisSet(this.e.user_id, "GetQrCode", { GetQrCode: 1 }, 60 * 5) //设置5分钟缓存避免重复触发
         let res;
-        let RedisData=await utils.redisGet(this.e.user_id,"GetQrCode")
+        let RedisData = await utils.redisGet(this.e.user_id, "GetQrCode")
         for (let n = 1; n < 60; n++) {
             await utils.sleepAsync(5000)
             res = await this.user.getData("qrCodeQuery", {
                 device: this.device, ticket
             })
-            if (res?.data?.stat == "Scanned"&&RedisData.GetQrCode==1) {
+            if (res?.data?.stat == "Scanned" && RedisData.GetQrCode == 1) {
                 Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(res))}`)
                 await this.e.reply("二维码已扫描，请确认登录", true)
                 RedisData.GetQrCode++;
@@ -49,7 +50,7 @@ export default class mysTopLogin {
                 break
             }
         }
-        await utils.redisDel(this.e.user_id,'GetQrCode')
+        await utils.redisDel(this.e.user_id, 'GetQrCode')
         if (!res?.data?.payload?.raw) {
             await this.e.reply("验证超时", true)
             return false
@@ -89,7 +90,7 @@ export default class mysTopLogin {
                 this.e.reply('接口效验失败，请重新尝试~')
                 return false
             }
-            let validate =vlData?.data?.geetest_seccode.replace("|jordan",'')
+            let validate = vlData?.data?.geetest_seccode.replace("|jordan", '')
             let aigis = res.aigis_data.session_id + ";" + Buffer.from(JSON.stringify({
                 geetest_challenge: vlData?.data?.geetest_challenge,
                 geetest_seccode: validate + "|jordan",
@@ -103,12 +104,12 @@ export default class mysTopLogin {
         }
         if (res.retcode == 0) {
             let cookies = `stoken=${res.data.token.token}&mid=${res.data.user_info.mid}`
-            let cookie_token =await this.user.getData("bbsGetCookie", { cookies })
+            let cookie_token = await this.user.getData("bbsGetCookie", { cookies })
             let ltoken = await this.user.getData('getLtoken', { cookies: `${cookies}` }, false)
             Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(cookie_token))}`)
             return {
                 cookie: `ltoken=${ltoken?.data?.ltoken};ltuid=${res.data.user_info.aid};cookie_token=${cookie_token?.data?.cookie_token};`,
-                stoken: `${cookies.replace('&',';')};stuid=${res.data.user_info.aid};`
+                stoken: `${cookies.replace('&', ';')};stuid=${res.data.user_info.aid};`
             }
         } else {
             await this.e.reply(`错误：${JSON.stringify(res)}`, true)
@@ -116,7 +117,7 @@ export default class mysTopLogin {
         }
     }
     async crack_geetest() {
-        let res =""; //await this.user.getData("microgg", this.aigis_captcha_data, false)
+        let res = ""; //await this.user.getData("microgg", this.aigis_captcha_data, false)
         Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(res))}`)
         await this.e.reply(`请完成验证：https://challenge.minigg.cn/manual/index.html?gt=${this.aigis_captcha_data.gt}&challenge=${this.aigis_captcha_data.challenge}`, true)
         for (let n = 1; n < 60; n++) {
@@ -148,25 +149,64 @@ export default class mysTopLogin {
         return true;
     }
 
-    async GetCode() {
+    async GetCode({render}) {
         try {
             let msg = this.e.msg.replace(/,|，|\|/g, ' ').split(' ')
-            if (msg.length != 3) {
+            if (msg.length != 2) {
                 this.e.reply(`格式参考：#原神充值 6(商品ID) 120065390(uid)\n 可通过【#商品列表】获取可操作商品`)
                 return true;
             }
             let iswx = msg[0].includes('微信') ? 'weixin' : 'alipay'
-            if (msg[2].length != 9) {
-                this.e.reply('uid格式不对!')
-                return true;
+            // if (msg[2].length != 9) {
+            //     this.e.reply('uid格式不对!')
+            //     return true;
+            // }
+            let goods = (await this.goodsList())[msg[1]]
+            // let ckData=this.e.user.ckData
+            let device_id = utils.randomString(4)
+            let order = {
+                "account": "196576671",
+                "region": utils.getServer(this.e.uid),
+                "uid": this.e.uid,
+                "delivery_url": "",
+                "device": device_id,
+                "channel_id": 1,
+                "client_ip": "",
+                "client_type": 4,
+                "game": this.e.uid[0] * 1 > 5 ? 'hk4e_global' : "hk4e_cn",
+                "amount": goods.price,
+                "goods_num": 1,
+                "goods_id": goods?.goods_id,
+                "goods_title": goods?.goods_name + (Number(goods.goods_unit) > 0 ? "×" + goods.goods_unit : ""),
+                "price_tier": goods?.tier_id,
+                "currency": "CNY",
+                "pay_plat": iswx,
             }
-            let res = await this.user.getData('GetCode', { msg: this.e.msg.replace('#', '') })
+            if (iswx != 'weixin') {
+                order["pay_type"] = iswx
+                order["pay_vendor"] = iswx
+            }
+            let res = await this.user.getData('createOrder', { order, headers: { "x-rpc-device_id": device_id } })
             if (!res) return false;
             if (res?.code != 200 && res?.retcode != 0) {
+                this.e.reply('生成充值订单失败：' + res.message)
                 return true
             }
-            this.e.reply([`uid:${res.data.uid},请使用${iswx == 'weixin' ? '微信' : "支付宝"}扫码支付：`, segment.image(res.data.base64.replace("data:image/png;base64,", "base64://")), `\n订单号：${res['data']['order_no']}\n 价格：${(res['data']['amount']) / 100}元`])
+            //记录操作日志
+            logger.mark(`当前操作用户：${this.e.user_id},操作uid:${this.e.uid},操作商品id:${goods?.goods_id},操作商品：${goods?.goods_name + (Number(goods.goods_unit) > 0 ? "×" + goods.goods_unit : "")}`)
+            logger.mark(`支付链接：${res['data']['encode_order']}\n订单号：${res['data']['order_no']}\n 价格：${(res['data']['amount']) / 100}元`)
+            let r= await Common.render(`pay/index`, {
+                url: res.data.encode_order,
+                data:res.data,uid:this.e.uid,
+                goods,
+            }, {
+                e:this.e,
+                render,
+                scale: 1.2, retMsgId: true
+            })
+            return true
         } catch (error) {
+            console.log(error)
             this.e.reply('出问题了捏')
         }
         return true;
@@ -174,8 +214,11 @@ export default class mysTopLogin {
 
     async goodsList() {
         let goods = await this.user.getData("goodsList")
-        if (!goods) return false;
-        return goods;
+        if (goods?.retcode != 0) {
+            this.e.reply(goods.message)
+            return false;
+        }
+        return goods?.data?.goods_list;
     }
     async checkOrder() {
         let msg, uid, order_no
