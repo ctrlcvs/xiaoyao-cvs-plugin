@@ -1,0 +1,71 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+<style>
+    .container {
+        width: 600px !important;
+        font-size: 1.125rem;
+        /* 背景色 渐变 */
+        background-image: linear-gradient( rgba(62, 214, 252),rgba(137, 240, 225 ),rgba(192, 240, 238));  
+        padding: 20px 0 10px 0 !important; 
+    }  
+
+    .image {
+        margin-right: 10px;
+    } 
+
+    .topTitle table {
+        margin: 0 auto;
+    }
+
+    .txt {
+        text-align: center;
+        color: red;
+        margin-top: 10px;
+        padding: 0 10px;
+    }
+
+    .bodys {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .order div {
+        margin-top: 10px;
+    }
+</style>
+{{/block}}
+{{block 'main'}}
+<div class="bodys">
+    <div class="image">
+        <img src="{{goods.goods_icon}}">
+    </div>
+    <div class="order">
+        <div>uid:{{uid}}</div>
+        <!-- <div>ltuid:{{data.account}}</div> -->
+        <div>订单号:{{data.order_no}}</div>
+        <div>商品:{{goods.goods_name}} x {{goods.goods_unit}}</div>
+        <div>价格：{{goods.price/100}}</div>
+    </div>
+    <div class="topTitle">
+
+    </div>
+</div>
+
+<div class="txt">
+    免责声明：请勿随意扫码，谁触发谁扫码，bot仅提供功能。<br />如果恶意抢码导致账号充值未到账的请自行承担后果 <br> ps来源:米游社>联系客服>米游社>原神网页充值
+</div>
+<script src="{{_res_path}}/qrCode/js/jquery-1.10.2.min.js"></script>
+<script src="{{_res_path}}/qrCode/js/jquery.qrcode.min.js"></script>
+<script>
+    var config = {
+        width: 300,//值是number类型, 表示的单位是px 必须传递
+        height: 300,//值是number类型, 表示的单位是px 必须传递
+        text: "{{url}}".replace(/#38;/g, ''),//text就表示二维码中存储的数据 必须传递
+        correctLevel: 2,//取值为0|1|2|3 表示二维码的纠错级别0:L/1:M/2:Q/3:H ,默认0 可选参数
+        render: "table"//取值:table/canvas , 默认table 可选参数
+    };
+    $(".topTitle").qrcode(config);
+</script>
+{{/block}}
