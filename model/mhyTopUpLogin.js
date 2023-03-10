@@ -149,7 +149,7 @@ export default class mysTopLogin {
         return true;
     }
 
-    async GetCode({render}) {
+    async GetCode({ render }) {
         try {
             let msg = this.e.msg.replace(/,|，|\|/g, ' ').split(' ')
             if (msg.length != 2) {
@@ -162,10 +162,14 @@ export default class mysTopLogin {
             //     return true;
             // }
             let goods = (await this.goodsList())[msg[1]]
-            // let ckData=this.e.user.ckData
+            if (!this.e.cookie) {
+                this.e.reply('请先 #绑定cookie')
+                return true;
+            }
+            let ckData =await utils.getCookieMap(this.e.cookie)
             let device_id = utils.randomString(4)
             let order = {
-                "account": "196576671",
+                "account":ckData?.get('ltuid')||ckData.get('account_id'),
                 "region": utils.getServer(this.e.uid),
                 "uid": this.e.uid,
                 "delivery_url": "",
@@ -195,12 +199,12 @@ export default class mysTopLogin {
             //记录操作日志
             logger.mark(`当前操作用户：${this.e.user_id},操作uid:${this.e.uid},操作商品id:${goods?.goods_id},操作商品：${goods?.goods_name + (Number(goods.goods_unit) > 0 ? "×" + goods.goods_unit : "")}`)
             logger.mark(`支付链接：${res['data']['encode_order']}\n订单号：${res['data']['order_no']}\n 价格：${(res['data']['amount']) / 100}元`)
-            let r= await Common.render(`pay/index`, {
+            let r = await Common.render(`pay/index`, {
                 url: res.data.encode_order,
-                data:res.data,uid:this.e.uid,
+                data: res.data, uid: this.e.uid,
                 goods,
             }, {
-                e:this.e,
+                e: this.e,
                 render,
                 scale: 1.2, retMsgId: true
             })
