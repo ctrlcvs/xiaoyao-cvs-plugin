@@ -157,10 +157,10 @@ export default class mysTopLogin {
                 return true;
             }
             let iswx = msg[0].includes('微信') ? 'weixin' : 'alipay'
-            // if (msg[2].length != 9) {
-            //     this.e.reply('uid格式不对!')
-            //     return true;
-            // }
+            if (msg[1].length != 1) {
+                his.e.reply(`格式参考：#原神充值 6(商品ID)\n 可通过【#商品列表】获取可操作商品`)
+                return true;
+            }
             let goods = (await this.goodsList())[msg[1]]
             if (!this.e.cookie) {
                 this.e.reply('请先 #绑定cookie')
