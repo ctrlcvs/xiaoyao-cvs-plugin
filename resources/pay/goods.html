@@ -1,0 +1,58 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+<style>
+    .container {
+        width: 700px !important;
+        font-size: 1.125rem;
+        /* 背景色 渐变 */
+        background-image: linear-gradient( rgba(62, 214, 252),rgba(137, 240, 225 ),rgba(192, 240, 238));  
+        padding: 20px 0 10px 0 !important; 
+    }  
+
+    .image {
+        margin-right: 20px;
+        margin-left: 20px;
+    } 
+
+    .topTitle table {
+        margin: 0 auto;
+    }
+    .text{
+        line-height: 25px;
+    }
+    .bodys {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content:left;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .order div {
+        margin-top: 10px;
+    }
+    .txt {
+        text-align: center;
+        color: red;
+        margin-top: 10px;
+        padding: 0 10px;
+    }
+</style>
+{{/block}}
+{{block 'main'}}
+<div class="bodys">
+    {{each goodslist}}
+    <div class="image">
+        <img src="{{$value.goods_icon}}">
+       
+    </div>
+    <div class="text">
+        商品ID：{{$value.index}} <br/> {{$value.num}} <br/>  价格：{{$value.price / 100}}元
+    </div>
+    {{/each}}
+</div>
+
+<div class="txt">
+    bot使用指令：#原神充值 0(商品Id) <br> ps来源:米游社>联系客服>米游社>原神网页充值
+</div>
+{{/block}}

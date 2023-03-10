@@ -32,7 +32,7 @@ export const rule = {
 export async function payOrder(e, { render }) {
 	let Mys = new mys(e)
 	if (/商品列表/.test(e.msg)) {
-		return await Mys.showgoods()
+		return await Mys.showgoods( { render })
 	} else if (/订单查询/.test(e.msg)) {
 		//容我摆烂会
 		e.reply('作者还在咕咕咕~~~~')

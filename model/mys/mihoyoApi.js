@@ -299,7 +299,7 @@ export default class miHoYoApi {
 				query: `account_id=${data.uid}&game_token=${data.token}`
 			},
 			createOrder:{
-				url:`https://hk4e-sdk.mihoyo.com/hk4e_cn/mdk/atropos/api/createOrder`,
+				url:`${mys.hk4_sdk}/hk4e_cn/mdk/atropos/api/createOrder`,
 				body: {
 					// "special_info": "topup_center",
 					"order": data.order,
@@ -308,7 +308,7 @@ export default class miHoYoApi {
 				types:'web'
 			},
 			goodsList:{
-				url:`https://hk4e-sdk.mihoyo.com/hk4e_cn/mdk/shopwindow/shopwindow/fetchGoods`,
+				url:`${mys.hk4_sdk}/hk4e_cn/mdk/shopwindow/shopwindow/fetchGoods`,
 				body:{
 					"released_flag": true,
 					"game": "hk4e_cn",
@@ -319,7 +319,7 @@ export default class miHoYoApi {
 				types:'web'
 			},
 			checkOrder:{
-				url:`https://hk4e-sdk.mihoyo.com/hk4e_cn/mdk/atropos/api/checkOrder`,
+				url:`${mys.hk4_sdk}/hk4e_cn/mdk/atropos/api/checkOrder`,
 				query:`game=hk4e_cn&region=${utils.getServer(data.uid)}&order_no=${data.order_no}&uid=${data.uid}`,
 				types:'web'
 			}

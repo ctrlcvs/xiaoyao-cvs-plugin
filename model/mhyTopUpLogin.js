@@ -9,6 +9,7 @@ export default class mysTopLogin {
         //消息提示以及风险警告
         this.sendMsgUser = `免责声明:您将通过扫码完成获取米游社sk以及ck。\n本Bot将不会保存您的登录状态。\n我方仅提供米游社查询及相关游戏内容服务,若您的账号封禁、被盗等处罚与我方无关。\n害怕风险请勿扫码~`
         this.sendMsgUserPassLogin = `免责声明:您将通过密码完成获取米游社sk以及ck。\n本Bot将不会保存您的账号和密码。\n我方仅提供米游社查询及相关游戏内容服务,若您的账号封禁、被盗等处罚与我方无关。\n害怕风险请勿发送账号密码~`
+        this.sendMagPay = `格式参考：#原神充值 6(商品ID)\n可通过【#商品列表】获取可操作商品`
     }
     async init() {
         this.user = new User(this.e)
@@ -135,17 +136,24 @@ export default class mysTopLogin {
         return false;
     }
 
-    async showgoods() {
+    async showgoods({ render }) {
         let goodslist = await this.goodsList()
         if (!goodslist) return false;
-        let msg = ['当前支持的商品有：\n']
+        // let msg = ['当前支持的商品有：\n']
         for (const [i, goods] of Object.entries(goodslist)) {
             if (i == 'api') continue;
-            let num = `${goods['goods_name']}×${(goods['goods_unit'])}` + ((goods['goods_unit']) > 0 ? goods["goods_name"] : '')
+            goods.num = `${goods['goods_name']}×${(goods['goods_unit'])}` + ((goods['goods_unit']) < 0 ? goods["goods_name"] : '')
             // console.log(`ID：${i}  ${num}  价格：${parseInt(goods['price']) / 100}元`)
-            msg.push(`ID：${i}  ${num}  价格：${parseInt(goods['price']) / 100}元\n`)
+            goods.index = i
+            // goods.msg =`ID：${i}  ${num}  价格：${parseInt(goods['price']) / 100}元\n`
         }
-        this.e.reply(msg)
+        let r = await Common.render(`pay/goods`, {
+            goodslist
+        }, {
+            e: this.e,
+            render,
+            scale: 1.2, retMsgId: true
+        })
         return true;
     }
 
@@ -153,12 +161,12 @@ export default class mysTopLogin {
         try {
             let msg = this.e.msg.replace(/,|，|\|/g, ' ').split(' ')
             if (msg.length != 2) {
-                this.e.reply(`格式参考：#原神充值 6(商品ID)\n 可通过【#商品列表】获取可操作商品`)
+                this.e.reply(this.sendMagPay)
                 return true;
             }
             let iswx = msg[0].includes('微信') ? 'weixin' : 'alipay'
             if (msg[1].length != 1) {
-                his.e.reply(`格式参考：#原神充值 6(商品ID)\n 可通过【#商品列表】获取可操作商品`)
+                this.e.reply(this.sendMagPay)
                 return true;
             }
             let goods = (await this.goodsList())[msg[1]]
@@ -166,10 +174,10 @@ export default class mysTopLogin {
                 this.e.reply('请先 #绑定cookie')
                 return true;
             }
-            let ckData =await utils.getCookieMap(this.e.cookie)
+            let ckData = await utils.getCookieMap(this.e.cookie)
             let device_id = utils.randomString(4)
             let order = {
-                "account":ckData?.get('ltuid')||ckData.get('account_id'),
+                "account": ckData?.get('ltuid') || ckData.get('account_id'),
                 "region": utils.getServer(this.e.uid),
                 "uid": this.e.uid,
                 "delivery_url": "",
@@ -199,6 +207,7 @@ export default class mysTopLogin {
             //记录操作日志
             logger.mark(`当前操作用户：${this.e.user_id},操作uid:${this.e.uid},操作商品id:${goods?.goods_id},操作商品：${goods?.goods_name + (Number(goods.goods_unit) > 0 ? "×" + goods.goods_unit : "")}`)
             logger.mark(`支付链接：${res['data']['encode_order']}\n订单号：${res['data']['order_no']}\n 价格：${(res['data']['amount']) / 100}元`)
+            //待定，等周末再咕
             let r = await Common.render(`pay/index`, {
                 url: res.data.encode_order,
                 data: res.data, uid: this.e.uid,
