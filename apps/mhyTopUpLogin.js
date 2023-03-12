@@ -22,7 +22,7 @@ export const rule = {
 	},
 	payOrder: {
 		/** 命令正则匹配 */
-		reg: '^#?((原神(微信)?充值(微信)?(.*))|(商品列表)|(订单查询))$',
+		reg: '^#?((原神(微信)?充值(微信)?(.*))|((商品|充值)列表)|((订单|查询)(订单|查询)(.*)))$',
 		/** 执行方法 */
 		describe: '原神充值（离线）'
 	}
@@ -31,12 +31,10 @@ export const rule = {
 
 export async function payOrder(e, { render }) {
 	let Mys = new mys(e)
-	if (/商品列表/.test(e.msg)) {
+	if (/(商品|充值)列表/.test(e.msg)) {
 		return await Mys.showgoods( { render })
-	} else if (/订单查询/.test(e.msg)) {
-		//容我摆烂会
-		e.reply('作者还在咕咕咕~~~~')
-		//return await Mys.checkOrder()
+	} else if (/(订单|查询)(订单|查询)/.test(e.msg)) {
+		return await Mys.checkOrder()
 	} else if (e.msg.includes('充值')) {
 		return await Mys.GetCode({ render })
 	}
