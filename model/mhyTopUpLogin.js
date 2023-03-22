@@ -44,12 +44,12 @@ export default class mysTopLogin {
                 device: this.device, ticket
             })
             if (res?.data?.stat == "Scanned" && RedisData.GetQrCode == 1) {
-                Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(res))}`)
+                Bot.logger.mark(`[米哈游登录] ${logger.blue(JSON.stringify(res))}`)
                 await this.e.reply("二维码已扫描，请确认登录", true)
                 RedisData.GetQrCode++;
             }
             if (res?.data?.stat == "Confirmed") {
-                Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(res))}`)
+                Bot.logger.mark(`[米哈游登录] ${logger.blue(JSON.stringify(res))}`)
                 break
             }
         }
@@ -80,7 +80,7 @@ export default class mysTopLogin {
             account: msg[0], password: msg[1],
         }
         let res = await this.user.getData("loginByPassword", body, "")
-        Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(res))}`)
+        Bot.logger.mark(`[米哈游登录] ${logger.blue(JSON.stringify(res))}`)
         if (res.retcode == -3101) {
             Bot.logger.mark("[米哈游登录] 正在验证")
             this.aigis_captcha_data = JSON.parse(res.aigis_data.data)
@@ -103,13 +103,13 @@ export default class mysTopLogin {
                 'x-rpc-aigis': aigis,
             }
             res = await this.user.getData("loginByPassword", body, false)
-            Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(res))}`)
+            Bot.logger.mark(`[米哈游登录] ${logger.blue(JSON.stringify(res))}`)
         }
         if (res.retcode == 0) {
             let cookies = `stoken=${res.data.token.token}&mid=${res.data.user_info.mid}`
             let cookie_token = await this.user.getData("bbsGetCookie", { cookies })
             let ltoken = await this.user.getData('getLtoken', { cookies: `${cookies}` }, false)
-            Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(cookie_token))}`)
+            Bot.logger.mark(`[米哈游登录] ${logger.blue(JSON.stringify(cookie_token))}`)
             return {
                 cookie: `ltoken=${ltoken?.data?.ltoken};ltuid=${res.data.user_info.aid};cookie_token=${cookie_token?.data?.cookie_token};`,
                 stoken: `${cookies.replace('&', ';')};stuid=${res.data.user_info.aid};`
@@ -121,7 +121,7 @@ export default class mysTopLogin {
     }
     async crack_geetest() {
         let res = ""; //await this.user.getData("microgg", this.aigis_captcha_data, false)
-        Bot.logger.mark(`[米哈游登录] ${Bot.logger.blue(JSON.stringify(res))}`)
+        Bot.logger.mark(`[米哈游登录] ${logger.blue(JSON.stringify(res))}`)
         await this.e.reply(`请完成验证：https://challenge.minigg.cn/manual/index.html?gt=${this.aigis_captcha_data.gt}&challenge=${this.aigis_captcha_data.challenge}`, true)
         for (let n = 1; n < 60; n++) {
             await utils.sleepAsync(5000)
