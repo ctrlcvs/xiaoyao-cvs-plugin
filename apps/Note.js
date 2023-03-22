@@ -1,6 +1,3 @@
-import {
-	segment
-} from "oicq";
 import fetch from "node-fetch";
 import fs from "fs";
 import {

@@ -1,8 +1,5 @@
 import User from "../model/user.js"
 import moment from 'moment';
-import {
-	segment
-} from "oicq";
 export const rule = {
 	sign: {
 		reg: `^#*(原神|崩坏3|崩坏2|未定事件簿)签到$`,

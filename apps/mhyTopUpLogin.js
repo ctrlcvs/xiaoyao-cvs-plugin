@@ -5,7 +5,6 @@ import mys from "../model/mhyTopUpLogin.js"
 import Common from "../components/Common.js";
 import { bindStoken } from './user.js'
 import utils from '../model/mys/utils.js';
-import { segment } from 'oicq'
 const _path = process.cwd();
 export const rule = {
 	qrCodeLogin: {

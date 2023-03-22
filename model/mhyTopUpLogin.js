@@ -1,6 +1,5 @@
 import User from "./user.js";
 import utils from './mys/utils.js';
-import { segment } from 'oicq'
 import Common from "../components/Common.js";
 export default class mysTopLogin {
     constructor(e) {
