@@ -5,6 +5,10 @@ import {
 } from './components/Changelog.js'
 import Data from './components/Data.js'
 
+if (!global.segment) {
+  global.segment = (await import("oicq")).segment
+}
+
 export * from './apps/index.js'
 let index = {
 	atlas: {}

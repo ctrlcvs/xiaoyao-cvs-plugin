@@ -1,5 +1,4 @@
 import { Cfg } from "./index.js";
-import { segment } from "oicq";
 import { currentVersion, yunzaiVersion,isV3 } from "./Changelog.js";
 export const render = async function (path, params, cfg) {
   let paths = path.split("/");

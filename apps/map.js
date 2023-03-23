@@ -5,9 +5,6 @@ import {
 import fs from "fs";
 import fetch from "node-fetch";
 import utils from "../model/mys/utils.js";
-import {
-	segment
-} from "oicq";
 let path = './data/map'
 //mapId-地图别名
 let getPath={
