@@ -201,6 +201,7 @@ export default class user {
 	async cloudSign() {
 		await this.cloudSeach()
 		let res = await this.getData("cloudReward")
+		Bot.logger.mark(`\n云原神签到用户:${this.e.user_id}:[接口返回]${res.message}\n`)
 		if (res?.data?.list?.length == 0 || !res?.data?.list) {
 			res.message = `您今天的奖励已经领取了~`
 		} else {
@@ -467,6 +468,7 @@ export default class user {
 		let mul = e;
 		Bot.logger.mark(`云原神签到任务开始`);
 		let files = fs.readdirSync(this.yunPath).filter(file => file.endsWith('.yaml'))
+		if(files.length==0) return;
 		let isCloudSignMsg = this.configSign.isCloudSignMsg
 		let userIdList = (files.join(",").replace(/.yaml/g, "").split(","))
 		if (cloudTask) {
@@ -507,8 +509,8 @@ export default class user {
 					utils.relpyPrivate(qq, msg + "\n云原神自动签到成功");
 				}
 			};
-			this.getyunToken(e)
 			this.e = e
+			await this.getyunToken(e)
 			let res = await this.cloudSign();
 			this.e.reply(res.message)
 			await utils.sleepAsync(10000);
