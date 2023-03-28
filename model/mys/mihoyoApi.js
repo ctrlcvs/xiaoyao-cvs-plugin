@@ -252,7 +252,7 @@ export default class miHoYoApi {
 			},
 			getLtoken: {
 				url: `${mys.pass_api}/account/auth/api/getLTokenBySToken`,
-				query: `${data.cookies}`,
+				query: `${data?.cookies?.replace(/;/g,'&')}`,
 			},
 			//用于手动过验证码，账号密码登录需要
 			microgg: {
@@ -305,7 +305,7 @@ export default class miHoYoApi {
 					"order": data.order,
 					"sign":  this.gen_sign(data.order)
 				},
-				types:'web'
+				types:'pay'
 			},
 			goodsList:{
 				url:`${mys.hk4_sdk}/hk4e_cn/mdk/shopwindow/shopwindow/fetchGoods`,
@@ -316,12 +316,12 @@ export default class miHoYoApi {
 					"uid": "1",
 					"account": "1"
 				},
-				types:'web'
+				types:'pay'
 			},
 			checkOrder:{
 				url:`${mys.hk4_sdk}/hk4e_cn/mdk/atropos/api/checkOrder`,
 				query:`game=hk4e_cn&region=${utils.getServer(data.uid)}&order_no=${data.order_no}&uid=${data.uid}`,
-				types:'web'
+				types:'pay'
 			}
 		}
 		if (!urlMap[type]) return false
@@ -473,21 +473,20 @@ export default class miHoYoApi {
 					"x-rpc-device_model": utils.randomString(16),
 					'x-rpc-app_version': mys.APP_VERSION,
 					'x-rpc-game_biz': 'bbs_cn',
+					"x-rpc-sys_version": "11",
 					"x-rpc-aigis": '',
 					"Content-Type": "application/json;",
 					"x-rpc-client_type": "2",
 					"DS": this.getDs2('', body, mys.passSalt),
 					"x-rpc-sdk_version": '1.3.1.2',
-					"User-Agent": "okhttp/4.9.3",
-					"Referer": "cors",
-					'Host': 'passport-api.mihoyo.com',
+					"User-Agent": "okhttp/4.8.0",
 					"Connection": 'Keep-Alive',
 					"Accept-Encoding": "gzip, deflate, br",
 					"x-rpc-channel": "appstore",
 					Cookie: this.cookies,
 				}
 				break;
-				case "web":
+				case "pay":
 					header={
 						"Accept": "application/json, text/plain, */*",
 						"Accept-Encoding": "gzip, deflate, br",
