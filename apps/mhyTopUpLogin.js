@@ -5,6 +5,9 @@ import mys from "../model/mhyTopUpLogin.js"
 import Common from "../components/Common.js";
 import { bindStoken } from './user.js'
 import utils from '../model/mys/utils.js';
+import {
+	Cfg,
+} from "../components/index.js";
 const _path = process.cwd();
 export const rule = {
 	qrCodeLogin: {
@@ -31,7 +34,7 @@ export const rule = {
 export async function payOrder(e, { render }) {
 	let Mys = new mys(e)
 	if (/(商品|充值)列表/.test(e.msg)) {
-		return await Mys.showgoods( { render })
+		return await Mys.showgoods({ render })
 	} else if (/(订单|查询)(订单|查询)/.test(e.msg)) {
 		return await Mys.checkOrder()
 	} else if (e.msg.includes('充值')) {
@@ -41,6 +44,17 @@ export async function payOrder(e, { render }) {
 }
 
 export async function qrCodeLogin(e, { render }) {
+	let power = Cfg.get("mhy.qrcode")
+	if (power === 3) {
+		return false;
+	} else {
+		if (power == 2 && !e.isPrivate) {
+			return false;
+		}
+		if (power == 1 && !e.isGroup) {
+			return false;
+		}
+	}
 	let Mys = new mys(e)
 	let res = await Mys.qrCodeLogin()
 	if (!res?.data) return false;
@@ -89,7 +103,7 @@ export async function UserPassLogin(e) {
 export async function bindSkCK(e, res) {
 	e.msg = res?.stoken, e.raw_message = res?.stoken
 	e.isPrivate = true
-	await bindStoken(e,'1')
+	await bindStoken(e, '1')
 	e.ck = res?.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
 	if (isV3) {
 		let userck = (await import(`file://${_path}/plugins/genshin/model/user.js`)).default
