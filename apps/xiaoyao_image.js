@@ -70,7 +70,7 @@ export async function getBasicVoide(e) {
 	if (source) {
 		let imgPath = await redis.get(`xiaoyao:basic:${source.message_id}`)
 		if (imgPath) {
-			e.reply([segment.video(`file:///${imgPath}`)])
+			e.reply([segment.video(`file://${imgPath}`)])
 			return true
 		}
 		if (source.time) {
@@ -129,7 +129,7 @@ const filePath = async function (e) {
 		}
 		let path = `${pathPlus}${val}/${msg}.png`
 		if (fs.existsSync(path)) {
-			e.reply(segment.image(`file:///${path}`));
+			e.reply(segment.image(`file://${path}`));
 			return true;
 		}
 	}
@@ -154,9 +154,9 @@ const send_Msg = async function (e, type, name) {
 	if (!fs.existsSync(path)) {
 		return false;
 	}
-	let msg = segment.image(`file:///${path}`)
+	let msg = segment.image(`file://${path}`)
 	try {
-		if (/动态|幻影/.test(e.msg)) msg = segment.video(`file:///${path.replace(/\.png|\.jpg/, '.mp4')}`)
+		if (/动态|幻影/.test(e.msg)) msg = segment.video(`file://${path.replace(/\.png|\.jpg/, '.mp4')}`)
 	} catch (error) {
 		Bot.logger.error(`发送七圣动态数据失败:` + error)
 		// error

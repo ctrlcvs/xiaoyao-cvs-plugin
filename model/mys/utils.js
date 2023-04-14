@@ -70,10 +70,15 @@ export async function replyMake(e, _msg, lenght) {
 			user_id: Bot.uin
 		})
 	}
-	if (e._reply) {
-		e._reply(await Bot.makeForwardMsg(msgList));
+	if (e.isGroup) {
+		msgList = await e.group.makeForwardMsg(msgList)
 	} else {
-		e.reply(await Bot.makeForwardMsg(msgList));
+		msgList = await e.friend.makeForwardMsg(msgList)
+	}
+	if (e._reply) {
+		e._reply(msgList);
+	} else {
+		e.reply(msgList);
 	}
 }
 

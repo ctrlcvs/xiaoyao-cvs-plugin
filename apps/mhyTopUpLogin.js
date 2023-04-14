@@ -92,12 +92,12 @@ export async function bindSkCK(e, res) {
 	await bindStoken(e)
 	e.ck = res?.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
 	if (isV3) {
-		let userck = (await import(`file:///${_path}/plugins/genshin/model/user.js`)).default
+		let userck = (await import(`file://${_path}/plugins/genshin/model/user.js`)).default
 		await (new userck(e)).bing()
 	} else {
 		let {
 			bingCookie
-		} = (await import(`file:///${_path}/lib/app/dailyNote.js`))
+		} = (await import(`file://${_path}/lib/app/dailyNote.js`))
 		await bingCookie(e)
 	}
 }
