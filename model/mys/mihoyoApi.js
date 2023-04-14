@@ -131,6 +131,7 @@ export default class miHoYoApi {
 		return res
 	}
 	getUrl(type, board, data) {
+		// if(/qrCodeLogin|qrCodeQuery|getTokenByGameToken|getCookieAccountInfoByGameToken/.test(type)) this.isOs=false;
 		let urlMap = {
 			userGameInfo: { //通用查询
 				url: `${this.apiMap.apiWeb}/binding/api/getUserGameRolesByCookie`,

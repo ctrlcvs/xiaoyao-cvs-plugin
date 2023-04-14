@@ -242,7 +242,7 @@ export async function bindLogin_ticket(e) {
 	return false;
 }
 
-export async function bindStoken(e) {
+export async function bindStoken(e, uid = '') {
 	if (!e.isPrivate) {
 		e.reply("请私聊发送")
 		return true;
@@ -250,23 +250,24 @@ export async function bindStoken(e) {
 	let msg = e.msg;
 	let user = new User(e);
 	await user.cookie(e)
+	e.uid = uid || e.uid
 	e.region = getServer(e.uid)
 	e.cks = msg.replace(/;/g, '&').replace(/stuid/, "uid")
 	e.sk = await utils.getCookieMap(msg)
-	let res = await user.getData("bbsGetCookie", { cookies: e.cks })
+	let res = await user.getData("bbsGetCookie", { cookies: e.cks }, false)
 	if (!res?.data) {
-		e.uid="64"
+		e.uid = "64"
 		e.region = getServer(e.uid)
-		res = await user.getData("bbsGetCookie", { cookies: e.cks,method:'post'},false)
-		if(!res?.data){
+		res = await user.getData("bbsGetCookie", { cookies: e.cks, method: 'post' }, false)
+		if (!res?.data) {
 			await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
 			return true;
-		}else{
+		} else {
 			await user.seachUid(res);
 			return true;
 		}
 	}
-	await user.getCookie(e)
+	// await user.getCookie(e)
 	await user.seachUid(res);
 	return true;
 }
@@ -278,7 +279,7 @@ export async function cloudToken(e) {
 		e.reply(`格式支持\nai=*;ci=*;oi=*;ct=***********;si=**************;bi=***********;devId=***********`)
 		return false;
 	}
-	let msg = e.msg.replace(/dev(i|l|I|L)d/g,'devId').split("devId")
+	let msg = e.msg.replace(/dev(i|l|I|L)d/g, 'devId').split("devId")
 	if (msg.length < 2) {
 		Bot.logger.mark(`云原神绑定失败：未包含devId字段~`)
 		return false;
@@ -333,15 +334,15 @@ export async function updCookie(e) {
 	for (let item of Object.keys(stoken)) {
 		e.region = getServer(stoken[item].uid)
 		e.uid = stoken[item].uid
-		if(!e?.uid){
+		if (!e?.uid) {
 			Bot.logger.mark(`[刷新ck][stoken读取]qq:${e?.user_id}；uid:${e?.uid}`)
 			continue; //奇怪的东西
-		} 
+		}
 		let cookies = `uid=${stoken[item].stuid}&stoken=${stoken[item].stoken}`
 		if (stoken[item]?.mid) cookies += `&mid=${stoken[item]?.mid}`
 		let data = { cookies: cookies }
-		if(e?.uid[0]>5) data.method='post'
-		let res = await user.getData("bbsGetCookie",data, false)
+		if (e?.uid[0] > 5) data.method = 'post'
+		let res = await user.getData("bbsGetCookie", data, false)
 		if (!res?.data) {
 			e.reply(`uid:${stoken[item].uid},请求异常：${res.message}`)
 			continue;

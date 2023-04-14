@@ -89,7 +89,7 @@ export async function UserPassLogin(e) {
 export async function bindSkCK(e, res) {
 	e.msg = res?.stoken, e.raw_message = res?.stoken
 	e.isPrivate = true
-	await bindStoken(e)
+	await bindStoken(e,'1')
 	e.ck = res?.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
 	if (isV3) {
 		let userck = (await import(`file://${_path}/plugins/genshin/model/user.js`)).default
