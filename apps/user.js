@@ -119,7 +119,7 @@ export async function gcPaylog(e) {
 			EX: time
 		});
 		if (isV3) {
-			let { payLog } = (await import(`file:///${_path}/plugins/genshin/apps/payLog.js`))
+			let { payLog } = (await import(`file://${_path}/plugins/genshin/apps/payLog.js`))
 			let pl = (new payLog())
 			e.isGroup = false;
 			pl.e = e
@@ -166,12 +166,12 @@ export async function gclog(e) {
 		sendMsg = [...sendMsg, ...[1, `uid:${e.uid}`, e.msg]]
 	} else {
 		if (isV3) {
-			let gclog = (await import(`file:///${_path}/plugins/genshin/model/gachaLog.js`)).default
+			let gclog = (await import(`file://${_path}/plugins/genshin/model/gachaLog.js`)).default
 			await (new gclog(e)).logUrl()
 		} else {
 			let {
 				bing
-			} = (await import(`file:///${_path}/lib/app/gachaLog.js`))
+			} = (await import(`file://${_path}/lib/app/gachaLog.js`))
 			e.isPrivate = true;
 			await bing(e)
 		}
@@ -352,13 +352,13 @@ export async function updCookie(e) {
 			sendMsg = [...sendMsg, ...[`uid:${stoken[item].uid}`, e.msg]]
 		} else {
 			if (isV3) {
-				let userck = (await import(`file:///${_path}/plugins/genshin/model/user.js`)).default
+				let userck = (await import(`file://${_path}/plugins/genshin/model/user.js`)).default
 				e.ck = e.msg;
 				await (new userck(e)).bing()
 			} else {
 				let {
 					bingCookie
-				} = (await import(`file:///${_path}/lib/app/dailyNote.js`))
+				} = (await import(`file://${_path}/lib/app/dailyNote.js`))
 				e.isPrivate = true;
 				await bingCookie(e)
 			}
