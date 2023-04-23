@@ -469,7 +469,7 @@ export default class miHoYoApi {
 					'x-rpc-device_id': DEVICE_ID,
 					'x-rpc-app_id': "bll8iq97cem8",
 					'x-rpc-device_name': DEVICE_NAME,
-					"x-rpc-device_fp": utils.randomString(13),
+					"x-rpc-device_fp": "38d7ee0e96649",
 					"x-rpc-device_model": utils.randomString(16),
 					'x-rpc-app_version': mys.APP_VERSION,
 					'x-rpc-game_biz': 'bbs_cn',
