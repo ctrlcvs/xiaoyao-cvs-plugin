@@ -255,11 +255,11 @@ export async function Note_appoint(e) {
 			let imgurl;
 			let pathFile = urlType[item].replace(/\./, _path)
 			if (item.includes(".")) {
-				imgurl = await segment.image(`file:///${pathFile}`);
+				imgurl = await segment.image(`file://${pathFile}`);
 				item = item.split(".")[0];
 			} else {
 				imgurl = await segment.image(
-					`file:///${pathFile}/icon/bg/${fs.readdirSync(`${pathFile}/icon/bg/`)[0]}`
+					`file://${pathFile}/icon/bg/${fs.readdirSync(`${pathFile}/icon/bg/`)[0]}`
 				)
 			}
 			if (isUser && !temp?.includes(item)) {
