@@ -197,11 +197,41 @@ const boards = {
 	honkaisr: {
 		forumid: 52,
 		name: '崩坏星穹铁道',
+		actid: 'e202304121516551',
+		biz:'hkrpg_cn',
 		url: "https://bbs.mihoyo.com/sr/",
 		signUrl(data, type, api) {  //预留方法方便后续迭代
 			let dataUrl = {}
+			switch (type) {
+				case "isSign":
+					dataUrl = {
+						url: `${api}/event/luna/info`,
+						query: `region=${data.region}&act_id=${this.actid}&uid=${data.game_uid}`
+					}
+					break;
+				case "sign":
+					dataUrl = {
+						url: `${api}/event/luna/sign`,
+						body: {
+							region: data.region,
+							act_id: this.actid,
+							uid: data.game_uid
+						}
+					}
+					break;
+				case "home":
+					dataUrl = {
+						url: `${api}/event/luna/home`,
+						query: `act_id=${this.actid}`
+					}
+					break;
+			}
+			dataUrl['types'] = 'sign'
 			return dataUrl
 		},
+		getReferer() {
+			return `https://webstatic.mihoyo.com/bbs/event/signin/hkrpg/index.html?bbs_auth_required=true&act_id=${this.actid}&bbs_auth_required=true&bbs_presentation_style=fullscreen&utm_source=h5&utm_medium=mys&utm_campaign=zj`
+		}
 	},
 	zzz: {
 		forumid: 57,

@@ -2,7 +2,7 @@ import User from "../model/user.js"
 import moment from 'moment';
 export const rule = {
 	sign: {
-		reg: `^#*(原神|崩坏3|崩坏2|未定事件簿)签到$`,
+		reg: `^#*(原神|崩坏3|崩坏2|未定事件簿|崩坏星穹铁道)签到$`,
 		describe: "米社规则签到"
 	},
 	bbsSign: {
