@@ -118,10 +118,10 @@ export async function getCookieMap(cookie) {
  */
 export function recallMsg(e,r,times){
 	setTimeout(()=>{
-		if(e.group){
-			e.group.recallMsg(r.message_id)
+		if(e?.group){
+			e?.group?.recallMsg(r.message_id)
 		}else{
-			e.friend.recallMsg(r.message_id)
+			e?.friend?.recallMsg(r.message_id)
 		}
 	},1000 * times)
 }

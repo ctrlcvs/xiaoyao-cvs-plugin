@@ -59,7 +59,7 @@ export default class user {
 			for (let item of resSign?.upData) {
 				let num = lodash.random(0, 9999);
 				item.upName = item.upName == "原神" ? "ys" : item.upName == "崩坏3" ? "bh3" : item.upName ==
-					"崩坏2" ? "bh2" : item.upName == "未定事件簿" ? "wdy" : ""
+					"崩坏2" ? "bh2" : item.upName == "未定事件簿" ? "wdy" : item.upName
 				sumData[item.upName + "" + num] = {
 					"uid": item.game_uid,
 					"游戏昵称": item.nickname,
@@ -389,6 +389,7 @@ export default class user {
 		}
 		let _reply = e.reply
 		let msg = e?.msg;
+		//暂时先这样吧，等有空再优化~
 		this.allSign = {
 			findModel: ["崩坏3", "崩坏2", '原神', '未定事件簿'],
 			"崩坏3": {
@@ -410,6 +411,12 @@ export default class user {
 				error: 0,
 			},
 			"未定事件簿": {
+				bindGame: 0,
+				sign: 0,
+				isSign: 0,
+				error: 0,
+			},
+			"崩坏星穹铁道": {
 				bindGame: 0,
 				sign: 0,
 				isSign: 0,
