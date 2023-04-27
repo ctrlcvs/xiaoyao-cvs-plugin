@@ -118,9 +118,9 @@ export async function getCookieMap(cookie) {
  */
 export function recallMsg(e,r,times){
 	setTimeout(()=>{
-		if(e.group){
+		if(e.group?.recallMsg){
 			e.group.recallMsg(r.message_id)
-		}else{
+		}else if(e.friend?.recallMsg){
 			e.friend.recallMsg(r.message_id)
 		}
 	},1000 * times)
