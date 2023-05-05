@@ -199,6 +199,7 @@ const boards = {
 		name: '崩坏星穹铁道',
 		actid: 'e202304121516551',
 		biz:'hkrpg_cn',
+		osbiz: 'hkrpg_global',
 		url: "https://bbs.mihoyo.com/sr/",
 		signUrl(data, type, api) {  //预留方法方便后续迭代
 			let dataUrl = {}
