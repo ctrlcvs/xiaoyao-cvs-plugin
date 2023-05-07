@@ -857,9 +857,10 @@ export default class user {
 		})
 	}
 	getDataList(name) {
-		for (let item of this.ForumData) {
-			if (item.name == name) { //循环结束未找到的时候返回原数组签到全部
-				return [item]
+		let otherName = lodash.map(this.ForumData,'otherName')
+		for (let [index,item] of Object.entries(otherName)) {
+			if (item.includes(name)) { //循环结束未找到的时候返回原数组签到全部
+				return [this.ForumData[index]]
 			}
 		}
 		return this.ForumData;
