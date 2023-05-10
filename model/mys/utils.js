@@ -56,8 +56,10 @@ export async function relpyPrivate(userId, msg) {
 export async function replyMake(e, _msg, lenght) {
 	let nickname = Bot.nickname;
 	if (e.isGroup) {
-		let info = await Bot.getGroupMemberInfo(e.group_id, Bot.uin)
-		nickname = info.card || info.nickname
+		if(Bot?.getGroupMemberInfo){
+			let info = await Bot?.getGroupMemberInfo(e.group_id, Bot.uin)
+			nickname = info.card || info.nickname
+		}
 	}
 	let msgList = [];
 	for (let [index, item] of Object.entries(_msg)) {
