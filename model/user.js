@@ -155,7 +155,7 @@ export default class user {
 											`${item.nickname}-${item.game_uid}:签到出现验证码~\n请晚点后重试，或者手动上米游社签到\n`;
 									}
 								} else {
-									if (this.allSign ) {
+									if (this.allSign) {
 										this.allSign[forum.name].error++;
 									}
 									signMsg = `${item.nickname}-${item.game_uid}:验证码失败~\n`
@@ -391,7 +391,7 @@ export default class user {
 		let msg = e?.msg;
 		//暂时先这样吧，等有空再优化~
 		this.allSign = {
-			findModel: ["崩坏3", "崩坏2", '原神', '未定事件簿'],
+			findModel: ["崩坏3", "崩坏2", '原神', '未定事件簿', '崩坏星穹铁道'],
 			"崩坏3": {
 				bindGame: 0,
 				sign: 0,
@@ -475,7 +475,7 @@ export default class user {
 		let mul = e;
 		Bot.logger.mark(`云原神签到任务开始`);
 		let files = fs.readdirSync(this.yunPath).filter(file => file.endsWith('.yaml'))
-		if(files.length==0) return;
+		if (files.length == 0) return;
 		let isCloudSignMsg = this.configSign.isCloudSignMsg
 		let userIdList = (files.join(",").replace(/.yaml/g, "").split(","))
 		if (cloudTask) {
@@ -617,7 +617,7 @@ export default class user {
 		bbsTask = false;
 	}
 	async bbsGeetest() {
-		if(!this.getToken) return ""
+		if (!this.getToken) return ""
 		try {
 			let res = await this.getData('bbsGetCaptcha', false)
 			// let challenge = res.data["challenge"]
@@ -636,7 +636,7 @@ export default class user {
 		return ""
 	}
 	async geetest(data) {
-		if(!this.getToken) return ""
+		if (!this.getToken) return ""
 		try {
 			data.getToken = this.getToken
 			let res = await this.getData("validate", data, false)
@@ -788,16 +788,20 @@ export default class user {
 				res = await this.getData('getLtoken', { cookies: this.cookies }, false)
 				v2Sk = await this.getData('getByStokenV2', { headers: { Cookie: this.cookies } }, false)
 			}
-			res = await this.getData("userGameInfo", this.ForumData[1], false)
-			if (res?.retcode != 0) {
-				return false;
+			let list = []
+			for (let item of ['崩坏星穹铁道', '原神']) {
+				let result = await this.getData("userGameInfo",this.getDataList(item)[0], false)
+				if (result?.retcode != 0) {
+					continue;
+				}
+				list.push(...result?.data?.list)
 			}
-			// console.log(res,this.e.sk)
+			if(list.length==0) return false;
 			let uids = []
-			for (let s of res.data.list) {
+			for (let s of list) {
 				let datalist = {}
 				let uid = s.game_uid
-				uids.push(uid)
+				uids.push(s.region_name+':'+uid)
 				datalist[uid] = {
 					stuid: this.e?.sk?.get('stuid') || this.e.stuid,
 					stoken: v2Sk?.data?.token?.token || this.e?.sk?.get('stoken') || data?.data?.list[0].token,
@@ -805,11 +809,13 @@ export default class user {
 					mid: this.e?.sk?.get('mid') || v2Sk?.data?.user_info?.mid,
 					uid: uid,
 					userId: this.e.user_id,
-					is_sign: true
+					is_sign: true,
+					region_name:s.region_name,
+					region:s.region
 				}
 				await gsCfg.saveBingStoken(this.e.user_id, datalist)
 			}
-			let msg = `uid:${uids.join(',')}\nstoken绑定成功您可通过下列指令进行操作:`;
+			let msg = `${uids.join('\n')}\nstoken绑定成功您可通过下列指令进行操作:`;
 			msg += '\n【#米币查询】查询米游币余额'
 			msg += '\n【#mys原神签到】获取米游币'
 			msg += '\n【#更新抽卡记录】更新抽卡记录'
@@ -851,9 +857,10 @@ export default class user {
 		})
 	}
 	getDataList(name) {
-		for (let item of this.ForumData) {
-			if (item.name == name) { //循环结束未找到的时候返回原数组签到全部
-				return [item]
+		let otherName = lodash.map(this.ForumData,'otherName')
+		for (let [index,item] of Object.entries(otherName)) {
+			if (item.includes(name)) { //循环结束未找到的时候返回原数组签到全部
+				return [this.ForumData[index]]
 			}
 		}
 		return this.ForumData;

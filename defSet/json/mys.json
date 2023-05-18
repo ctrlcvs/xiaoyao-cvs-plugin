@@ -3,42 +3,49 @@
     "id": "1",
     "forumId": "1",
     "name": "崩坏3",
-    "url": "https://bbs.mihoyo.com/bh3/"
+    "url": "https://bbs.mihoyo.com/bh3/",
+    "otherName":["bh3","崩崩崩","崩坏3"]
   },
   {
     "id": "2",
     "forumId": "26",
     "name": "原神",
-    "url": "https://bbs.mihoyo.com/ys/"
+    "url": "https://bbs.mihoyo.com/ys/",
+    "otherName":["原神"]
   },
   {
     "id": "3",
     "forumId": "30",
     "name": "崩坏2",
-    "url": "https://bbs.mihoyo.com/bh2/"
+    "url": "https://bbs.mihoyo.com/bh2/",
+    "otherName":["bh2","崩崩","崩坏2"]
   },
   {
     "id": "4",
     "forumId": "37",
     "name": "未定事件簿",
-    "url": "https://bbs.mihoyo.com/wd/"
+    "url": "https://bbs.mihoyo.com/wd/",
+    "otherName":["事件簿","未定事件簿","未定"]
   },
   {
     "id": "5",
     "forumId": "34",
     "name": "大别野",
-    "url": "https://bbs.mihoyo.com/dby/"
+    "url": "https://bbs.mihoyo.com/dby/",
+    "otherName":["大别野"]
   },
   {
     "id": "6",
     "forumId": "52",
     "name": "崩坏星穹铁道",
-    "url": "https://bbs.mihoyo.com/sr/"
+    "url": "https://bbs.mihoyo.com/sr/",
+    "otherName":["sr","星铁","穹轨","崩坏星穹铁道"]
   },
   {
      "id": "7",
      "forumId": "57",
      "name": "绝区零",
-     "url": "https://bbs.mihoyo.com/zzz/"
+     "url": "https://bbs.mihoyo.com/zzz/",
+     "otherName":["绝区零","zzz"]
   }
 ]
