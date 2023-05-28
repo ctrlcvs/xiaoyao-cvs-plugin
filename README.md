@@ -7,8 +7,6 @@ yunzai-bot扩展图鉴以及体力优化;
 
 #### 介绍
 
-介绍
-
 原神图鉴插件。
 
 #### 软件架构
@@ -28,6 +26,9 @@ git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cv
 
 #### 使用说明
  配合云崽使用, https://gitee.com/Le-niao/Yunzai-Bot
+ 
+ 配合喵崽使用, https://gitee.com/yoimiya-kokomi/Miao-Yunzai.git
+ 
 #### 命令说明
 1. 发送 【#图鉴更新】 获取最新的图鉴记录。(必须)
 2. 发送 【#**图鉴】 进行触发，例如发送 #刻晴图鉴，即可返回对应的图片信息。
@@ -41,6 +42,13 @@ git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cv
 11. 发送 #云原神签到 可签到云原神游戏
 12. 默认配置文件位于 ./plugins/xiaoyao-cvs-plugin/defSet/config/config.yaml
 13. 支持stoken绑定以及相关的操作。如：【#更新抽卡记录】
+
+##后续计划
+   关于插件兼容以及支持问题：
+ 
+    由于喵崽目前uid以及ck管理部分正在重写盲目兼容只会不断的进行修改以及完善，如非必要情况可以先不急更新主体
+    
+    画个大饼，等随缘咕咕咕
 ## 其他
 <!---
 - 有什么问题、Bug，或有其它建议，欢迎提 [issue](https://github.com/Ctrlcvs/xiaoyao-cvs-plugin/issues)
@@ -51,4 +59,4 @@ git clone https://github.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cv
 - 严禁用于任何商业用途和非法行为
 - Yunzai-Bot 官方QQ群：213938015 （暂时停止新加入）
 - 喵喵Miao-Plugin QQ群：755269874 （暂时停止新加入）
-- 图鉴xiaoyao-cvs-Plugin QQ群：544570609（暂时停止新加入）
+- 闲聊群 342996701
