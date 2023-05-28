@@ -302,7 +302,7 @@ export default class miHoYoApi {
 			createOrder:{
 				url:`${mys.hk4_sdk}/hk4e_cn/mdk/atropos/api/createOrder`,
 				body: {
-					// "special_info": "topup_center",
+					"special_info": "topup_center",
 					"order": data.order,
 					"sign":  this.gen_sign(data.order)
 				},

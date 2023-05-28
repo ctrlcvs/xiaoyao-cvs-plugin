@@ -162,7 +162,7 @@ export default class mysTopLogin {
                 this.e.reply(this.sendMsgPay)
                 return true;
             }
-            let iswx = msg[0].includes('微信') ? 'weixin' : 'alipay'
+            let iswx = msg[0].includes('微信') ? 'wechatpay' : 'alipay'
             if (msg[1].length != 1) {
                 this.e.reply(this.sendMsgPay)
                 return true;
@@ -178,7 +178,7 @@ export default class mysTopLogin {
                 return true
             }
             let ckData = await utils.getCookieMap(this.e.cookie)
-            let device_id = utils.randomString(4)
+            let device_id = utils.randomString(16)
             let region = utils.getServer(this.e.uid)
             let order = {
                 "account": ckData?.get('ltuid') || ckData?.get('account_id'),
@@ -202,7 +202,9 @@ export default class mysTopLogin {
                 order["pay_type"] = iswx
                 order["pay_vendor"] = iswx
             }
+            console.log(order)
             let res = await this.user.getData('createOrder', { order, headers: { "x-rpc-device_id": device_id } })
+            console.log(res)
             if (!res) return false;
             if (res?.code != 200 && res?.retcode != 0) {
                 this.e.reply('生成充值订单失败：' + res.message)
