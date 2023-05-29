@@ -713,7 +713,7 @@ export default class user {
             skuid = await gsCfg.getBingCookie(e.user_id);
             cookie = skuid?.ck;
             uid = skuid?.item;
-            if (!uid && e.user) { //获取uid为空时进行后续处理获取 (临时处理方式后续会进行解耦以避免这种情况。。待咕中.)s
+            if (!uid && e.user?.mainUid) { //获取uid为空时进行后续处理获取 (临时处理方式后续会进行解耦以避免这种情况。。待咕中.)s
                 uid = e.user?.mainUid[e.isSr ? 'sr' : 'gs'] //由于目前只支持原神功能暂时先写死
                 lodash.mapValues(e.user.mysUsers, function (o) {
                     if (o.uids[e.isSr ? 'sr' : 'gs'].includes(uid)) {
