@@ -60,7 +60,7 @@ export default class user {
             for (let item of resSign?.upData) {
                 let num = lodash.random(0, 9999);
                 item.upName = item.upName == "原神" ? "ys" : item.upName == "崩坏3" ? "bh3" : item.upName ==
-                "崩坏2" ? "bh2" : item.upName == "未定事件簿" ? "wdy" : item.upName
+                    "崩坏2" ? "bh2" : item.upName == "未定事件簿" ? "wdy" : item.upName
                 sumData[item.upName + "" + num] = {
                     "uid": item.game_uid,
                     "游戏昵称": item.nickname,
@@ -369,7 +369,29 @@ export default class user {
         let userIdList = [];
         let dir = './data/MysCookie/'
         if (isV3) {
-            userIdList = (await gsCfg.getBingAllCk()).ckQQ
+            if (!fs.existsSync(dir)) {
+                let NoteUser = (await import(`file://${_path}/plugins/genshin/model/mys/NoteUser.js`)).default
+                await NoteUser.forEach(async (user) => {
+                    await user.eachMysUser(async (mys) => {
+                        let { qq } = user
+                        let { ck, ltuid, device_id } = mys 
+                        if (Object.keys(userIdList).includes(qq+'')) {
+                            let seed_id = lodash.sample('abcdefghijklmnopqrstuvwxyz', 4).replace(/,/g, '')
+                            userIdList[qq + seed_id] = {
+                                qq, ck, device_id,
+                                ltuid,
+                            }
+                        } else {
+                            userIdList[qq] = {
+                                qq, ck, device_id,
+                                ltuid,
+                            }   
+                        }
+                    })
+                })
+            } else {
+                userIdList = (await gsCfg.getBingAllCk()).ckQQ
+            }
         } else {
             userIdList = NoteCookie;
         }
@@ -440,10 +462,11 @@ export default class user {
             }
         }
         for (let qq of userIdkeys) {
-            let user_id = qq;
+            let user_id = qq.replace(/\s+(?:n$)?/gi, '');
+            let ltuid=userIdList[qq]?.ltuid
             let e = {
                 user_id,
-                qq,
+                qq: user_id,
                 isTask: true,
                 uid: userIdList[qq].uid,
                 cookie: userIdList[qq].cookie || userIdList[qq].ck,
@@ -453,7 +476,7 @@ export default class user {
             } else {
                 e.msg = "全部"
             }
-            Bot.logger.mark(`正在为qq${user_id}米社签到中...`);
+            Bot.logger.mark(`正在为qq:${user_id},通行证id:${ltuid}米社签到中...`);
 
             this.e = e;
             let res = await this.multiSign(this.getDataList(e.msg));
@@ -463,7 +486,7 @@ export default class user {
                     return;
                 }
                 if (msg.includes("OK")) {
-                    utils.relpyPrivate(qq, msg + "\n自动签到成功");
+                    utils.relpyPrivate(user_id, msg + "\n自动签到成功");
                 }
             };
             e.reply(res.message)
@@ -710,17 +733,15 @@ export default class user {
     async getCookie(e) {
         let skuid, cookie, uid
         if (isV3) {
-            skuid = await gsCfg.getBingCookie(e.user_id);
+            skuid = await gsCfg.getBingCookie(e.user_id); 
             cookie = skuid?.ck;
             uid = skuid?.item;
-            if (!uid && e.user?.mainUid) { //获取uid为空时进行后续处理获取 (临时处理方式后续会进行解耦以避免这种情况。。待咕中.)s
-                uid = e.user?.mainUid[e.isSr ? 'sr' : 'gs'] //由于目前只支持原神功能暂时先写死
-                lodash.mapValues(e.user.mysUsers, function (o) {
-                    if (o.uids[e.isSr ? 'sr' : 'gs'].includes(uid)) {
-                        cookie = o.ck
-                    }
-                });
+            if (!uid && e.user) {
+                uid = e.user.getUid('gs')
+                cookie = e.user.mysUser.ck
             }
+            // if (!uid && e.user) { //获取uid为空时进行后续处理获取 (临时处理方式后续会进行解耦以避免这种情况。。待咕中.)s
+            // }
         } else {
             if (NoteCookie[e.user_id]) {
                 cookie = NoteCookie[e.user_id].cookie;
@@ -799,10 +820,10 @@ export default class user {
             let res;
             if (this.e.sk) {
                 if (this.e.sk.get('stoken').includes('v2_')) {
-                    res = await this.getData('getLtoken', {cookies: this.e.raw_message}, false)
+                    res = await this.getData('getLtoken', { cookies: this.e.raw_message }, false)
                     ltoken = res?.data?.ltoken
                 } else {
-                    v2Sk = await this.getData('getByStokenV2', {headers: {Cookie: this.e.raw_message}}, false)
+                    v2Sk = await this.getData('getByStokenV2', { headers: { Cookie: this.e.raw_message } }, false)
                 }
                 this.e.cookie =
                     `ltoken=${this.e.sk?.get('ltoken') || ltoken};ltuid=${this.e.sk?.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk?.get('stuid')};`
@@ -813,8 +834,8 @@ export default class user {
             } else {
                 this.e.cookie = this.e.original_msg //发送的为cookies
                 this.cookies = `stuid=${this.e.stuid};stoken=${data?.data?.list[0].token};ltoken=${data?.data?.list[1].token}`
-                res = await this.getData('getLtoken', {cookies: this.cookies}, false)
-                v2Sk = await this.getData('getByStokenV2', {headers: {Cookie: this.cookies}}, false)
+                res = await this.getData('getLtoken', { cookies: this.cookies }, false)
+                v2Sk = await this.getData('getByStokenV2', { headers: { Cookie: this.cookies } }, false)
             }
             let list = []
             for (let item of ['崩坏星穹铁道', '原神']) {

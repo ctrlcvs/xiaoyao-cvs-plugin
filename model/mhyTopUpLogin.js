@@ -202,9 +202,7 @@ export default class mysTopLogin {
                 order["pay_type"] = iswx
                 order["pay_vendor"] = iswx
             }
-            console.log(order)
             let res = await this.user.getData('createOrder', { order, headers: { "x-rpc-device_id": device_id } })
-            console.log(res)
             if (!res) return false;
             if (res?.code != 200 && res?.retcode != 0) {
                 this.e.reply('生成充值订单失败：' + res.message)
