@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <link rel="shortcut icon" href="#"/>
+    <link rel="stylesheet" type="text/css" href="{{_layout_path}}sr/weapon/index.css?v=1.0"/>
+</head>
+<body class="">
+<div class="container">
+    <div class="body">
+        <div class="icon">xiaoyao-cvs</div>
+        <div class="body-left">
+            <div class="body-dev">
+                <div class="body-left-top">
+                    <img src="{{_layout_path}}sr/weapon/image/顶层.png" alt="">
+                </div>
+                <div class="body-left-img">
+                    <img src="{{_layout_path}}sr/{{portrait}}" alt="">
+                </div>
+                <div class="body-left-bottom">
+                    <img src="{{_layout_path}}sr/weapon/image/底层.png" alt="">
+                </div>
+                <div class="body-left-text">{{desc}}</div>
+                <div class="body-left-type">
+                    <div class="body-left-icon">
+                        <img src="{{_layout_path}}sr/icon/path/{{type}}.png" alt="">
+                    </div>
+                    <div class="body-left-type-text">
+                        {{type}}
+                    </div>
+                </div>
+                <div class="body-left-levet">
+                    Lv.80
+                </div>
+                <div class="body-left-star">
+                    <% for(var i = 0; i < star; i++){ %>
+                    <div class="body-left-star-img">
+                        <img src="{{_layout_path}}sr/weapon/image/星.png" alt="">
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+
+        </div>
+        <div class="body-right">
+            <div class="body-right-title">
+                「{{type}} · {{name}}」
+            </div>
+            <div class="body-right-num">
+                {{each fullValues list}}
+
+                <div class="body-right-num-list">
+                    <div class="body-right-num-item">
+                        <div>{{list.base}}</div>
+                        {{if $index=='hp'}}
+                        <div>生命值</div>
+                        {{else if $index=='atk'}}
+                        <div>攻击力</div>
+                        {{else}}
+                        <div>防御力</div>
+                        {{/if}}
+                    </div>
+                    <div class="body-right-num-item">
+                        <div>+{{list.stop}}</div>
+                        <div>成长</div>
+                    </div>
+                </div>
+                {{/each}}
+                <div class="body-right-num-list">
+                    <div class="body-right-num-item">
+                        <div>{{access}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="body-right-items">
+                {{each material list}}
+                <div class="body-right-items-item ">
+                    <div class="body-right-items-item-title {{ list.rarity == '2'?'bgcolor1':list.rarity == '3'?'bgcolor2':'bgcolor3'}} ">
+                        {{list.name}}
+                    </div>
+                    <div class="body-right-items-item-img {{ list.rarity == '2'?'jb1':list.rarity == '3'?'jb2':'jb3'}} ">
+                        <img src="{{_layout_path}}sr/{{list.icon}}" alt="">
+                    </div>
+                    <div class="body-right-items-item-num {{ list.rarity == '2'?'bgcolorbottom1':list.rarity == '3'?'bgcolorbottom2':'bgcolorbottom3'}}">
+                        {{list.num}}
+                    </div>
+                </div>
+                {{/each}}
+                <div class="body-right-items-item ">
+                    <div class="body-right-items-item-title bgcolor2">
+                        {{rarity==3?529750:rarity==4?706500:883000}}
+                    </div>
+                    <div>
+                        <div class="body-right-items-item-image jb2" style="    padding: 0;"><img style="transform: scale(1.3);" src="{{_layout_path}}sr/icon/item/2.png"
+                                                                          alt=""></div>
+                        <div style="background-color: rgb(99,101,193);height: 2px;width: 100%;"></div>
+                        <div class="body-right-items-item-image jb3"><img src="{{_layout_path}}sr/icon/item/223.png" alt=""></div>
+                    </div>
+                    <div class="body-right-items-item-num bgcolorbottom3">
+                        {{rarity==3?100:rarity==4?133:166}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="body-right-attribute">
+                <div class="body-right-attribute-title">
+                    <div class="body-right-attribute-img">
+                        <img src="{{_layout_path}}sr/weapon/image/装饰.png" alt="">
+                    </div>
+                    <div class="body-right-attribute-name">
+                        <span>{{skill}}</span>
+                        <span>（{{characteristic}}）</span>
+                    </div>
+                    <div class="body-right-attribute-img">
+                        <img src="{{_layout_path}}sr/weapon/image/装饰.png" alt="">
+                    </div>
+                </div>
+                <div class="body-right-attribute-text">
+                    {{@attribute}}
+                </div>
+            </div>
+            <div class="body-right-headerImg">
+                <div class="body-right-headerImg-title">适配</div>
+                <% for(var i = 0; i < 5; i++){ %>
+                <% if(suitRole[i]){ %>
+                <div class="body-right-headerImg-bg">
+                    <div class="body-right-headerImg-img {{suitRole[i].star==4?'up4':'up5'}}">
+                        <img src="{{_layout_path}}sr/icon/avatar/{{suitRole[i].id}}.png" alt="">
+                    </div>
+                    <% if(suitRole[i].isUp){ %>
+                    <div class="body-right-headerImg-isup">
+                        <img src="{{_layout_path}}sr/weapon/image/专.png" alt="">
+                    </div>
+                    <% } %>
+                </div>
+                <% }else{ %>
+                <div class="body-right-headerImg-bg">
+
+                </div>
+                <% }%>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+</body>
+</html>

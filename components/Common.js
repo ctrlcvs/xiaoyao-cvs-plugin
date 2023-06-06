@@ -5,6 +5,10 @@ export const render = async function (path, params, cfg) {
   let { render, e } = cfg;
   let _layout_path = process.cwd() + "/plugins/xiaoyao-cvs-plugin/resources/";
   let layout_path= process.cwd() + "/plugins/xiaoyao-cvs-plugin/resources/common/layout/";
+  if(paths.length>2){
+      paths[0] = `${paths[0]}/${paths[1]}`
+      paths[1] = `${paths[2]}`
+  }
   let base64 = await render(paths[0], paths[1], {
     ...params,
     _layout_path,

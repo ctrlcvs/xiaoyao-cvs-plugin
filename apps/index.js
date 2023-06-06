@@ -3,6 +3,7 @@ import schedule from "node-schedule";
 import {
 	AtlasAlias,getBasicVoide
 } from "./xiaoyao_image.js";
+import { srAtlasAlias} from './srGallery.js'
 import {
 	versionInfo,
 	help
@@ -72,7 +73,7 @@ export {
 	updCookie,
 	DailyNoteTask,
 	noteTask,
-	AtlasAlias,
+	AtlasAlias,srAtlasAlias,
 	Note,
 };
 import gsCfg from '../model/gsCfg.js';
@@ -90,6 +91,10 @@ let rule = {
 	AtlasAlias: {
 		reg: "^(#(.*)|.*图鉴)$",
 		describe: "角色、食物、怪物、武器信息图鉴",
+	},
+	srAtlasAlias: {
+		reg: "^((#|\\*)(.*)|.*图鉴)$",
+		describe: "sr 星穹铁道武器信息图鉴",
 	},
 	Note: {
 		reg: "^#*(多|全|全部)*(体力|树脂|查询体力|便笺|便签)$",

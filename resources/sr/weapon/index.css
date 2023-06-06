@@ -1,0 +1,422 @@
+@font-face {
+    font-family: HYWenHei;
+    src: url(../../font/HYWenHei.ttf);
+}
+
+@font-face {
+    font-family: MiSans-Regular;
+    src: url(../../font/MiSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: MiSans-Medium;
+    src: url(../../font/MiSans-Medium.ttf);
+}
+@font-face {
+    font-family: MiSans-Bold;
+    src: url(../../font/MiSans-Bold.ttf);
+}
+@font-face {
+    font-family: HYWenHei-Hew;
+    src: url(../../font/HYWenHei-55W.ttf);
+}
+
+@font-face {
+    font-family: MiSans-Normal;
+    src: url(../../font/MiSans-Normal.ttf);
+}
+@font-face {
+    font-family: MiSans-Demibold;
+    src: url(../../font/MiSans-Demibold.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    font-size: 18px;
+    color: #1e1f20;
+    font-family: Number, YS2, PingFangSC-Medium, PingFang SC, sans-serif;
+    transform: scale(1.4);
+    transform-origin: 0 0;
+    width: 1600px;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    width: 1600px;
+    background-image: url('image/背景.png');
+    height: 900px;
+}
+
+.body {
+    padding: 50px;
+    display: flex;
+}
+
+.body-left {
+    width: 600px;
+    height: 800px;
+    font-family: 'HYWenHei-HEW';
+}
+
+.body-left-top {
+    position: absolute;
+    z-index: 10;
+}
+
+.body-left-img {
+    width: 470px;
+    position: absolute;
+    margin-top: 25px;
+    margin-left: 50px;
+    z-index: 2;
+    margin-top: 35px;
+    margin-left: 40px;
+    /*border: 8px solid rgb(201, 189, 192);*/
+    background-color: rgb(201, 189, 192);
+    height: 660px;
+}
+
+.body-left-img img {
+    clip-path: inset(8px 8px 8px 8px);
+}
+
+.body-left-bottom {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.body-dev {
+    width: 550px;
+    position: relative;
+    height: 730px;
+    left: 25px;
+    top: 30px;
+    transform: rotate(4deg);
+}
+
+.body-left-text {
+    color: #fff;
+    position: absolute;
+    z-index: 99;
+    white-space: pre-line;
+    margin-left: 68px;
+    font-size: 15px;
+    text-align: left;
+    line-height: 30px;
+    bottom: 250px;
+    font-family: 'Misans-Medium';
+    width: 380px;
+}
+
+.body-left-type {
+    position: absolute;
+    bottom: 165px;
+    background-color: rgba(25, 25, 25, 0.8);
+    height: 70px;
+    margin-left: 31px;
+    z-index: 8;
+    width: 230px;
+    display: flex;
+}
+
+.body-left-icon {
+    width: 100px;
+    text-align: center;
+}
+
+.body-left-icon img {
+    width: 70px;
+    padding: 4px;
+}
+
+.body-left-type-text {
+    color: #fff;
+    font-size: 48px;
+    width: 130px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    font-family: HYWenHei-HEW;
+}
+
+.body-left-levet {
+    width: 100px;
+    height: 35px;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    right: 95px;
+    bottom: 165px;
+    z-index: 2;
+    font-family: HYWenHei-HEW;
+}
+
+.body-left-star {
+    position: absolute;
+    display: flex;
+    justify-content: end;
+    right: 97px;
+    bottom: 88px;
+    z-index: 2;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+
+.body-left-star-img {
+    width: 75px;
+    height: 75px;
+    margin-right: -11px;
+}
+
+.body-left-star-img:last-child {
+    left: 0px;
+}
+
+.body-right {
+    margin-left: 50px;
+    color: #fff;
+    width: calc(100% - 650px);
+}
+
+.body-right-title {
+    font-size: 48px;
+    text-align: left;
+    font-family: 'MiSans-Demibold';
+    margin-bottom: 20px;
+    position: relative;
+    left: -30px;
+}
+
+.body-right-num {
+    display: flex;
+}
+
+.body-right-num-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    text-align: center;
+    width: 110px;
+    height: 80px;
+    border-radius: 8px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    line-height: 30px;
+    margin-right: 13px;
+}
+
+.body-right-num-item:nth-child(2) {
+    width: 80px;
+}
+
+.body-right-num-list {
+    display: flex;
+    margin-right: 31px;
+}
+
+.body-right-num-item div:nth-child(1) {
+    font-size: 30px;
+    font-family: 'MiSans-Normal';
+}
+
+.body-right-num-item div:nth-child(2) {
+    font-size: 14px;
+    font-family: 'MiSans-Medium';
+}
+
+.body-right-items {
+    display: flex;
+    margin-top: 20px;
+    font-family: 'MiSans-Medium';
+}
+
+.body-right-items-item {
+    width: 110px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12px;
+    margin-right: 13px;
+}
+
+.body-right-items-item:last-child {
+    margin-right: 0;
+    margin-left: 2px;
+}
+
+.body-right-items-item-title {
+    border-radius: 8px 8px 0 0;
+}
+
+.bgcolor1 {
+    background-color: rgba(56, 120, 118);
+}
+
+.bgcolor2 {
+    background-color: rgb(67, 114, 185);
+}
+
+.bgcolor3 {
+    background-color: rgb(120, 82, 184);
+}
+
+.jb1 {
+    background-image: linear-gradient(rgba(48, 60, 82), rgba(56, 120, 118));
+}
+
+.jb2 {
+    background-image: linear-gradient(rgba(48, 49, 83), rgba(70, 123, 200));
+}
+
+.jb3 {
+    background-image: linear-gradient(rgba(56, 55, 89), rgba(131, 86, 199));
+}
+
+.body-right-items-item-num {
+    border-radius: 0 0 8px 8px;
+}
+
+.bgcolorbottom1 {
+    background-color: rgba(48, 60, 82);
+}
+
+.bgcolorbottom2 {
+    background-color: rgba(50, 60, 101);
+}
+
+.bgcolorbottom3 {
+    background-color: rgba(65, 59, 103);
+}
+
+.body-right-items-item-image img {
+    width: 52px;
+    height: 52px;
+    padding: 2px;
+}
+
+.body-right-attribute {
+    width: 850px;
+    height: 300px;
+    margin-top: 20px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.body-right-attribute-title {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255, 0.1);
+}
+
+.body-right-attribute-img {
+    width: 70px;
+    justify-content: flex-start;
+}
+
+.body-right-attribute-img:nth-child(3) {
+    transform: rotate(180deg);
+}
+
+.body-right-attribute-name {
+    flex: 1 auto;
+    text-align: center;
+}
+
+.body-right-attribute-name span:nth-child(1) {
+    font-size: 36px;
+    font-family: 'MiSans-Bold';
+}
+
+.body-right-attribute-name span:nth-child(2) {
+    font-size: 24px;
+    font-family: 'MiSans-Medium';
+}
+
+.body-right-attribute-text {
+    padding: 17px;
+    font-size: 24px;
+    font-family: 'MiSans-Regular';
+}
+
+.body-right-headerImg {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 850px;
+}
+
+.body-right-headerImg-title {
+    font-size: 36px;
+    font-family: 'MiSans-Bold';
+    padding: 35px;
+}
+
+.body-right-headerImg-bg {
+    background-image: url('./image/头像框.png');
+    width: 138px;
+    height: 138px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.body-right-headerImg-img {
+    width: 90px;
+    height: 90px;
+    text-align: center;
+}
+
+.up4 img{
+    background-image: linear-gradient(rgba(56, 55, 90), rgba(130, 86, 199));
+    border-radius: 50%;
+}
+.up5 img{
+    background-image: linear-gradient(rgba(112, 66, 61), rgba(204, 166, 110));
+    border-radius: 50%;
+}
+.up4 {
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+.up5 {
+
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.5);
+}
+.icon {
+    position: absolute;
+    right: 50px;
+    color: #fff;
+    font-size: 30px;
+    font-family: 'MiSans-Demibold';
+    margin-top: 10px;
+}
+.body-right-headerImg-isup {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 60px;
+    margin-left: 60px;
+}
+.text-num{
+    background: linear-gradient(to right,rgba(71, 180, 254) 0%, rgba(9, 235, 254)) 100%;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 600;
+}

@@ -20,6 +20,8 @@ let cfgMap = {
 	"获取sk":"ck.sk",
 	"目录":"Atlas.all",
 	"扫码绑定":'mhy.qrcode',
+	"星铁图鉴":'sr.Search',
+	"星铁匹配":'sr.Atlas'
 };
 let sysCfgReg = `^#图鉴设置\s*(${lodash.keys(cfgMap).join("|")})?\s*(.*)$`;
 export const rule = {
@@ -80,6 +82,7 @@ export async function sysCfg(e, {
 		} else {
 			val = !/关闭/.test(val);
 		}
+
 		if (cfgKey) {
 			Cfg.set(cfgKey, val);
 		}
@@ -96,6 +99,8 @@ export async function sysCfg(e, {
 		notePlus: fs.existsSync(notePlus),
 		bg: await rodom(), //获取底图
 		Atlasall:getStatus("Atlas.all",false),
+		srAtlas:getStatus("sr.Atlas",false),
+		srSearch:getStatus("sr.Search",false),
 	}
 	//渲染图像
 	return await Common.render("admin/index", {
