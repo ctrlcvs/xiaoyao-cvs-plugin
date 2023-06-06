@@ -26,8 +26,9 @@ export async function GetData(e) {
     let list = Data.readJSON(pathPlus, 'weapon/data.json')
     let items = Data.readJSON(pathPlus, 'items/data.json')
     let role=GetRole(name)
-    if(!role) return  false;
-    name=role.name
+    if(role) {
+        name=role.name
+    }
     let roleData;
     let isUp=e.msg.includes('专武');
     lodash.forEach(list,(v,k)=>{
