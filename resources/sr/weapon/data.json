@@ -6921,9 +6921,7 @@
             "娜塔莎",
             "罗刹"
         ],
-        "belongRole": [
-            "娜塔莎"
-        ],
+        "belongRole": [],
         "values": [
             {
                 "hp": {
@@ -7421,9 +7419,7 @@
             "三月七",
             "开拓者"
         ],
-        "belongRole": [
-            "杰帕德"
-        ],
+        "belongRole": [],
         "values": [
             {
                 "hp": {

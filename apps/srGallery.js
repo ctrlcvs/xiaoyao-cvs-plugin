@@ -11,7 +11,7 @@ export async function srAtlasAlias(e,{render}) {
     }
     let reg = /(#|\*)(.*)/;
     if (Cfg.get("sr.Atlas")) {
-        reg = /(#\*)?(.*)图鉴/;
+        reg = /(#|\*)?(.*)图鉴/;
     }
     if (!reg.test(e.msg)) {
         return false;
