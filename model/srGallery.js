@@ -31,8 +31,14 @@ export async function sendMsg(e, {render}, data, url) {
 
 export async function GetRoleData(e) {
     let name = e.msg.replace(/\*|#|星铁|星穹铁道|图鉴/g, '')
+
     let roleName = GetRole(name)?.name
     if(!roleName){
+        return false
+    }
+    if(/开拓者/.test(name)){
+        // roleName = "开拓者 (火)"
+        e.reply("开拓者图鉴暂不支持查询")
         return false
     }
     let data = Data.readJSON(pathPlus, `character/${roleName}/data.json`)
