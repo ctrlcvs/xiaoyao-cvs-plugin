@@ -1,0 +1,520 @@
+@font-face {
+    font-family: HYWenHei;
+    src: url(../../font/HYWenHei.ttf);
+}
+
+@font-face {
+    font-family: MiSans-Regular;
+    src: url(../../font/MiSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: MiSans-Medium;
+    src: url(../../font/MiSans-Medium.ttf);
+}
+@font-face {
+    font-family: MiSans-Bold;
+    src: url(../../font/MiSans-Bold.ttf);
+}
+@font-face {
+    font-family: HYWenHei-Hew;
+    src: url(../../font/HYWenHei-55W.ttf);
+}
+
+@font-face {
+    font-family: MiSans-Normal;
+    src: url(../../font/MiSans-Normal.ttf);
+}
+@font-face {
+    font-family: MiSans-Demibold;
+    src: url(../../font/MiSans-Demibold.ttf);
+}
+@font-face {
+    font-family: AKZIDENZ_GROTESK_EXTRABOLDALT;
+    src: url(../../font/AKZIDENZ_GROTESK_EXTRABOLDALT.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    font-size: 18px;
+    color: #1e1f20;
+    font-family: Number, YS2, PingFangSC-Medium, PingFang SC, sans-serif;
+     transform: scale(1.4);
+    transform-origin: 0 0;
+    width: 1600px;
+    position: relative;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    width: 1600px;
+    background-color: rgb(230, 230, 230);
+    /* background-image: url('image/背景.png'); */
+    /* height: 900px; */
+}
+
+.body-top {
+    height: 700px;
+    width: 1600px;
+    position: relative;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.body-top-left {
+    width: 700px;
+    position: absolute;
+    left: -80px;
+}
+
+.body-top-left div:nth-child(1) {
+    position: absolute;
+    height: 930px;
+    width: 930px;
+    transform: scale(1.5);
+    z-index: 2;
+    top: -110px;
+}
+
+.body-top-left div:nth-child(2) {
+    filter: grayscale(100%);
+    position: absolute;
+    height: 930px;
+    width: 930px;
+    transform: scale(1.5);
+    top: -110px;
+    left: 450px;
+    z-index: 1;
+    opacity: 0.2;
+}
+
+.body-top-zz {
+    height: 700px;
+    position: absolute;
+    width: 100%;
+    opacity: 0.3;
+    /* background: repeating-linear-gradient(125deg, #fff, #fff 4px, #808080 5px, #808080 2px); */
+}
+
+.border {
+    margin: 20px;
+    width: 1560px;
+    position: absolute;
+    height: calc(100% - 40px);
+    border: 2px solid #2a2625;
+    opacity: 0.6;
+    z-index: 999999;
+}
+
+.body-top-right {
+    position: absolute;
+    right: 50px;
+    width: 630px;
+    top: 50px;
+    height: 620px;
+    z-index: 9;
+}
+
+.body-top-right-name {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.body-top-right-name>div:nth-child(1) {
+    margin-right: 21px;
+    text-align: right;
+    font-size: 72px;
+    color: #000000;
+    font-family: 'MiSans-bold';
+}
+
+.body-top-right-star {
+    position: absolute;
+    display: flex;
+    justify-content: end;
+    right: 100px;
+    z-index: 2;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+
+.body-top-right-star-img {
+    width: 80px;
+    height: 80px;
+    margin-right: -11px;
+}
+
+.body-top-right-star-img:last-child {
+    left: 0px;
+}
+
+.body-top-right-name-attribute div {
+    width: 80px;
+}
+
+.body-top-right-roleInfo-item,
+.body-top-right-roleInfo-list {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.body-top-right-roleInfo-item>div,
+.body-top-right-roleInfo-list>div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(242, 242, 242, 0.9);
+    height: 50px;
+    width: 300px;
+    padding: 0 30px;
+    align-items: center;
+    border: 2px solid rgba(204, 204, 204, 0.9);
+    outline: 2px solid #fff;
+    border-radius: 4px 30px 4px 4px;
+    color: #333333;
+    font-size: 24px;
+    font-family: 'MiSans-Regular';
+}
+
+.body-top-right-roleInfo-list {
+    flex-wrap: wrap;
+    margin-top: 0;
+}
+
+.body-top-right-roleInfo-list>div,
+.cvsSet {
+    width: 120px;
+    height: 80px;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 30px;
+    padding: 0;
+    margin-top: 10px;
+}
+.cvsSet{
+    width: 247px !important;
+}
+.body-top-right-roleInfo-list>div>div:nth-child(1) {
+    font-family: 'AKZIDENZ_GROTESK_EXTRABOLDALT';
+}
+
+.body-top-right-roleInfo-list>div>div:nth-child(2) {
+    font-size: 16px;
+    font-family: 'AKZIDENZ_GROTESK_EXTRABOLDALT';
+}
+
+.body-top-right-roleInfo-list:last-child>div {
+    width: 190px;
+    height: 80px;
+    position: relative;
+}
+
+.body-top-right-roleInfo-list:last-child>div>div:nth-child(1) {
+    position: absolute;
+    width: 16px;
+    height: 76px;
+    left: 0;
+    background-color: #dac291;
+    border-radius: 4px 0 0 4px;
+}
+
+.body-top-right-roleInfo-list:last-child>div>div:nth-child(2) {
+    font-size: 30px;
+    font-family: 'AKZIDENZ_GROTESK_EXTRABOLDALT';
+}
+
+.body-top-right-roleInfo-list:last-child>div>div:nth-child(3) {
+    font-size: 16px;
+    font-family: 'AKZIDENZ_GROTESK_EXTRABOLDALT';
+}
+
+.fontFamily_Medium {
+    font-family: 'MiSans-Medium';
+}
+
+.fontFamily_Regular {
+    font-family: 'MiSans-Regular';
+}
+
+.icon_left {
+    position: absolute;
+    background-image: url(img/四角图标.png);
+    top: 1px;
+    left: 1px;
+    width: 192px;
+    height: 192px;
+    z-index: 6;
+}
+
+.icon_right {
+    position: absolute;
+    background-image: url(img/四角图标.png);
+    top: 1px;
+    left: 1407px;
+    width: 192px;
+    height: 192px;
+    z-index: 6;
+    transform: rotate(90deg);
+}
+
+.icon_left_bottom {
+    position: absolute;
+    background-image: url(img/四角图标.png);
+    bottom: 1px;
+    left: 1px;
+    width: 192px;
+    height: 192px;
+    z-index: 6;
+    transform: rotate(270deg);
+}
+
+.icon_right_bottom {
+    position: absolute;
+    background-image: url(img/四角图标.png);
+    bottom: 1px;
+    left: 1407px;
+    width: 192px;
+    height: 192px;
+    z-index: 6;
+    transform: rotate(180deg);
+}
+
+.background_Tm {
+    width: 100%;
+    height: 700px;
+    position: absolute;
+    z-index: 1;
+    opacity: 0.5;
+    background-color: #fff;
+}
+
+.body-content {
+    margin: 30px 20px 0px;
+    padding-bottom: 40px;
+}
+
+.role-levet {
+    width: calc(100% - 60px);
+    display: flex;
+    justify-content: space-between;
+    margin-left: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.role-levet-left {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    /*width: 990px;*/
+}
+
+.roleInfo-item {
+    width: 480px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    align-items: center;
+    background-color: rgba(242, 242, 242, 0.9);
+    border: 2px solid rgba(204, 204, 204, 0.9);
+    outline: 2px solid #fff;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 32px;
+    font-family: 'MiSans-Regular';
+}
+
+.roleInfo-item>div:nth-child(1) {
+    position: absolute;
+    width: 16px;
+    height: 96px;
+    left: 0;
+    border-radius: 6px 0 0 6px;
+}
+
+.infoColor2 {
+    background-color: #8bddb8;
+}
+
+.infoColor3 {
+    background-color: #80aeee;
+}
+
+.infoColor4 {
+    background-color: #ba98f8;
+}
+
+.infoColor5 {
+    background-color: #f7d07e;
+}
+
+.roleInfo-item>div:nth-child(2) {
+    width: 70px;
+    height: 70px;
+    margin: 0 30px;
+    border-radius: 50%;
+    background-color: #e6e6e6;
+}
+
+.roleInfo-item>div:nth-child(3) {
+    flex: 1 auto;
+}
+
+.roleInfo-item>div:nth-child(4) {
+    margin-right: 34px;
+}
+
+.role-levet-right {
+    width: 480px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 30px;
+    color: #000000;
+    position: relative;
+    border-radius: 8px;
+}
+
+.role-levet-right-bg {
+    position: absolute;
+    background-image: url('./img/条纹.png');
+    opacity: 0.2;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.role-title {
+    background-color: #2a2625;
+
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: 15px;
+}
+
+.role-title div {
+    width: 50px;
+    flex-shrink: 0;
+    height: 50px;
+    margin: 0 35px;
+}
+
+.role-title>div:nth-child(2) {
+    width: 100%;
+    flex: 1 auto;
+    text-align: center;
+    /*color: #fff;*/
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: 36px;
+    font-family: 'MiSans-Demibold';
+    color:#d6c297;
+}
+
+.role-talent {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    align-items: center;
+    font-size: 36px;
+    color: #333333;
+    margin: 0 30px 0 60px;
+    background-color: #b2b2b2;
+    height: 60px;
+}
+
+.role-talent>div:nth-child(1) {
+    width: 60px;
+    height: 60px;
+    background-image: url('img/技能图标.png');
+    position: absolute;
+    left: -30px;
+    z-index: 9;
+}
+
+.role-talent-bg {
+    background-image: url(img/条纹.png);
+    background-color: #b2b2b2;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height: 60px;
+    z-index: 0;
+    opacity: 0.2;
+}
+
+.role-talent>div:nth-child(2) {
+    margin-left: 30px;
+    z-index: 9;
+    font-family: 'MiSans-Demibold';
+}
+
+.role-talent>div:nth-child(3) {
+    margin-left: 30px;
+    z-index: 9;
+    font-family: 'MiSans-Regular';
+}
+
+.role-talent-text {
+    /*display: flex;*/
+    width: 1440px;
+    justify-content: left;
+    margin: 0 92px;
+    font-family: 'MiSans-Regular';
+    font-size: 36px;
+    color: #2a2625;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+}
+.role-talent-extra,.role-talent-attribute{
+    display: flex;
+    justify-content: left;
+    margin: 0 30px 0 60px;
+    padding-left: 30px;
+    font-family: 'MiSans-Demibold';
+    font-size: 36px;
+    color: #2a2625;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #d9d9d9;
+}
+
+.role-talent-extra>.role-talent-extraInfo:nth-child(2){
+    font-family: 'MiSans-Regular';
+    margin-left: 30px;
+}
+
+.role-talent-attribute>.role-talent-extraInfo:nth-child(2){
+    font-family: 'MiSans-Regular';
+    margin-left: 30px;
+}
+.role-talent-attribute{
+    background-color: #f2f2f2;
+}
+.textColor {
+    background: linear-gradient(to right, rgba(253,78,53) 0%, rgba(225,42,110)) 100%;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 600;
+}

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <link rel="shortcut icon" href="#"/>
+    <link rel="stylesheet" type="text/css" href="{{_layout_path}}sr/character/index.css?v=1.0"/>
+</head>
+<body>
+<div class="container">
+    <div class="border"></div>
+    <div class="icon_left"></div>
+    <div class="icon_right"></div>
+    <div class="icon_left_bottom"></div>
+    <div class="icon_right_bottom"></div>
+    <div class="background_Tm"></div>
+    <div class="body-top">
+        <div class="body-top-left">
+            <div>
+                <img src="{{_layout_path}}sr/{{portrait}}" alt="">
+            </div>
+            <div>
+                <img src="{{_layout_path}}sr/{{portrait}}" alt="">
+            </div>
+        </div>
+        <div class="body-top-zz">
+            <img src="{{_layout_path}}sr/character/img/条纹.png" alt="">
+        </div>
+        <div class="body-top-right">
+            <div class="body-top-right-name">
+                <div>
+                    <div>{{name}}</div>
+                    <div class="body-top-right-star">
+                        <% for(var i = 0; i < rarity; i++){ %>
+                        <div class="body-top-right-star-img">
+                            <img src="{{_layout_path}}sr/character/img/星.png" alt="">
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="body-top-right-name-attribute">
+                    <div>
+                        <img src="{{_layout_path}}sr/character/img/命途/{{path}}.png" alt="">
+                    </div>
+                    <div>
+                        <img src="{{_layout_path}}sr/character/img/属性/{{element}}.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="body-top-right-roleInfo">
+                <div class="body-top-right-roleInfo-item">
+                    <div>
+                        <div>命途</div>
+                        <div class="fontFamily_Medium">{{path}}</div>
+                    </div>
+                    <div>
+                        <div>属性</div>
+                        <div class="fontFamily_Medium">{{element}}</div>
+                    </div>
+                </div>
+                <div class="body-top-right-roleInfo-item">
+                    <div>
+                        <div>派系</div>
+                        <div class="fontFamily_Medium">{{factions}}</div>
+                    </div>
+                    <div>
+                        <div>所属</div>
+                        <div class="fontFamily_Medium">{{affiliation}}</div>
+                    </div>
+                </div>
+                <div class="body-top-right-roleInfo-item">
+                    <div style="width: 100%;">
+                        <div>配音</div>
+                        <div>中：{{cncv}} / 日：{{jpcv}}</div>
+                    </div>
+                </div>
+                <div class="body-top-right-roleInfo-list">
+                    {{each baseAttr list}}
+                    <div>
+                        <div>{{list.num}}</div>
+                        <div>{{list.name}}</div>
+                    </div>
+                    {{/each}}
+                    <div class="cvsSet">
+                        <div >xiaoyao-cvs</div>
+                        <div class="fontFamily_Regular">制作</div>
+                    </div>
+                </div>
+                <div class="body-top-right-roleInfo-list">
+                    {{each growAttr list}}
+                    <div>
+                        <div></div>
+                        <div>{{list.num}}</div>
+                        <div>{{list.name}}</div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="body-content">
+        <div class="role-title">
+            <div>
+                <img src="{{_layout_path}}sr/character/img/星2.png" alt="">
+            </div>
+            <div >升级消耗(Lv1-Lv80)</div>
+            <div>
+                <img src="{{_layout_path}}sr/character/img/星2.png" alt="">
+            </div>
+        </div>
+        <div class="role-levet">
+            <div class="role-levet-left">
+                {{each materials list}}
+                <div class="roleInfo-item">
+                    <div class="infoColor{{list.rarity}}"></div>
+                    <div><img src="{{_layout_path}}sr/{{list.icon}}" alt=""></div>
+                    <div>{{list.name}}</div>
+                    <div>×{{list.num}}</div>
+                </div>
+                {{/each}}
+            </div>
+<!--            <div class="role-levet-right">-->
+<!--                <div class="role-levet-right-bg"></div>-->
+<!--                <div>升级消耗</div>-->
+<!--                <div>(Lv1-Lv80)</div>-->
+<!--            </div>-->
+        </div>
+        <div class="role-title">
+            <div>
+                <img src="{{_layout_path}}sr/character/img/星2.png" alt="">
+            </div>
+            <div >角色行迹</div>
+            <div>
+                <img src="{{_layout_path}}sr/character/img/星2.png" alt="">
+            </div>
+        </div>
+        <div class="role-levet">
+            {{each skillMaterial list}}
+            <div class="roleInfo-item">
+                <div class="infoColor{{list.rarity}}"></div>
+                <div><img src="{{_layout_path}}sr/{{list.icon}}" alt=""></div>
+                <div>{{list.name}}</div>
+                <div>×{{list.num}}</div>
+            </div>
+            {{/each}}
+        </div>
+
+        {{each skillsData list}}
+        <div class="role-talent">
+            <div>
+                <img style="transform: scale(0.7);" src="{{_layout_path}}sr/{{list.icon}}" alt="">
+            </div>
+            <div>
+                {{list.name}}
+            </div>
+            <div style="margin-right: {{list.max_level==1?"15px":0}}">
+                {{list.type_text}} {{if(list.max_level!=1)}}（Lv1-Lv{{list.max_level}}）{{/if}}
+            </div>
+            <div class="role-talent-bg"></div>
+        </div>
+        <div class="role-talent-text">
+            {{@list.desc}}
+        </div>
+        {{each list.newAttributeBuff item}}
+        {{if item.isType=="attribute"}}
+        <div class="role-talent-{{item.isType}}">
+            <div class="role-talent-extraInfo">{{item.key}}</div>
+            <div class="role-talent-extraInfo">{{item.value}}</div>
+        </div>
+        {{else}}
+        <div class="role-talent-{{item.isType}}">
+            <div class="role-talent-extraInfo">{{item.key}}</div>
+            <div class="role-talent-extraInfo"></div>
+        </div>
+        <div class="role-talent-text">
+            {{@item.value}}
+        </div>
+        {{/if }}
+        {{/each}}
+        {{/each}}
+        <div class="role-title">
+            <div>
+                <img src="{{_layout_path}}sr/character/img/星2.png" alt="">
+            </div>
+            <div>星魂</div>
+            <div>
+                <img src="{{_layout_path}}sr/character/img/星2.png" alt="">
+            </div>
+        </div>
+        {{each eidolons list}}
+        <div class="role-talent">
+            <div>
+                <img style="transform: scale(0.7);" src="{{_layout_path}}sr/{{list.icon}}" alt="">
+            </div>
+            <div>
+                {{list.name}}
+            </div>
+            <div></div>
+            <div class="role-talent-bg"></div>
+        </div>
+        <div class="role-talent-text">
+            {{list.effect}}
+        </div>
+        {{/each}}
+    </div>
+</div>
+</body>
+</html>
