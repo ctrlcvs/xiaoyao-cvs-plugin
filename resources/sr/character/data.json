@@ -229,6 +229,16 @@
     "elem": "物理",
     "weapon": "巡猎"
   },
+  "1207":{
+    "id": 1207,
+    "key": "yukong",
+    "name": "驭空",
+    "abbr": "驭空",
+    "names": ["驭空"],
+    "star": 4,
+    "elem": "虚数",
+    "weapon": "同谐"
+  },
   "1209": {
     "id": 1209,
     "key": "yanqing",

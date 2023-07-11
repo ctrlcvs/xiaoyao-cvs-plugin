@@ -146,6 +146,7 @@
         </div>
 
         {{each skillsData list}}
+        {{if list.type_text!='dev_连携'}}
         <div class="role-talent">
             <div>
                 <img style="transform: scale(0.7);" src="{{_layout_path}}sr/{{list.icon}}" alt="">
@@ -177,6 +178,7 @@
         </div>
         {{/if }}
         {{/each}}
+    {{/if }}
         {{/each}}
         <div class="role-title">
             <div>

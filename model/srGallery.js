@@ -101,7 +101,7 @@ export async function GetRoleData(e) {
 
     data.skillMaterial=[]
     for (const [index,item] of Object.entries(data.skill_tree)) {
-        let levelsMaterial=lodash.map(Object.values(item.levels), 'material_list')
+        let levelsMaterial=lodash.map(Object.values(item.levels), 'materials')
         for (const levelsMaterialElement of levelsMaterial) {
             for (const levelsMaterialElement1 of levelsMaterialElement) {
                 if (!lodash.map(data.skillMaterial, 'id').includes(levelsMaterialElement1.id)) {
