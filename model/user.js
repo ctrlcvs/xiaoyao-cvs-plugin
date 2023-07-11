@@ -893,7 +893,12 @@ export default class user {
                 if (!ck[e.uid]) {
                     return true;
                 }
-                delete ck[e.uid];
+                let sk=ck[e.uid]
+                lodash.forEach(ck,(v,i)=>{
+                    if(sk?.stoken===v?.stoken){
+                        delete ck[i];
+                    }
+                })
                 if (Object.keys(ck) == 0) {
                     fs.unlinkSync(file);
                 } else {
@@ -901,7 +906,7 @@ export default class user {
                     fs.writeFileSync(file, ck, 'utf8')
                 }
             }
-            e.reply(`已删除${e.msg}`)
+            e.reply(`已删除${/米游社|mys|米币|米游币|sk|stoken/.test(e.msg)?'stoken':'云原神token'}`)
             return true;
         })
     }

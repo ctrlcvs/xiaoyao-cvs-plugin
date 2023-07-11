@@ -43,7 +43,7 @@ export const rule = {
 		describe: "云原神签到token获取"
 	},
 	delSign: {
-		reg: "^#*删除(我的)*(stoken|(云原神|云ck))$",
+		reg: "^#*删除(我的)*((stoken|sk)|(云原神|云ck))$",
 		describe: "删除云原神、stoken数据"
 	},
 	updCookie: {
@@ -98,11 +98,11 @@ export async function gcPaylog(e) {
 		e.reply("请私聊发送")
 		return true;
 	}
-	let authkey = await getAuthKey(e, user)
+	let authkey = await getAuthKey(e, user,{auth_appid:'csc'})
 	if (!authkey) {
 		return true;
 	}
-	let url = `https://hk4e-api.mihoyo.com/ysulog/api/getCrystalLog?selfquery_type=3&lang=zh-cn&sign_type=2&auth_appid=csc&authkey_ver=1&authkey=${encodeURIComponent(authkey)}&game_biz=hk4e_cn&app_client=bbs&type=3&size=6&region=${e.region}&end_id=`
+	let url = `https://webstatic.mihoyo.com/event/user-game-search/hk4e/index.html?selfquery_type=3&lang=zh-cn&sign_type=2&auth_appid=csc&authkey_ver=1&authkey=${encodeURIComponent(authkey)}&game_biz=hk4e_cn&app_client=bbs&type=3&size=6&region=${e.region}&end_id=`
 	e.msg = url
 	// e.reply(e.msg)
 	let sendMsg = [];
@@ -183,12 +183,14 @@ export async function gclog(e) {
 	});
 	return true;
 }
-async function getAuthKey(e, user) {
+async function getAuthKey(e, user,data={
+	auth_appid:'webview_gacha'
+}) {
 	if (!e.uid) {
 		e.uid = e?.runtime?.user?._regUid
 	}
 	e.region = getServer(e.uid)
-	let authkeyrow = await user.getData("authKey", {});
+	let authkeyrow = await user.getData("authKey", data);
 	if (!authkeyrow?.data) {
 		e.reply(`uid:${e.uid},authkey获取失败：` + (authkeyrow.message.includes("登录失效") ? "请重新绑定stoken" : authkeyrow.message))
 		return false;
@@ -310,7 +312,7 @@ export async function cloudToken(e) {
 export async function delSign(e) {
 	let user = new User(e);
 	e.msg = e.msg.replace(/#|删除|我的/g, "");
-	let url = e.msg == "stoken" ? `${YamlDataUrl}` : `${yunpath}`;
+	let url = /sk|stoken/.test(e.msg) ? `${YamlDataUrl}` : `${yunpath}`;
 	await user.delSytk(url, e)
 	return true;
 }
