@@ -26,7 +26,7 @@ const boards = {
 		forumid: 1,
 		key: 'honkai3rd',
 		biz: 'bh3_cn',
-		actid: 'e202207181446311',
+		actid: 'e202306201626331',
 		name: '崩坏3',
 		url: "https://bbs.mihoyo.com/bh3/",
 		signUrl(data, type, api) {
@@ -35,17 +35,17 @@ const boards = {
 				case "isSign":
 					dataUrl = {
 						url: `${api}/event/luna/info`,
-						query: `lang=zh-cn&region=${data.region}&act_id=${this.actid}&uid=${data.game_uid}`
+						query: `lang=zh-cn&act_id=${this.actid}&region=${data.region}&uid=${data.game_uid}`
 					}
 					break;
 				case "sign":
 					dataUrl = {
 						url: `${api}/event/luna/sign`,
 						body: {
-							lang: 'zh-cn',
-							region: data.region,
 							act_id: this.actid,
-							uid: data.game_uid
+							region: data.region,
+							uid: data.game_uid,
+							lang: 'zh-cn'
 						}
 					}
 					break;
@@ -60,7 +60,7 @@ const boards = {
 			return dataUrl
 		},
 		getReferer() {
-			return `https://webstatic.mihoyo.com/bh3/event/euthenia/index.html?bbs_presentation_style=fullscreen&bbs_game_role_required=${this.biz}&bbs_auth_required=true&act_id=${this.actid}&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
+			return `https://webstatic.mihoyo.com/bbs/event/signin/bh3/index.html?bbs_auth_required=true&act_id=${this.actid}&bbs_presentation_style=fullscreen&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
 		}
 	},
 	genShin: {
