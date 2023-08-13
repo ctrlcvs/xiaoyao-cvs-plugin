@@ -54,6 +54,14 @@ export async function relpyPrivate(userId, msg) {
 	}
 }
 export async function replyMake(e, _msg, lenght) {
+	/** 如果是频道插件直接发送即可~ */
+	if(e.QQGuild){
+		if (e._reply) {
+			return e._reply(_msg);
+		} else {
+			return e.reply(_msg);
+		}
+	}
 	let nickname = Bot.nickname;
 	if (e.isGroup) {
 		if(Bot?.getGroupMemberInfo){
