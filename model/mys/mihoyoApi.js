@@ -371,7 +371,6 @@ export default class miHoYoApi {
 					'accept-language': 'zh-CN,zh;q=0.9,ja-JP;q=0.8,ja;q=0.7,en-US;q=0.6,en;q=0.5',
 					'x-rpc-device_id': DEVICE_ID,
 					'User-Agent': `Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/${mys.APP_VERSION}`,
-					Referer: board.getReferer(),
 					Host: 'api-takumi.mihoyo.com',
 					'x-rpc-channel': 'appstore',
 					'x-rpc-app_version': mys.APP_VERSION,
@@ -379,7 +378,14 @@ export default class miHoYoApi {
 					'x-rpc-client_type': '5',
 					'Content-Type': 'application/json;charset=UTF-8',
 					DS: this.getDs(),
-					'Cookie': this.cookie
+					'Cookie': this.cookie,
+					...(board.key === 'genshin'? {
+						'x-rpc-signgame': 'hk4e',
+						'Origin': 'htps://act.mihoyo.com',
+						'Referer': 'https://act.mihoyo.com/',
+					} : {
+						Referer: board.getReferer(),
+					})
 				}
 				if (this.isOs) {
 					let os_Header = {

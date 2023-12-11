@@ -42,16 +42,16 @@ let MysApi = {
         query = `uid=${uid}`;//米游社id
         break;
       case "bbs_sign_info":
-        url += "/event/bbs_sign_reward/info";
-        query = `act_id=e202009291139501&region=${server}&uid=${uid}`;
+        url += "/event/luna/info";
+        query = `act_id=e202311201442471&region=${server}&uid=${uid}`;
         break;
       case "bbs_sign_home":
-        url += "/event/bbs_sign_reward/home";
-        query = `act_id=e202009291139501&region=${server}&uid=${uid}`;
+        url += "/event/luna/home";
+        query = `act_id=e202311201442471&region=${server}&uid=${uid}`;
         break;
       case "bbs_sign":
-        url += "/event/bbs_sign_reward/sign";
-        body = JSON.stringify({ act_id: "e202009291139501", region: server, uid: uid, });
+        url += "/event/luna/sign";
+        body = JSON.stringify({ act_id: "e202311201442471", region: server, uid: uid, });
         break;
       case "ys_ledger":
         url = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo";
