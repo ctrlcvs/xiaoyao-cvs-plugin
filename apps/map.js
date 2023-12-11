@@ -39,7 +39,7 @@ export async function delMapData(e){
 
 export async function genShenMap(e){
 	let isBool=/刷新|更新/.test(e.msg)
-	let msg= e.msg.replace(/#|(哪|那)|里|在|刷新|更新/g,"")
+	let msg= e.msg.replace(/#|哪|(里|那里)|在|刷新|更新/g,"")
 	let urlFile = fs.readdirSync(path);
 	let msgPath=`${path}/${msg}.jpg`
 	if(urlFile.includes(`${msg}.jpg`)&&!isBool){

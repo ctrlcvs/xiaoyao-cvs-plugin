@@ -15,10 +15,18 @@
     <div class="background_Tm"></div>
     <div class="body-top">
         <div class="body-top-left">
+            {{if isTopImg}}
+            <div style="transform: scale(1.2);top:{{isTopImg}}px">
+            {{ else }}
             <div>
+                {{/if}}
                 <img src="{{_layout_path}}sr/{{portrait}}" alt="">
             </div>
-            <div>
+                {{if isTopImg}}
+                <div style="transform: scale(1.2);top:{{isTopImg}}px">
+                    {{ else }}
+                    <div>
+                        {{/if}}
                 <img src="{{_layout_path}}sr/{{portrait}}" alt="">
             </div>
         </div>
