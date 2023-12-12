@@ -68,7 +68,7 @@ const boards = {
 		key: 'genshin',
 		biz: 'hk4e_cn',
 		osbiz: 'hk4e_global',
-		actid: 'e202009291139501',
+		actid: 'e202311201442471',
 		name: '原神',
 		url: "https://bbs.mihoyo.com/ys/",
 		signUrl(data, type, api) {
@@ -76,13 +76,13 @@ const boards = {
 			switch (type) {
 				case "isSign":
 					dataUrl = {
-						url: `${api}/event/bbs_sign_reward/info`,
+						url: `${api}/event/luna/info`,
 						query: `region=${data.region}&act_id=${this.actid}&uid=${data.game_uid}`
 					}
 					break;
 				case "sign":
 					dataUrl = {
-						url: `${api}/event/bbs_sign_reward/sign`,
+						url: `${api}/event/luna/sign`,
 						body: {
 							region: data.region,
 							act_id: this.actid,
@@ -92,7 +92,7 @@ const boards = {
 					break;
 				case "home":
 					dataUrl = {
-						url: `${api}/event/bbs_sign_reward/home`,
+						url: `${api}/event/luna/home`,
 						query: `act_id=${this.actid}`
 					}
 					break;
@@ -101,7 +101,7 @@ const boards = {
 			return dataUrl
 		},
 		getReferer() {
-			return `https://webstatic.mihoyo.com/bbs/event/signin-ys/index.html?bbs_auth_required=true&act_id=${this.actid}&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
+			return `https://act.mihoyo.com/bbs/event/signin-ys/index.html?bbs_auth_required=true&act_id=${this.actid}&utm_source=bbs&utm_medium=mys&utm_campaign=icon`
 		}
 	},
 	honkai2: {

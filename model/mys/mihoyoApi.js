@@ -381,6 +381,9 @@ export default class miHoYoApi {
 					DS: this.getDs(),
 					'Cookie': this.cookie
 				}
+				if(board.key === "genshin"){
+          header["x-rpc-signgame"]="hk4e"
+        }
 				if (this.isOs) {
 					let os_Header = {
 						app_version: '2.9.0',
