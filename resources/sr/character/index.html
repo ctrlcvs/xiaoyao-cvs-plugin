@@ -5,6 +5,13 @@
     <link rel="shortcut icon" href="#"/>
     <link rel="stylesheet" type="text/css" href="{{_layout_path}}sr/character/index.css?v=1.0"/>
 </head>
+{{if isLeftImg}}
+<style>
+  .body-top-left div{
+    left: 140px;
+  }
+</style>
+{{/if}}
 <body>
 <div class="container">
     <div class="border"></div>
@@ -22,11 +29,11 @@
                 {{/if}}
                 <img src="{{_layout_path}}sr/{{portrait}}" alt="">
             </div>
-                {{if isTopImg}}
+                {{if isTopImg }}
                 <div style="transform: scale(1.2);top:{{isTopImg}}px">
                     {{ else }}
                     <div>
-                        {{/if}}
+                 {{/if}}
                 <img src="{{_layout_path}}sr/{{portrait}}" alt="">
             </div>
         </div>

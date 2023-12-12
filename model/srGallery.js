@@ -72,7 +72,8 @@ export async function GetRoleData(e) {
         aggro: "嘲讽",
         effect:"效果命中",
         damage:"伤害",
-        resist:"效果抵抗"
+        resist:"效果抵抗",
+        break: "击破强化"
     }
     let growAttr=[]
     for (const item of Object.keys(data.growAttr)) {
@@ -201,6 +202,7 @@ export async function GetWeaPonData(e) {
         let suitRole = []
         for (const item of roleData.suitRole) {
             let list = GetRole(item)
+
             if (roleData.belongRole.includes(item)) list.isUp = true
             suitRole.push(list)
         }
