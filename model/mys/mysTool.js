@@ -1,8 +1,8 @@
-const APP_VERSION = "2.40.1";
+const APP_VERSION = "2.70.1";
 const mhyVersion = "2.11.1";
-const salt = "fdv0fY9My9eA7MR0NpjGP9RjueFvjUSQ"; //k2
-const salt2 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v"; //x6
-const saltWeb = "jEpJb9rRARU2rXDA9qYbZ3selxkuct9a";//lk2
+const salt = "S9Hrn38d2b55PamfIR9BNA3Tx9sQTOem"; //k2
+const salt2 = "LyD1rXqMv2GJhnwdvCBjFOKGiKuLY3aO"; //x6
+const saltWeb = "sjdNFJB7XxyDWGIAk0eTV8AOCfMJmyEo";//lk2
 const oldsalt = "z8DRIUjNDT7IT5IZXvrUAxyupA1peND9";
 const passSalt = 'JwYDpKvLj6MrMqqYU6jTKF17KNO2PXoS';
 const osSalt = ''; //599uqkwc0dlqu3h6epzjzfhgyyrd44ae rk4xg2hakoi26nljpr099fv9fck1ah10
