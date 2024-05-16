@@ -7,8 +7,8 @@
     "jpcv": "小西克幸",
     "cncv": "彭博",
     "sp": 115,
-    "affiliation": "/",
-    "factions": "巡海游侠",
+    "affiliation": "巡海游侠",
+    "factions": "/",
     "baseAttr": {
         "atk": 620.9280000000001,
         "hp": 1203.0479999999998,
