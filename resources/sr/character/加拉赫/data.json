@@ -1,1 +1,1982 @@
-{"id":"1301","name":"加拉赫","rarity":4,"element":"火","path":"丰饶","isTopImg":20,"jpcv":"三上哲","cncv":"马语非","allegiance":"匹诺康尼","sp":110,"affiliation":"家族","factions":"匹诺康尼","baseAttr":{"atk":529.2,"hp":1305.3600000000001,"def":441,"speed":98,"cpct":5,"cdmg":50,"aggro":100},"growAttr":{"hp":[4,4,6,6,8],"resist":[4,6,8],"break":[5.3,8]},"desc":"匹诺康尼猎犬家系的治安官，对来访宾客以礼相待，但保有戒心。似乎有着诸多往事，却从不主动提及。","skills":["130101","130102","130103","130104","130106","130107","130108"],"eidolons":[{"id":"130101","name":"盐与犬","effect":"加拉赫进入战斗后会恢复20点能量，效果抵抗提高50%。","icon":"icon/skill/1301_rank1.png"},{"id":"130102","name":"狮子之尾","effect":"施放战技时，解除指定我方单体的1个负面效果，同时使其效果抵抗提高30%，持续2回合。","icon":"icon/skill/1301_rank2.png"},{"id":"130103","name":"逝者的新生","effect":"战技等级+2，最多不超过15级，普攻等级+1，最多不超过10级。","icon":"icon/skill/1301_skill.png"},{"id":"130104","name":"临终的轻语","effect":"加拉赫终结技造成的【酩酊】状态持续时间延长1回合。","icon":"icon/skill/1301_rank4.png"},{"id":"130105","name":"午后之死","effect":"终结技等级+2，最多不超过15级，天赋等级+2，最多不超过15级。","icon":"icon/skill/1301_ultimate.png"},{"id":"130106","name":"血与沙","effect":"加拉赫的击破特攻提高20%，弱点击破效率提高20%。","icon":"icon/skill/1301_rank6.png"}],"skillsData":{"130101":{"id":"130101","name":"开瓶费","max_level":9,"element":"Fire","type":"Normal","type_text":"普攻","effect":"SingleAttack","effect_text":"单攻","simple_desc":"对敌方单体造成少量火属性伤害。","desc":"对指定敌方单体造成等同于加拉赫<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的火属性伤害。","params":[[0.5],[0.6],[0.7],[0.8],[0.9],[1],[1.1],[1.2],[1.3]],"icon":"icon/skill/1301_basic_atk.png"},"130102":{"id":"130102","name":"罐装特调","max_level":15,"element":"","type":"BPSkill","type_text":"战技","effect":"Restore","effect_text":"回复","simple_desc":"立即为我方单体回复生命值。","desc":"立即为指定我方单体回复<span class=\"textColor\">200/340/480/676/830/984/1138/1292/1446/1600/1684/1768/1852/1936/2020</span>点生命值。","params":[[200],[340],[480],[676],[830],[984],[1138],[1292],[1446],[1600],[1684],[1768],[1852],[1936],[2020]],"icon":"icon/skill/1301_skill.png"},"130103":{"id":"130103","name":"香槟仪礼","max_level":15,"element":"Fire","type":"Ultra","type_text":"终结技","effect":"AoEAttack","effect_text":"群攻","simple_desc":"使敌方全体陷入【酩酊】状态，同时对敌方全体造成火属性伤害。下一次普攻强化为【酒花奔涌】。","desc":"使敌方全体陷入【酩酊】状态，持续<span class=\"textColor\">2</span>回合，同时对敌方全体造成等同于加拉赫<span class=\"textColor\">75%/82%/90%/97%/105%/112%/121%/131%/140%/150%/157%/165%/172%/180%/187%</span>攻击力的火属性伤害，并将下一次普攻强化为【酒花奔涌】。","params":[[0.75,2],[0.825,2],[0.9,2],[0.975,2],[1.05,2],[1.125,2],[1.2188,2],[1.3125,2],[1.4062,2],[1.5,2],[1.575,2],[1.65,2],[1.725,2],[1.8,2],[1.875,2]],"icon":"icon/skill/1301_ultimate.png"},"130104":{"id":"130104","name":"鏖战正酣","max_level":15,"element":"Fire","type":"Talent","type_text":"天赋","effect":"Restore","effect_text":"回复","simple_desc":"【酩酊】使目标受到的击破伤害提高，目标每次受到我方角色攻击后，攻击者回复生命值。","desc":"【酩酊】使目标受到的击破伤害提高<span class=\"textColor\">6%/7%/8%/9%/10%/11%/12%/13%/14%/15%</span>。陷入【酩酊】状态的目标每次受到我方角色攻击后，会回复攻击者<span class=\"textColor\">80/136/192/270.4/332/393.6/455.2/516.8/578.4/640/673.6/707.2/740.8/774.4/808</span>点生命值。","params":[[0.06,80],[0.066,136],[0.072,192],[0.078,270.4],[0.084,332],[0.09,393.6],[0.0975,455.2],[0.105,516.8],[0.1125,578.4],[0.12,640],[0.126,673.6],[0.132,707.2],[0.138,740.8],[0.144,774.4],[0.15,808]],"icon":"icon/skill/1301_talent.png","AttributeBuff":["额外能力·敬请干杯：加拉赫施放【酒花奔涌】攻击陷入【酩酊】状态的目标时，使此次天赋提供的生命回复效果对我方队友也会生效。","属性加成·效果抵抗：效果抵抗提高8%。","属性加成·生命强化：生命值上限提高6%。"]},"130106":{"id":"130106","name":"攻击","max_level":1,"element":"Fire","type":"MazeNormal","type_text":"dev_连携","effect":"MazeAttack","effect_text":"","simple_desc":"","desc":"攻击敌人，进入战斗后削弱敌方目标对应属性韧性。","params":[],"icon":"icon/skill/1301_basic_atk.png"},"130107":{"id":"130107","name":"亲启佳酿","max_level":1,"element":"Fire","type":"Maze","type_text":"秘技","effect":"MazeAttack","effect_text":"","simple_desc":"攻击敌人，进战后使敌方全体陷入【酩酊】状态，并对敌方全体造成少量火属性伤害。","desc":"立即攻击敌人，进入战斗后使敌方全体陷入【酩酊】状态，持续<span class=\"textColor\">2</span>回合，并对敌方全体造成等同于加拉赫<span class=\"textColor\">50%</span>攻击力的火属性伤害。","params":[[2,0.5]],"icon":"icon/skill/1301_technique.png","AttributeBuff":["额外能力·天然酵母：施放终结技后，立刻使自己行动提前100%。","属性加成·效果抵抗强化：效果抵抗提高6%。","属性加成·击破强化：击破特攻提高8%。","属性加成·效果抵抗强化：效果抵抗提高6%。","额外能力·崭新配方：使自身提供的治疗量提高，提高数值等同于击破特攻的50%，最多使提供的治疗量提高75%。","属性加成·击破强化：击破特攻提高5.3%。","属性加成·效果抵抗强化：效果抵抗提高4%。","属性加成·生命强化：生命值上限提高4%。","属性加成·生命强化：生命值上限提高8%。","属性加成·效果抵抗强化：效果抵抗提高4%。"]},"130108":{"id":"130108","name":"酒花奔涌","max_level":9,"element":"Fire","type":"Normal","type_text":"普攻","effect":"SingleAttack","effect_text":"单攻","simple_desc":"对敌方单体造成火属性伤害，并降低其攻击力。","desc":"对指定敌方单体造成等同于加拉赫<span class=\"textColor\">125%/150%/175%/2%/225%/250%/275%/3%/325%</span>攻击力的火属性伤害。并使目标攻击力降低<span class=\"textColor\">10%/11%/12%/13%/14%/15%/16%/17%/18%</span>，持续<span class=\"textColor\">2</span>回合。","params":[[1.25,0.1,2],[1.5,0.11,2],[1.75,0.12,2],[2,0.13,2],[2.25,0.14,2],[2.5,0.15,2],[2.75,0.16,2],[3,0.17,2],[3.25,0.18,2]],"icon":"icon/skill/1301_basic_atk.png"}},"skill_tree":{"1301001":{"id":"1301001","name":"","max_level":6,"desc":"","params":[],"anchor":"Point01","pre_points":[],"level_up_skills":[{"id":"130101","num":1},{"id":"130108","num":1}],"levels":[{"promotion":0,"level":0,"properties":[],"materials":[]},{"promotion":2,"level":0,"properties":[],"materials":[{"id":"2","num":4000},{"id":"110241","num":2},{"id":"114001","num":4}]},{"promotion":3,"level":0,"properties":[],"materials":[{"id":"2","num":8000},{"id":"110242","num":2},{"id":"114002","num":2}]},{"promotion":4,"level":0,"properties":[],"materials":[{"id":"2","num":16000},{"id":"110242","num":4},{"id":"114002","num":3}]},{"promotion":5,"level":0,"properties":[],"materials":[{"id":"2","num":36000},{"id":"110243","num":2},{"id":"114003","num":2}]},{"promotion":6,"level":0,"properties":[],"materials":[{"id":"2","num":128000},{"id":"110243","num":6},{"id":"114003","num":3}]}],"icon":"icon/skill/1301_basic_atk.png"},"1301002":{"id":"1301002","name":"","max_level":10,"desc":"","params":[],"anchor":"Point02","pre_points":[],"level_up_skills":[{"id":"130102","num":1}],"levels":[{"promotion":0,"level":0,"properties":[],"materials":[]},{"promotion":1,"level":0,"properties":[],"materials":[{"id":"2","num":2000},{"id":"114001","num":2}]},{"promotion":2,"level":0,"properties":[],"materials":[{"id":"2","num":4000},{"id":"110241","num":2},{"id":"114001","num":4}]},{"promotion":3,"level":0,"properties":[],"materials":[{"id":"2","num":8000},{"id":"110242","num":2},{"id":"114002","num":2}]},{"promotion":4,"level":0,"properties":[],"materials":[{"id":"2","num":16000},{"id":"110242","num":4},{"id":"114002","num":3}]},{"promotion":4,"level":0,"properties":[],"materials":[{"id":"2","num":24000},{"id":"110242","num":6},{"id":"114002","num":5}]},{"promotion":5,"level":0,"properties":[],"materials":[{"id":"2","num":36000},{"id":"110243","num":2},{"id":"114003","num":2}]},{"promotion":5,"level":0,"properties":[],"materials":[{"id":"2","num":64000},{"id":"110243","num":4},{"id":"110504","num":1},{"id":"114003","num":3}]},{"promotion":6,"level":0,"properties":[],"materials":[{"id":"2","num":128000},{"id":"110243","num":6},{"id":"110504","num":1}]},{"promotion":6,"level":0,"properties":[],"materials":[{"id":"2","num":240000},{"id":"110243","num":11},{"id":"241","num":1},{"id":"110504","num":1}]}],"icon":"icon/skill/1301_skill.png"},"1301003":{"id":"1301003","name":"","max_level":10,"desc":"","params":[],"anchor":"Point03","pre_points":[],"level_up_skills":[{"id":"130103","num":1}],"levels":[{"promotion":0,"level":0,"properties":[],"materials":[]},{"promotion":1,"level":0,"properties":[],"materials":[{"id":"2","num":2000},{"id":"114001","num":2}]},{"promotion":2,"level":0,"properties":[],"materials":[{"id":"2","num":4000},{"id":"110241","num":2},{"id":"114001","num":4}]},{"promotion":3,"level":0,"properties":[],"materials":[{"id":"2","num":8000},{"id":"110242","num":2},{"id":"114002","num":2}]},{"promotion":4,"level":0,"properties":[],"materials":[{"id":"2","num":16000},{"id":"110242","num":4},{"id":"114002","num":3}]},{"promotion":4,"level":0,"properties":[],"materials":[{"id":"2","num":24000},{"id":"110242","num":6},{"id":"114002","num":5}]},{"promotion":5,"level":0,"properties":[],"materials":[{"id":"2","num":36000},{"id":"110243","num":2},{"id":"114003","num":2}]},{"promotion":5,"level":0,"properties":[],"materials":[{"id":"2","num":64000},{"id":"110243","num":4},{"id":"110504","num":1},{"id":"114003","num":3}]},{"promotion":6,"level":0,"properties":[],"materials":[{"id":"2","num":128000},{"id":"110243","num":6},{"id":"110504","num":1}]},{"promotion":6,"level":0,"properties":[],"materials":[{"id":"2","num":240000},{"id":"110243","num":11},{"id":"241","num":1},{"id":"110504","num":1}]}],"icon":"icon/skill/1301_ultimate.png"},"1301004":{"id":"1301004","name":"","max_level":10,"desc":"","params":[],"anchor":"Point04","pre_points":[],"level_up_skills":[{"id":"130104","num":1}],"levels":[{"promotion":0,"level":0,"properties":[],"materials":[]},{"promotion":1,"level":0,"properties":[],"materials":[{"id":"2","num":2000},{"id":"114001","num":2}]},{"promotion":2,"level":0,"properties":[],"materials":[{"id":"2","num":4000},{"id":"110241","num":2},{"id":"114001","num":4}]},{"promotion":3,"level":0,"properties":[],"materials":[{"id":"2","num":8000},{"id":"110242","num":2},{"id":"114002","num":2}]},{"promotion":4,"level":0,"properties":[],"materials":[{"id":"2","num":16000},{"id":"110242","num":4},{"id":"114002","num":3}]},{"promotion":4,"level":0,"properties":[],"materials":[{"id":"2","num":24000},{"id":"110242","num":6},{"id":"114002","num":5}]},{"promotion":5,"level":0,"properties":[],"materials":[{"id":"2","num":36000},{"id":"110243","num":2},{"id":"114003","num":2}]},{"promotion":5,"level":0,"properties":[],"materials":[{"id":"2","num":64000},{"id":"110243","num":4},{"id":"110504","num":1},{"id":"114003","num":3}]},{"promotion":6,"level":0,"properties":[],"materials":[{"id":"2","num":128000},{"id":"110243","num":6},{"id":"110504","num":1}]},{"promotion":6,"level":0,"properties":[],"materials":[{"id":"2","num":240000},{"id":"110243","num":11},{"id":"241","num":1},{"id":"110504","num":1}]}],"icon":"icon/skill/1301_talent.png"},"1301007":{"id":"1301007","name":"","max_level":1,"desc":"","params":[],"anchor":"Point05","pre_points":[],"level_up_skills":[{"id":"130107","num":1}],"levels":[{"promotion":0,"level":0,"properties":[],"materials":[]}],"icon":"icon/skill/1301_technique.png"},"1301101":{"id":"1301101","name":"崭新配方","max_level":1,"desc":"使自身提供的治疗量提高，提高数值等同于击破特攻的#1[i]%，最多使提供的治疗量提高#2[i]%。","params":[[0.5,0.75]],"anchor":"Point06","pre_points":[],"level_up_skills":[],"levels":[{"promotion":2,"level":0,"properties":[],"materials":[{"id":"2","num":4000},{"id":"110241","num":2},{"id":"110504","num":1}]}],"icon":"icon/skill/1301_skilltree1.png"},"1301102":{"id":"1301102","name":"天然酵母","max_level":1,"desc":"施放终结技后，立刻使自己行动提前100%。","params":[],"anchor":"Point07","pre_points":[],"level_up_skills":[],"levels":[{"promotion":4,"level":0,"properties":[],"materials":[{"id":"2","num":16000},{"id":"110242","num":4},{"id":"241","num":1},{"id":"110504","num":1}]}],"icon":"icon/skill/1301_skilltree2.png"},"1301103":{"id":"1301103","name":"敬请干杯","max_level":1,"desc":"加拉赫施放【酒花奔涌】攻击陷入【酩酊】状态的目标时，使此次天赋提供的生命回复效果对我方队友也会生效。","params":[],"anchor":"Point08","pre_points":[],"level_up_skills":[],"levels":[{"promotion":6,"level":0,"properties":[],"materials":[{"id":"2","num":128000},{"id":"110243","num":6},{"id":"241","num":1},{"id":"110504","num":1}]}],"icon":"icon/skill/1301_skilltree3.png"},"1301201":{"id":"1301201","name":"效果抵抗强化","max_level":1,"desc":"","params":[],"anchor":"Point09","pre_points":[],"level_up_skills":[],"levels":[{"promotion":0,"level":1,"properties":[{"type":"StatusResistanceBase","value":0.04}],"materials":[{"id":"2","num":2000},{"id":"114001","num":2}]}],"icon":"icon/property/IconStatusResistance.png"},"1301202":{"id":"1301202","name":"击破强化","max_level":1,"desc":"","params":[],"anchor":"Point10","pre_points":["1301101"],"level_up_skills":[],"levels":[{"promotion":2,"level":0,"properties":[{"type":"BreakDamageAddedRatioBase","value":0.053}],"materials":[{"id":"2","num":4000},{"id":"110241","num":2},{"id":"114001","num":4}]}],"icon":"icon/property/IconBreakUp.png"},"1301203":{"id":"1301203","name":"效果抵抗强化","max_level":1,"desc":"","params":[],"anchor":"Point11","pre_points":["1301202"],"level_up_skills":[],"levels":[{"promotion":3,"level":0,"properties":[{"type":"StatusResistanceBase","value":0.04}],"materials":[{"id":"2","num":8000},{"id":"110242","num":2},{"id":"114002","num":2}]}],"icon":"icon/property/IconStatusResistance.png"},"1301204":{"id":"1301204","name":"生命强化","max_level":1,"desc":"","params":[],"anchor":"Point12","pre_points":["1301203"],"level_up_skills":[],"levels":[{"promotion":3,"level":0,"properties":[{"type":"HPAddedRatio","value":0.04}],"materials":[{"id":"2","num":8000},{"id":"110242","num":2},{"id":"114002","num":2}]}],"icon":"icon/property/IconMaxHP.png"},"1301205":{"id":"1301205","name":"效果抵抗强化","max_level":1,"desc":"","params":[],"anchor":"Point13","pre_points":["1301102"],"level_up_skills":[],"levels":[{"promotion":4,"level":0,"properties":[{"type":"StatusResistanceBase","value":0.06}],"materials":[{"id":"2","num":16000},{"id":"110242","num":4},{"id":"114002","num":3}]}],"icon":"icon/property/IconStatusResistance.png"},"1301206":{"id":"1301206","name":"击破强化","max_level":1,"desc":"","params":[],"anchor":"Point14","pre_points":["1301205"],"level_up_skills":[],"levels":[{"promotion":5,"level":0,"properties":[{"type":"BreakDamageAddedRatioBase","value":0.08}],"materials":[{"id":"2","num":36000},{"id":"110243","num":2},{"id":"114003","num":2}]}],"icon":"icon/property/IconBreakUp.png"},"1301207":{"id":"1301207","name":"效果抵抗强化","max_level":1,"desc":"","params":[],"anchor":"Point15","pre_points":["1301206"],"level_up_skills":[],"levels":[{"promotion":5,"level":0,"properties":[{"type":"StatusResistanceBase","value":0.06}],"materials":[{"id":"2","num":36000},{"id":"110243","num":2},{"id":"114003","num":2}]}],"icon":"icon/property/IconStatusResistance.png"},"1301208":{"id":"1301208","name":"生命强化","max_level":1,"desc":"","params":[],"anchor":"Point16","pre_points":["1301103"],"level_up_skills":[],"levels":[{"promotion":6,"level":0,"properties":[{"type":"HPAddedRatio","value":0.06}],"materials":[{"id":"2","num":128000},{"id":"110243","num":6},{"id":"114003","num":6}]}],"icon":"icon/property/IconMaxHP.png"},"1301209":{"id":"1301209","name":"效果抵抗强化","max_level":1,"desc":"","params":[],"anchor":"Point17","pre_points":["1301103"],"level_up_skills":[],"levels":[{"promotion":0,"level":75,"properties":[{"type":"StatusResistanceBase","value":0.08}],"materials":[{"id":"2","num":128000},{"id":"110243","num":6},{"id":"114003","num":6}]}],"icon":"icon/property/IconStatusResistance.png"},"1301210":{"id":"1301210","name":"生命强化","max_level":1,"desc":"","params":[],"anchor":"Point18","pre_points":[],"level_up_skills":[],"levels":[{"promotion":0,"level":80,"properties":[{"type":"HPAddedRatio","value":0.08}],"materials":[{"id":"2","num":128000},{"id":"110243","num":6},{"id":"114003","num":6}]}],"icon":"icon/property/IconMaxHP.png"}},"materials":[[{"id":"2","num":3200},{"id":"114001","num":4}],[{"id":"2","num":6400},{"id":"114001","num":8}],[{"id":"2","num":12800},{"id":"114002","num":5},{"id":"110422","num":2}],[{"id":"2","num":32000},{"id":"114002","num":8},{"id":"110422","num":5}],[{"id":"2","num":64000},{"id":"114003","num":5},{"id":"110422","num":15}],[{"id":"2","num":128000},{"id":"114003","num":7},{"id":"110422","num":28}],[]],"values":[{"hp":{"base":177.6,"step":8.88},"atk":{"base":72,"step":3.6},"def":{"base":60,"step":3},"spd":{"base":98,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":248.64,"step":8.88},"atk":{"base":100.8,"step":3.6},"def":{"base":84,"step":3},"spd":{"base":98,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":319.68,"step":8.88},"atk":{"base":129.6,"step":3.6},"def":{"base":108,"step":3},"spd":{"base":98,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":390.72,"step":8.88},"atk":{"base":158.4,"step":3.6},"def":{"base":132,"step":3},"spd":{"base":98,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":461.76,"step":8.88},"atk":{"base":187.2,"step":3.6},"def":{"base":156,"step":3},"spd":{"base":98,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":532.8,"step":8.88},"atk":{"base":216,"step":3.6},"def":{"base":180,"step":3},"spd":{"base":98,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":603.84,"step":8.88},"atk":{"base":244.8,"step":3.6},"def":{"base":204,"step":3},"spd":{"base":98,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}}],"portrait":"image/character_portrait/1301.png"}
+{
+    "id": "1301",
+    "name": "加拉赫",
+    "rarity": 4,
+    "element": "火",
+    "path": "丰饶",
+    "isTopImg": 20,
+    "jpcv": "三上哲",
+    "cncv": "马语非",
+    "allegiance": "匹诺康尼",
+    "sp": 110,
+    "affiliation": "家族",
+    "factions": "匹诺康尼",
+    "baseAttr": {
+        "atk": 529.2,
+        "hp": 1305.3600000000001,
+        "def": 441,
+        "speed": 98,
+        "cpct": 5,
+        "cdmg": 50,
+        "aggro": 100
+    },
+    "growAttr": {
+        "hp": [
+            4,
+            4,
+            6,
+            6,
+            8
+        ],
+        "resist": [
+            4,
+            6,
+            8
+        ],
+        "break": [
+            5.3,
+            8
+        ]
+    },
+    "desc": "匹诺康尼猎犬家系的治安官，对来访宾客以礼相待，但保有戒心。似乎有着诸多往事，却从不主动提及。",
+    "skills": [
+        "130101",
+        "130102",
+        "130103",
+        "130104",
+        "130106",
+        "130107",
+        "130108"
+    ],
+    "eidolons": [
+        {
+            "id": "130101",
+            "name": "盐与犬",
+            "effect": "加拉赫进入战斗后会恢复20点能量，效果抵抗提高50%。",
+            "icon": "icon/skill/1301_rank1.png"
+        },
+        {
+            "id": "130102",
+            "name": "狮子之尾",
+            "effect": "施放战技时，解除指定我方单体的1个负面效果，同时使其效果抵抗提高30%，持续2回合。",
+            "icon": "icon/skill/1301_rank2.png"
+        },
+        {
+            "id": "130103",
+            "name": "逝者的新生",
+            "effect": "战技等级+2，最多不超过15级，普攻等级+1，最多不超过10级。",
+            "icon": "icon/skill/1301_skill.png"
+        },
+        {
+            "id": "130104",
+            "name": "临终的轻语",
+            "effect": "加拉赫终结技造成的【酩酊】状态持续时间延长1回合。",
+            "icon": "icon/skill/1301_rank4.png"
+        },
+        {
+            "id": "130105",
+            "name": "午后之死",
+            "effect": "终结技等级+2，最多不超过15级，天赋等级+2，最多不超过15级。",
+            "icon": "icon/skill/1301_ultimate.png"
+        },
+        {
+            "id": "130106",
+            "name": "血与沙",
+            "effect": "加拉赫的击破特攻提高20%，弱点击破效率提高20%。",
+            "icon": "icon/skill/1301_rank6.png"
+        }
+    ],
+    "skillsData": {
+        "130101": {
+            "id": "130101",
+            "name": "开瓶费",
+            "max_level": 9,
+            "element": "Fire",
+            "type": "Normal",
+            "type_text": "普攻",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "对敌方单体造成少量火属性伤害。",
+            "desc": "对指定敌方单体造成等同于加拉赫<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的火属性伤害。",
+            "params": [
+                [
+                    0.5
+                ],
+                [
+                    0.6
+                ],
+                [
+                    0.7
+                ],
+                [
+                    0.8
+                ],
+                [
+                    0.9
+                ],
+                [
+                    1
+                ],
+                [
+                    1.1
+                ],
+                [
+                    1.2
+                ],
+                [
+                    1.3
+                ]
+            ],
+            "icon": "icon/skill/1301_basic_atk.png"
+        },
+        "130102": {
+            "id": "130102",
+            "name": "罐装特调",
+            "max_level": 15,
+            "element": "",
+            "type": "BPSkill",
+            "type_text": "战技",
+            "effect": "Restore",
+            "effect_text": "回复",
+            "simple_desc": "立即为我方单体回复生命值。",
+            "desc": "立即为指定我方单体回复<span class=\"textColor\">200/340/480/676/830/984/1138/1292/1446/1600/1684/1768/1852/1936/2020</span>点生命值。",
+            "params": [
+                [
+                    200
+                ],
+                [
+                    340
+                ],
+                [
+                    480
+                ],
+                [
+                    676
+                ],
+                [
+                    830
+                ],
+                [
+                    984
+                ],
+                [
+                    1138
+                ],
+                [
+                    1292
+                ],
+                [
+                    1446
+                ],
+                [
+                    1600
+                ],
+                [
+                    1684
+                ],
+                [
+                    1768
+                ],
+                [
+                    1852
+                ],
+                [
+                    1936
+                ],
+                [
+                    2020
+                ]
+            ],
+            "icon": "icon/skill/1301_skill.png"
+        },
+        "130103": {
+            "id": "130103",
+            "name": "香槟仪礼",
+            "max_level": 15,
+            "element": "Fire",
+            "type": "Ultra",
+            "type_text": "终结技",
+            "effect": "AoEAttack",
+            "effect_text": "群攻",
+            "simple_desc": "使敌方全体陷入【酩酊】状态，同时对敌方全体造成火属性伤害。下一次普攻强化为【酒花奔涌】。",
+            "desc": "使敌方全体陷入【酩酊】状态，持续<span class=\"textColor\">2</span>回合，同时对敌方全体造成等同于加拉赫<span class=\"textColor\">75%/82%/90%/97%/105%/112%/121%/131%/140%/150%/157%/165%/172%/180%/187%</span>攻击力的火属性伤害，并将下一次普攻强化为【酒花奔涌】。",
+            "params": [
+                [
+                    0.75,
+                    2
+                ],
+                [
+                    0.825,
+                    2
+                ],
+                [
+                    0.9,
+                    2
+                ],
+                [
+                    0.975,
+                    2
+                ],
+                [
+                    1.05,
+                    2
+                ],
+                [
+                    1.125,
+                    2
+                ],
+                [
+                    1.2188,
+                    2
+                ],
+                [
+                    1.3125,
+                    2
+                ],
+                [
+                    1.4062,
+                    2
+                ],
+                [
+                    1.5,
+                    2
+                ],
+                [
+                    1.575,
+                    2
+                ],
+                [
+                    1.65,
+                    2
+                ],
+                [
+                    1.725,
+                    2
+                ],
+                [
+                    1.8,
+                    2
+                ],
+                [
+                    1.875,
+                    2
+                ]
+            ],
+            "icon": "icon/skill/1301_ultimate.png"
+        },
+        "130104": {
+            "id": "130104",
+            "name": "鏖战正酣",
+            "max_level": 15,
+            "element": "Fire",
+            "type": "Talent",
+            "type_text": "天赋",
+            "effect": "Restore",
+            "effect_text": "回复",
+            "simple_desc": "【酩酊】使目标受到的击破伤害提高，目标每次受到我方角色攻击后，攻击者回复生命值。",
+            "desc": "【酩酊】使目标受到的击破伤害提高<span class=\"textColor\">6%/7%/8%/9%/10%/11%/12%/13%/14%/15%</span>。陷入【酩酊】状态的目标每次受到我方角色攻击后，会回复攻击者<span class=\"textColor\">80/136/192/270.4/332/393.6/455.2/516.8/578.4/640/673.6/707.2/740.8/774.4/808</span>点生命值。",
+            "params": [
+                [
+                    0.06,
+                    80
+                ],
+                [
+                    0.066,
+                    136
+                ],
+                [
+                    0.072,
+                    192
+                ],
+                [
+                    0.078,
+                    270.4
+                ],
+                [
+                    0.084,
+                    332
+                ],
+                [
+                    0.09,
+                    393.6
+                ],
+                [
+                    0.0975,
+                    455.2
+                ],
+                [
+                    0.105,
+                    516.8
+                ],
+                [
+                    0.1125,
+                    578.4
+                ],
+                [
+                    0.12,
+                    640
+                ],
+                [
+                    0.126,
+                    673.6
+                ],
+                [
+                    0.132,
+                    707.2
+                ],
+                [
+                    0.138,
+                    740.8
+                ],
+                [
+                    0.144,
+                    774.4
+                ],
+                [
+                    0.15,
+                    808
+                ]
+            ],
+            "icon": "icon/skill/1301_talent.png",
+            "AttributeBuff": [
+                "额外能力·敬请干杯：加拉赫施放【酒花奔涌】攻击陷入【酩酊】状态的目标时，使此次天赋提供的生命回复效果对我方队友也会生效。",
+                "属性加成·效果抵抗：效果抵抗提高8%。",
+                "属性加成·生命强化：生命值上限提高6%。"
+            ]
+        },
+        "130106": {
+            "id": "130106",
+            "name": "攻击",
+            "max_level": 1,
+            "element": "Fire",
+            "type": "MazeNormal",
+            "type_text": "dev_连携",
+            "effect": "MazeAttack",
+            "effect_text": "",
+            "simple_desc": "",
+            "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
+            "params": [],
+            "icon": "icon/skill/1301_basic_atk.png"
+        },
+        "130107": {
+            "id": "130107",
+            "name": "亲启佳酿",
+            "max_level": 1,
+            "element": "Fire",
+            "type": "Maze",
+            "type_text": "秘技",
+            "effect": "MazeAttack",
+            "effect_text": "",
+            "simple_desc": "攻击敌人，进战后使敌方全体陷入【酩酊】状态，并对敌方全体造成少量火属性伤害。",
+            "desc": "立即攻击敌人，进入战斗后使敌方全体陷入【酩酊】状态，持续<span class=\"textColor\">2</span>回合，并对敌方全体造成等同于加拉赫<span class=\"textColor\">50%</span>攻击力的火属性伤害。",
+            "params": [
+                [
+                    2,
+                    0.5
+                ]
+            ],
+            "icon": "icon/skill/1301_technique.png",
+            "AttributeBuff": [
+                "额外能力·天然酵母：施放终结技后，立刻使自己行动提前100%。",
+                "属性加成·效果抵抗强化：效果抵抗提高6%。",
+                "属性加成·击破强化：击破特攻提高8%。",
+                "属性加成·效果抵抗强化：效果抵抗提高6%。",
+                "额外能力·崭新配方：使自身提供的治疗量提高，提高数值等同于击破特攻的50%，最多使提供的治疗量提高75%。",
+                "属性加成·击破强化：击破特攻提高5.3%。",
+                "属性加成·效果抵抗强化：效果抵抗提高4%。",
+                "属性加成·生命强化：生命值上限提高4%。",
+                "属性加成·生命强化：生命值上限提高8%。",
+                "属性加成·效果抵抗强化：效果抵抗提高4%。"
+            ]
+        },
+        "130108": {
+            "id": "130108",
+            "name": "酒花奔涌",
+            "max_level": 9,
+            "element": "Fire",
+            "type": "Normal",
+            "type_text": "普攻",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "对敌方单体造成火属性伤害，并降低其攻击力。",
+            "desc": "对指定敌方单体造成等同于加拉赫<span class=\"textColor\">125%/150%/175%/2%/225%/250%/275%/3%/325%</span>攻击力的火属性伤害。并使目标攻击力降低<span class=\"textColor\">10%/11%/12%/13%/14%/15%/16%/17%/18%</span>，持续<span class=\"textColor\">2</span>回合。",
+            "params": [
+                [
+                    1.25,
+                    0.1,
+                    2
+                ],
+                [
+                    1.5,
+                    0.11,
+                    2
+                ],
+                [
+                    1.75,
+                    0.12,
+                    2
+                ],
+                [
+                    2,
+                    0.13,
+                    2
+                ],
+                [
+                    2.25,
+                    0.14,
+                    2
+                ],
+                [
+                    2.5,
+                    0.15,
+                    2
+                ],
+                [
+                    2.75,
+                    0.16,
+                    2
+                ],
+                [
+                    3,
+                    0.17,
+                    2
+                ],
+                [
+                    3.25,
+                    0.18,
+                    2
+                ]
+            ],
+            "icon": "icon/skill/1301_basic_atk.png"
+        }
+    },
+    "skill_tree": {
+        "1301001": {
+            "id": "1301001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "130101",
+                    "num": 1
+                },
+                {
+                    "id": "130108",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110241",
+                            "num": 2
+                        },
+                        {
+                            "id": "114001",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 2
+                        },
+                        {
+                            "id": "114002",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 4
+                        },
+                        {
+                            "id": "114002",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 2
+                        },
+                        {
+                            "id": "114003",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 6
+                        },
+                        {
+                            "id": "114003",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1301_basic_atk.png"
+        },
+        "1301002": {
+            "id": "1301002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "130102",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "114001",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110241",
+                            "num": 2
+                        },
+                        {
+                            "id": "114001",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 2
+                        },
+                        {
+                            "id": "114002",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 4
+                        },
+                        {
+                            "id": "114002",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 24000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 6
+                        },
+                        {
+                            "id": "114002",
+                            "num": 5
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 2
+                        },
+                        {
+                            "id": "114003",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 64000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 4
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        },
+                        {
+                            "id": "114003",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 6
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 240000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 11
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1301_skill.png"
+        },
+        "1301003": {
+            "id": "1301003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "130103",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "114001",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110241",
+                            "num": 2
+                        },
+                        {
+                            "id": "114001",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 2
+                        },
+                        {
+                            "id": "114002",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 4
+                        },
+                        {
+                            "id": "114002",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 24000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 6
+                        },
+                        {
+                            "id": "114002",
+                            "num": 5
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 2
+                        },
+                        {
+                            "id": "114003",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 64000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 4
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        },
+                        {
+                            "id": "114003",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 6
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 240000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 11
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1301_ultimate.png"
+        },
+        "1301004": {
+            "id": "1301004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "130104",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "114001",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110241",
+                            "num": 2
+                        },
+                        {
+                            "id": "114001",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 2
+                        },
+                        {
+                            "id": "114002",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 4
+                        },
+                        {
+                            "id": "114002",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 24000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 6
+                        },
+                        {
+                            "id": "114002",
+                            "num": 5
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 2
+                        },
+                        {
+                            "id": "114003",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 64000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 4
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        },
+                        {
+                            "id": "114003",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 6
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 240000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 11
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1301_talent.png"
+        },
+        "1301007": {
+            "id": "1301007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "130107",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1301_technique.png"
+        },
+        "1301101": {
+            "id": "1301101",
+            "name": "崭新配方",
+            "max_level": 1,
+            "desc": "使自身提供的治疗量提高，提高数值等同于击破特攻的#1[i]%，最多使提供的治疗量提高#2[i]%。",
+            "params": [
+                [
+                    0.5,
+                    0.75
+                ]
+            ],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110241",
+                            "num": 2
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1301_skilltree1.png"
+        },
+        "1301102": {
+            "id": "1301102",
+            "name": "天然酵母",
+            "max_level": 1,
+            "desc": "施放终结技后，立刻使自己行动提前100%。",
+            "params": [],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 4
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1301_skilltree2.png"
+        },
+        "1301103": {
+            "id": "1301103",
+            "name": "敬请干杯",
+            "max_level": 1,
+            "desc": "加拉赫施放【酒花奔涌】攻击陷入【酩酊】状态的目标时，使此次天赋提供的生命回复效果对我方队友也会生效。",
+            "params": [],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 6
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110504",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1301_skilltree3.png"
+        },
+        "1301201": {
+            "id": "1301201",
+            "name": "效果抵抗强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "StatusResistanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "114001",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconStatusResistance.png"
+        },
+        "1301202": {
+            "id": "1301202",
+            "name": "击破强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [
+                "1301101"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "BreakDamageAddedRatioBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110241",
+                            "num": 2
+                        },
+                        {
+                            "id": "114001",
+                            "num": 4
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconBreakUp.png"
+        },
+        "1301203": {
+            "id": "1301203",
+            "name": "效果抵抗强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [
+                "1301202"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "StatusResistanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 2
+                        },
+                        {
+                            "id": "114002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconStatusResistance.png"
+        },
+        "1301204": {
+            "id": "1301204",
+            "name": "生命强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [
+                "1301203"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "HPAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 2
+                        },
+                        {
+                            "id": "114002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconMaxHP.png"
+        },
+        "1301205": {
+            "id": "1301205",
+            "name": "效果抵抗强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [
+                "1301102"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "StatusResistanceBase",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110242",
+                            "num": 4
+                        },
+                        {
+                            "id": "114002",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconStatusResistance.png"
+        },
+        "1301206": {
+            "id": "1301206",
+            "name": "击破强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [
+                "1301205"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "BreakDamageAddedRatioBase",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 2
+                        },
+                        {
+                            "id": "114003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconBreakUp.png"
+        },
+        "1301207": {
+            "id": "1301207",
+            "name": "效果抵抗强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [
+                "1301206"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "StatusResistanceBase",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 2
+                        },
+                        {
+                            "id": "114003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconStatusResistance.png"
+        },
+        "1301208": {
+            "id": "1301208",
+            "name": "生命强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [
+                "1301103"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "HPAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 6
+                        },
+                        {
+                            "id": "114003",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconMaxHP.png"
+        },
+        "1301209": {
+            "id": "1301209",
+            "name": "效果抵抗强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [
+                "1301103"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 75,
+                    "properties": [
+                        {
+                            "type": "StatusResistanceBase",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 6
+                        },
+                        {
+                            "id": "114003",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconStatusResistance.png"
+        },
+        "1301210": {
+            "id": "1301210",
+            "name": "生命强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 80,
+                    "properties": [
+                        {
+                            "type": "HPAddedRatio",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110243",
+                            "num": 6
+                        },
+                        {
+                            "id": "114003",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconMaxHP.png"
+        }
+    },
+    "materials": [
+        [
+            {
+                "id": "2",
+                "num": 3200
+            },
+            {
+                "id": "114001",
+                "num": 4
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 6400
+            },
+            {
+                "id": "114001",
+                "num": 8
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 12800
+            },
+            {
+                "id": "114002",
+                "num": 5
+            },
+            {
+                "id": "110422",
+                "num": 2
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 32000
+            },
+            {
+                "id": "114002",
+                "num": 8
+            },
+            {
+                "id": "110422",
+                "num": 5
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 64000
+            },
+            {
+                "id": "114003",
+                "num": 5
+            },
+            {
+                "id": "110422",
+                "num": 15
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 128000
+            },
+            {
+                "id": "114003",
+                "num": 7
+            },
+            {
+                "id": "110422",
+                "num": 28
+            }
+        ],
+        []
+    ],
+    "values": [
+        {
+            "hp": {
+                "base": 177.6,
+                "step": 8.88
+            },
+            "atk": {
+                "base": 72,
+                "step": 3.6
+            },
+            "def": {
+                "base": 60,
+                "step": 3
+            },
+            "spd": {
+                "base": 98,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 248.64,
+                "step": 8.88
+            },
+            "atk": {
+                "base": 100.8,
+                "step": 3.6
+            },
+            "def": {
+                "base": 84,
+                "step": 3
+            },
+            "spd": {
+                "base": 98,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 319.68,
+                "step": 8.88
+            },
+            "atk": {
+                "base": 129.6,
+                "step": 3.6
+            },
+            "def": {
+                "base": 108,
+                "step": 3
+            },
+            "spd": {
+                "base": 98,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 390.72,
+                "step": 8.88
+            },
+            "atk": {
+                "base": 158.4,
+                "step": 3.6
+            },
+            "def": {
+                "base": 132,
+                "step": 3
+            },
+            "spd": {
+                "base": 98,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 461.76,
+                "step": 8.88
+            },
+            "atk": {
+                "base": 187.2,
+                "step": 3.6
+            },
+            "def": {
+                "base": 156,
+                "step": 3
+            },
+            "spd": {
+                "base": 98,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 532.8,
+                "step": 8.88
+            },
+            "atk": {
+                "base": 216,
+                "step": 3.6
+            },
+            "def": {
+                "base": 180,
+                "step": 3
+            },
+            "spd": {
+                "base": 98,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 603.84,
+                "step": 8.88
+            },
+            "atk": {
+                "base": 244.8,
+                "step": 3.6
+            },
+            "def": {
+                "base": 204,
+                "step": 3
+            },
+            "spd": {
+                "base": 98,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        }
+    ],
+    "portrait": "image/character_portrait/1301.png"
+}

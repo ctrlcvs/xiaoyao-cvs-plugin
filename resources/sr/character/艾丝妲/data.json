@@ -1,1 +1,1827 @@
-{"id":"1009","name":"艾丝妲","rarity":4,"element":"火","path":"同谐","jpcv":"赤﨑千夏","cncv":"龟娘","allegiance":"空间站「黑塔」","sp":120,"affiliation":"空间站「黑塔」","factions":"/","baseAttr":{"atk":511.56,"hp":1023.12,"def":463.04999999999995,"speed":106,"cpct":5,"cdmg":50,"aggro":100},"growAttr":{"damage":[3.2,3.2,4.8,4.8,6.4],"def":[5,7.5,10],"cpct":[2.7,4]},"desc":"空间站「黑塔」的站长，出身名门的大小姐。 好奇心旺盛的天文研究者，擅长管理空间站各抒己见的科员。","skills":["100901","100902","100903","100904","100906","100907"],"eidolons":[{"id":"100901","name":"星有无言之歌","effect":"施放战技时，对敌方随机单体额外造成1次伤害。","icon":"icon/skill/1009_rank1.png"},{"id":"100902","name":"月见圆缺之意","effect":"施放终结技时，艾丝妲下回合不会减少蓄能层数。","icon":"icon/skill/1009_rank2.png"},{"id":"100903","name":"黄道陨石之变","effect":"战技等级+2，最多不超过15级；天赋等级+2，最多不超过15级。","icon":"icon/skill/1009_skill.png"},{"id":"100904","name":"极光显现之时","effect":"天赋的蓄能层数大于等于2时，艾丝妲的能量恢复效率提高15%。","icon":"icon/skill/1009_rank4.png"},{"id":"100905","name":"深空天体之谜","effect":"终结技等级+2，最多不超过15级；普攻等级+1，最多不超过10级。","icon":"icon/skill/1009_ultimate.png"},{"id":"100906","name":"眠于银河之下","effect":"天赋每回合减少的蓄能层数降低1。","icon":"icon/skill/1009_rank6.png"}],"skillsData":{"100901":{"id":"100901","name":"光谱射线","max_level":9,"element":"Fire","type":"Normal","type_text":"普攻","effect":"SingleAttack","effect_text":"单攻","simple_desc":"对敌方单体造成少量火属性伤害。","desc":"对指定敌方单体造成等同于艾丝妲<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的火属性伤害。","params":[[0.5],[0.6],[0.7],[0.8],[0.9],[1],[1.1],[1.2],[1.3]],"icon":"icon/skill/1009_basic_atk.png","AttributeBuff":["额外能力·火花：施放普攻时，有80%的基础概率使敌方目标陷入灼烧状态，持续3回合。\n灼烧状态下，敌方目标每回合开始时受到等同于艾丝妲普攻50%的火属性持续伤害。","属性加成·防御强化：防御力提高5%。","属性加成·伤害强化•火：火属性伤害提高3.2%。"]},"100902":{"id":"100902","name":"流星群落","max_level":15,"element":"Fire","type":"BPSkill","type_text":"战技","effect":"Bounce","effect_text":"弹射","simple_desc":"对敌方单体造成少量火属性伤害，共弹射5次。","desc":"对指定敌方单体造成等同于艾丝妲<span class=\"textColor\">25%/27%/30%/32%/35%/37%/40%/43%/46%/50%/52%/55%/57%/60%/62%</span>攻击力的火属性伤害，并额外造成4次伤害。每次伤害对随机敌方单体造成等同于艾丝妲<span class=\"textColor\">25%/27%/30%/32%/35%/37%/40%/43%/46%/50%/52%/55%/57%/60%/62%</span>攻击力的火属性伤害。","params":[[0.25],[0.275],[0.3],[0.325],[0.35],[0.375],[0.4063],[0.4375],[0.4688],[0.5],[0.525],[0.55],[0.575],[0.6],[0.625]],"icon":"icon/skill/1009_skill.png","AttributeBuff":["额外能力·点燃：艾丝妲在场时，我方全体的火属性伤害提高18%。","属性加成·伤害强化•火：火属性伤害提高4.8%。","属性加成·防御强化：防御力提高7.5%。"]},"100903":{"id":"100903","name":"星空祝言","max_level":15,"element":"","type":"Ultra","type_text":"终结技","effect":"Support","effect_text":"辅助","simple_desc":"使我方全体速度提高。","desc":"使我方全体速度提高<span class=\"textColor\">36/37.4/38.8/40.2/41.6/43/44.75/46.5/48.25/50/51.4/52.8/54.2/55.6/57</span>点，持续<span class=\"textColor\">2</span>回合。","params":[[36,2],[37.4,2],[38.8,2],[40.2,2],[41.6,2],[43,2],[44.75,2],[46.5,2],[48.25,2],[50,2],[51.4,2],[52.8,2],[54.2,2],[55.6,2],[57,2]],"icon":"icon/skill/1009_ultimate.png"},"100904":{"id":"100904","name":"天象学","max_level":15,"element":"","type":"Talent","type_text":"天赋","effect":"Support","effect_text":"辅助","simple_desc":"每击中1名不同敌人后获得1层蓄能，最多叠加5层。每层蓄能提高我方全体攻击力。自身回合开始时降低蓄能层数。","desc":"每击中1名不同的敌方目标获得1层蓄能，若受到攻击的敌方目标弱点为火属性，则额外获得1层蓄能。\n艾丝妲每拥有1层蓄能，会使我方全体攻击力提高<span class=\"textColor\">7%/8%/9%/10%/11%/12%/13%/14%/15%/16%/17%</span>，该效果最多叠加<span class=\"textColor\">5</span>层。\n从自身的第2回合开始，艾丝妲每回合开始时蓄能层数减少<span class=\"textColor\">3</span>层。","params":[[0.07,5,3],[0.077,5,3],[0.084,5,3],[0.091,5,3],[0.098,5,3],[0.105,5,3],[0.1138,5,3],[0.1225,5,3],[0.1313,5,3],[0.14,5,3],[0.147,5,3],[0.154,5,3],[0.161,5,3],[0.168,5,3],[0.175,5,3]],"icon":"icon/skill/1009_talent.png","AttributeBuff":["额外能力·星座：艾丝妲每拥有1层蓄能，自身防御力提高6%。","属性加成·暴击率强化：暴击率提高4%。","属性加成·防御强化：防御力提高10%。","属性加成·伤害强化•火：火属性伤害提高6.4%。"]},"100906":{"id":"100906","name":"攻击","max_level":1,"element":"Fire","type":"MazeNormal","type_text":"dev_连携","effect":"MazeAttack","effect_text":"","simple_desc":"","desc":"攻击敌人，进入战斗后削弱敌方目标对应属性韧性。","params":[],"icon":"icon/skill/1009_basic_atk.png"},"100907":{"id":"100907","name":"灵光一现","max_level":1,"element":"Fire","type":"Maze","type_text":"秘技","effect":"MazeAttack","effect_text":"","simple_desc":"攻击敌人，进战后对敌方全体造成少量伤害。","desc":"立即攻击敌人，进入战斗后对敌方全体目标造成等同于艾丝妲<span class=\"textColor\">50%</span>攻击力的火属性伤害。","params":[[0.5]],"icon":"icon/skill/1009_technique.png","AttributeBuff":["属性加成·伤害强化•火：火属性伤害提高3.2%。","属性加成·暴击率强化：暴击率提高2.7%。","属性加成·伤害强化•火：火属性伤害提高4.8%。"]}},"skill_tree":{"1009001":{"id":"1009001","max_level":6,"anchor":"Point01","pre_points":[],"level_up_skills":[{"id":"100901","num":1}],"levels":[{"promotion":0,"properties":[],"materials":[]},{"promotion":2,"properties":[],"materials":[{"id":"2","num":4000},{"id":"110161","num":2},{"id":"112001","num":4}]},{"promotion":3,"properties":[],"materials":[{"id":"2","num":8000},{"id":"110162","num":2},{"id":"112002","num":2}]},{"promotion":4,"properties":[],"materials":[{"id":"2","num":16000},{"id":"110162","num":4},{"id":"112002","num":3}]},{"promotion":5,"properties":[],"materials":[{"id":"2","num":36000},{"id":"110163","num":2},{"id":"112003","num":2}]},{"promotion":6,"properties":[],"materials":[{"id":"2","num":128000},{"id":"110163","num":6},{"id":"112003","num":3}]}],"icon":"icon/skill/1009_basic_atk.png"},"1009002":{"id":"1009002","max_level":10,"anchor":"Point02","pre_points":[],"level_up_skills":[{"id":"100902","num":1}],"levels":[{"promotion":0,"properties":[],"materials":[]},{"promotion":1,"properties":[],"materials":[{"id":"2","num":2000},{"id":"112001","num":2}]},{"promotion":2,"properties":[],"materials":[{"id":"2","num":4000},{"id":"110161","num":2},{"id":"112001","num":4}]},{"promotion":3,"properties":[],"materials":[{"id":"2","num":8000},{"id":"110162","num":2},{"id":"112002","num":2}]},{"promotion":4,"properties":[],"materials":[{"id":"2","num":16000},{"id":"110162","num":4},{"id":"112002","num":3}]},{"promotion":4,"properties":[],"materials":[{"id":"2","num":24000},{"id":"110162","num":6},{"id":"112002","num":5}]},{"promotion":5,"properties":[],"materials":[{"id":"2","num":36000},{"id":"110163","num":2},{"id":"112003","num":2}]},{"promotion":5,"properties":[],"materials":[{"id":"2","num":64000},{"id":"110163","num":4},{"id":"110501","num":1},{"id":"112003","num":3}]},{"promotion":6,"properties":[],"materials":[{"id":"2","num":128000},{"id":"110163","num":6},{"id":"110501","num":1}]},{"promotion":6,"properties":[],"materials":[{"id":"2","num":240000},{"id":"110163","num":11},{"id":"241","num":1},{"id":"110501","num":1}]}],"icon":"icon/skill/1009_skill.png"},"1009003":{"id":"1009003","max_level":10,"anchor":"Point03","pre_points":[],"level_up_skills":[{"id":"100903","num":1}],"levels":[{"promotion":0,"properties":[],"materials":[]},{"promotion":1,"properties":[],"materials":[{"id":"2","num":2000},{"id":"112001","num":2}]},{"promotion":2,"properties":[],"materials":[{"id":"2","num":4000},{"id":"110161","num":2},{"id":"112001","num":4}]},{"promotion":3,"properties":[],"materials":[{"id":"2","num":8000},{"id":"110162","num":2},{"id":"112002","num":2}]},{"promotion":4,"properties":[],"materials":[{"id":"2","num":16000},{"id":"110162","num":4},{"id":"112002","num":3}]},{"promotion":4,"properties":[],"materials":[{"id":"2","num":24000},{"id":"110162","num":6},{"id":"112002","num":5}]},{"promotion":5,"properties":[],"materials":[{"id":"2","num":36000},{"id":"110163","num":2},{"id":"112003","num":2}]},{"promotion":5,"properties":[],"materials":[{"id":"2","num":64000},{"id":"110163","num":4},{"id":"110501","num":1},{"id":"112003","num":3}]},{"promotion":6,"properties":[],"materials":[{"id":"2","num":128000},{"id":"110163","num":6},{"id":"110501","num":1}]},{"promotion":6,"properties":[],"materials":[{"id":"2","num":240000},{"id":"110163","num":11},{"id":"241","num":1},{"id":"110501","num":1}]}],"icon":"icon/skill/1009_ultimate.png"},"1009004":{"id":"1009004","max_level":10,"anchor":"Point04","pre_points":[],"level_up_skills":[{"id":"100904","num":1}],"levels":[{"promotion":0,"properties":[],"materials":[]},{"promotion":1,"properties":[],"materials":[{"id":"2","num":2000},{"id":"112001","num":2}]},{"promotion":2,"properties":[],"materials":[{"id":"2","num":4000},{"id":"110161","num":2},{"id":"112001","num":4}]},{"promotion":3,"properties":[],"materials":[{"id":"2","num":8000},{"id":"110162","num":2},{"id":"112002","num":2}]},{"promotion":4,"properties":[],"materials":[{"id":"2","num":16000},{"id":"110162","num":4},{"id":"112002","num":3}]},{"promotion":4,"properties":[],"materials":[{"id":"2","num":24000},{"id":"110162","num":6},{"id":"112002","num":5}]},{"promotion":5,"properties":[],"materials":[{"id":"2","num":36000},{"id":"110163","num":2},{"id":"112003","num":2}]},{"promotion":5,"properties":[],"materials":[{"id":"2","num":64000},{"id":"110163","num":4},{"id":"110501","num":1},{"id":"112003","num":3}]},{"promotion":6,"properties":[],"materials":[{"id":"2","num":128000},{"id":"110163","num":6},{"id":"110501","num":1}]},{"promotion":6,"properties":[],"materials":[{"id":"2","num":240000},{"id":"110163","num":11},{"id":"241","num":1},{"id":"110501","num":1}]}],"icon":"icon/skill/1009_talent.png"},"1009007":{"id":"1009007","max_level":1,"anchor":"Point05","pre_points":[],"level_up_skills":[{"id":"100907","num":1}],"levels":[{"promotion":0,"properties":[],"materials":[]}],"icon":"icon/skill/1009_technique.png"},"1009101":{"id":"1009101","max_level":1,"anchor":"Point06","pre_points":[],"level_up_skills":[],"levels":[{"promotion":2,"properties":[],"materials":[{"id":"2","num":4000},{"id":"110161","num":2},{"id":"110501","num":1}]}],"icon":"icon/skill/1009_skilltree1.png"},"1009102":{"id":"1009102","max_level":1,"anchor":"Point07","pre_points":[],"level_up_skills":[],"levels":[{"promotion":4,"properties":[],"materials":[{"id":"2","num":16000},{"id":"110162","num":4},{"id":"241","num":1},{"id":"110501","num":1}]}],"icon":"icon/skill/1009_skilltree2.png"},"1009103":{"id":"1009103","max_level":1,"anchor":"Point08","pre_points":[],"level_up_skills":[],"levels":[{"promotion":6,"properties":[],"materials":[{"id":"2","num":128000},{"id":"110163","num":6},{"id":"241","num":1},{"id":"110501","num":1}]}],"icon":"icon/skill/1009_skilltree3.png"},"1009201":{"id":"1009201","max_level":1,"anchor":"Point09","pre_points":[],"level_up_skills":[],"levels":[{"promotion":0,"properties":[{"type":"FireAddedRatio","value":0.032}],"materials":[{"id":"2","num":2000},{"id":"112001","num":2}]}],"icon":"icon/property/IconFireAddedRatio.png"},"1009202":{"id":"1009202","max_level":1,"anchor":"Point10","pre_points":["1009101"],"level_up_skills":[],"levels":[{"promotion":2,"properties":[{"type":"DefenceAddedRatio","value":0.05}],"materials":[{"id":"2","num":4000},{"id":"110161","num":2},{"id":"112001","num":4}]}],"icon":"icon/property/IconDefence.png"},"1009203":{"id":"1009203","max_level":1,"anchor":"Point11","pre_points":["1009202"],"level_up_skills":[],"levels":[{"promotion":3,"properties":[{"type":"FireAddedRatio","value":0.032}],"materials":[{"id":"2","num":8000},{"id":"110162","num":2},{"id":"112002","num":2}]}],"icon":"icon/property/IconFireAddedRatio.png"},"1009204":{"id":"1009204","max_level":1,"anchor":"Point12","pre_points":["1009201"],"level_up_skills":[],"levels":[{"promotion":3,"properties":[{"type":"CriticalChanceBase","value":0.027}],"materials":[{"id":"2","num":8000},{"id":"110162","num":2},{"id":"112002","num":2}]}],"icon":"icon/property/IconCriticalChance.png"},"1009205":{"id":"1009205","max_level":1,"anchor":"Point13","pre_points":["1009102"],"level_up_skills":[],"levels":[{"promotion":4,"properties":[{"type":"FireAddedRatio","value":0.048}],"materials":[{"id":"2","num":16000},{"id":"110162","num":4},{"id":"112002","num":3}]}],"icon":"icon/property/IconFireAddedRatio.png"},"1009206":{"id":"1009206","max_level":1,"anchor":"Point14","pre_points":["1009205"],"level_up_skills":[],"levels":[{"promotion":5,"properties":[{"type":"DefenceAddedRatio","value":0.075}],"materials":[{"id":"2","num":36000},{"id":"110163","num":2},{"id":"112003","num":2}]}],"icon":"icon/property/IconDefence.png"},"1009207":{"id":"1009207","max_level":1,"anchor":"Point15","pre_points":["1009201"],"level_up_skills":[],"levels":[{"promotion":5,"properties":[{"type":"FireAddedRatio","value":0.048}],"materials":[{"id":"2","num":36000},{"id":"110163","num":2},{"id":"112003","num":2}]}],"icon":"icon/property/IconFireAddedRatio.png"},"1009208":{"id":"1009208","max_level":1,"anchor":"Point16","pre_points":["1009103"],"level_up_skills":[],"levels":[{"promotion":6,"properties":[{"type":"CriticalChanceBase","value":0.04}],"materials":[{"id":"2","num":128000},{"id":"110163","num":6},{"id":"112003","num":6}]}],"icon":"icon/property/IconCriticalChance.png"},"1009209":{"id":"1009209","max_level":1,"anchor":"Point17","pre_points":["1009208"],"level_up_skills":[],"levels":[{"promotion":0,"properties":[{"type":"DefenceAddedRatio","value":0.1}],"materials":[{"id":"2","num":128000},{"id":"110163","num":6},{"id":"112003","num":6}]}],"icon":"icon/property/IconDefence.png"},"1009210":{"id":"1009210","max_level":1,"anchor":"Point18","pre_points":["1009208"],"level_up_skills":[],"levels":[{"promotion":0,"properties":[{"type":"FireAddedRatio","value":0.064}],"materials":[{"id":"2","num":128000},{"id":"110163","num":6},{"id":"112003","num":6}]}],"icon":"icon/property/IconFireAddedRatio.png"}},"materials":[[{"id":"2","num":3200},{"id":"112001","num":4}],[{"id":"2","num":6400},{"id":"112001","num":8}],[{"id":"2","num":12800},{"id":"112002","num":5},{"id":"110402","num":2}],[{"id":"2","num":32000},{"id":"112002","num":8},{"id":"110402","num":5}],[{"id":"2","num":64000},{"id":"112003","num":5},{"id":"110402","num":15}],[{"id":"2","num":128000},{"id":"112003","num":7},{"id":"110402","num":28}],[]],"values":[{"hp":{"base":139.2,"step":6.96},"atk":{"base":69.6,"step":3.48},"def":{"base":63,"step":3.15},"spd":{"base":106,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":194.88,"step":6.96},"atk":{"base":97.44,"step":3.48},"def":{"base":88.2,"step":3.15},"spd":{"base":106,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":250.56,"step":6.96},"atk":{"base":125.28,"step":3.48},"def":{"base":113.4,"step":3.15},"spd":{"base":106,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":306.24,"step":6.96},"atk":{"base":153.12,"step":3.48},"def":{"base":138.6,"step":3.15},"spd":{"base":106,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":361.92,"step":6.96},"atk":{"base":180.96,"step":3.48},"def":{"base":163.8,"step":3.15},"spd":{"base":106,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":417.6,"step":6.96},"atk":{"base":208.8,"step":3.48},"def":{"base":189,"step":3.15},"spd":{"base":106,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}},{"hp":{"base":473.28,"step":6.96},"atk":{"base":236.64,"step":3.48},"def":{"base":214.2,"step":3.15},"spd":{"base":106,"step":0},"taunt":{"base":100,"step":0},"crit_rate":{"base":0.05,"step":0},"crit_dmg":{"base":0.5,"step":0}}],"portrait":"image/character_portrait/1009.png"}
+{
+    "id": "1009",
+    "name": "艾丝妲",
+    "rarity": 4,
+    "element": "火",
+    "path": "同谐",
+    "jpcv": "赤﨑千夏",
+    "cncv": "龟娘",
+    "allegiance": "空间站「黑塔」",
+    "sp": 120,
+    "affiliation": "空间站「黑塔」",
+    "factions": "/",
+    "baseAttr": {
+        "atk": 511.56,
+        "hp": 1023.12,
+        "def": 463.04999999999995,
+        "speed": 106,
+        "cpct": 5,
+        "cdmg": 50,
+        "aggro": 100
+    },
+    "growAttr": {
+        "damage": [
+            3.2,
+            3.2,
+            4.8,
+            4.8,
+            6.4
+        ],
+        "def": [
+            5,
+            7.5,
+            10
+        ],
+        "cpct": [
+            2.7,
+            4
+        ]
+    },
+    "desc": "空间站「黑塔」的站长，出身名门的大小姐。 好奇心旺盛的天文研究者，擅长管理空间站各抒己见的科员。",
+    "skills": [
+        "100901",
+        "100902",
+        "100903",
+        "100904",
+        "100906",
+        "100907"
+    ],
+    "eidolons": [
+        {
+            "id": "100901",
+            "name": "星有无言之歌",
+            "effect": "施放战技时，对敌方随机单体额外造成1次伤害。",
+            "icon": "icon/skill/1009_rank1.png"
+        },
+        {
+            "id": "100902",
+            "name": "月见圆缺之意",
+            "effect": "施放终结技时，艾丝妲下回合不会减少蓄能层数。",
+            "icon": "icon/skill/1009_rank2.png"
+        },
+        {
+            "id": "100903",
+            "name": "黄道陨石之变",
+            "effect": "战技等级+2，最多不超过15级；天赋等级+2，最多不超过15级。",
+            "icon": "icon/skill/1009_skill.png"
+        },
+        {
+            "id": "100904",
+            "name": "极光显现之时",
+            "effect": "天赋的蓄能层数大于等于2时，艾丝妲的能量恢复效率提高15%。",
+            "icon": "icon/skill/1009_rank4.png"
+        },
+        {
+            "id": "100905",
+            "name": "深空天体之谜",
+            "effect": "终结技等级+2，最多不超过15级；普攻等级+1，最多不超过10级。",
+            "icon": "icon/skill/1009_ultimate.png"
+        },
+        {
+            "id": "100906",
+            "name": "眠于银河之下",
+            "effect": "天赋每回合减少的蓄能层数降低1。",
+            "icon": "icon/skill/1009_rank6.png"
+        }
+    ],
+    "skillsData": {
+        "100901": {
+            "id": "100901",
+            "name": "光谱射线",
+            "max_level": 9,
+            "element": "Fire",
+            "type": "Normal",
+            "type_text": "普攻",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "对敌方单体造成少量火属性伤害。",
+            "desc": "对指定敌方单体造成等同于艾丝妲<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的火属性伤害。",
+            "params": [
+                [
+                    0.5
+                ],
+                [
+                    0.6
+                ],
+                [
+                    0.7
+                ],
+                [
+                    0.8
+                ],
+                [
+                    0.9
+                ],
+                [
+                    1
+                ],
+                [
+                    1.1
+                ],
+                [
+                    1.2
+                ],
+                [
+                    1.3
+                ]
+            ],
+            "icon": "icon/skill/1009_basic_atk.png",
+            "AttributeBuff": [
+                "额外能力·火花：施放普攻时，有80%的基础概率使敌方目标陷入灼烧状态，持续3回合。\n灼烧状态下，敌方目标每回合开始时受到等同于艾丝妲普攻50%的火属性持续伤害。",
+                "属性加成·防御强化：防御力提高5%。",
+                "属性加成·伤害强化•火：火属性伤害提高3.2%。"
+            ]
+        },
+        "100902": {
+            "id": "100902",
+            "name": "流星群落",
+            "max_level": 15,
+            "element": "Fire",
+            "type": "BPSkill",
+            "type_text": "战技",
+            "effect": "Bounce",
+            "effect_text": "弹射",
+            "simple_desc": "对敌方单体造成少量火属性伤害，共弹射5次。",
+            "desc": "对指定敌方单体造成等同于艾丝妲<span class=\"textColor\">25%/27%/30%/32%/35%/37%/40%/43%/46%/50%/52%/55%/57%/60%/62%</span>攻击力的火属性伤害，并额外造成4次伤害。每次伤害对随机敌方单体造成等同于艾丝妲<span class=\"textColor\">25%/27%/30%/32%/35%/37%/40%/43%/46%/50%/52%/55%/57%/60%/62%</span>攻击力的火属性伤害。",
+            "params": [
+                [
+                    0.25
+                ],
+                [
+                    0.275
+                ],
+                [
+                    0.3
+                ],
+                [
+                    0.325
+                ],
+                [
+                    0.35
+                ],
+                [
+                    0.375
+                ],
+                [
+                    0.4063
+                ],
+                [
+                    0.4375
+                ],
+                [
+                    0.4688
+                ],
+                [
+                    0.5
+                ],
+                [
+                    0.525
+                ],
+                [
+                    0.55
+                ],
+                [
+                    0.575
+                ],
+                [
+                    0.6
+                ],
+                [
+                    0.625
+                ]
+            ],
+            "icon": "icon/skill/1009_skill.png",
+            "AttributeBuff": [
+                "额外能力·点燃：艾丝妲在场时，我方全体的火属性伤害提高18%。",
+                "属性加成·伤害强化•火：火属性伤害提高4.8%。",
+                "属性加成·防御强化：防御力提高7.5%。"
+            ]
+        },
+        "100903": {
+            "id": "100903",
+            "name": "星空祝言",
+            "max_level": 15,
+            "element": "",
+            "type": "Ultra",
+            "type_text": "终结技",
+            "effect": "Support",
+            "effect_text": "辅助",
+            "simple_desc": "使我方全体速度提高。",
+            "desc": "使我方全体速度提高<span class=\"textColor\">36/37.4/38.8/40.2/41.6/43/44.75/46.5/48.25/50/51.4/52.8/54.2/55.6/57</span>点，持续<span class=\"textColor\">2</span>回合。",
+            "params": [
+                [
+                    36,
+                    2
+                ],
+                [
+                    37.4,
+                    2
+                ],
+                [
+                    38.8,
+                    2
+                ],
+                [
+                    40.2,
+                    2
+                ],
+                [
+                    41.6,
+                    2
+                ],
+                [
+                    43,
+                    2
+                ],
+                [
+                    44.75,
+                    2
+                ],
+                [
+                    46.5,
+                    2
+                ],
+                [
+                    48.25,
+                    2
+                ],
+                [
+                    50,
+                    2
+                ],
+                [
+                    51.4,
+                    2
+                ],
+                [
+                    52.8,
+                    2
+                ],
+                [
+                    54.2,
+                    2
+                ],
+                [
+                    55.6,
+                    2
+                ],
+                [
+                    57,
+                    2
+                ]
+            ],
+            "icon": "icon/skill/1009_ultimate.png"
+        },
+        "100904": {
+            "id": "100904",
+            "name": "天象学",
+            "max_level": 15,
+            "element": "",
+            "type": "Talent",
+            "type_text": "天赋",
+            "effect": "Support",
+            "effect_text": "辅助",
+            "simple_desc": "每击中1名不同敌人后获得1层蓄能，最多叠加5层。每层蓄能提高我方全体攻击力。自身回合开始时降低蓄能层数。",
+            "desc": "每击中1名不同的敌方目标获得1层蓄能，若受到攻击的敌方目标弱点为火属性，则额外获得1层蓄能。\n艾丝妲每拥有1层蓄能，会使我方全体攻击力提高<span class=\"textColor\">7%/8%/9%/10%/11%/12%/13%/14%/15%/16%/17%</span>，该效果最多叠加<span class=\"textColor\">5</span>层。\n从自身的第2回合开始，艾丝妲每回合开始时蓄能层数减少<span class=\"textColor\">3</span>层。",
+            "params": [
+                [
+                    0.07,
+                    5,
+                    3
+                ],
+                [
+                    0.077,
+                    5,
+                    3
+                ],
+                [
+                    0.084,
+                    5,
+                    3
+                ],
+                [
+                    0.091,
+                    5,
+                    3
+                ],
+                [
+                    0.098,
+                    5,
+                    3
+                ],
+                [
+                    0.105,
+                    5,
+                    3
+                ],
+                [
+                    0.1138,
+                    5,
+                    3
+                ],
+                [
+                    0.1225,
+                    5,
+                    3
+                ],
+                [
+                    0.1313,
+                    5,
+                    3
+                ],
+                [
+                    0.14,
+                    5,
+                    3
+                ],
+                [
+                    0.147,
+                    5,
+                    3
+                ],
+                [
+                    0.154,
+                    5,
+                    3
+                ],
+                [
+                    0.161,
+                    5,
+                    3
+                ],
+                [
+                    0.168,
+                    5,
+                    3
+                ],
+                [
+                    0.175,
+                    5,
+                    3
+                ]
+            ],
+            "icon": "icon/skill/1009_talent.png",
+            "AttributeBuff": [
+                "额外能力·星座：艾丝妲每拥有1层蓄能，自身防御力提高6%。",
+                "属性加成·暴击率强化：暴击率提高4%。",
+                "属性加成·防御强化：防御力提高10%。",
+                "属性加成·伤害强化•火：火属性伤害提高6.4%。"
+            ]
+        },
+        "100906": {
+            "id": "100906",
+            "name": "攻击",
+            "max_level": 1,
+            "element": "Fire",
+            "type": "MazeNormal",
+            "type_text": "dev_连携",
+            "effect": "MazeAttack",
+            "effect_text": "",
+            "simple_desc": "",
+            "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
+            "params": [],
+            "icon": "icon/skill/1009_basic_atk.png"
+        },
+        "100907": {
+            "id": "100907",
+            "name": "灵光一现",
+            "max_level": 1,
+            "element": "Fire",
+            "type": "Maze",
+            "type_text": "秘技",
+            "effect": "MazeAttack",
+            "effect_text": "",
+            "simple_desc": "攻击敌人，进战后对敌方全体造成少量伤害。",
+            "desc": "立即攻击敌人，进入战斗后对敌方全体目标造成等同于艾丝妲<span class=\"textColor\">50%</span>攻击力的火属性伤害。",
+            "params": [
+                [
+                    0.5
+                ]
+            ],
+            "icon": "icon/skill/1009_technique.png",
+            "AttributeBuff": [
+                "属性加成·伤害强化•火：火属性伤害提高3.2%。",
+                "属性加成·暴击率强化：暴击率提高2.7%。",
+                "属性加成·伤害强化•火：火属性伤害提高4.8%。"
+            ]
+        }
+    },
+    "skill_tree": {
+        "1009001": {
+            "id": "1009001",
+            "max_level": 6,
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "100901",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110161",
+                            "num": 2
+                        },
+                        {
+                            "id": "112001",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 2
+                        },
+                        {
+                            "id": "112002",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 4
+                        },
+                        {
+                            "id": "112002",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 2
+                        },
+                        {
+                            "id": "112003",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 6
+                        },
+                        {
+                            "id": "112003",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1009_basic_atk.png"
+        },
+        "1009002": {
+            "id": "1009002",
+            "max_level": 10,
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "100902",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "112001",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110161",
+                            "num": 2
+                        },
+                        {
+                            "id": "112001",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 2
+                        },
+                        {
+                            "id": "112002",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 4
+                        },
+                        {
+                            "id": "112002",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 24000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 6
+                        },
+                        {
+                            "id": "112002",
+                            "num": 5
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 2
+                        },
+                        {
+                            "id": "112003",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 64000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 4
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        },
+                        {
+                            "id": "112003",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 6
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 240000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 11
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1009_skill.png"
+        },
+        "1009003": {
+            "id": "1009003",
+            "max_level": 10,
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "100903",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "112001",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110161",
+                            "num": 2
+                        },
+                        {
+                            "id": "112001",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 2
+                        },
+                        {
+                            "id": "112002",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 4
+                        },
+                        {
+                            "id": "112002",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 24000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 6
+                        },
+                        {
+                            "id": "112002",
+                            "num": 5
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 2
+                        },
+                        {
+                            "id": "112003",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 64000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 4
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        },
+                        {
+                            "id": "112003",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 6
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 240000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 11
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1009_ultimate.png"
+        },
+        "1009004": {
+            "id": "1009004",
+            "max_level": 10,
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "100904",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "112001",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110161",
+                            "num": 2
+                        },
+                        {
+                            "id": "112001",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 2
+                        },
+                        {
+                            "id": "112002",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 4
+                        },
+                        {
+                            "id": "112002",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 24000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 6
+                        },
+                        {
+                            "id": "112002",
+                            "num": 5
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 2
+                        },
+                        {
+                            "id": "112003",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 64000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 4
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        },
+                        {
+                            "id": "112003",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 6
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 240000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 11
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1009_talent.png"
+        },
+        "1009007": {
+            "id": "1009007",
+            "max_level": 1,
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "100907",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1009_technique.png"
+        },
+        "1009101": {
+            "id": "1009101",
+            "max_level": 1,
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110161",
+                            "num": 2
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1009_skilltree1.png"
+        },
+        "1009102": {
+            "id": "1009102",
+            "max_level": 1,
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 4,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 4
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1009_skilltree2.png"
+        },
+        "1009103": {
+            "id": "1009103",
+            "max_level": 1,
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 6,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 6
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1009_skilltree3.png"
+        },
+        "1009201": {
+            "id": "1009201",
+            "max_level": 1,
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "properties": [
+                        {
+                            "type": "FireAddedRatio",
+                            "value": 0.032
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "112001",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconFireAddedRatio.png"
+        },
+        "1009202": {
+            "id": "1009202",
+            "max_level": 1,
+            "anchor": "Point10",
+            "pre_points": [
+                "1009101"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "properties": [
+                        {
+                            "type": "DefenceAddedRatio",
+                            "value": 0.05
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110161",
+                            "num": 2
+                        },
+                        {
+                            "id": "112001",
+                            "num": 4
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconDefence.png"
+        },
+        "1009203": {
+            "id": "1009203",
+            "max_level": 1,
+            "anchor": "Point11",
+            "pre_points": [
+                "1009202"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 3,
+                    "properties": [
+                        {
+                            "type": "FireAddedRatio",
+                            "value": 0.032
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 2
+                        },
+                        {
+                            "id": "112002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconFireAddedRatio.png"
+        },
+        "1009204": {
+            "id": "1009204",
+            "max_level": 1,
+            "anchor": "Point12",
+            "pre_points": [
+                "1009201"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 3,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 2
+                        },
+                        {
+                            "id": "112002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChance.png"
+        },
+        "1009205": {
+            "id": "1009205",
+            "max_level": 1,
+            "anchor": "Point13",
+            "pre_points": [
+                "1009102"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 4,
+                    "properties": [
+                        {
+                            "type": "FireAddedRatio",
+                            "value": 0.048
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110162",
+                            "num": 4
+                        },
+                        {
+                            "id": "112002",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconFireAddedRatio.png"
+        },
+        "1009206": {
+            "id": "1009206",
+            "max_level": 1,
+            "anchor": "Point14",
+            "pre_points": [
+                "1009205"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 5,
+                    "properties": [
+                        {
+                            "type": "DefenceAddedRatio",
+                            "value": 0.075
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 2
+                        },
+                        {
+                            "id": "112003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconDefence.png"
+        },
+        "1009207": {
+            "id": "1009207",
+            "max_level": 1,
+            "anchor": "Point15",
+            "pre_points": [
+                "1009201"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 5,
+                    "properties": [
+                        {
+                            "type": "FireAddedRatio",
+                            "value": 0.048
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 2
+                        },
+                        {
+                            "id": "112003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconFireAddedRatio.png"
+        },
+        "1009208": {
+            "id": "1009208",
+            "max_level": 1,
+            "anchor": "Point16",
+            "pre_points": [
+                "1009103"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 6,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 6
+                        },
+                        {
+                            "id": "112003",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChance.png"
+        },
+        "1009209": {
+            "id": "1009209",
+            "max_level": 1,
+            "anchor": "Point17",
+            "pre_points": [
+                "1009208"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "properties": [
+                        {
+                            "type": "DefenceAddedRatio",
+                            "value": 0.1
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 6
+                        },
+                        {
+                            "id": "112003",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconDefence.png"
+        },
+        "1009210": {
+            "id": "1009210",
+            "max_level": 1,
+            "anchor": "Point18",
+            "pre_points": [
+                "1009208"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "properties": [
+                        {
+                            "type": "FireAddedRatio",
+                            "value": 0.064
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110163",
+                            "num": 6
+                        },
+                        {
+                            "id": "112003",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconFireAddedRatio.png"
+        }
+    },
+    "materials": [
+        [
+            {
+                "id": "2",
+                "num": 3200
+            },
+            {
+                "id": "112001",
+                "num": 4
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 6400
+            },
+            {
+                "id": "112001",
+                "num": 8
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 12800
+            },
+            {
+                "id": "112002",
+                "num": 5
+            },
+            {
+                "id": "110402",
+                "num": 2
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 32000
+            },
+            {
+                "id": "112002",
+                "num": 8
+            },
+            {
+                "id": "110402",
+                "num": 5
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 64000
+            },
+            {
+                "id": "112003",
+                "num": 5
+            },
+            {
+                "id": "110402",
+                "num": 15
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 128000
+            },
+            {
+                "id": "112003",
+                "num": 7
+            },
+            {
+                "id": "110402",
+                "num": 28
+            }
+        ],
+        []
+    ],
+    "values": [
+        {
+            "hp": {
+                "base": 139.2,
+                "step": 6.96
+            },
+            "atk": {
+                "base": 69.6,
+                "step": 3.48
+            },
+            "def": {
+                "base": 63,
+                "step": 3.15
+            },
+            "spd": {
+                "base": 106,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 194.88,
+                "step": 6.96
+            },
+            "atk": {
+                "base": 97.44,
+                "step": 3.48
+            },
+            "def": {
+                "base": 88.2,
+                "step": 3.15
+            },
+            "spd": {
+                "base": 106,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 250.56,
+                "step": 6.96
+            },
+            "atk": {
+                "base": 125.28,
+                "step": 3.48
+            },
+            "def": {
+                "base": 113.4,
+                "step": 3.15
+            },
+            "spd": {
+                "base": 106,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 306.24,
+                "step": 6.96
+            },
+            "atk": {
+                "base": 153.12,
+                "step": 3.48
+            },
+            "def": {
+                "base": 138.6,
+                "step": 3.15
+            },
+            "spd": {
+                "base": 106,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 361.92,
+                "step": 6.96
+            },
+            "atk": {
+                "base": 180.96,
+                "step": 3.48
+            },
+            "def": {
+                "base": 163.8,
+                "step": 3.15
+            },
+            "spd": {
+                "base": 106,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 417.6,
+                "step": 6.96
+            },
+            "atk": {
+                "base": 208.8,
+                "step": 3.48
+            },
+            "def": {
+                "base": 189,
+                "step": 3.15
+            },
+            "spd": {
+                "base": 106,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 473.28,
+                "step": 6.96
+            },
+            "atk": {
+                "base": 236.64,
+                "step": 3.48
+            },
+            "def": {
+                "base": 214.2,
+                "step": 3.15
+            },
+            "spd": {
+                "base": 106,
+                "step": 0
+            },
+            "taunt": {
+                "base": 100,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        }
+    ],
+    "portrait": "image/character_portrait/1009.png"
+}

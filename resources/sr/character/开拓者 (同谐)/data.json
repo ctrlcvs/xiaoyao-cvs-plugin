@@ -18,36 +18,27 @@
         "cdmg": 50,
         "aggro": 100
     },
-    "growAttr": {
-        "def": [
-            5,
-            5,
-            7.5,
-            7.5,
-            10
-        ],
-        "atk": [
-            4,
-            6,
-            8
-        ],
-        "hp": [
-            4,
-            6
-        ]
-    },
+    "growAttr": {},
+    "skills": [
+        "800601",
+        "800602",
+        "800603",
+        "800604",
+        "800606",
+        "800607"
+    ],
     "eidolons": [
         {
             "id": "800601",
             "name": "您的最佳观众席",
             "effect": "施放首次战技后立即回复1点战技点。",
-            "icon": "icon/skill/8005_rank1.png"
+            "icon": "icon/skill/8006_rank1.png"
         },
         {
             "id": "800602",
             "name": "越狱的跨洋彩虹",
             "effect": "战斗开始时，开拓者的能量恢复效率提高25%，持续3回合。",
-            "icon": "icon/skill/8005_rank2.png"
+            "icon": "icon/skill/8006_rank2.png"
         },
         {
             "id": "800603",
@@ -59,7 +50,7 @@
             "id": "800604",
             "name": "袒护白鸽的冠冕",
             "effect": "开拓者在场时，使除自身以外的队友击破特攻提高，提高数值等同于开拓者15%的击破特攻。",
-            "icon": "icon/skill/8005_rank4.png"
+            "icon": "icon/skill/8006_rank4.png"
         },
         {
             "id": "800605",
@@ -71,7 +62,7 @@
             "id": "800606",
             "name": "明天，栖息聚光之下",
             "effect": "战技的额外伤害次数增加2次。",
-            "icon": "icon/skill/8005_rank6.png"
+            "icon": "icon/skill/8006_rank6.png"
         }
     ],
     "skillsData": {
@@ -116,7 +107,11 @@
                 ]
             ],
             "icon": "icon/skill/8006_basic_atk.png",
-            "AttributeBuff": []
+            "AttributeBuff": [
+                "额外能力·卫我起舞：当场上敌方目标数量等于5或以上/4/3/2/1名时，【伴舞】效果触发的超击破伤害提高20%/30%/40%/50%/60%。",
+                "属性加成·伤害强化•虚数：虚数属性伤害提高3.2%。",
+                "属性加成·击破强化：击破特攻提高5.3%。"
+            ]
         },
         "800602": {
             "id": "800602",
@@ -192,7 +187,11 @@
                 ]
             ],
             "icon": "icon/skill/8006_skill.png",
-            "AttributeBuff": []
+            "AttributeBuff": [
+                "额外能力·随波逐流：施放战技时，造成的第一次削韧伤害额外提高100%。",
+                "属性加成·击破强化：击破特攻提高8%。",
+                "属性加成·伤害强化•虚数：虚数属性伤害提高4.8%。"
+            ]
         },
         "800603": {
             "id": "800603",
@@ -292,8 +291,8 @@
             "element": "",
             "type": "Talent",
             "type_text": "天赋",
-            "effect": "Impair",
-            "effect_text": "妨害",
+            "effect": "Support",
+            "effect_text": "辅助",
             "simple_desc": "当有敌方目标的弱点被击破时，开拓者恢复能量。",
             "desc": "当有敌方目标的弱点被击破时，开拓者立即恢复<span class=\"textColor\">5/550/6/650/7/750/812/875/937/10/10.5/11/11.5/12/12.5</span>点能量。",
             "params": [
@@ -344,7 +343,12 @@
                 ]
             ],
             "icon": "icon/skill/8006_talent.png",
-            "AttributeBuff": []
+            "AttributeBuff": [
+                "额外能力·剧院之帽：我方目标造成弱点击破后额外使敌方目标行动延后30%。",
+                "属性加成·效果抵抗强化：效果抵抗提高6%。",
+                "属性加成·伤害强化•虚数：虚数属性伤害提高6.4%。",
+                "属性加成·击破强化：击破特攻提高10.7%。"
+            ]
         },
         "800606": {
             "id": "800606",
@@ -379,7 +383,11 @@
                 ]
             ],
             "icon": "icon/skill/8006_technique.png",
-            "AttributeBuff": []
+            "AttributeBuff": [
+                "属性加成·击破强化：击破特攻提高5.3%。",
+                "属性加成·效果抵抗强化：效果抵抗提高4%。",
+                "属性加成·击破强化：击破特攻提高8%。"
+            ]
         }
     },
     "skill_tree": {
@@ -1919,5 +1927,5 @@
             }
         }
     ],
-    "portrait": "image/character_portrait/8005.png"
+    "portrait": "image/character_portrait/8006.png"
 }
