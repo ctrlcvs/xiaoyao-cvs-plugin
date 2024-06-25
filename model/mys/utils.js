@@ -44,7 +44,7 @@ export async function redisSet(userId="all", type = 'bbs', data, time=0) {
  * @param msg 消息
  */
 export async function relpyPrivate(userId, msg) {
-	userId = Number(userId)
+	userId = Number(userId) || userId
 	let friend = Bot.fl.get(userId)
 	if (friend) {
 		Bot.logger.mark(`发送好友消息[${friend.nickname}](${userId})`)
@@ -54,13 +54,12 @@ export async function relpyPrivate(userId, msg) {
 	}
 }
 export async function replyMake(e, _msg, lenght) {
-	let nickname = Bot.nickname;
-	if (e.isGroup) {
-		if(Bot?.getGroupMemberInfo){
-			let info = await Bot?.getGroupMemberInfo(e.group_id, Bot.uin)
-			nickname = info.card || info.nickname
-		}
-	}
+	const bot = e.bot || Bot
+	let nickname = bot.nickname;
+	if (e.isGroup && bot.getGroupMemberInfo) try {
+		const info = await bot.getGroupMemberInfo(e.group_id, bot.uin)
+		nickname = info.card || info.nickname
+	} catch {}
 	let msgList = [];
 	for (let [index, item] of Object.entries(_msg)) {
 		if (index < lenght) {
@@ -69,7 +68,7 @@ export async function replyMake(e, _msg, lenght) {
 		msgList.push({
 			message: item,
 			nickname: nickname,
-			user_id: Bot.uin
+			user_id: bot.uin
 		})
 	}
 	if (e.isGroup) {
