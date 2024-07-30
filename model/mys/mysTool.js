@@ -15,7 +15,7 @@ const hk4_sdk = `https://hk4e-sdk.mihoyo.com`;
 const bbs_api = `https://bbs-api.mihoyo.com`;
 const cloud_api = `https://api-cloudgame.mihoyo.com`
 const pass_api = `https://passport-api.mihoyo.com`
-const app_id = 4
+const app_id = 8
 const publicKey = `-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDvekdPMHN3AYhm/vktJT+YJr7cI5DcsNKqdsx5DZX0gDuWFuIjzdwButrIYPNmRJ1G8ybDIF7oDW2eEpm5sMbL9zs
 9ExXCdvqrn51qELbqj0XxtMTIpaCHFSI50PfPpTFV9Xt/hmyVwokoOXFlAEgCn+Q
