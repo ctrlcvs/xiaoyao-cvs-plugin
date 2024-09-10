@@ -1,0 +1,1941 @@
+{
+    "id": "1223",
+    "name": "貊泽",
+    "rarity": 4,
+    "element": "雷",
+    "path": "巡猎",
+    "jpcv": "坂田 将吾",
+    "cncv": "黄进泽",
+    "sp": 120,
+    "affiliation": "仙舟「曜青」",
+    "factions": "/",
+    "baseAttr": {
+        "atk": 599.76,
+        "hp": 811.44,
+        "def": 352.79999999999995,
+        "speed": 111,
+        "cpct": 5,
+        "cdmg": 50,
+        "aggro": 75
+    },
+    "growAttr": {
+        "cdmg": [
+            5.3,
+            5.3,
+            8,
+            8,
+            10.7
+        ],
+        "atk": [
+            4,
+            6,
+            8
+        ],
+        "hp": [
+            4,
+            6
+        ]
+    },
+    "skills": [
+        "122301",
+        "122302",
+        "122303",
+        "122304",
+        "122306",
+        "122307"
+    ],
+    "eidolons": [
+        {
+            "id": "122301",
+            "name": "矢志",
+            "effect": "进入战斗后，貊泽恢复20点能量。每触发1次天赋的附加伤害，貊泽恢复2点能量。",
+            "icon": "icon/skill/1223_rank1.png"
+        },
+        {
+            "id": "122302",
+            "name": "惩膺",
+            "effect": "我方全体目标对成为【猎物】的敌方目标造成伤害时，暴击伤害提高40%。",
+            "icon": "icon/skill/1223_rank2.png"
+        },
+        {
+            "id": "122303",
+            "name": "追奔",
+            "effect": "终结技等级+2，最多不超过15级；天赋等级+2，最多不超过15级。",
+            "icon": "icon/skill/1223_skill.png"
+        },
+        {
+            "id": "122304",
+            "name": "逐薮",
+            "effect": "施放终结技时，貊泽造成的伤害提高30.0%，持续2回合。",
+            "icon": "icon/skill/1223_rank4.png"
+        },
+        {
+            "id": "122305",
+            "name": "闪诳",
+            "effect": "战技等级+2，最多不超过15级；普攻等级+1，最多不超过10级。",
+            "icon": "icon/skill/1223_ultimate.png"
+        },
+        {
+            "id": "122306",
+            "name": "丹心",
+            "effect": "天赋的追加攻击的伤害倍率提高25%。",
+            "icon": "icon/skill/1223_rank6.png"
+        }
+    ],
+    "skillsData": {
+        "122301": {
+            "id": "122301",
+            "name": "飞铙",
+            "max_level": 9,
+            "element": "Thunder",
+            "type": "Normal",
+            "type_text": "普攻",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "对敌方单体造成少量雷属性伤害。",
+            "desc": "对指定敌方单体造成等同于貊泽<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的雷属性伤害。",
+            "params": [
+                [
+                    0.5
+                ],
+                [
+                    0.6
+                ],
+                [
+                    0.7
+                ],
+                [
+                    0.8
+                ],
+                [
+                    0.9
+                ],
+                [
+                    1
+                ],
+                [
+                    1.1
+                ],
+                [
+                    1.2
+                ],
+                [
+                    1.3
+                ]
+            ],
+            "icon": "icon/skill/1223_basic_atk.png",
+            "AttributeBuff": [
+                "属性加成·生命强化：生命值上限提高4%。"
+            ]
+        },
+        "122302": {
+            "id": "122302",
+            "name": "迅羽掠袭",
+            "max_level": 15,
+            "element": "Thunder",
+            "type": "BPSkill",
+            "type_text": "战技",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "使敌方单体成为【猎物】，对其造成雷属性伤害，并获得9点充能。",
+            "desc": "使指定敌方单体目标成为【猎物】，并对其造成等同于貊泽<span class=\"textColor\">75%/82%/90%/97%/105%/112%/121%/131%/140%/150%/157%/165%/172%/180%/187%</span>攻击力的雷属性伤害，并获得<span class=\"textColor\">9</span>点充能。\n当场上没有可以战斗的其他角色时，貊泽无法使用战技，并解除敌人的【猎物】状态。",
+            "params": [
+                [
+                    0.75,
+                    9
+                ],
+                [
+                    0.825,
+                    9
+                ],
+                [
+                    0.9,
+                    9
+                ],
+                [
+                    0.975,
+                    9
+                ],
+                [
+                    1.05,
+                    9
+                ],
+                [
+                    1.125,
+                    9
+                ],
+                [
+                    1.2188,
+                    9
+                ],
+                [
+                    1.3125,
+                    9
+                ],
+                [
+                    1.4062,
+                    9
+                ],
+                [
+                    1.5,
+                    9
+                ],
+                [
+                    1.575,
+                    9
+                ],
+                [
+                    1.65,
+                    9
+                ],
+                [
+                    1.725,
+                    9
+                ],
+                [
+                    1.8,
+                    9
+                ],
+                [
+                    1.875,
+                    9
+                ]
+            ],
+            "icon": "icon/skill/1223_skill.png",
+            "AttributeBuff": [
+                "属性加成·暴击伤害强化：暴击伤害提高8%。"
+            ]
+        },
+        "122303": {
+            "id": "122303",
+            "name": "锋入幽渺，影出凌厉",
+            "max_level": 15,
+            "element": "Thunder",
+            "type": "Ultra",
+            "type_text": "终结技",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "对敌方单体造成雷属性伤害，并发动天赋的追加攻击。",
+            "desc": "对指定敌方单体造成等同于貊泽<span class=\"textColor\">162%/172%/183%/194%/205%/216%/229%/243%/256%/270%/280%/291%/302%/313%/324%</span>攻击力的雷属性伤害，并对该目标发动天赋的追加攻击。若本次追加攻击施放前目标被消灭则对敌方随机单体发动追加攻击。",
+            "params": [
+                [
+                    1.62
+                ],
+                [
+                    1.728
+                ],
+                [
+                    1.836
+                ],
+                [
+                    1.944
+                ],
+                [
+                    2.052
+                ],
+                [
+                    2.16
+                ],
+                [
+                    2.295
+                ],
+                [
+                    2.43
+                ],
+                [
+                    2.565
+                ],
+                [
+                    2.7
+                ],
+                [
+                    2.808
+                ],
+                [
+                    2.916
+                ],
+                [
+                    3.024
+                ],
+                [
+                    3.132
+                ],
+                [
+                    3.24
+                ]
+            ],
+            "icon": "icon/skill/1223_ultimate.png"
+        },
+        "122304": {
+            "id": "122304",
+            "name": "伸天卑飞，折翅为芒",
+            "max_level": 15,
+            "element": "Thunder",
+            "type": "Talent",
+            "type_text": "天赋",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "场上存在【猎物】时，貊泽会进入离场状态。\n我方目标攻击【猎物】后，貊泽造成雷属性附加伤害，并消耗1点充能。每消耗3点充能，貊泽会对【猎物】发动追加攻击，造成雷属性伤害，当充能为0时，解除目标【猎物】状态。",
+            "desc": "场上存在【猎物】时，貊泽会进入离场状态。\n我方目标攻击【猎物】后，貊泽会额外造成1次等同于自身<span class=\"textColor\">15%/16%/18%/19%/21%/22%/24%/26%/28%/30%/31%/33%/34%/36%/37%</span>攻击力的雷属性附加伤害，并消耗1点充能。每消耗<span class=\"textColor\">3</span>点充能，貊泽会对【猎物】发动1次追加攻击，造成等同于自身<span class=\"textColor\">80%/88%/96%/104%/112%/120%/130%/140%/150%/160%/168%/176%/184%/192%/2%</span>攻击力的雷属性伤害，当充能为0时，解除目标【猎物】状态，并重置计入发动追加攻击所需的充能点数。天赋的追加攻击不会消耗充能。",
+            "params": [
+                [
+                    0.15,
+                    3,
+                    0.8
+                ],
+                [
+                    0.165,
+                    3,
+                    0.88
+                ],
+                [
+                    0.18,
+                    3,
+                    0.96
+                ],
+                [
+                    0.195,
+                    3,
+                    1.04
+                ],
+                [
+                    0.21,
+                    3,
+                    1.12
+                ],
+                [
+                    0.225,
+                    3,
+                    1.2
+                ],
+                [
+                    0.2437,
+                    3,
+                    1.3
+                ],
+                [
+                    0.2625,
+                    3,
+                    1.4
+                ],
+                [
+                    0.2812,
+                    3,
+                    1.5
+                ],
+                [
+                    0.3,
+                    3,
+                    1.6
+                ],
+                [
+                    0.315,
+                    3,
+                    1.68
+                ],
+                [
+                    0.33,
+                    3,
+                    1.76
+                ],
+                [
+                    0.345,
+                    3,
+                    1.84
+                ],
+                [
+                    0.36,
+                    3,
+                    1.92
+                ],
+                [
+                    0.375,
+                    3,
+                    2
+                ]
+            ],
+            "icon": "icon/skill/1223_talent.png",
+            "AttributeBuff": [
+                "额外能力·不折镆干：施放终结技造成伤害时，被视为发动了追加攻击。【猎物】受到的追加攻击伤害提高25%。",
+                "属性加成·生命强化：生命值上限提高6%。",
+                "属性加成·攻击强化：攻击力提高8%。",
+                "属性加成·暴击伤害强化：暴击伤害提高10.7%。"
+            ]
+        },
+        "122306": {
+            "id": "122306",
+            "name": "攻击",
+            "max_level": 1,
+            "element": "Thunder",
+            "type": "MazeNormal",
+            "type_text": "dev_连携",
+            "effect": "MazeAttack",
+            "effect_text": "",
+            "simple_desc": "",
+            "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
+            "params": [],
+            "icon": "icon/skill/1223_basic_atk.png"
+        },
+        "122307": {
+            "id": "122307",
+            "name": "胁翼匿迹",
+            "max_level": 1,
+            "element": "",
+            "type": "Maze",
+            "type_text": "秘技",
+            "effect": "Enhance",
+            "effect_text": "强化",
+            "simple_desc": "进入隐身状态。隐身状态攻击敌人进入战斗时提高伤害。",
+            "desc": "使用秘技后进入持续<span class=\"textColor\">20</span>秒的隐身状态。隐身状态下不会被敌人发现，貊泽在隐身状态下攻击敌人进入战斗时伤害提高<span class=\"textColor\">30%</span>，持续<span class=\"textColor\">2</span>回合。",
+            "params": [
+                [
+                    20,
+                    0.3,
+                    2
+                ]
+            ],
+            "icon": "icon/skill/1223_technique.png",
+            "AttributeBuff": [
+                "额外能力·墨毫绣衣：施放天赋的追加攻击后，恢复1个战技点，该效果在1回合后可再次触发。",
+                "属性加成·攻击强化：攻击力提高4%。",
+                "属性加成·暴击伤害强化：暴击伤害提高5.3%。",
+                "额外能力·手奋匕尺：貊泽解除离场状态时，行动提前20%。每个波次开始时，貊泽行动提前30%。",
+                "属性加成·暴击伤害强化：暴击伤害提高8%。",
+                "属性加成·攻击强化：攻击力提高6%。",
+                "属性加成·暴击伤害强化：暴击伤害提高5.3%。"
+            ]
+        }
+    },
+    "skill_tree": {
+        "1223001": {
+            "id": "1223001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "122301",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110191",
+                            "num": 2
+                        },
+                        {
+                            "id": "113011",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 2
+                        },
+                        {
+                            "id": "113012",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 4
+                        },
+                        {
+                            "id": "113012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 2
+                        },
+                        {
+                            "id": "113013",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 6
+                        },
+                        {
+                            "id": "113013",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1223_basic_atk.png"
+        },
+        "1223002": {
+            "id": "1223002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "122302",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "113011",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110191",
+                            "num": 2
+                        },
+                        {
+                            "id": "113011",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 2
+                        },
+                        {
+                            "id": "113012",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 4
+                        },
+                        {
+                            "id": "113012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 24000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 6
+                        },
+                        {
+                            "id": "113012",
+                            "num": 5
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 2
+                        },
+                        {
+                            "id": "113013",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 64000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 4
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        },
+                        {
+                            "id": "113013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 6
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 240000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 11
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1223_skill.png"
+        },
+        "1223003": {
+            "id": "1223003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "122303",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "113011",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110191",
+                            "num": 2
+                        },
+                        {
+                            "id": "113011",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 2
+                        },
+                        {
+                            "id": "113012",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 4
+                        },
+                        {
+                            "id": "113012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 24000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 6
+                        },
+                        {
+                            "id": "113012",
+                            "num": 5
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 2
+                        },
+                        {
+                            "id": "113013",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 64000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 4
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        },
+                        {
+                            "id": "113013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 6
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 240000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 11
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1223_ultimate.png"
+        },
+        "1223004": {
+            "id": "1223004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "122304",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "113011",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110191",
+                            "num": 2
+                        },
+                        {
+                            "id": "113011",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 2
+                        },
+                        {
+                            "id": "113012",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 4
+                        },
+                        {
+                            "id": "113012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 24000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 6
+                        },
+                        {
+                            "id": "113012",
+                            "num": 5
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 2
+                        },
+                        {
+                            "id": "113013",
+                            "num": 2
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 64000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 4
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        },
+                        {
+                            "id": "113013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 6
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 240000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 11
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1223_talent.png"
+        },
+        "1223007": {
+            "id": "1223007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "122307",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1223_technique.png"
+        },
+        "1223101": {
+            "id": "1223101",
+            "name": "墨毫绣衣",
+            "max_level": 1,
+            "desc": "施放天赋的追加攻击后，恢复#1[i]个战技点，该效果在#2[i]回合后可再次触发。",
+            "params": [
+                [
+                    1,
+                    1
+                ]
+            ],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110191",
+                            "num": 2
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1223_skilltree1.png"
+        },
+        "1223102": {
+            "id": "1223102",
+            "name": "手奋匕尺",
+            "max_level": 1,
+            "desc": "貊泽解除离场状态时，行动提前#1[i]%。每个波次开始时，貊泽行动提前#2[i]%。",
+            "params": [
+                [
+                    0.2,
+                    0.3
+                ]
+            ],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 4
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1223_skilltree2.png"
+        },
+        "1223103": {
+            "id": "1223103",
+            "name": "不折镆干",
+            "max_level": 1,
+            "desc": "施放终结技造成伤害时，被视为发动了追加攻击。【猎物】受到的追加攻击伤害提高#1[i]%。",
+            "params": [
+                [
+                    0.25
+                ]
+            ],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 6
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110506",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1223_skilltree3.png"
+        },
+        "1223201": {
+            "id": "1223201",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "113011",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamage.png"
+        },
+        "1223202": {
+            "id": "1223202",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [
+                "1223101"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110191",
+                            "num": 2
+                        },
+                        {
+                            "id": "113011",
+                            "num": 4
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "1223203": {
+            "id": "1223203",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [
+                "1223202"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 2
+                        },
+                        {
+                            "id": "113012",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamage.png"
+        },
+        "1223204": {
+            "id": "1223204",
+            "name": "生命强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "HPAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 2
+                        },
+                        {
+                            "id": "113012",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconMaxHP.png"
+        },
+        "1223205": {
+            "id": "1223205",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [
+                "1223102"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "110192",
+                            "num": 4
+                        },
+                        {
+                            "id": "113012",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamage.png"
+        },
+        "1223206": {
+            "id": "1223206",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [
+                "1223205"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 2
+                        },
+                        {
+                            "id": "113013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "1223207": {
+            "id": "1223207",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 2
+                        },
+                        {
+                            "id": "113013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamage.png"
+        },
+        "1223208": {
+            "id": "1223208",
+            "name": "生命强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [
+                "1223103"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "HPAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 6
+                        },
+                        {
+                            "id": "113013",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconMaxHP.png"
+        },
+        "1223209": {
+            "id": "1223209",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [
+                "1223208"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 75,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 6
+                        },
+                        {
+                            "id": "113013",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "1223210": {
+            "id": "1223210",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [
+                "1223208"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 80,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.107
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110193",
+                            "num": 6
+                        },
+                        {
+                            "id": "113013",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamage.png"
+        }
+    },
+    "materials": [
+        [
+            {
+                "id": "2",
+                "num": 3200
+            },
+            {
+                "id": "113011",
+                "num": 4
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 6400
+            },
+            {
+                "id": "113011",
+                "num": 8
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 12800
+            },
+            {
+                "id": "113012",
+                "num": 5
+            },
+            {
+                "id": "110424",
+                "num": 2
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 32000
+            },
+            {
+                "id": "113012",
+                "num": 8
+            },
+            {
+                "id": "110424",
+                "num": 5
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 64000
+            },
+            {
+                "id": "113013",
+                "num": 5
+            },
+            {
+                "id": "110424",
+                "num": 15
+            }
+        ],
+        [
+            {
+                "id": "2",
+                "num": 128000
+            },
+            {
+                "id": "113013",
+                "num": 7
+            },
+            {
+                "id": "110424",
+                "num": 28
+            }
+        ],
+        []
+    ],
+    "values": [
+        {
+            "hp": {
+                "base": 110.4,
+                "step": 5.52
+            },
+            "atk": {
+                "base": 81.6,
+                "step": 4.08
+            },
+            "def": {
+                "base": 48,
+                "step": 2.4
+            },
+            "spd": {
+                "base": 111,
+                "step": 0
+            },
+            "taunt": {
+                "base": 75,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 154.56,
+                "step": 5.52
+            },
+            "atk": {
+                "base": 114.24,
+                "step": 4.08
+            },
+            "def": {
+                "base": 67.2,
+                "step": 2.4
+            },
+            "spd": {
+                "base": 111,
+                "step": 0
+            },
+            "taunt": {
+                "base": 75,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 198.72,
+                "step": 5.52
+            },
+            "atk": {
+                "base": 146.88,
+                "step": 4.08
+            },
+            "def": {
+                "base": 86.4,
+                "step": 2.4
+            },
+            "spd": {
+                "base": 111,
+                "step": 0
+            },
+            "taunt": {
+                "base": 75,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 242.88,
+                "step": 5.52
+            },
+            "atk": {
+                "base": 179.52,
+                "step": 4.08
+            },
+            "def": {
+                "base": 105.6,
+                "step": 2.4
+            },
+            "spd": {
+                "base": 111,
+                "step": 0
+            },
+            "taunt": {
+                "base": 75,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 287.04,
+                "step": 5.52
+            },
+            "atk": {
+                "base": 212.16,
+                "step": 4.08
+            },
+            "def": {
+                "base": 124.8,
+                "step": 2.4
+            },
+            "spd": {
+                "base": 111,
+                "step": 0
+            },
+            "taunt": {
+                "base": 75,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 331.2,
+                "step": 5.52
+            },
+            "atk": {
+                "base": 244.8,
+                "step": 4.08
+            },
+            "def": {
+                "base": 144,
+                "step": 2.4
+            },
+            "spd": {
+                "base": 111,
+                "step": 0
+            },
+            "taunt": {
+                "base": 75,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        },
+        {
+            "hp": {
+                "base": 375.36,
+                "step": 5.52
+            },
+            "atk": {
+                "base": 277.44,
+                "step": 4.08
+            },
+            "def": {
+                "base": 163.2,
+                "step": 2.4
+            },
+            "spd": {
+                "base": 111,
+                "step": 0
+            },
+            "taunt": {
+                "base": 75,
+                "step": 0
+            },
+            "crit_rate": {
+                "base": 0.05,
+                "step": 0
+            },
+            "crit_dmg": {
+                "base": 0.5,
+                "step": 0
+            }
+        }
+    ],
+    "portrait": "image/character_portrait/1223.png"
+}
