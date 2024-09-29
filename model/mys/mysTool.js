@@ -26,7 +26,7 @@ const boards = {
 		forumid: 1,
 		key: 'honkai3rd',
 		biz: 'bh3_cn',
-		actid: 'e202207181446311',
+		actid: 'e202306201626331',
 		name: '崩坏3',
 		url: "https://bbs.mihoyo.com/bh3/",
 		signUrl(data, type, api) {
