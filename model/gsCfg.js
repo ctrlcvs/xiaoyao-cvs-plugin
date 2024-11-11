@@ -177,7 +177,7 @@ class GsCfg {
 		if (lodash.isEmpty(data)) {
 			fs.existsSync(file) && fs.unlinkSync(file)
 		} else {
-			fs.exists(file, (exists) => {
+			const exists = fs.existsSync(file)
 				if (!exists) {
 					fs.writeFileSync(file, "", 'utf8')
 				}
@@ -195,7 +195,6 @@ class GsCfg {
 						fs.writeFileSync(file,YAML.stringify(ck), 'utf8')
 					}
 				}
-			})
 		}
 	}
 }
