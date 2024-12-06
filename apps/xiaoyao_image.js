@@ -97,8 +97,8 @@ export async function roleInfo(e) {
 	}
 	let name;
 	if (["10000005", "10000007", "20000000"].includes(id+"")) {
-		if (!["风主", "岩主", "雷主", "草主", "水主"].includes(msg)) {
-			e.reply("请选择：风主图鉴、岩主图鉴、雷主图鉴、草主图鉴、水主图鉴");
+		if (!["风主", "岩主", "雷主", "草主", "水主", "火主"].includes(msg)) {
+			e.reply("请选择：风主图鉴、岩主图鉴、雷主图鉴、草主图鉴、水主图鉴、火主图鉴");
 			return true;
 		}
 		name = msg;
