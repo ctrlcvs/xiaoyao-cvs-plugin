@@ -856,6 +856,31 @@
     "elem": "雷",
     "weapon": "记忆"
   },
+  "1403": {
+    "id": 1403,
+    "key": "Tribios",
+    "name": "缇宝",
+    "names": [
+      "缇里西庇俄丝",
+      "缇宝",
+      "缇安",
+      "缇宁"
+    ],
+    "star": 5,
+    "elem": "量子",
+    "weapon": "同谐"
+  },
+  "1404": {
+    "id": 1404,
+    "key": "Mydeimos",
+    "name": "万敌",
+    "names": [
+      "万敌"
+    ],
+    "star": 5,
+    "elem": "虚数",
+    "weapon": "毁灭"
+  },
   "8002": {
     "id": 8002,
     "key": "Trailblazer",
