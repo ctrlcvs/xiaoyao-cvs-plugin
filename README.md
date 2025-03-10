@@ -16,7 +16,7 @@ yunzai-bot扩展图鉴以及体力优化;
 #### 安装教程
 使用gitea
 ```
-git clone https://gitea.com/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cvs-plugin/
+git clone https://gitea.microgg.cn/Ctrlcvs/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-cvs-plugin/
 ```
 使用github
 ```
