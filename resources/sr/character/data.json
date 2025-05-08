@@ -881,6 +881,29 @@
     "elem": "虚数",
     "weapon": "毁灭"
   },
+  "1407": {
+    "id": 1407,
+    "key": "Castorice",
+    "name": "遐蝶",
+    "names": [
+      "遐蝶",
+      "小蝶"
+    ],
+    "star": 5,
+    "elem": "量子",
+    "weapon": "记忆"
+  },
+  "1405": {
+    "id": 1405,
+    "key": "Anaxagoras",
+    "name": "那刻夏",
+    "names": [
+      "那刻夏"
+    ],
+    "star": 5,
+    "elem": "风",
+    "weapon": "智识"
+  },
   "8002": {
     "id": 8002,
     "key": "Trailblazer",
