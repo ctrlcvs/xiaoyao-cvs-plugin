@@ -930,6 +930,50 @@
     "elem": "量子",
     "weapon": "虚无"
   },
+  "1408": {
+    "id": 1408,
+    "key": "Phainon",
+    "name": "白厄",
+    "names": [
+      "白厄",
+      "黑厄",
+      "救世主"
+    ],
+    "star": 5,
+    "elem": "物理",
+    "weapon": "毁灭"
+  },
+  "1014": {
+    "id": 1014,
+    "key": "Saber",
+    "name": "Saber",
+    "names": [
+      "Saber",
+      "saber",
+      "阿尔托莉雅",
+      "骑士王",
+      "呆毛王",
+      "呆毛"
+    ],
+    "star": 5,
+    "elem": "风",
+    "weapon": "毁灭"
+  },
+  "1015": {
+    "id": 1015,
+    "key": "Archer",
+    "name": "Archer",
+    "names": [
+      "Archer",
+      "archer",
+      "卫宫士郎",
+      "红A",
+      "红a"
+    ],
+    "star": 5,
+    "elem": "量子",
+    "weapon": "巡猎"
+  },
   "8002": {
     "id": 8002,
     "key": "Trailblazer",

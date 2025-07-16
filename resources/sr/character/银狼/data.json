@@ -6,11 +6,12 @@
     "path": "虚无",
     "jpcv": "阿澄佳奈",
     "cncv": "Hanser",
+    "allegiance": "星核猎手",
     "sp": 110,
     "affiliation": "星核猎手",
     "factions": "/",
     "baseAttr": {
-        "atk": 601.5239999999999,
+        "atk": 640.332,
         "hp": 1047.816,
         "def": 460.845,
         "speed": 107,
@@ -43,7 +44,13 @@
         "100603",
         "100604",
         "100606",
-        "100607"
+        "100607",
+        "1100601",
+        "1100602",
+        "1100603",
+        "1100604",
+        "1100606",
+        "1100607"
     ],
     "eidolons": [
         {
@@ -87,14 +94,14 @@
         "100601": {
             "id": "100601",
             "name": "|系统警告|",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Quantum",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量量子属性伤害。",
-            "desc": "对指定敌方单体造成等同于银狼<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的量子属性伤害。",
+            "desc": "对指定敌方单体造成等同于银狼<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的量子属性伤害。",
             "params": [
                 [
                     0.5
@@ -122,11 +129,14 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1006_basic_atk.png",
             "AttributeBuff": [
-                "额外能力·生成：【缺陷】的持续时间增加1回合。每当有敌方目标的弱点被击破时，银狼有65%的基础概率对该目标植入1个随机【缺陷】。",
+                "额外能力·生成：【缺陷】的持续时间增加1回合。每当有敌方目标的弱点被击破时，银狼有100%的基础概率对该目标植入1个随机【缺陷】。",
                 "属性加成·效果命中强化:：效果命中提高4%。",
                 "属性加成·攻击强化：攻击力提高4%。",
                 "属性加成· 伤害强化•量子：量子属性伤害提高3.2%。"
@@ -139,8 +149,8 @@
             "element": "Quantum",
             "type": "BPSkill",
             "type_text": "战技",
-            "effect": "Impair",
-            "effect_text": "妨害",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
             "simple_desc": "大概率为敌方单体添加额外的弱点，并对其造成量子属性伤害。",
             "desc": "有<span class=\"textColor\">75%/76%/77%/78%/79%/80%/81%/82%/83%/85%/86%/87%/88%/89%/90%</span>的基础概率为指定敌方单体目标添加1个场上我方目标持有属性的弱点，且该弱点对应属性的抗性降低<span class=\"textColor\">20%</span>，持续<span class=\"textColor\">2</span>回合。若添加的是敌方目标原有属性的弱点，则不会触发对应属性的抗性降低效果。\n单个敌方目标仅能被银狼添加1个弱点，当银狼对其再次添加弱点时，仅保留最新添加的弱点。\n有<span class=\"textColor\">100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%</span>的基础概率额外使该目标的全属性抗性降低<span class=\"textColor\">7%/8%/9%/10%/11%</span>，持续<span class=\"textColor\">2</span>回合。\n对该目标造成等同于银狼<span class=\"textColor\">98%/107%/117%/127%/137%/147%/159%/171%/183%/196%/205%/215%/225%/235%/245%</span>攻击力的量子属性伤害。",
             "params": [
@@ -282,7 +292,7 @@
             ],
             "icon": "icon/skill/1006_skill.png",
             "AttributeBuff": [
-                "额外能力·注入：施放战技时，为敌方目标添加的弱点持续时间增加1回合。",
+                "额外能力·注入：战斗开始时，立即恢复20点能量。银狼的回合开始时，自身恢复5点能量。",
                 "属性加成·攻击强化：攻击力提高6%。",
                 "属性加成·效果命中强化:：效果命中提高6%。",
                 "属性加成·攻击强化：攻击力提高6%。"
@@ -295,8 +305,8 @@
             "element": "Quantum",
             "type": "Ultra",
             "type_text": "终结技",
-            "effect": "Impair",
-            "effect_text": "妨害",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
             "simple_desc": "大概率使敌方单体防御力降低，并对其造成大量量子属性伤害。",
             "desc": "有<span class=\"textColor\">85%/86%/88%/89%/91%/92%/94%/96%/98%/100%/101%/103%/104%/106%/107%</span>的基础概率使指定敌方单体防御力降低<span class=\"textColor\">36%/37%/38%/39%/40%/41%/42%/43%/45%/46%/47%/48%/49%</span>，持续<span class=\"textColor\">3</span>回合，同时对该目标造成等同于银狼<span class=\"textColor\">227%/243%/258%/273%/288%/304%/323%/342%/361%/380%/395%/410%/425%/440%/455%</span>攻击力的量子属性伤害。",
             "params": [
@@ -338,7 +348,7 @@
                 ],
                 [
                     3.23,
-                    0.9438,
+                    0.9437,
                     0.4163,
                     3
                 ],
@@ -350,8 +360,8 @@
                 ],
                 [
                     3.61,
-                    0.9813,
-                    0.4388,
+                    0.9812,
+                    0.4387,
                     3
                 ],
                 [
@@ -513,7 +523,7 @@
             ],
             "icon": "icon/skill/1006_talent.png",
             "AttributeBuff": [
-                "额外能力·旁注：施放战技时，若敌方目标的负面效果数量大于等于3个，则战技使目标全属性抗性降低的效果额外降低3%。",
+                "额外能力·旁注：银狼每拥有10%效果命中，则额外提高10%攻击力，最高不超过 50%。",
                 "属性加成·伤害强化•量子：量子属性伤害提高4.8%。",
                 "属性加成·效果命中强化:：效果命中提高8%。"
             ]
@@ -527,7 +537,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1006_basic_atk.png"
@@ -553,12 +563,488 @@
                 "属性加成·攻击强化：攻击力提高4%。",
                 "属性加成·攻击强化：攻击力提高8%。"
             ]
+        },
+        "1100601": {
+            "id": "1100601",
+            "name": "|系统警告|",
+            "max_level": 10,
+            "element": "Quantum",
+            "type": "Normal",
+            "type_text": "普攻",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "对敌方单体造成少量量子属性伤害。",
+            "desc": "对指定敌方单体造成等同于银狼<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的量子属性伤害。",
+            "params": [
+                [
+                    0.5
+                ],
+                [
+                    0.6
+                ],
+                [
+                    0.7
+                ],
+                [
+                    0.8
+                ],
+                [
+                    0.9
+                ],
+                [
+                    1
+                ],
+                [
+                    1.1
+                ],
+                [
+                    1.2
+                ],
+                [
+                    1.3
+                ],
+                [
+                    1.4
+                ]
+            ],
+            "icon": "icon/skill/1006_basic_atk.png",
+            "AttributeBuff": [
+                "额外能力·生成：【缺陷】的持续时间增加1回合。每当有敌方目标的弱点被击破时，银狼有100%的基础概率对该目标植入1个随机【缺陷】。",
+                "属性加成·效果命中强化:：效果命中提高4%。",
+                "属性加成·攻击强化：攻击力提高4%。",
+                "属性加成· 伤害强化•量子：量子属性伤害提高3.2%。"
+            ]
+        },
+        "1100602": {
+            "id": "1100602",
+            "name": "是否允许更改？",
+            "max_level": 15,
+            "element": "Quantum",
+            "type": "BPSkill",
+            "type_text": "战技",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "大概率为敌方单体添加额外的弱点，并对其造成量子属性伤害。",
+            "desc": "有<span class=\"textColor\">80%/84%/88%/92%/96%/100%/105%/110%/114%/120%/124%/128%/132%/136%/140%</span>的基础概率为指定敌方单体目标添加1个场上我方目标持有属性的弱点（优先添加我方编队中的第一位角色持有属性的弱点），且该弱点对应属性的抗性降低<span class=\"textColor\">20%</span>，持续<span class=\"textColor\">3</span>回合。若添加的是敌方目标原有属性的弱点，则不会触发对应属性的抗性降低效果。\n单个敌方目标仅能被银狼添加1个弱点，当银狼对其再次添加弱点时，仅保留最新添加的弱点。\n有<span class=\"textColor\">100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%</span>的基础概率额外使该目标的全属性抗性降低<span class=\"textColor\">10%/11%/12%/13%/14%</span>，持续<span class=\"textColor\">2</span>回合。\n对该目标造成等同于银狼<span class=\"textColor\">98%/107%/117%/127%/137%/147%/159%/171%/183%/196%/205%/215%/225%/235%/245%</span>攻击力的量子属性伤害。",
+            "params": [
+                [
+                    0.98,
+                    0.8,
+                    3,
+                    0.2,
+                    1,
+                    0.105,
+                    2
+                ],
+                [
+                    1.078,
+                    0.84,
+                    3,
+                    0.2,
+                    1,
+                    0.1075,
+                    2
+                ],
+                [
+                    1.176,
+                    0.88,
+                    3,
+                    0.2,
+                    1,
+                    0.11,
+                    2
+                ],
+                [
+                    1.274,
+                    0.92,
+                    3,
+                    0.2,
+                    1,
+                    0.1125,
+                    2
+                ],
+                [
+                    1.372,
+                    0.96,
+                    3,
+                    0.2,
+                    1,
+                    0.115,
+                    2
+                ],
+                [
+                    1.47,
+                    1,
+                    3,
+                    0.2,
+                    1,
+                    0.1175,
+                    2
+                ],
+                [
+                    1.5925,
+                    1.05,
+                    3,
+                    0.2,
+                    1,
+                    0.1206,
+                    2
+                ],
+                [
+                    1.715,
+                    1.1,
+                    3,
+                    0.2,
+                    1,
+                    0.1237,
+                    2
+                ],
+                [
+                    1.8375,
+                    1.15,
+                    3,
+                    0.2,
+                    1,
+                    0.1269,
+                    2
+                ],
+                [
+                    1.96,
+                    1.2,
+                    3,
+                    0.2,
+                    1,
+                    0.13,
+                    2
+                ],
+                [
+                    2.058,
+                    1.24,
+                    3,
+                    0.2,
+                    1,
+                    0.1325,
+                    2
+                ],
+                [
+                    2.156,
+                    1.28,
+                    3,
+                    0.2,
+                    1,
+                    0.135,
+                    2
+                ],
+                [
+                    2.254,
+                    1.32,
+                    3,
+                    0.2,
+                    1,
+                    0.1375,
+                    2
+                ],
+                [
+                    2.352,
+                    1.36,
+                    3,
+                    0.2,
+                    1,
+                    0.14,
+                    2
+                ],
+                [
+                    2.45,
+                    1.4,
+                    3,
+                    0.2,
+                    1,
+                    0.1425,
+                    2
+                ]
+            ],
+            "icon": "icon/skill/1006_skill.png",
+            "AttributeBuff": [
+                "额外能力·注入：战斗开始时，立即恢复20点能量。银狼的回合开始时，自身恢复5点能量。",
+                "属性加成·攻击强化：攻击力提高6%。",
+                "属性加成·效果命中强化:：效果命中提高6%。",
+                "属性加成·攻击强化：攻击力提高6%。"
+            ]
+        },
+        "1100603": {
+            "id": "1100603",
+            "name": "|账号已封禁|",
+            "max_level": 15,
+            "element": "Quantum",
+            "type": "Ultra",
+            "type_text": "终结技",
+            "effect": "AoEAttack",
+            "effect_text": "群攻",
+            "simple_desc": "大概率使敌方全体防御力降低，并对其造成大量量子属性伤害。",
+            "desc": "有<span class=\"textColor\">80%/84%/88%/92%/96%/100%/105%/110%/114%/120%/124%/128%/132%/136%/140%</span>的基础概率使敌方全体防御力降低<span class=\"textColor\">36%/37%/38%/39%/40%/41%/42%/43%/45%/46%/47%/48%/49%</span>，持续<span class=\"textColor\">3</span>回合，同时对敌方全体造成等同于银狼<span class=\"textColor\">227%/243%/258%/273%/288%/304%/323%/342%/361%/380%/395%/410%/425%/440%/455%</span>攻击力的量子属性伤害。",
+            "params": [
+                [
+                    2.28,
+                    0.8,
+                    0.36,
+                    3
+                ],
+                [
+                    2.432,
+                    0.84,
+                    0.369,
+                    3
+                ],
+                [
+                    2.584,
+                    0.88,
+                    0.378,
+                    3
+                ],
+                [
+                    2.736,
+                    0.92,
+                    0.387,
+                    3
+                ],
+                [
+                    2.888,
+                    0.96,
+                    0.396,
+                    3
+                ],
+                [
+                    3.04,
+                    1,
+                    0.405,
+                    3
+                ],
+                [
+                    3.23,
+                    1.05,
+                    0.4163,
+                    3
+                ],
+                [
+                    3.42,
+                    1.1,
+                    0.4275,
+                    3
+                ],
+                [
+                    3.61,
+                    1.15,
+                    0.4387,
+                    3
+                ],
+                [
+                    3.8,
+                    1.2,
+                    0.45,
+                    3
+                ],
+                [
+                    3.952,
+                    1.24,
+                    0.459,
+                    3
+                ],
+                [
+                    4.104,
+                    1.28,
+                    0.468,
+                    3
+                ],
+                [
+                    4.256,
+                    1.32,
+                    0.477,
+                    3
+                ],
+                [
+                    4.408,
+                    1.36,
+                    0.486,
+                    3
+                ],
+                [
+                    4.56,
+                    1.4,
+                    0.495,
+                    3
+                ]
+            ],
+            "icon": "icon/skill/1006_ultimate.png"
+        },
+        "1100604": {
+            "id": "1100604",
+            "name": "等待程序响应…",
+            "max_level": 15,
+            "element": "",
+            "type": "Talent",
+            "type_text": "天赋",
+            "effect": "Impair",
+            "effect_text": "妨害",
+            "simple_desc": "攻击后有概率给目标植入1个随机【缺陷】。敌方目标被消灭时，添加的弱点会转移。",
+            "desc": "银狼能够制造：攻击力降低<span class=\"textColor\">5%/6%/7%/8%/9%/10%/11%/12%</span>、防御力降低<span class=\"textColor\">6%/7%/8%/9%/10%/11%/12%/13%/14%/15%</span>、速度降低<span class=\"textColor\">3%/4%/5%/6%/7%</span>3种【缺陷】。\n银狼每次施放攻击后有<span class=\"textColor\">60%/64%/68%/72%/76%/80%/85%/90%/95%/100%/104%/108%/112%/115%/120%</span>的基础概率给受到攻击的敌方目标植入1个随机【缺陷】，持续<span class=\"textColor\">3</span>回合。\n敌方目标被消灭时，银狼对其添加的弱点会转移给场上存活的未被银狼添加弱点的敌人，优先转移给精英级别及以上的目标。",
+            "params": [
+                [
+                    0.05,
+                    0.06,
+                    0.03,
+                    0.6,
+                    3
+                ],
+                [
+                    0.055,
+                    0.066,
+                    0.033,
+                    0.64,
+                    3
+                ],
+                [
+                    0.06,
+                    0.072,
+                    0.036,
+                    0.68,
+                    3
+                ],
+                [
+                    0.065,
+                    0.078,
+                    0.039,
+                    0.72,
+                    3
+                ],
+                [
+                    0.07,
+                    0.084,
+                    0.042,
+                    0.76,
+                    3
+                ],
+                [
+                    0.075,
+                    0.09,
+                    0.045,
+                    0.8,
+                    3
+                ],
+                [
+                    0.0813,
+                    0.0975,
+                    0.0488,
+                    0.85,
+                    3
+                ],
+                [
+                    0.0875,
+                    0.105,
+                    0.0525,
+                    0.9,
+                    3
+                ],
+                [
+                    0.0938,
+                    0.1125,
+                    0.0563,
+                    0.95,
+                    3
+                ],
+                [
+                    0.1,
+                    0.12,
+                    0.06,
+                    1,
+                    3
+                ],
+                [
+                    0.105,
+                    0.126,
+                    0.063,
+                    1.04,
+                    3
+                ],
+                [
+                    0.11,
+                    0.132,
+                    0.066,
+                    1.08,
+                    3
+                ],
+                [
+                    0.115,
+                    0.138,
+                    0.069,
+                    1.12,
+                    3
+                ],
+                [
+                    0.12,
+                    0.144,
+                    0.072,
+                    1.16,
+                    3
+                ],
+                [
+                    0.125,
+                    0.15,
+                    0.075,
+                    1.2,
+                    3
+                ]
+            ],
+            "icon": "icon/skill/1006_talent.png",
+            "AttributeBuff": [
+                "额外能力·旁注：银狼每拥有10%效果命中，则额外提高10%攻击力，最高不超过 50%。",
+                "属性加成·伤害强化•量子：量子属性伤害提高4.8%。",
+                "属性加成·效果命中强化:：效果命中提高8%。"
+            ]
+        },
+        "1100606": {
+            "id": "1100606",
+            "name": "攻击",
+            "max_level": 1,
+            "element": "Quantum",
+            "type": "MazeNormal",
+            "type_text": "dev_连携",
+            "effect": "MazeAttack",
+            "effect_text": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
+            "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
+            "params": [],
+            "icon": "icon/skill/1006_basic_atk.png"
+        },
+        "1100607": {
+            "id": "1100607",
+            "name": "|强制结束进程|",
+            "max_level": 1,
+            "element": "Quantum",
+            "type": "Maze",
+            "type_text": "秘技",
+            "effect": "MazeAttack",
+            "effect_text": "",
+            "simple_desc": "攻击敌人，进战后对敌方全体造成少量伤害，并无视弱点属性削减韧性。",
+            "desc": "立即攻击敌人，进入战斗后对敌方全体造成等同于银狼<span class=\"textColor\">80%</span>攻击力的量子属性伤害，并无视弱点属性削减敌方全体的韧性，击破弱点时，触发量子属性的弱点击破效果。",
+            "params": [
+                [
+                    0.8
+                ]
+            ],
+            "icon": "icon/skill/1006_technique.png",
+            "AttributeBuff": [
+                "属性加成·攻击强化：攻击力提高4%。",
+                "属性加成·攻击强化：攻击力提高8%。"
+            ]
         }
     },
     "skill_tree": {
         "1006001": {
             "id": "1006001",
+            "name": "",
             "max_level": 6,
+            "desc": "",
+            "params": [],
             "anchor": "Point01",
             "pre_points": [],
             "level_up_skills": [
@@ -570,11 +1056,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -593,6 +1081,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -611,6 +1100,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -629,6 +1119,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -647,6 +1138,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -668,7 +1160,10 @@
         },
         "1006002": {
             "id": "1006002",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point02",
             "pre_points": [],
             "level_up_skills": [
@@ -680,11 +1175,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -699,6 +1196,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -717,6 +1215,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -735,6 +1234,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -753,6 +1253,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -771,6 +1272,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -789,6 +1291,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -811,6 +1314,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -833,6 +1337,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -858,7 +1363,10 @@
         },
         "1006003": {
             "id": "1006003",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point03",
             "pre_points": [],
             "level_up_skills": [
@@ -870,11 +1378,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -889,6 +1399,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -907,6 +1418,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -925,6 +1437,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -943,6 +1456,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -961,6 +1475,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -979,6 +1494,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1001,6 +1517,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1023,6 +1540,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1048,7 +1566,10 @@
         },
         "1006004": {
             "id": "1006004",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point04",
             "pre_points": [],
             "level_up_skills": [
@@ -1060,11 +1581,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1079,6 +1602,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1097,6 +1621,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1115,6 +1640,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1133,6 +1659,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1151,6 +1678,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1169,6 +1697,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1191,6 +1720,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1213,6 +1743,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1238,7 +1769,10 @@
         },
         "1006007": {
             "id": "1006007",
+            "name": "",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point05",
             "pre_points": [],
             "level_up_skills": [
@@ -1250,6 +1784,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 }
@@ -1258,13 +1793,22 @@
         },
         "1006101": {
             "id": "1006101",
+            "name": "生成",
             "max_level": 1,
+            "desc": "【缺陷】的持续时间增加#1[i]回合。每当有敌方目标的弱点被击破时，银狼有#2[i]%的基础概率对该目标植入1个随机【缺陷】。",
+            "params": [
+                [
+                    1,
+                    0.65
+                ]
+            ],
             "anchor": "Point06",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1286,13 +1830,21 @@
         },
         "1006102": {
             "id": "1006102",
+            "name": "注入",
             "max_level": 1,
+            "desc": "施放战技时，为敌方目标添加的弱点持续时间增加#1[i]回合。",
+            "params": [
+                [
+                    1
+                ]
+            ],
             "anchor": "Point07",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1318,13 +1870,22 @@
         },
         "1006103": {
             "id": "1006103",
+            "name": "旁注",
             "max_level": 1,
+            "desc": "施放战技时，若敌方目标的负面效果数量大于等于#1[i]个，则战技使目标全属性抗性降低的效果额外降低#2[i]%。",
+            "params": [
+                [
+                    3,
+                    0.03
+                ]
+            ],
             "anchor": "Point08",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1350,13 +1911,17 @@
         },
         "1006201": {
             "id": "1006201",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point09",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 1,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1379,7 +1944,10 @@
         },
         "1006202": {
             "id": "1006202",
+            "name": "效果命中强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point10",
             "pre_points": [
                 "1006101"
@@ -1388,6 +1956,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusProbabilityBase",
@@ -1414,7 +1983,10 @@
         },
         "1006203": {
             "id": "1006203",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point11",
             "pre_points": [
                 "1006202"
@@ -1423,6 +1995,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1449,7 +2022,10 @@
         },
         "1006204": {
             "id": "1006204",
+            "name": "伤害强化•量子",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point12",
             "pre_points": [
                 "1006203"
@@ -1458,6 +2034,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "QuantumAddedRatio",
@@ -1484,7 +2061,10 @@
         },
         "1006205": {
             "id": "1006205",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point13",
             "pre_points": [
                 "1006102"
@@ -1493,6 +2073,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1519,7 +2100,10 @@
         },
         "1006206": {
             "id": "1006206",
+            "name": "效果命中强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point14",
             "pre_points": [
                 "1006205"
@@ -1528,6 +2112,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusProbabilityBase",
@@ -1554,7 +2139,10 @@
         },
         "1006207": {
             "id": "1006207",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point15",
             "pre_points": [
                 "1006206"
@@ -1563,6 +2151,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1589,7 +2178,10 @@
         },
         "1006208": {
             "id": "1006208",
+            "name": "伤害强化•量子",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point16",
             "pre_points": [
                 "1006103"
@@ -1598,6 +2190,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "QuantumAddedRatio",
@@ -1624,7 +2217,10 @@
         },
         "1006209": {
             "id": "1006209",
+            "name": "效果命中强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point17",
             "pre_points": [
                 "1006103"
@@ -1633,6 +2229,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 75,
                     "properties": [
                         {
                             "type": "StatusProbabilityBase",
@@ -1659,7 +2256,10 @@
         },
         "1006210": {
             "id": "1006210",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point18",
             "pre_points": [
                 "1006201"
@@ -1668,6 +2268,1263 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 80,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 8
+                        },
+                        {
+                            "id": "112013",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "11006001": {
+            "id": "11006001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "1100601",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110151",
+                            "num": 3
+                        },
+                        {
+                            "id": "112011",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 3
+                        },
+                        {
+                            "id": "112012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 5
+                        },
+                        {
+                            "id": "112012",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 3
+                        },
+                        {
+                            "id": "112013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 8
+                        },
+                        {
+                            "id": "112013",
+                            "num": 4
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1006_basic_atk.png"
+        },
+        "11006002": {
+            "id": "11006002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "1100602",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2500
+                        },
+                        {
+                            "id": "112011",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110151",
+                            "num": 3
+                        },
+                        {
+                            "id": "112011",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 3
+                        },
+                        {
+                            "id": "112012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 5
+                        },
+                        {
+                            "id": "112012",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 30000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 7
+                        },
+                        {
+                            "id": "112012",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 3
+                        },
+                        {
+                            "id": "112013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 80000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 5
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        },
+                        {
+                            "id": "112013",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 8
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 300000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 14
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1006_skill.png"
+        },
+        "11006003": {
+            "id": "11006003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "1100603",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2500
+                        },
+                        {
+                            "id": "112011",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110151",
+                            "num": 3
+                        },
+                        {
+                            "id": "112011",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 3
+                        },
+                        {
+                            "id": "112012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 5
+                        },
+                        {
+                            "id": "112012",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 30000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 7
+                        },
+                        {
+                            "id": "112012",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 3
+                        },
+                        {
+                            "id": "112013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 80000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 5
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        },
+                        {
+                            "id": "112013",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 8
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 300000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 14
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1006_ultimate.png"
+        },
+        "11006004": {
+            "id": "11006004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "1100604",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2500
+                        },
+                        {
+                            "id": "112011",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110151",
+                            "num": 3
+                        },
+                        {
+                            "id": "112011",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 3
+                        },
+                        {
+                            "id": "112012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 5
+                        },
+                        {
+                            "id": "112012",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 30000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 7
+                        },
+                        {
+                            "id": "112012",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 3
+                        },
+                        {
+                            "id": "112013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 80000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 5
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        },
+                        {
+                            "id": "112013",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 8
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 300000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 14
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1006_talent.png"
+        },
+        "11006007": {
+            "id": "11006007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "1100607",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1006_technique.png"
+        },
+        "11006101": {
+            "id": "11006101",
+            "name": "生成",
+            "max_level": 1,
+            "desc": "【缺陷】的持续时间增加#1[i]回合。每当有敌方目标的弱点被击破时，银狼有#2[i]%的基础概率对该目标植入1个随机【缺陷】。",
+            "params": [
+                [
+                    1,
+                    1
+                ]
+            ],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110151",
+                            "num": 3
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1006_skilltree1.png"
+        },
+        "11006102": {
+            "id": "11006102",
+            "name": "注入",
+            "max_level": 1,
+            "desc": "战斗开始时，立即恢复#1[i]点能量。银狼的回合开始时，自身恢复#2[i]点能量。",
+            "params": [
+                [
+                    20,
+                    5
+                ]
+            ],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 5
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1006_skilltree2.png"
+        },
+        "11006103": {
+            "id": "11006103",
+            "name": "旁注",
+            "max_level": 1,
+            "desc": "银狼每拥有#1[i]%效果命中，则额外提高#2[i]%攻击力，最高不超过#3[i]%。",
+            "params": [
+                [
+                    0.1,
+                    0.1,
+                    0.5
+                ]
+            ],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 8
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110501",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1006_skilltree3.png"
+        },
+        "11006201": {
+            "id": "11006201",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2500
+                        },
+                        {
+                            "id": "112011",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "11006202": {
+            "id": "11006202",
+            "name": "效果命中强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [
+                "11006101"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "StatusProbabilityBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110151",
+                            "num": 3
+                        },
+                        {
+                            "id": "112011",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconStatusProbability.png"
+        },
+        "11006203": {
+            "id": "11006203",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [
+                "11006202"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 3
+                        },
+                        {
+                            "id": "112012",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "11006204": {
+            "id": "11006204",
+            "name": "伤害强化•量子",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [
+                "11006203"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "QuantumAddedRatio",
+                            "value": 0.032
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 3
+                        },
+                        {
+                            "id": "112012",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconQuantumAddedRatio.png"
+        },
+        "11006205": {
+            "id": "11006205",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [
+                "11006102"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110152",
+                            "num": 5
+                        },
+                        {
+                            "id": "112012",
+                            "num": 4
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "11006206": {
+            "id": "11006206",
+            "name": "效果命中强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [
+                "11006205"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "StatusProbabilityBase",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 3
+                        },
+                        {
+                            "id": "112013",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconStatusProbability.png"
+        },
+        "11006207": {
+            "id": "11006207",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [
+                "11006206"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 3
+                        },
+                        {
+                            "id": "112013",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "11006208": {
+            "id": "11006208",
+            "name": "伤害强化•量子",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [
+                "11006103"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "QuantumAddedRatio",
+                            "value": 0.048
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 8
+                        },
+                        {
+                            "id": "112013",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconQuantumAddedRatio.png"
+        },
+        "11006209": {
+            "id": "11006209",
+            "name": "效果命中强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [
+                "11006103"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 75,
+                    "properties": [
+                        {
+                            "type": "StatusProbabilityBase",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110153",
+                            "num": 8
+                        },
+                        {
+                            "id": "112013",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconStatusProbability.png"
+        },
+        "11006210": {
+            "id": "11006210",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [
+                "11006201"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 80,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",

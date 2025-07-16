@@ -177,7 +177,7 @@ export async function updateRes(e) {
 		//gitub图床,如异常请请求多次
 		command = `git clone https://github.com/ctrlcvs/xiaoyao_plus.git "${resPath}/xiaoyao-plus/"`
 		// command = `git clone https://gitee.com/Ctrlcvs/xiaoyao-plus.git "${resPath}/xiaoyao-plus/"`;\n此链接为gitee图床,因仓库过大已被封禁
-		// command = `git clone https://gitea.microgg.cn/ctrlcvs/xiaoyao_plus.git "${resPath}/xiaoyao-plus/"`;\n此链接为gitea图床,网络不稳定暂时更换
+		// command = `git clone https://cnb.cool/tar/xiaoyao_plus.git "${resPath}/xiaoyao-plus/"`;\n此链接为cnb图床,网络不稳定时更换
 		e.reply("开始尝试安装图鉴加量包，可能会需要一段时间，请耐心等待~");
 		exec(command, function(error, stdout, stderr) {
 			if (error) {
