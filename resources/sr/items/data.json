@@ -508,7 +508,7 @@
         "type": "Material",
         "sub_type": "Material",
         "rarity": 5,
-        "icon": null,
+        "icon": "icon/item/821.png",
         "come_from": []
     },
     "11001": {
@@ -1054,6 +1054,15 @@
     "11317": {
         "id": "11317",
         "name": "【乱破】的星魂",
+        "type": "Material",
+        "sub_type": "Eidolon",
+        "rarity": 5,
+        "icon": "icon/item/11003.png",
+        "come_from": []
+    },
+    "11321": {
+        "id": "11321",
+        "name": "【大丽花】的星魂",
         "type": "Material",
         "sub_type": "Eidolon",
         "rarity": 5,
@@ -9319,6 +9328,24 @@
         "sub_type": "Mission",
         "rarity": 3,
         "icon": "icon/item/140577.png",
+        "come_from": []
+    },
+    "140597": {
+        "id": "140597",
+        "name": "梦的谢幕礼",
+        "type": "Mission",
+        "sub_type": "Mission",
+        "rarity": 3,
+        "icon": "icon/item/140597.png",
+        "come_from": []
+    },
+    "140598": {
+        "id": "140598",
+        "name": "梦的谢幕礼",
+        "type": "Mission",
+        "sub_type": "Mission",
+        "rarity": 3,
+        "icon": "icon/item/140598.png",
         "come_from": []
     },
     "140599": {
@@ -18843,6 +18870,60 @@
         "icon": "icon/item/190017.png",
         "come_from": []
     },
+    "191952": {
+        "id": "191952",
+        "name": "《黑焰骑士崛起》首映采访",
+        "type": "Usable",
+        "sub_type": "Book",
+        "rarity": 1,
+        "icon": "icon/item/190013.png",
+        "come_from": []
+    },
+    "191953": {
+        "id": "191953",
+        "name": "背道者的来信",
+        "type": "Usable",
+        "sub_type": "Book",
+        "rarity": 1,
+        "icon": "icon/item/140236.png",
+        "come_from": []
+    },
+    "191954": {
+        "id": "191954",
+        "name": "有关星核的颂歌",
+        "type": "Usable",
+        "sub_type": "Book",
+        "rarity": 1,
+        "icon": "icon/item/190016.png",
+        "come_from": []
+    },
+    "191955": {
+        "id": "191955",
+        "name": "《蝗灾中的世界：重建秩序》丛书宣传单",
+        "type": "Usable",
+        "sub_type": "Book",
+        "rarity": 1,
+        "icon": "icon/item/190015.png",
+        "come_from": []
+    },
+    "191956": {
+        "id": "191956",
+        "name": "「梦主」的回信",
+        "type": "Usable",
+        "sub_type": "Book",
+        "rarity": 1,
+        "icon": "icon/item/140236.png",
+        "come_from": []
+    },
+    "191957": {
+        "id": "191957",
+        "name": "未能送出的时祷书",
+        "type": "Usable",
+        "sub_type": "Book",
+        "rarity": 1,
+        "icon": "icon/item/190016.png",
+        "come_from": []
+    },
     "191958": {
         "id": "191958",
         "name": "δ-me13实验记录（部分：其三）",
@@ -18850,6 +18931,24 @@
         "sub_type": "Book",
         "rarity": 1,
         "icon": "icon/item/190018.png",
+        "come_from": []
+    },
+    "191959": {
+        "id": "191959",
+        "name": "梦的谢幕礼",
+        "type": "Usable",
+        "sub_type": "Book",
+        "rarity": 1,
+        "icon": "icon/item/190016.png",
+        "come_from": []
+    },
+    "191960": {
+        "id": "191960",
+        "name": "梦的谢幕礼",
+        "type": "Usable",
+        "sub_type": "Book",
+        "rarity": 1,
+        "icon": "icon/item/190016.png",
         "come_from": []
     },
     "210001": {
@@ -20294,7 +20393,7 @@
     },
     "210410": {
         "id": "210410",
-        "name": "《NAME==秘所思》",
+        "name": "《NAME == 秘所思》",
         "type": "Usable",
         "sub_type": "MusicAlbum",
         "rarity": 3,
@@ -20303,7 +20402,7 @@
     },
     "210411": {
         "id": "210411",
-        "name": "《NAME==逻各斯》",
+        "name": "《NAME == 逻各斯》",
         "type": "Usable",
         "sub_type": "MusicAlbum",
         "rarity": 3,
@@ -20418,6 +20517,42 @@
         "icon": "icon/item/210001.png",
         "come_from": []
     },
+    "210424": {
+        "id": "210424",
+        "name": "《忆梦浮廊》",
+        "type": "Usable",
+        "sub_type": "MusicAlbum",
+        "rarity": 3,
+        "icon": "icon/item/210001.png",
+        "come_from": []
+    },
+    "210425": {
+        "id": "210425",
+        "name": "《神降》",
+        "type": "Usable",
+        "sub_type": "MusicAlbum",
+        "rarity": 3,
+        "icon": "icon/item/210001.png",
+        "come_from": []
+    },
+    "210426": {
+        "id": "210426",
+        "name": "《鸣蛀之梦》",
+        "type": "Usable",
+        "sub_type": "MusicAlbum",
+        "rarity": 3,
+        "icon": "icon/item/210001.png",
+        "come_from": []
+    },
+    "210427": {
+        "id": "210427",
+        "name": "《深魇噩兆》",
+        "type": "Usable",
+        "sub_type": "MusicAlbum",
+        "rarity": 3,
+        "icon": "icon/item/210001.png",
+        "come_from": []
+    },
     "220000": {
         "id": "220000",
         "name": "语言的艺术",
@@ -20498,6 +20633,15 @@
         "rarity": 4,
         "icon": "icon/item/220008.png",
         "come_from": ["「嗷呜嗷呜事务所」活动获得的聊天气泡"]
+    },
+    "220009": {
+        "id": "220009",
+        "name": "我们是冠军",
+        "type": "Usable",
+        "sub_type": "ChatBubble",
+        "rarity": 4,
+        "icon": "icon/item/220009.png",
+        "come_from": ["「嗷呜黄金大师赛」活动获得的聊天气泡"]
     },
     "221000": {
         "id": "221000",
@@ -23044,7 +23188,7 @@
         "sub_type": "PlayerOutfit",
         "rarity": 5,
         "icon": "icon/item/227003.png",
-        "come_from": ["「拾梦韶华」活动获得的开拓穿搭"]
+        "come_from": ["往期「拾梦韶华」活动获得的开拓穿搭"]
     },
     "250001": {
         "id": "250001",
@@ -27276,6 +27420,438 @@
         "icon": "icon/item/HipplenDecoItemIcon1.png",
         "come_from": []
     },
+    "265001": {
+        "id": "265001",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 1,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265002": {
+        "id": "265002",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 1,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265003": {
+        "id": "265003",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 1,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265004": {
+        "id": "265004",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 1,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265005": {
+        "id": "265005",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 2,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265006": {
+        "id": "265006",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 2,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265007": {
+        "id": "265007",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 2,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265008": {
+        "id": "265008",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 2,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265009": {
+        "id": "265009",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 3,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265010": {
+        "id": "265010",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 3,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265011": {
+        "id": "265011",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 3,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265012": {
+        "id": "265012",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 3,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265013": {
+        "id": "265013",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 4,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265014": {
+        "id": "265014",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 4,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265015": {
+        "id": "265015",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 4,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265016": {
+        "id": "265016",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 4,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265017": {
+        "id": "265017",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265018": {
+        "id": "265018",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265019": {
+        "id": "265019",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265020": {
+        "id": "265020",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265021": {
+        "id": "265021",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265022": {
+        "id": "265022",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265023": {
+        "id": "265023",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265024": {
+        "id": "265024",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265025": {
+        "id": "265025",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265026": {
+        "id": "265026",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265027": {
+        "id": "265027",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265028": {
+        "id": "265028",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265029": {
+        "id": "265029",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265030": {
+        "id": "265030",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 2,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265031": {
+        "id": "265031",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 2,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265032": {
+        "id": "265032",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 2,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265033": {
+        "id": "265033",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 2,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265034": {
+        "id": "265034",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 2,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265035": {
+        "id": "265035",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 2,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265036": {
+        "id": "265036",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 3,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265037": {
+        "id": "265037",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 3,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265038": {
+        "id": "265038",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 3,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265039": {
+        "id": "265039",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 3,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265040": {
+        "id": "265040",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 3,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265041": {
+        "id": "265041",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 3,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265042": {
+        "id": "265042",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 4,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265043": {
+        "id": "265043",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 4,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265044": {
+        "id": "265044",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 4,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265045": {
+        "id": "265045",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 4,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265046": {
+        "id": "265046",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 4,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265047": {
+        "id": "265047",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 4,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
+    "265048": {
+        "id": "265048",
+        "name": "",
+        "type": "Material",
+        "sub_type": "Material",
+        "rarity": 5,
+        "icon": "icon/item/Icon_Testmaterial01.png",
+        "come_from": []
+    },
     "270000": {
         "id": "270000",
         "name": "笑口常开",
@@ -27573,6 +28149,15 @@
         "icon": "icon/item/140150.png",
         "come_from": []
     },
+    "281037": {
+        "id": "281037",
+        "name": "黄金邀请券",
+        "type": "Virtual",
+        "sub_type": "Virtual",
+        "rarity": 3,
+        "icon": "icon/item/281037.png",
+        "come_from": []
+    },
     "281038": {
         "id": "281038",
         "name": "蹦蹦点心",
@@ -27724,6 +28309,15 @@
         "sub_type": "Gift",
         "rarity": 3,
         "icon": "icon/item/300041.png",
+        "come_from": []
+    },
+    "300057": {
+        "id": "300057",
+        "name": "觅宝券",
+        "type": "Usable",
+        "sub_type": "Gift",
+        "rarity": 4,
+        "icon": "icon/item/300057.png",
         "come_from": []
     },
     "300101": {

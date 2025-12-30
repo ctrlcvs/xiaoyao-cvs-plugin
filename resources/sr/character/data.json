@@ -1039,6 +1039,18 @@
     "elem": "冰",
     "weapon": "记忆"
   },
+  "1321": {
+    "id": 1321,
+    "key": "Constance",
+    "name": "大丽花",
+    "names": [
+      "大丽花",
+      "康士坦丝"
+    ],
+    "star": 5,
+    "elem": "火",
+    "weapon": "虚无"
+  },
   "8002": {
     "id": 8002,
     "key": "Trailblazer",
