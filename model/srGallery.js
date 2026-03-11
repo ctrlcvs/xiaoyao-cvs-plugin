@@ -73,7 +73,8 @@ export async function GetRoleData(e) {
         effect:"效果命中",
         damage:"伤害",
         resist:"效果抵抗",
-        break: "击破强化"
+        break: "击破强化",
+        pleasure: "欢愉度"
     }
     let growAttr=[]
     for (const item of Object.keys(data.growAttr)) {

@@ -1051,6 +1051,30 @@
     "elem": "火",
     "weapon": "虚无"
   },
+  "1502": {
+    "id": 1502,
+    "key": "Yaoguang",
+    "name": "爻光",
+    "names": [
+      "爻光",
+      "爻老板"
+    ],
+    "star": 5,
+    "elem": "物理",
+    "weapon": "欢愉"
+  },
+  "1501": {
+    "id": 1501,
+    "key": "Sparkle",
+    "name": "火花",
+    "names": [
+      "火花",
+      "火花花"
+    ],
+    "star": 5,
+    "elem": "火",
+    "weapon": "欢愉"
+  },
   "8002": {
     "id": 8002,
     "key": "Trailblazer",
