@@ -295,6 +295,18 @@ export default class miHoYoApi {
 				},
 				types: 'pass'
 			},
+			exchange: {
+				url: `${mys.pass_api}/account/ma-cn-session/app/exchange`,
+				body: {
+					"src_token": {
+						"token": data.token,
+						"token_type": 1
+					},
+					"mid": data.mid,
+					"dst_token_type": 2
+				},
+				types: 'pass'
+			},
 			getCookieAccountInfoByGameToken: {
 				url: `${mys.web_api}/auth/api/getCookieAccountInfoByGameToken`,
 				query: `account_id=${data.uid}&game_token=${data.token}`
