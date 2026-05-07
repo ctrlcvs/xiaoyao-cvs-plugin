@@ -90,14 +90,14 @@
         "130201": {
             "id": "130201",
             "name": "芬芳一现",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Physical",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量物理属性伤害。",
-            "desc": "对指定敌方单体造成等同于银枝<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的物理属性伤害。",
+            "desc": "对指定敌方单体造成等同于银枝<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的物理属性伤害。",
             "params": [
                 [
                     0.5
@@ -125,6 +125,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1302_basic_atk.png",
@@ -210,7 +213,7 @@
             "type_text": "终结技",
             "effect": "AoEAttack",
             "effect_text": "群攻",
-            "simple_desc": "消耗#2[i]点能量，对敌方全体造成物理属性伤害。",
+            "simple_desc": "消耗90点能量，对敌方全体造成物理属性伤害。",
             "desc": "消耗<span class=\"textColor\">90</span>点能量，对敌方全体造成等同于银枝<span class=\"textColor\">96%/102%/108%/115%/121%/128%/136%/144%/152%/160%/166%/172%/179%/185%/192%</span>攻击力的物理属性伤害。",
             "params": [
                 [
@@ -380,7 +383,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1302_basic_atk.png"
@@ -418,7 +421,7 @@
             "type_text": "终结技",
             "effect": "AoEAttack",
             "effect_text": "群攻",
-            "simple_desc": "消耗#4[i]点能量，对敌方全体造成物理属性伤害，并额外对敌方随机单体造成少量物理属性伤害，共弹射6次。",
+            "simple_desc": "消耗180点能量，对敌方全体造成物理属性伤害，并额外对敌方随机单体造成少量物理属性伤害，共弹射6次。",
             "desc": "消耗<span class=\"textColor\">180</span>点能量，对敌方全体造成等同于银枝<span class=\"textColor\">168%/179%/190%/201%/212%/224%/238%/252%/266%/280%/291%/302%/313%/324%/336%</span>攻击力的物理属性伤害，并额外造成<span class=\"textColor\">6</span>次伤害，每次伤害对敌方随机单体造成等同于银枝<span class=\"textColor\">56%/60%/64%/68%/72%/76%/80%/85%/90%/95%/98%/102%/106%/110%/113%</span>攻击力的物理属性伤害。",
             "params": [
                 [

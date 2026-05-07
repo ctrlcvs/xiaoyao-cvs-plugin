@@ -4,8 +4,9 @@
     "rarity": 4,
     "element": "雷",
     "path": "巡猎",
-    "jpcv": "坂田 将吾",
+    "jpcv": "坂田将吾",
     "cncv": "黄进泽",
+    "allegiance": "仙舟「曜青」",
     "sp": 120,
     "affiliation": "仙舟「曜青」",
     "factions": "/",
@@ -36,6 +37,7 @@
             6
         ]
     },
+    "desc": "仙舟「曜青」的影卫，沉默寡言、独来独往。 专司情报与不见光的事务，鲜少在人前露面。貊泽显露锋芒时，便是敌人的死期。 刺杀手段丰富，对整洁和条理有超乎寻常的执着。",
     "skills": [
         "122301",
         "122302",
@@ -61,7 +63,7 @@
             "id": "122303",
             "name": "追奔",
             "effect": "终结技等级+2，最多不超过15级；天赋等级+2，最多不超过15级。",
-            "icon": "icon/skill/1223_skill.png"
+            "icon": "icon/skill/1223_ultimate.png"
         },
         {
             "id": "122304",
@@ -73,7 +75,7 @@
             "id": "122305",
             "name": "闪诳",
             "effect": "战技等级+2，最多不超过15级；普攻等级+1，最多不超过10级。",
-            "icon": "icon/skill/1223_ultimate.png"
+            "icon": "icon/skill/1223_skill.png"
         },
         {
             "id": "122306",
@@ -86,14 +88,14 @@
         "122301": {
             "id": "122301",
             "name": "飞铙",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Thunder",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量雷属性伤害。",
-            "desc": "对指定敌方单体造成等同于貊泽<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的雷属性伤害。",
+            "desc": "对指定敌方单体造成等同于貊泽<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的雷属性伤害。",
             "params": [
                 [
                     0.5
@@ -121,6 +123,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1223_basic_atk.png",
@@ -371,7 +376,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1223_basic_atk.png"

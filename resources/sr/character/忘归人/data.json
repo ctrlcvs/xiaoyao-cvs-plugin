@@ -89,14 +89,14 @@
         "122501": {
             "id": "122501",
             "name": "焕焕辰尾",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Fire",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量火属性伤害。",
-            "desc": "对指定敌方单体造成等同于忘归人<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的火属性伤害。",
+            "desc": "对指定敌方单体造成等同于忘归人<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的火属性伤害。",
             "params": [
                 [
                     0.5
@@ -124,6 +124,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1225_basic_atk.png",
@@ -424,7 +427,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1225_basic_atk.png"
@@ -457,14 +460,14 @@
         "122508": {
             "id": "122508",
             "name": "冉冉方炽",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Fire",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "Blast",
             "effect_text": "扩散",
             "simple_desc": "对敌方单体造成少量火属性伤害，对相邻目标造成少量火属性伤害。",
-            "desc": "对指定敌方单体造成等同于忘归人<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的火属性伤害，对相邻目标造成等同于忘归人<span class=\"textColor\">25%/30%/35%/40%/45%/50%/55%/60%/65%</span>攻击力的火属性伤害。",
+            "desc": "对指定敌方单体造成等同于忘归人<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的火属性伤害，对相邻目标造成等同于忘归人<span class=\"textColor\">25%/30%/35%/40%/45%/50%/55%/60%/65%/70%</span>攻击力的火属性伤害。",
             "params": [
                 [
                     0.5,
@@ -501,6 +504,10 @@
                 [
                     1.3,
                     0.65
+                ],
+                [
+                    1.4,
+                    0.7
                 ]
             ],
             "icon": "icon/skill/1225_basic_atk.png"

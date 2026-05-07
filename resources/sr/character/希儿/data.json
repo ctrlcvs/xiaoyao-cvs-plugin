@@ -8,12 +8,12 @@
     "cncv": "唐雅菁",
     "allegiance": "贝洛伯格",
     "sp": 120,
-    "affiliation": "雅利洛-VI",
+    "affiliation": "贝洛伯格",
     "factions": "/",
     "baseAttr": {
-        "atk": 640.332,
-        "hp": 931.392,
-        "def": 363.82500000000005,
+        "atk": 640.33,
+        "hp": 931.39,
+        "def": 363.83,
         "speed": 115,
         "cpct": 5,
         "cdmg": 50,
@@ -44,7 +44,13 @@
         "110203",
         "110204",
         "110206",
-        "110207"
+        "110207",
+        "1110201",
+        "1110202",
+        "1110203",
+        "1110204",
+        "1110206",
+        "1110207"
     ],
     "eidolons": [
         {
@@ -80,7 +86,7 @@
         {
             "id": "110206",
             "name": "离析",
-            "effect": "施放终结技后使受到攻击的敌方单体陷入【乱蝶】状态，持续1回合。【乱蝶】状态下的敌方目标受到攻击后，额外受到1次等同于希儿终结技伤害15%的量子属性附加伤害。若该目标被我方其他目标触发【乱蝶】状态的附加伤害消灭，将不会触发希儿的天赋。\\n当希儿陷入无法战斗状态时，敌方目标的【乱蝶】状态被解除。",
+            "effect": "施放终结技攻击后使受到攻击的敌方单体陷入【乱蝶】状态，持续1回合。【乱蝶】状态下的敌方目标受到攻击后，额外受到1次等同于希儿终结技伤害15%的量子属性附加伤害。若该目标被我方其他目标触发【乱蝶】状态的附加伤害消灭，将不会触发希儿的天赋。\n当希儿陷入无法战斗状态时，敌方目标的【乱蝶】状态被解除。",
             "icon": "icon/skill/1102_rank6.png"
         }
     ],
@@ -88,14 +94,14 @@
         "110201": {
             "id": "110201",
             "name": "强袭",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Quantum",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量量子属性伤害。",
-            "desc": "对指定敌方单体造成等同于希儿<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的量子属性伤害。",
+            "desc": "对指定敌方单体造成等同于希儿<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的量子属性伤害。",
             "params": [
                 [
                     0.5
@@ -123,6 +129,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1102_basic_atk.png",
@@ -292,7 +301,7 @@
             "type_text": "天赋",
             "effect": "Enhance",
             "effect_text": "强化",
-            "simple_desc": "",
+            "simple_desc": "施放普攻、战技、终结技消灭敌方目标时获得额外回合并进入增幅状态，增幅状态下自身造成的伤害提高。",
             "desc": "施放普攻、战技、终结技消灭敌方目标时立即获得1个额外回合并进入增幅状态，增幅状态下希儿施放攻击造成的伤害提高<span class=\"textColor\">40%/44%/48%/52%/56%/60%/65%/70%/75%/80%/84%/88%/92%/96%/100%</span>，持续<span class=\"textColor\">1</span>回合。\n若希儿在因天赋【再现】获得的额外回合中消灭敌方目标，此天赋不会生效。",
             "params": [
                 [
@@ -358,7 +367,7 @@
             ],
             "icon": "icon/skill/1102_talent.png",
             "AttributeBuff": [
-                "额外能力·涟漪：施放普攻后，希儿的下一次行动提前20%。",
+                "额外能力·涟漪：施放普攻后，希儿的下次行动提前20%。",
                 "属性加成·防御强化：防御力提高7.5%。",
                 "属性加成·暴击伤害强化：暴击伤害提高10.7%。",
                 "属性加成·攻击强化：攻击力提高8%。"
@@ -373,7 +382,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1102_basic_atk.png"
@@ -387,7 +396,7 @@
             "type_text": "秘技",
             "effect": "Enhance",
             "effect_text": "强化",
-            "simple_desc": "",
+            "simple_desc": "进入隐身状态。攻击敌人进入战斗后立即进入增幅状态。",
             "desc": "使用秘技后进入持续<span class=\"textColor\">20</span>秒的隐身状态。隐身状态下不会被敌人发现，且主动攻击敌人进入战斗时，希儿立即进入增幅状态。",
             "params": [
                 [
@@ -397,10 +406,348 @@
             "icon": "icon/skill/1102_technique.png",
             "AttributeBuff": [
                 "属性加成·攻击强化：攻击力提高4%。",
-                "额外能力·夜行：若当前生命值百分比小于等于50%，则被敌方目标攻击的概率降低。",
+                "额外能力·夜行：消灭敌方目标时，使自身造成的伤害提高50%，该效果最多叠加3层，持续3回合。",
                 "属性加成·暴击伤害强化：暴击伤害提高5.3%。",
                 "属性加成·攻击强化：攻击力提高4%。",
-                "额外能力·割裂：增幅状态下希儿的量子属性抗性穿透提高20%。",
+                "额外能力·割裂：增幅状态下希儿的量子抗性穿透提高20%。",
+                "属性加成·攻击强化：攻击力提高6%。",
+                "属性加成·暴击伤害强化：暴击伤害提高8%。"
+            ]
+        },
+        "1110201": {
+            "id": "1110201",
+            "name": "强袭",
+            "max_level": 10,
+            "element": "Quantum",
+            "type": "Normal",
+            "type_text": "普攻",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "对敌方单体造成少量量子属性伤害。",
+            "desc": "对指定敌方单体造成等同于希儿<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的量子属性伤害。",
+            "params": [
+                [
+                    0.5
+                ],
+                [
+                    0.6
+                ],
+                [
+                    0.7
+                ],
+                [
+                    0.8
+                ],
+                [
+                    0.9
+                ],
+                [
+                    1
+                ],
+                [
+                    1.1
+                ],
+                [
+                    1.2
+                ],
+                [
+                    1.3
+                ],
+                [
+                    1.4
+                ]
+            ],
+            "icon": "icon/skill/1102_basic_atk.png",
+            "AttributeBuff": [
+                "属性加成·防御强化：防御力提高5%。"
+            ]
+        },
+        "1110202": {
+            "id": "1110202",
+            "name": "归刃",
+            "max_level": 15,
+            "element": "Quantum",
+            "type": "BPSkill",
+            "type_text": "战技",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "对敌方单体造成大量量子属性伤害，并使自身速度提高。我方目标攻击后，被攻击目标当前生命值百分比小于等于50%时，希儿自动对其施放1次战技。",
+            "desc": "使希儿的速度提高<span class=\"textColor\">25%</span>，并对指定敌方单体造成等同于希儿<span class=\"textColor\">180%/198%/216%/234%/252%/270%/292%/315%/337%/360%/378%/396%/413%/432%/450%</span>攻击力的量子属性伤害，速度提高效果持续<span class=\"textColor\">3</span>回合。\n我方目标攻击后，被攻击目标当前生命值百分比小于等于<span class=\"textColor\">50%</span>，则希儿自动对其施放1次战技，此次战技不消耗战技点且不恢复能量，该效果每个回合最多触发1次，希儿回合开始时重置可触发次数。若不存在可攻击的目标，则攻击生命值最低的敌方单体目标。",
+            "params": [
+                [
+                    1.8,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    1.98,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    2.16,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    2.34,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    2.52,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    2.7,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    2.925,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    3.15,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    3.375,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    3.6,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    3.78,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    3.96,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    4.14,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    4.32,
+                    0.25,
+                    3,
+                    0.5
+                ],
+                [
+                    4.5,
+                    0.25,
+                    3,
+                    0.5
+                ]
+            ],
+            "icon": "icon/skill/1102_skill.png",
+            "AttributeBuff": [
+                "属性加成·攻击强化：攻击力提高6%。"
+            ]
+        },
+        "1110203": {
+            "id": "1110203",
+            "name": "乱蝶",
+            "max_level": 15,
+            "element": "Quantum",
+            "type": "Ultra",
+            "type_text": "终结技",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
+            "simple_desc": "进入增幅状态，对敌方单体造成大量量子属性伤害。",
+            "desc": "立即进入增幅状态，并对指定敌方单体造成等同于希儿<span class=\"textColor\">360%/396%/432%/468%/504%/540%/585%/630%/675%/720%/756%/792%/827%/864%/9%</span>攻击力的量子属性伤害。",
+            "params": [
+                [
+                    3.6
+                ],
+                [
+                    3.96
+                ],
+                [
+                    4.32
+                ],
+                [
+                    4.68
+                ],
+                [
+                    5.04
+                ],
+                [
+                    5.4
+                ],
+                [
+                    5.85
+                ],
+                [
+                    6.3
+                ],
+                [
+                    6.75
+                ],
+                [
+                    7.2
+                ],
+                [
+                    7.56
+                ],
+                [
+                    7.92
+                ],
+                [
+                    8.28
+                ],
+                [
+                    8.64
+                ],
+                [
+                    9
+                ]
+            ],
+            "icon": "icon/skill/1102_ultimate.png"
+        },
+        "1110204": {
+            "id": "1110204",
+            "name": "再现",
+            "max_level": 15,
+            "element": "",
+            "type": "Talent",
+            "type_text": "天赋",
+            "effect": "Enhance",
+            "effect_text": "强化",
+            "simple_desc": "施放普攻、战技、终结技消灭敌方目标时获得额外回合并进入增幅状态，增幅状态下自身造成的伤害提高。",
+            "desc": "施放普攻、战技、终结技消灭敌方目标时立即获得1个额外回合并进入增幅状态，增幅状态下希儿造成的伤害提高<span class=\"textColor\">40%/44%/48%/52%/56%/60%/65%/70%/75%/80%/84%/88%/92%/96%/100%</span>，持续<span class=\"textColor\">3</span>回合。\n若希儿在因天赋【再现】获得的额外回合中消灭敌方目标，此天赋不会生效。",
+            "params": [
+                [
+                    0.4,
+                    3
+                ],
+                [
+                    0.44,
+                    3
+                ],
+                [
+                    0.48,
+                    3
+                ],
+                [
+                    0.52,
+                    3
+                ],
+                [
+                    0.56,
+                    3
+                ],
+                [
+                    0.6,
+                    3
+                ],
+                [
+                    0.65,
+                    3
+                ],
+                [
+                    0.7,
+                    3
+                ],
+                [
+                    0.75,
+                    3
+                ],
+                [
+                    0.8,
+                    3
+                ],
+                [
+                    0.84,
+                    3
+                ],
+                [
+                    0.88,
+                    3
+                ],
+                [
+                    0.92,
+                    3
+                ],
+                [
+                    0.96,
+                    3
+                ],
+                [
+                    1,
+                    3
+                ]
+            ],
+            "icon": "icon/skill/1102_talent.png",
+            "AttributeBuff": [
+                "额外能力·涟漪：施放普攻后，希儿的下次行动提前20%。",
+                "属性加成·防御强化：防御力提高7.5%。",
+                "属性加成·暴击伤害强化：暴击伤害提高10.7%。",
+                "属性加成·攻击强化：攻击力提高8%。"
+            ]
+        },
+        "1110206": {
+            "id": "1110206",
+            "name": "攻击",
+            "max_level": 1,
+            "element": "Quantum",
+            "type": "MazeNormal",
+            "type_text": "dev_连携",
+            "effect": "MazeAttack",
+            "effect_text": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
+            "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
+            "params": [],
+            "icon": "icon/skill/1102_basic_atk.png"
+        },
+        "1110207": {
+            "id": "1110207",
+            "name": "幻身",
+            "max_level": 1,
+            "element": "",
+            "type": "Maze",
+            "type_text": "秘技",
+            "effect": "Enhance",
+            "effect_text": "强化",
+            "simple_desc": "进入隐身状态。攻击敌人进入战斗后立即进入增幅状态且对随机目标造成必定暴击的大量量子属性伤害。",
+            "desc": "使用秘技后进入持续<span class=\"textColor\">20</span>秒的隐身状态。隐身状态下不会被敌人发现，主动攻击敌人进入战斗时，希儿立即进入增幅状态且对随机敌方目标造成1次等同于希儿战技伤害倍率的量子属性伤害，该伤害必定暴击。",
+            "params": [
+                [
+                    20
+                ]
+            ],
+            "icon": "icon/skill/1102_technique.png",
+            "AttributeBuff": [
+                "属性加成·攻击强化：攻击力提高4%。",
+                "额外能力·夜行：消灭敌方目标时，使自身造成的伤害提高50%，该效果最多叠加3层，持续3回合。",
+                "属性加成·暴击伤害强化：暴击伤害提高5.3%。",
+                "属性加成·攻击强化：攻击力提高4%。",
+                "额外能力·割裂：增幅状态下希儿的量子抗性穿透提高20%。",
                 "属性加成·攻击强化：攻击力提高6%。",
                 "属性加成·暴击伤害强化：暴击伤害提高8%。"
             ]
@@ -409,7 +756,10 @@
     "skill_tree": {
         "1102001": {
             "id": "1102001",
+            "name": "",
             "max_level": 6,
+            "desc": "",
+            "params": [],
             "anchor": "Point01",
             "pre_points": [],
             "level_up_skills": [
@@ -421,11 +771,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -444,6 +796,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -462,6 +815,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -480,6 +834,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -498,6 +853,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -519,7 +875,10 @@
         },
         "1102002": {
             "id": "1102002",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point02",
             "pre_points": [],
             "level_up_skills": [
@@ -531,11 +890,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -550,6 +911,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -568,6 +930,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -586,6 +949,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -604,6 +968,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -622,6 +987,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -640,6 +1006,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -662,6 +1029,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -684,6 +1052,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -709,7 +1078,10 @@
         },
         "1102003": {
             "id": "1102003",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point03",
             "pre_points": [],
             "level_up_skills": [
@@ -721,11 +1093,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -740,6 +1114,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -758,6 +1133,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -776,6 +1152,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -794,6 +1171,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -812,6 +1190,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -830,6 +1209,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -852,6 +1232,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -874,6 +1255,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -899,7 +1281,10 @@
         },
         "1102004": {
             "id": "1102004",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point04",
             "pre_points": [],
             "level_up_skills": [
@@ -911,11 +1296,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -930,6 +1317,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -948,6 +1336,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -966,6 +1355,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -984,6 +1374,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1002,6 +1393,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1020,6 +1412,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1042,6 +1435,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1064,6 +1458,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1089,7 +1484,10 @@
         },
         "1102007": {
             "id": "1102007",
+            "name": "",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point05",
             "pre_points": [],
             "level_up_skills": [
@@ -1101,6 +1499,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 }
@@ -1109,13 +1508,22 @@
         },
         "1102101": {
             "id": "1102101",
+            "name": "夜行",
             "max_level": 1,
+            "desc": "若当前生命值百分比小于等于#1[i]%，则被敌方目标攻击的概率降低。",
+            "params": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ],
             "anchor": "Point06",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1137,13 +1545,21 @@
         },
         "1102102": {
             "id": "1102102",
+            "name": "割裂",
             "max_level": 1,
+            "desc": "增幅状态下希儿的量子属性抗性穿透提高#1[i]%。",
+            "params": [
+                [
+                    0.2
+                ]
+            ],
             "anchor": "Point07",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1169,13 +1585,21 @@
         },
         "1102103": {
             "id": "1102103",
+            "name": "涟漪",
             "max_level": 1,
+            "desc": "施放普攻后，希儿的下一次行动提前#1[i]%。",
+            "params": [
+                [
+                    0.2
+                ]
+            ],
             "anchor": "Point08",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1201,13 +1625,17 @@
         },
         "1102201": {
             "id": "1102201",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point09",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 1,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1230,7 +1658,10 @@
         },
         "1102202": {
             "id": "1102202",
+            "name": "暴击伤害强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point10",
             "pre_points": [
                 "1102101"
@@ -1239,6 +1670,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalDamageBase",
@@ -1265,7 +1697,10 @@
         },
         "1102203": {
             "id": "1102203",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point11",
             "pre_points": [
                 "1102202"
@@ -1274,6 +1709,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1300,13 +1736,17 @@
         },
         "1102204": {
             "id": "1102204",
+            "name": "防御强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point12",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "DefenceAddedRatio",
@@ -1333,7 +1773,10 @@
         },
         "1102205": {
             "id": "1102205",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point13",
             "pre_points": [
                 "1102102"
@@ -1342,6 +1785,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1368,7 +1812,10 @@
         },
         "1102206": {
             "id": "1102206",
+            "name": "暴击伤害强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point14",
             "pre_points": [
                 "1102205"
@@ -1377,6 +1824,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalDamageBase",
@@ -1403,13 +1851,17 @@
         },
         "1102207": {
             "id": "1102207",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point15",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1436,7 +1888,10 @@
         },
         "1102208": {
             "id": "1102208",
+            "name": "防御强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point16",
             "pre_points": [
                 "1102103"
@@ -1445,6 +1900,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "DefenceAddedRatio",
@@ -1471,7 +1927,10 @@
         },
         "1102209": {
             "id": "1102209",
+            "name": "暴击伤害强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point17",
             "pre_points": [
                 "1102208"
@@ -1480,6 +1939,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 75,
                     "properties": [
                         {
                             "type": "CriticalDamageBase",
@@ -1506,7 +1966,10 @@
         },
         "1102210": {
             "id": "1102210",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point18",
             "pre_points": [
                 "1102208"
@@ -1515,6 +1978,1257 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 80,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 8
+                        },
+                        {
+                            "id": "111013",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "11102001": {
+            "id": "11102001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "1110201",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110121",
+                            "num": 3
+                        },
+                        {
+                            "id": "111011",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 3
+                        },
+                        {
+                            "id": "111012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 5
+                        },
+                        {
+                            "id": "111012",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 3
+                        },
+                        {
+                            "id": "111013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 8
+                        },
+                        {
+                            "id": "111013",
+                            "num": 4
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1102_basic_atk.png"
+        },
+        "11102002": {
+            "id": "11102002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "1110202",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2500
+                        },
+                        {
+                            "id": "111011",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110121",
+                            "num": 3
+                        },
+                        {
+                            "id": "111011",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 3
+                        },
+                        {
+                            "id": "111012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 5
+                        },
+                        {
+                            "id": "111012",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 30000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 7
+                        },
+                        {
+                            "id": "111012",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 3
+                        },
+                        {
+                            "id": "111013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 80000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 5
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        },
+                        {
+                            "id": "111013",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 8
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 300000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 14
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1102_skill.png"
+        },
+        "11102003": {
+            "id": "11102003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "1110203",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2500
+                        },
+                        {
+                            "id": "111011",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110121",
+                            "num": 3
+                        },
+                        {
+                            "id": "111011",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 3
+                        },
+                        {
+                            "id": "111012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 5
+                        },
+                        {
+                            "id": "111012",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 30000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 7
+                        },
+                        {
+                            "id": "111012",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 3
+                        },
+                        {
+                            "id": "111013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 80000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 5
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        },
+                        {
+                            "id": "111013",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 8
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 300000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 14
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1102_ultimate.png"
+        },
+        "11102004": {
+            "id": "11102004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "1110204",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2500
+                        },
+                        {
+                            "id": "111011",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110121",
+                            "num": 3
+                        },
+                        {
+                            "id": "111011",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 3
+                        },
+                        {
+                            "id": "111012",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 5
+                        },
+                        {
+                            "id": "111012",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 30000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 7
+                        },
+                        {
+                            "id": "111012",
+                            "num": 6
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 3
+                        },
+                        {
+                            "id": "111013",
+                            "num": 3
+                        }
+                    ]
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 80000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 5
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        },
+                        {
+                            "id": "111013",
+                            "num": 4
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 8
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        }
+                    ]
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 300000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 14
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1102_talent.png"
+        },
+        "11102007": {
+            "id": "11102007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [
+                {
+                    "id": "1110207",
+                    "num": 1
+                }
+            ],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1102_technique.png"
+        },
+        "11102101": {
+            "id": "11102101",
+            "name": "夜行",
+            "max_level": 1,
+            "desc": "消灭敌方目标时，使自身造成的伤害提高#1[i]%，该效果最多叠加#2[i]层，持续#3[i]回合。",
+            "params": [
+                [
+                    0.5,
+                    3,
+                    3
+                ]
+            ],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110121",
+                            "num": 3
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1102_skilltree1.png"
+        },
+        "11102102": {
+            "id": "11102102",
+            "name": "割裂",
+            "max_level": 1,
+            "desc": "增幅状态下希儿的量子属性抗性穿透提高#1[i]%。",
+            "params": [
+                [
+                    0.25
+                ]
+            ],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 5
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1102_skilltree2.png"
+        },
+        "11102103": {
+            "id": "11102103",
+            "name": "涟漪",
+            "max_level": 1,
+            "desc": "施放普攻后，希儿的下一次行动提前#1[i]%。",
+            "params": [
+                [
+                    0.2
+                ]
+            ],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 8
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110502",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1102_skilltree3.png"
+        },
+        "11102201": {
+            "id": "11102201",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2500
+                        },
+                        {
+                            "id": "111011",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "11102202": {
+            "id": "11102202",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [
+                "11102101"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110121",
+                            "num": 3
+                        },
+                        {
+                            "id": "111011",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamage.png"
+        },
+        "11102203": {
+            "id": "11102203",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [
+                "11102202"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 3
+                        },
+                        {
+                            "id": "111012",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "11102204": {
+            "id": "11102204",
+            "name": "防御强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "DefenceAddedRatio",
+                            "value": 0.05
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 3
+                        },
+                        {
+                            "id": "111012",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconDefence.png"
+        },
+        "11102205": {
+            "id": "11102205",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [
+                "11102102"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "110122",
+                            "num": 5
+                        },
+                        {
+                            "id": "111012",
+                            "num": 4
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "11102206": {
+            "id": "11102206",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [
+                "11102205"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 3
+                        },
+                        {
+                            "id": "111013",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamage.png"
+        },
+        "11102207": {
+            "id": "11102207",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 3
+                        },
+                        {
+                            "id": "111013",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttack.png"
+        },
+        "11102208": {
+            "id": "11102208",
+            "name": "防御强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [
+                "11102103"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [
+                        {
+                            "type": "DefenceAddedRatio",
+                            "value": 0.075
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 8
+                        },
+                        {
+                            "id": "111013",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconDefence.png"
+        },
+        "11102209": {
+            "id": "11102209",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [
+                "11102208"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 75,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.107
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110123",
+                            "num": 8
+                        },
+                        {
+                            "id": "111013",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamage.png"
+        },
+        "11102210": {
+            "id": "11102210",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [
+                "11102208"
+            ],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 80,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",

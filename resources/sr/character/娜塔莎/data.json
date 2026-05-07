@@ -8,7 +8,7 @@
     "cncv": "秦紫翼",
     "allegiance": "贝洛伯格",
     "sp": 90,
-    "affiliation": "雅利洛-VI",
+    "affiliation": "贝洛伯格",
     "factions": "/",
     "baseAttr": {
         "atk": 476.28,
@@ -88,14 +88,14 @@
         "110501": {
             "id": "110501",
             "name": "仁慈的背面",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Physical",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量物理属性伤害。",
-            "desc": "对指定敌方单体造成等同于娜塔莎<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的物理属性伤害。",
+            "desc": "对指定敌方单体造成等同于娜塔莎<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的物理属性伤害。",
             "params": [
                 [
                     0.5
@@ -123,6 +123,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1105_basic_atk.png"
@@ -360,7 +363,7 @@
                 ],
                 [
                     0.3,
-                    0.4063
+                    0.4062
                 ],
                 [
                     0.3,
@@ -411,7 +414,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1105_basic_atk.png"
@@ -453,7 +456,10 @@
     "skill_tree": {
         "1105001": {
             "id": "1105001",
+            "name": "",
             "max_level": 6,
+            "desc": "",
+            "params": [],
             "anchor": "Point01",
             "pre_points": [],
             "level_up_skills": [
@@ -465,11 +471,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -488,6 +496,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -506,6 +515,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -524,6 +534,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -542,6 +553,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -563,7 +575,10 @@
         },
         "1105002": {
             "id": "1105002",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point02",
             "pre_points": [],
             "level_up_skills": [
@@ -575,11 +590,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -594,6 +611,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -612,6 +630,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -630,6 +649,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -648,6 +668,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -666,6 +687,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -684,6 +706,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -706,6 +729,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -724,6 +748,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -749,7 +774,10 @@
         },
         "1105003": {
             "id": "1105003",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point03",
             "pre_points": [],
             "level_up_skills": [
@@ -761,11 +789,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -780,6 +810,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -798,6 +829,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -816,6 +848,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -834,6 +867,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -852,6 +886,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -870,6 +905,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -892,6 +928,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -910,6 +947,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -935,7 +973,10 @@
         },
         "1105004": {
             "id": "1105004",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point04",
             "pre_points": [],
             "level_up_skills": [
@@ -947,11 +988,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -966,6 +1009,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -984,6 +1028,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1002,6 +1047,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1020,6 +1066,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1038,6 +1085,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1056,6 +1104,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1078,6 +1127,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1096,6 +1146,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1121,7 +1172,10 @@
         },
         "1105007": {
             "id": "1105007",
+            "name": "",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point05",
             "pre_points": [],
             "level_up_skills": [
@@ -1133,6 +1187,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 }
@@ -1141,13 +1196,21 @@
         },
         "1105101": {
             "id": "1105101",
+            "name": "舒缓",
             "max_level": 1,
+            "desc": "施放战技时，解除指定我方单体的#1[i]个负面效果。",
+            "params": [
+                [
+                    1
+                ]
+            ],
             "anchor": "Point06",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1169,13 +1232,21 @@
         },
         "1105102": {
             "id": "1105102",
+            "name": "医者",
             "max_level": 1,
+            "desc": "娜塔莎提供的治疗量提高#1[i]%。",
+            "params": [
+                [
+                    0.1
+                ]
+            ],
             "anchor": "Point07",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1201,13 +1272,21 @@
         },
         "1105103": {
             "id": "1105103",
+            "name": "调理",
             "max_level": 1,
+            "desc": "施放战技产生的持续回复效果延长#1[i]回合。",
+            "params": [
+                [
+                    1
+                ]
+            ],
             "anchor": "Point08",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1233,13 +1312,17 @@
         },
         "1105201": {
             "id": "1105201",
+            "name": "生命强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point09",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 1,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1262,7 +1345,10 @@
         },
         "1105202": {
             "id": "1105202",
+            "name": "效果抵抗强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point10",
             "pre_points": [
                 "1105101"
@@ -1271,6 +1357,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusResistanceBase",
@@ -1297,7 +1384,10 @@
         },
         "1105203": {
             "id": "1105203",
+            "name": "生命强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point11",
             "pre_points": [
                 "1105202"
@@ -1306,6 +1396,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1332,7 +1423,10 @@
         },
         "1105204": {
             "id": "1105204",
+            "name": "防御强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point12",
             "pre_points": [
                 "1105203"
@@ -1341,6 +1435,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "DefenceAddedRatio",
@@ -1367,7 +1462,10 @@
         },
         "1105205": {
             "id": "1105205",
+            "name": "生命强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point13",
             "pre_points": [
                 "1105102"
@@ -1376,6 +1474,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1402,7 +1501,10 @@
         },
         "1105206": {
             "id": "1105206",
+            "name": "效果抵抗强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point14",
             "pre_points": [
                 "1105205"
@@ -1411,6 +1513,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusResistanceBase",
@@ -1437,7 +1540,10 @@
         },
         "1105207": {
             "id": "1105207",
+            "name": "生命强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point15",
             "pre_points": [
                 "1105206"
@@ -1446,6 +1552,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1472,7 +1579,10 @@
         },
         "1105208": {
             "id": "1105208",
+            "name": "防御强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point16",
             "pre_points": [
                 "1105103"
@@ -1481,6 +1591,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "DefenceAddedRatio",
@@ -1507,7 +1618,10 @@
         },
         "1105209": {
             "id": "1105209",
+            "name": "效果抵抗强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point17",
             "pre_points": [
                 "1105103"
@@ -1516,6 +1630,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 75,
                     "properties": [
                         {
                             "type": "StatusResistanceBase",
@@ -1542,13 +1657,17 @@
         },
         "1105210": {
             "id": "1105210",
+            "name": "生命强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point18",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 80,
                     "properties": [
                         {
                             "type": "HPAddedRatio",

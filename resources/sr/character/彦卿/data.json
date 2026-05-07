@@ -88,14 +88,14 @@
         "120901": {
             "id": "120901",
             "name": "霜锋点寒芒",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Ice",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量冰属性伤害。",
-            "desc": "对指定敌方单体造成等同于彦卿<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的冰属性伤害。",
+            "desc": "对指定敌方单体造成等同于彦卿<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的冰属性伤害。",
             "params": [
                 [
                     0.5
@@ -123,6 +123,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1209_basic_atk.png",
@@ -344,11 +347,11 @@
                     0.65
                 ],
                 [
-                    0.1813,
-                    0.2438,
+                    0.1812,
+                    0.2437,
                     0.5625,
-                    0.4063,
-                    0.4063,
+                    0.4062,
+                    0.4062,
                     0.65
                 ],
                 [
@@ -361,7 +364,7 @@
                 ],
                 [
                     0.1938,
-                    0.2813,
+                    0.2812,
                     0.5875,
                     0.4688,
                     0.4688,
@@ -433,7 +436,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1209_basic_atk.png"
@@ -471,7 +474,10 @@
     "skill_tree": {
         "1209001": {
             "id": "1209001",
+            "name": "",
             "max_level": 6,
+            "desc": "",
+            "params": [],
             "anchor": "Point01",
             "pre_points": [],
             "level_up_skills": [
@@ -483,11 +489,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -506,6 +514,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -524,6 +533,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -542,6 +552,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -560,6 +571,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -581,7 +593,10 @@
         },
         "1209002": {
             "id": "1209002",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point02",
             "pre_points": [],
             "level_up_skills": [
@@ -593,11 +608,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -612,6 +629,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -630,6 +648,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -648,6 +667,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -666,6 +686,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -684,6 +705,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -702,6 +724,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -724,6 +747,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -746,6 +770,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -771,7 +796,10 @@
         },
         "1209003": {
             "id": "1209003",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point03",
             "pre_points": [],
             "level_up_skills": [
@@ -783,11 +811,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -802,6 +832,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -820,6 +851,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -838,6 +870,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -856,6 +889,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -874,6 +908,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -892,6 +927,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -914,6 +950,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -936,6 +973,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -961,7 +999,10 @@
         },
         "1209004": {
             "id": "1209004",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point04",
             "pre_points": [],
             "level_up_skills": [
@@ -973,11 +1014,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -992,6 +1035,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1010,6 +1054,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1028,6 +1073,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1046,6 +1092,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1064,6 +1111,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1082,6 +1130,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1104,6 +1153,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1126,6 +1176,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1151,7 +1202,10 @@
         },
         "1209007": {
             "id": "1209007",
+            "name": "",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point05",
             "pre_points": [],
             "level_up_skills": [
@@ -1163,6 +1217,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 }
@@ -1171,13 +1226,21 @@
         },
         "1209101": {
             "id": "1209101",
+            "name": "颁冰",
             "max_level": 1,
+            "desc": "施放攻击后，对携带冰属性弱点的敌方目标造成等同于彦卿#1[i]%攻击力的冰属性附加伤害。",
+            "params": [
+                [
+                    0.3
+                ]
+            ],
             "anchor": "Point06",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1199,13 +1262,21 @@
         },
         "1209102": {
             "id": "1209102",
+            "name": "凌霜",
             "max_level": 1,
+            "desc": "处于【智剑连心】效果时，效果抵抗提高#1[i]%。",
+            "params": [
+                [
+                    0.2
+                ]
+            ],
             "anchor": "Point07",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1231,13 +1302,22 @@
         },
         "1209103": {
             "id": "1209103",
+            "name": "轻吕",
             "max_level": 1,
+            "desc": "触发暴击时，速度提高#1[i]%，持续#2[i]回合。",
+            "params": [
+                [
+                    0.1,
+                    2
+                ]
+            ],
             "anchor": "Point08",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1263,13 +1343,17 @@
         },
         "1209201": {
             "id": "1209201",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point09",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 1,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1292,7 +1376,10 @@
         },
         "1209202": {
             "id": "1209202",
+            "name": "伤害强化•冰",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point10",
             "pre_points": [
                 "1209101"
@@ -1301,6 +1388,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "IceAddedRatio",
@@ -1327,7 +1415,10 @@
         },
         "1209203": {
             "id": "1209203",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point11",
             "pre_points": [
                 "1209202"
@@ -1336,6 +1427,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1362,13 +1454,17 @@
         },
         "1209204": {
             "id": "1209204",
+            "name": "生命强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point12",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1395,7 +1491,10 @@
         },
         "1209205": {
             "id": "1209205",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point13",
             "pre_points": [
                 "1209102"
@@ -1404,6 +1503,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1430,7 +1530,10 @@
         },
         "1209206": {
             "id": "1209206",
+            "name": "伤害强化•冰",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point14",
             "pre_points": [
                 "1209205"
@@ -1439,6 +1542,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "IceAddedRatio",
@@ -1465,13 +1569,17 @@
         },
         "1209207": {
             "id": "1209207",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point15",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1498,7 +1606,10 @@
         },
         "1209208": {
             "id": "1209208",
+            "name": "生命强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point16",
             "pre_points": [
                 "1209103"
@@ -1507,6 +1618,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1533,7 +1645,10 @@
         },
         "1209209": {
             "id": "1209209",
+            "name": "伤害强化•冰",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point17",
             "pre_points": [
                 "1209208"
@@ -1542,6 +1657,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 75,
                     "properties": [
                         {
                             "type": "IceAddedRatio",
@@ -1568,7 +1684,10 @@
         },
         "1209210": {
             "id": "1209210",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point18",
             "pre_points": [
                 "1209208"
@@ -1577,6 +1696,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 80,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",

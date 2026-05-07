@@ -8,7 +8,7 @@
     "cncv": "宴宁",
     "allegiance": "贝洛伯格",
     "sp": 110,
-    "affiliation": "雅利洛-VI",
+    "affiliation": "贝洛伯格",
     "factions": "筑城者",
     "baseAttr": {
         "atk": 546.84,
@@ -88,14 +88,14 @@
         "110601": {
             "id": "110601",
             "name": "冰点射击",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Ice",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量冰属性伤害。",
-            "desc": "对指定敌方单体造成等同于佩拉<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的冰属性伤害。",
+            "desc": "对指定敌方单体造成等同于佩拉<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的冰属性伤害。",
             "params": [
                 [
                     0.5
@@ -123,12 +123,15 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1106_basic_atk.png",
             "AttributeBuff": [
                 "额外能力·痛击：对处于负面效果的敌方目标造成的伤害提高20%。",
-                "属性加成·攻击强化：攻击提高4%。",
+                "属性加成·攻击强化：攻击力提高4%。",
                 "属性加成·伤害强化•冰：冰属性伤害提高3.2%。",
                 "属性加成·效果命中强化：效果命中提高4%。"
             ]
@@ -140,8 +143,8 @@
             "element": "Ice",
             "type": "BPSkill",
             "type_text": "战技",
-            "effect": "Impair",
-            "effect_text": "妨害",
+            "effect": "SingleAttack",
+            "effect_text": "单攻",
             "simple_desc": "解除敌方单体1个增益效果，对敌方单体造成冰属性伤害。",
             "desc": "解除指定敌方单体的<span class=\"textColor\">1</span>个增益效果，同时造成等同于佩拉<span class=\"textColor\">105%/115%/126%/136%/147%/157%/170%/183%/196%/210%/220%/231%/241%/252%/262%</span>攻击力的冰属性伤害。",
             "params": [
@@ -210,7 +213,7 @@
             "AttributeBuff": [
                 "额外能力·秘策：佩拉在场时，我方全体的效果命中提高10%。",
                 "属性加成·伤害强化•冰：冰属性伤害提高4.8%。",
-                "属性加成·攻击强化：攻击提高6%。",
+                "属性加成·攻击强化：攻击力提高6%。",
                 "属性加成·伤害强化•冰：冰属性伤害提高4.8%。"
             ]
         },
@@ -221,8 +224,8 @@
             "element": "Ice",
             "type": "Ultra",
             "type_text": "终结技",
-            "effect": "Impair",
-            "effect_text": "妨害",
+            "effect": "AoEAttack",
+            "effect_text": "群攻",
             "simple_desc": "大概率使敌方目标防御力降低，并对敌方全体造成少量冰属性伤害。",
             "desc": "有<span class=\"textColor\">100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%/100%</span>的基础概率使敌方每个单体目标陷入【通解】状态，同时对敌方全体造成等同于佩拉<span class=\"textColor\">60%/64%/68%/72%/76%/80%/85%/90%/95%/100%/104%/108%/112%/115%/120%</span>攻击力的冰属性伤害。\n【通解】状态下，敌方目标防御力降低<span class=\"textColor\">30%/31%/32%/33%/34%/35%/36%/37%/38%/40%/41%/42%/43%/44%/45%</span>，持续<span class=\"textColor\">2</span>回合。",
             "params": [
@@ -381,7 +384,7 @@
             "AttributeBuff": [
                 "额外能力·追歼：施放战技解除增益效果时，下一次攻击造成的伤害提高20%。",
                 "属性加成·效果命中强化：效果命中提高6%。",
-                "属性加成·攻击强化：攻击提高8%。"
+                "属性加成·攻击强化：攻击力提高8%。"
             ]
         },
         "110606": {
@@ -393,7 +396,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1106_basic_atk.png"
@@ -427,7 +430,10 @@
     "skill_tree": {
         "1106001": {
             "id": "1106001",
+            "name": "",
             "max_level": 6,
+            "desc": "",
+            "params": [],
             "anchor": "Point01",
             "pre_points": [],
             "level_up_skills": [
@@ -439,11 +445,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -462,6 +470,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -480,6 +489,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -498,6 +508,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -516,6 +527,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -537,7 +549,10 @@
         },
         "1106002": {
             "id": "1106002",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point02",
             "pre_points": [],
             "level_up_skills": [
@@ -549,11 +564,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -568,6 +585,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -586,6 +604,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -604,6 +623,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -622,6 +642,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -640,6 +661,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -658,6 +680,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -680,6 +703,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -698,6 +722,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -723,7 +748,10 @@
         },
         "1106003": {
             "id": "1106003",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point03",
             "pre_points": [],
             "level_up_skills": [
@@ -735,11 +763,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -754,6 +784,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -772,6 +803,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -790,6 +822,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -808,6 +841,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -826,6 +860,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -844,6 +879,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -866,6 +902,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -884,6 +921,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -909,7 +947,10 @@
         },
         "1106004": {
             "id": "1106004",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point04",
             "pre_points": [],
             "level_up_skills": [
@@ -921,11 +962,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -940,6 +983,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -958,6 +1002,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -976,6 +1021,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -994,6 +1040,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1012,6 +1059,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1030,6 +1078,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1052,6 +1101,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1070,6 +1120,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1095,7 +1146,10 @@
         },
         "1106007": {
             "id": "1106007",
+            "name": "",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point05",
             "pre_points": [],
             "level_up_skills": [
@@ -1107,6 +1161,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 }
@@ -1115,13 +1170,21 @@
         },
         "1106101": {
             "id": "1106101",
+            "name": "痛击",
             "max_level": 1,
+            "desc": "对处于负面效果的敌方目标造成的伤害提高#1[i]%。",
+            "params": [
+                [
+                    0.2
+                ]
+            ],
             "anchor": "Point06",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1143,13 +1206,21 @@
         },
         "1106102": {
             "id": "1106102",
+            "name": "秘策",
             "max_level": 1,
+            "desc": "佩拉在场时，我方全体的效果命中提高#1[i]%。",
+            "params": [
+                [
+                    0.1
+                ]
+            ],
             "anchor": "Point07",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1175,13 +1246,21 @@
         },
         "1106103": {
             "id": "1106103",
+            "name": "追歼",
             "max_level": 1,
+            "desc": "施放战技解除增益效果时，下一次攻击造成的伤害提高#1[i]%。",
+            "params": [
+                [
+                    0.2
+                ]
+            ],
             "anchor": "Point08",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1207,13 +1286,17 @@
         },
         "1106201": {
             "id": "1106201",
+            "name": "伤害强化•冰",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point09",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 1,
                     "properties": [
                         {
                             "type": "IceAddedRatio",
@@ -1236,7 +1319,10 @@
         },
         "1106202": {
             "id": "1106202",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point10",
             "pre_points": [
                 "1106101"
@@ -1245,6 +1331,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1271,7 +1358,10 @@
         },
         "1106203": {
             "id": "1106203",
+            "name": "伤害强化•冰",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point11",
             "pre_points": [
                 "1106202"
@@ -1280,6 +1370,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "IceAddedRatio",
@@ -1306,7 +1397,10 @@
         },
         "1106204": {
             "id": "1106204",
+            "name": "效果命中强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point12",
             "pre_points": [
                 "1106203"
@@ -1315,6 +1409,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusProbabilityBase",
@@ -1341,7 +1436,10 @@
         },
         "1106205": {
             "id": "1106205",
+            "name": "伤害强化•冰",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point13",
             "pre_points": [
                 "1106102"
@@ -1350,6 +1448,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "IceAddedRatio",
@@ -1376,7 +1475,10 @@
         },
         "1106206": {
             "id": "1106206",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point14",
             "pre_points": [
                 "1106205"
@@ -1385,6 +1487,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1411,7 +1514,10 @@
         },
         "1106207": {
             "id": "1106207",
+            "name": "伤害强化•冰",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point15",
             "pre_points": [
                 "1106206"
@@ -1420,6 +1526,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "IceAddedRatio",
@@ -1446,7 +1553,10 @@
         },
         "1106208": {
             "id": "1106208",
+            "name": "效果命中强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point16",
             "pre_points": [
                 "1106103"
@@ -1455,6 +1565,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusProbabilityBase",
@@ -1481,7 +1592,10 @@
         },
         "1106209": {
             "id": "1106209",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point17",
             "pre_points": [
                 "1106103"
@@ -1490,6 +1604,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 75,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1516,7 +1631,10 @@
         },
         "1106210": {
             "id": "1106210",
+            "name": "伤害强化•冰",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point18",
             "pre_points": [
                 "1106201"
@@ -1525,6 +1643,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 80,
                     "properties": [
                         {
                             "type": "IceAddedRatio",

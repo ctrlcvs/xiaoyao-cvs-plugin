@@ -8,8 +8,8 @@
     "cncv": "花玲",
     "allegiance": "仙舟「罗浮」",
     "sp": 135,
-    "affiliation": "",
-    "factions": "",
+    "affiliation": "仙舟「罗浮」",
+    "factions": "仙舟联盟",
     "baseAttr": {
         "atk": 465.696,
         "hp": 1474.7040000000002,
@@ -19,7 +19,24 @@
         "cdmg": 50,
         "aggro": 150
     },
-    "growAttr": {},
+    "growAttr": {
+        "cpct": [
+            2.7,
+            2.7,
+            4,
+            4,
+            5.3
+        ],
+        "hp": [
+            4,
+            6,
+            8
+        ],
+        "esist": [
+            4,
+            6
+        ]
+    },
     "desc": "仙舟「罗浮」太卜司之首。 凭借第三眼与穷观阵为仙舟占算航路，预卜事务吉凶。",
     "skills": [
         "120801",
@@ -63,7 +80,7 @@
         {
             "id": "120806",
             "name": "种陵",
-            "effect": "【穷观阵】开启时，会累计我方全体本场战斗中的已损失生命值。符玄施放终结技造成的伤害提高，提高数值等同于本场战斗中累计已损失生命值的200%。\\n本场战斗中累计已损失生命值最高不超过符玄生命上限的120%，施放终结技后会清空并进行重新累计。",
+            "effect": "【穷观阵】开启时，会累计我方全体本场战斗中的已损失生命值。符玄施放终结技造成的伤害提高，提高数值等同于本场战斗中累计已损失生命值的200%。\n本场战斗中累计已损失生命值最高不超过符玄生命上限的120%，施放终结技后会清空并进行重新累计。",
             "icon": "icon/skill/1208_rank6.png"
         }
     ],
@@ -71,14 +88,14 @@
         "120801": {
             "id": "120801",
             "name": "始击岁星",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Quantum",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量量子属性伤害。",
-            "desc": "对指定敌方单体造成等同于符玄<span class=\"textColor\">25%/30%/35%/40%/45%/50%/55%/60%/65%</span>生命上限的量子属性伤害。",
+            "desc": "对指定敌方单体造成等同于符玄<span class=\"textColor\">25%/30%/35%/40%/45%/50%/55%/60%/65%/70%</span>生命上限的量子属性伤害。",
             "params": [
                 [
                     0.25
@@ -106,10 +123,15 @@
                 ],
                 [
                     0.65
+                ],
+                [
+                    0.7
                 ]
             ],
             "icon": "icon/skill/1208_basic_atk.png",
-            "AttributeBuff": []
+            "AttributeBuff": [
+                "属性加成·效果抵抗强化：效果抵抗提高4%。"
+            ]
         },
         "120802": {
             "id": "120802",
@@ -230,7 +252,9 @@
                 ]
             ],
             "icon": "icon/skill/1208_skill.png",
-            "AttributeBuff": []
+            "AttributeBuff": [
+                "属性加成·暴击率强化：暴击率提高4%。"
+            ]
         },
         "120803": {
             "id": "120803",
@@ -290,8 +314,7 @@
                     1.2
                 ]
             ],
-            "icon": "icon/skill/1208_ultimate.png",
-            "AttributeBuff": []
+            "icon": "icon/skill/1208_ultimate.png"
         },
         "120804": {
             "id": "120804",
@@ -382,7 +405,12 @@
                 ]
             ],
             "icon": "icon/skill/1208_talent.png",
-            "AttributeBuff": []
+            "AttributeBuff": [
+                "额外能力·六壬兆堪：【穷观阵】开启时，若敌方目标对我方施加了控制类负面状态，则我方全体抵抗本次行动中敌方目标施加的所有控制类负面状态。该效果可以触发1次。再次开启【穷观阵】后将刷新效果可触发次数。",
+                "属性加成·效果抵抗强化：效果抵抗提高6%。",
+                "属性加成·生命强化：生命值上限提高8%。",
+                "属性加成·暴击率强化：暴击率提高5.3%。"
+            ]
         },
         "120806": {
             "id": "120806",
@@ -393,11 +421,10 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
-            "icon": "icon/skill/1208_basic_atk.png",
-            "AttributeBuff": []
+            "icon": "icon/skill/1208_basic_atk.png"
         },
         "120807": {
             "id": "120807",
@@ -417,7 +444,16 @@
                 ]
             ],
             "icon": "icon/skill/1208_technique.png",
-            "AttributeBuff": []
+            "AttributeBuff": [
+                "属性加成·暴击率强化：暴击率提高2.7%。",
+                "额外能力·太乙式盘：【穷观阵】开启时，符玄施放战技将额外恢复20点能量。",
+                "属性加成·生命强化：生命值上限提高4%。",
+                "属性加成·暴击率强化：暴击率提高2.7%",
+                "额外能力·遁甲星舆：施放终结技时为我方其他目标回复等同于符玄5%生命上限+133的生命值。",
+                "属性加成·伤害强化•虚数：虚数属性伤害提高4.8%。",
+                "属性加成·暴击率强化：暴击率提高4%。",
+                "属性加成·生命强化：生命值上限提高6%。"
+            ]
         }
     },
     "skill_tree": {
@@ -438,11 +474,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -461,6 +499,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -479,6 +518,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -497,6 +537,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -515,6 +556,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -551,11 +593,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -570,6 +614,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -588,6 +633,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -606,6 +652,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -624,6 +671,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -642,6 +690,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -660,6 +709,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -682,6 +732,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -704,6 +755,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -744,11 +796,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -763,6 +817,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -781,6 +836,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -799,6 +855,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -817,6 +874,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -835,6 +893,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -853,6 +912,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -875,6 +935,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -897,6 +958,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -937,11 +999,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -956,6 +1020,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -974,6 +1039,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -992,6 +1058,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1010,6 +1077,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1028,6 +1096,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1046,6 +1115,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1068,6 +1138,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1090,6 +1161,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1130,6 +1202,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 }
@@ -1154,6 +1227,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1192,6 +1266,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1227,6 +1302,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1262,6 +1338,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 1,
                     "properties": [
                         {
                             "type": "CriticalChanceBase",
@@ -1296,6 +1373,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1334,6 +1412,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalChanceBase",
@@ -1370,6 +1449,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusResistanceBase",
@@ -1408,6 +1488,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalChanceBase",
@@ -1446,6 +1527,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1482,6 +1564,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalChanceBase",
@@ -1520,6 +1603,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusResistanceBase",
@@ -1558,6 +1642,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 75,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1596,6 +1681,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 80,
                     "properties": [
                         {
                             "type": "CriticalChanceBase",

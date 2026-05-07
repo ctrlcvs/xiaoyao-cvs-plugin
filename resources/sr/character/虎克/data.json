@@ -8,7 +8,7 @@
     "cncv": "王晓彤",
     "allegiance": "贝洛伯格",
     "sp": 120,
-    "affiliation": "雅利洛-VI",
+    "affiliation": "贝洛伯格",
     "factions": "/",
     "baseAttr": {
         "atk": 617.4000000000001,
@@ -89,14 +89,14 @@
         "110901": {
             "id": "110901",
             "name": "喂！小心火烛",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Fire",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量火属性伤害。",
-            "desc": "对指定敌方单体造成等同于虎克<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的火属性伤害。",
+            "desc": "对指定敌方单体造成等同于虎克<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的火属性伤害。",
             "params": [
                 [
                     0.5
@@ -124,6 +124,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1109_basic_atk.png"
@@ -302,7 +305,7 @@
             "type_text": "天赋",
             "effect": "Enhance",
             "effect_text": "强化",
-            "simple_desc": "",
+            "simple_desc": "攻击处于灼烧状态的敌方目标时，造成少量火属性附加伤害并额外恢复能量。",
             "desc": "攻击处于灼烧状态的敌方目标时，追加1次等同于虎克<span class=\"textColor\">50%/55%/60%/65%/70%/75%/81%/87%/93%/100%/105%/110%/114%/120%/125%</span>攻击力的火属性附加伤害，并额外恢复<span class=\"textColor\">5</span>点能量。",
             "params": [
                 [
@@ -371,7 +374,7 @@
                 "额外能力·玩火：施放终结技后，虎克的行动提前20%并额外恢复5点能量。",
                 "属性加成·暴击伤害强化：暴击伤害提高8%。",
                 "属性加成·生命强化：生命值上限提高8%。",
-                "属性加成·攻击强化：攻击提高8%。"
+                "属性加成·攻击强化：攻击力提高8%。"
             ]
         },
         "110906": {
@@ -383,7 +386,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1109_basic_atk.png"
@@ -397,7 +400,7 @@
             "type_text": "秘技",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进战后对敌方随机单体造成少量火属性伤害，大概率使敌方每个单体陷入灼烧状态。",
             "desc": "立即攻击敌人，进入战斗后对敌方随机单体造成等同于虎克<span class=\"textColor\">50%</span>攻击力的火属性伤害，同时有<span class=\"textColor\">100%</span>的基础概率使敌方每个单体目标陷入灼烧状态，持续<span class=\"textColor\">3</span>回合。\n灼烧状态下，敌方目标每回合开始时受到等同于虎克<span class=\"textColor\">50%</span>攻击力的火属性持续伤害。",
             "params": [
                 [
@@ -409,15 +412,15 @@
             ],
             "icon": "icon/skill/1109_technique.png",
             "AttributeBuff": [
-                "属性加成·攻击强化：攻击提高4%。",
+                "属性加成·攻击强化：攻击力提高4%。",
                 "额外能力·童真：触发天赋时，回复等同于虎克生命上限5%的生命值。",
                 "属性加成·生命强化：生命值上限提高4%。",
-                "属性加成·攻击强化：攻击提高4%。",
+                "属性加成·攻击强化：攻击力提高4%。",
                 "属性加成·暴击伤害强化：暴击伤害提高5.3%。",
                 "额外能力·无邪：抵抗控制类负面状态的概率提高35%。",
-                "属性加成·攻击强化：攻击提高6%。",
+                "属性加成·攻击强化：攻击力提高6%。",
                 "属性加成·生命强化：生命值上限提高6%。",
-                "属性加成·攻击强化：攻击提高6%。"
+                "属性加成·攻击强化：攻击力提高6%。"
             ]
         },
         "110909": {
@@ -544,7 +547,10 @@
     "skill_tree": {
         "1109001": {
             "id": "1109001",
+            "name": "",
             "max_level": 6,
+            "desc": "",
+            "params": [],
             "anchor": "Point01",
             "pre_points": [],
             "level_up_skills": [
@@ -556,11 +562,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -579,6 +587,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -597,6 +606,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -615,6 +625,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -633,6 +644,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -654,7 +666,10 @@
         },
         "1109002": {
             "id": "1109002",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point02",
             "pre_points": [],
             "level_up_skills": [
@@ -670,11 +685,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -689,6 +706,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -707,6 +725,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -725,6 +744,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -743,6 +763,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -761,6 +782,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -779,6 +801,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -801,6 +824,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -819,6 +843,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -844,7 +869,10 @@
         },
         "1109003": {
             "id": "1109003",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point03",
             "pre_points": [],
             "level_up_skills": [
@@ -856,11 +884,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -875,6 +905,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -893,6 +924,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -911,6 +943,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -929,6 +962,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -947,6 +981,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -965,6 +1000,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -987,6 +1023,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1005,6 +1042,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1030,7 +1068,10 @@
         },
         "1109004": {
             "id": "1109004",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point04",
             "pre_points": [],
             "level_up_skills": [
@@ -1042,11 +1083,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1061,6 +1104,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1079,6 +1123,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1097,6 +1142,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1115,6 +1161,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1133,6 +1180,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1151,6 +1199,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1173,6 +1222,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1191,6 +1241,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1216,7 +1267,10 @@
         },
         "1109007": {
             "id": "1109007",
+            "name": "",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point05",
             "pre_points": [],
             "level_up_skills": [
@@ -1228,6 +1282,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 }
@@ -1236,13 +1291,21 @@
         },
         "1109101": {
             "id": "1109101",
+            "name": "童真",
             "max_level": 1,
+            "desc": "触发天赋时，回复等同于虎克生命上限#1[i]%的生命值。",
+            "params": [
+                [
+                    0.05
+                ]
+            ],
             "anchor": "Point06",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1264,13 +1327,21 @@
         },
         "1109102": {
             "id": "1109102",
+            "name": "无邪",
             "max_level": 1,
+            "desc": "抵抗控制类负面状态的概率提高#1[i]%。",
+            "params": [
+                [
+                    0.35
+                ]
+            ],
             "anchor": "Point07",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1296,13 +1367,22 @@
         },
         "1109103": {
             "id": "1109103",
+            "name": "玩火",
             "max_level": 1,
+            "desc": "施放终结技后，虎克的行动提前#2[i]%并额外恢复#1[i]点能量。",
+            "params": [
+                [
+                    5,
+                    0.2
+                ]
+            ],
             "anchor": "Point08",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1328,13 +1408,17 @@
         },
         "1109201": {
             "id": "1109201",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point09",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 1,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1357,7 +1441,10 @@
         },
         "1109202": {
             "id": "1109202",
+            "name": "生命强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point10",
             "pre_points": [
                 "1109101"
@@ -1366,6 +1453,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1392,7 +1480,10 @@
         },
         "1109203": {
             "id": "1109203",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point11",
             "pre_points": [
                 "1109202"
@@ -1401,6 +1492,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1427,7 +1519,10 @@
         },
         "1109204": {
             "id": "1109204",
+            "name": "暴击伤害强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point12",
             "pre_points": [
                 "1109203"
@@ -1436,6 +1531,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalDamageBase",
@@ -1462,7 +1558,10 @@
         },
         "1109205": {
             "id": "1109205",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point13",
             "pre_points": [
                 "1109102"
@@ -1471,6 +1570,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1497,7 +1597,10 @@
         },
         "1109206": {
             "id": "1109206",
+            "name": "生命强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point14",
             "pre_points": [
                 "1109205"
@@ -1506,6 +1609,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1532,7 +1636,10 @@
         },
         "1109207": {
             "id": "1109207",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point15",
             "pre_points": [
                 "1109206"
@@ -1541,6 +1648,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1567,7 +1675,10 @@
         },
         "1109208": {
             "id": "1109208",
+            "name": "暴击伤害强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point16",
             "pre_points": [
                 "1109103"
@@ -1576,6 +1687,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalDamageBase",
@@ -1602,7 +1714,10 @@
         },
         "1109209": {
             "id": "1109209",
+            "name": "生命强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point17",
             "pre_points": [
                 "1109208"
@@ -1611,6 +1726,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 75,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1637,7 +1753,10 @@
         },
         "1109210": {
             "id": "1109210",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point18",
             "pre_points": [
                 "1109208"
@@ -1646,6 +1765,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 80,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",

@@ -64,7 +64,7 @@
         {
             "id": "130103",
             "name": "逝者的新生",
-            "effect": "战技等级+2，最多不超过15级，普攻等级+1，最多不超过10级。",
+            "effect": "战技等级+2，最多不超过15级；普攻等级+1，最多不超过10级。",
             "icon": "icon/skill/1301_skill.png"
         },
         {
@@ -76,7 +76,7 @@
         {
             "id": "130105",
             "name": "午后之死",
-            "effect": "终结技等级+2，最多不超过15级，天赋等级+2，最多不超过15级。",
+            "effect": "终结技等级+2，最多不超过15级；天赋等级+2，最多不超过15级。",
             "icon": "icon/skill/1301_ultimate.png"
         },
         {
@@ -90,14 +90,14 @@
         "130101": {
             "id": "130101",
             "name": "开瓶费",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Fire",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量火属性伤害。",
-            "desc": "对指定敌方单体造成等同于加拉赫<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的火属性伤害。",
+            "desc": "对指定敌方单体造成等同于加拉赫<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的火属性伤害。",
             "params": [
                 [
                     0.5
@@ -125,6 +125,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1301_basic_atk.png"
@@ -353,7 +356,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1301_basic_atk.png"
@@ -392,14 +395,14 @@
         "130108": {
             "id": "130108",
             "name": "酒花奔涌",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Fire",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成火属性伤害，并降低其攻击力。",
-            "desc": "对指定敌方单体造成等同于加拉赫<span class=\"textColor\">125%/150%/175%/2%/225%/250%/275%/3%/325%</span>攻击力的火属性伤害。并使目标攻击力降低<span class=\"textColor\">10%/11%/12%/13%/14%/15%/16%/17%/18%</span>，持续<span class=\"textColor\">2</span>回合。",
+            "desc": "对指定敌方单体造成等同于加拉赫<span class=\"textColor\">125%/150%/175%/2%/225%/250%/275%/3%/325%/350%</span>攻击力的火属性伤害。并使目标攻击力降低<span class=\"textColor\">10%/11%/12%/13%/14%/15%/16%/17%/18%/19%</span>，持续<span class=\"textColor\">2</span>回合。",
             "params": [
                 [
                     1.25,
@@ -444,6 +447,11 @@
                 [
                     3.25,
                     0.18,
+                    2
+                ],
+                [
+                    3.5,
+                    0.19,
                     2
                 ]
             ],

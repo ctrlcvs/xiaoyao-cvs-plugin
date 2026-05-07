@@ -8,8 +8,8 @@
     "cncv": "米糊",
     "allegiance": "贝洛伯格",
     "sp": 100,
-    "affiliation": "",
-    "factions": "",
+    "affiliation": "贝洛伯格",
+    "factions": "/",
     "baseAttr": {
         "atk": 493.91999999999996,
         "hp": 1058.4,
@@ -19,7 +19,24 @@
         "cdmg": 50,
         "aggro": 100
     },
-    "growAttr": {},
+    "growAttr": {
+        "hp": [
+            4,
+            4,
+            6,
+            6,
+            8
+        ],
+        "def": [
+            5,
+            7.5,
+            10
+        ],
+        "resist": [
+            4,
+            6
+        ]
+    },
     "desc": "贝洛伯格的雪原探险家，朗道家的小妹妹。 性格淡定，行动力极强。常常孤身前往雪原探险。",
     "skills": [
         "111001",
@@ -51,7 +68,7 @@
         {
             "id": "111004",
             "name": "露营篝火的薄暮",
-            "effect": "获得【求生反应】时，使该目标攻击力提高，提高数值等同于玲可('3.0', '.1f')%生命上限的攻击力，持续1回合。",
+            "effect": "获得【求生反应】时，使该目标攻击力提高，提高数值等同于玲可3.0%生命上限的攻击力，持续1回合。",
             "icon": "icon/skill/1110_rank4.png"
         },
         {
@@ -63,7 +80,7 @@
         {
             "id": "111006",
             "name": "测绘图纸的黎明",
-            "effect": "【求生反应】的生命上限提高效果额外提高，提高数值等同于玲可('6.00000001', '.1f')%的生命上限，并使其效果抵抗提高30%。",
+            "effect": "【求生反应】的生命上限提高效果额外提高，提高数值等同于玲可6.0%的生命上限，并使其效果抵抗提高30%。",
             "icon": "icon/skill/1110_rank6.png"
         }
     ],
@@ -71,14 +88,14 @@
         "111001": {
             "id": "111001",
             "name": "冰攀前齿技术",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Quantum",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量量子属性伤害。",
-            "desc": "对指定敌方单体造成等同于自身<span class=\"textColor\">25%/30%/35%/40%/45%/50%/55%/60%/65%</span>生命上限的量子属性伤害。",
+            "desc": "对指定敌方单体造成等同于自身<span class=\"textColor\">25%/30%/35%/40%/45%/50%/55%/60%/65%/70%</span>生命上限的量子属性伤害。",
             "params": [
                 [
                     0.25
@@ -106,10 +123,12 @@
                 ],
                 [
                     0.65
+                ],
+                [
+                    0.7
                 ]
             ],
-            "icon": "icon/skill/1110_basic_atk.png",
-            "AttributeBuff": []
+            "icon": "icon/skill/1110_basic_atk.png"
         },
         "111002": {
             "id": "111002",
@@ -244,8 +263,7 @@
                     5
                 ]
             ],
-            "icon": "icon/skill/1110_skill.png",
-            "AttributeBuff": []
+            "icon": "icon/skill/1110_skill.png"
         },
         "111003": {
             "id": "111003",
@@ -335,8 +353,7 @@
                     461.25
                 ]
             ],
-            "icon": "icon/skill/1110_ultimate.png",
-            "AttributeBuff": []
+            "icon": "icon/skill/1110_ultimate.png"
         },
         "111004": {
             "id": "111004",
@@ -457,7 +474,11 @@
                 ]
             ],
             "icon": "icon/skill/1110_talent.png",
-            "AttributeBuff": []
+            "AttributeBuff": [
+                "额外能力·极境求生：天赋产生的持续回复效果延长1回合。",
+                "属性加成·防御强化：防御力提高10%。",
+                "属性加成·效果抵抗强化：效果抵抗提高6%。"
+            ]
         },
         "111006": {
             "id": "111006",
@@ -468,11 +489,10 @@
             "type_text": "dev_连携",
             "effect": "SingleAttack",
             "effect_text": "单攻",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
-            "icon": "icon/skill/1110_basic_atk.png",
-            "AttributeBuff": []
+            "icon": "icon/skill/1110_basic_atk.png"
         },
         "111007": {
             "id": "111007",
@@ -491,7 +511,16 @@
                 ]
             ],
             "icon": "icon/skill/1110_technique.png",
-            "AttributeBuff": []
+            "AttributeBuff": [
+                "额外能力·探险技术：抵抗控制类负面状态的概率提高35%。",
+                "属性加成·生命强化：生命值上限提高6%。",
+                "属性加成·防御强化：防御力提高7.5%。",
+                "属性加成·生命强化：生命值上限提高6%。",
+                "额外能力·提前勘测：当持有【求生反应】的目标受到攻击后，玲可立即恢复2点能量。",
+                "属性加成·防御强化：防御力提高5%。",
+                "属性加成·生命强化：生命值上限提高4%。",
+                "属性加成·效果抵抗强化：效果抵抗提高4%。"
+            ]
         }
     },
     "skill_tree": {
@@ -512,11 +541,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -535,6 +566,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -553,6 +585,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -571,6 +604,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -589,6 +623,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -625,11 +660,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -644,6 +681,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -662,6 +700,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -680,6 +719,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -698,6 +738,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -716,6 +757,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -734,6 +776,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -756,6 +799,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -774,6 +818,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -814,11 +859,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -833,6 +880,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -851,6 +899,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -869,6 +918,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -887,6 +937,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -905,6 +956,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -923,6 +975,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -945,6 +998,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -963,6 +1017,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1003,11 +1058,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1022,6 +1079,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1040,6 +1098,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1058,6 +1117,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1076,6 +1136,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1094,6 +1155,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1112,6 +1174,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1134,6 +1197,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1152,6 +1216,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1192,6 +1257,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 }
@@ -1214,6 +1280,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1249,6 +1316,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1288,6 +1356,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1323,6 +1392,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 1,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1357,6 +1427,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "DefenceAddedRatio",
@@ -1395,6 +1466,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1433,6 +1505,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusResistanceBase",
@@ -1471,6 +1544,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1509,6 +1583,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "DefenceAddedRatio",
@@ -1547,6 +1622,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "HPAddedRatio",
@@ -1585,6 +1661,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusResistanceBase",
@@ -1623,6 +1700,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 75,
                     "properties": [
                         {
                             "type": "DefenceAddedRatio",
@@ -1659,6 +1737,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 80,
                     "properties": [
                         {
                             "type": "HPAddedRatio",

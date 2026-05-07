@@ -11,9 +11,9 @@
     "affiliation": "焚化工",
     "factions": "/",
     "baseAttr": {
-        "atk": 679.14,
+        "atk": 679.1400000000001,
         "hp": 1086.624,
-        "def": 606.38,
+        "def": 606.375,
         "speed": 96,
         "cpct": 5,
         "cdmg": 50,

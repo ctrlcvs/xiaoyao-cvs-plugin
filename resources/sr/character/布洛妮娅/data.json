@@ -8,7 +8,7 @@
     "cncv": "谢莹",
     "allegiance": "贝洛伯格",
     "sp": 120,
-    "affiliation": "雅利洛-VI",
+    "affiliation": "贝洛伯格",
     "factions": "筑城者",
     "baseAttr": {
         "atk": 582.1199999999999,
@@ -63,7 +63,7 @@
             "id": "110103",
             "name": "鼓炮齐鸣",
             "effect": "终结技等级+2，最多不超过15级；天赋等级+2，最多不超过15级。",
-            "icon": "icon/skill/1101_skill.png"
+            "icon": "icon/skill/1101_ultimate.png"
         },
         {
             "id": "110104",
@@ -75,7 +75,7 @@
             "id": "110105",
             "name": "所向克捷",
             "effect": "战技等级+2，最多不超过15级；普攻等级+1，最多不超过10级。",
-            "icon": "icon/skill/1101_ultimate.png"
+            "icon": "icon/skill/1101_skill.png"
         },
         {
             "id": "110106",
@@ -88,14 +88,14 @@
         "110101": {
             "id": "110101",
             "name": "驭风的子弹",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Wind",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量风属性伤害。",
-            "desc": "对指定敌方单体造成等同于布洛妮娅<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的风属性伤害。",
+            "desc": "对指定敌方单体造成等同于布洛妮娅<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的风属性伤害。",
             "params": [
                 [
                     0.5
@@ -123,6 +123,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1101_basic_atk.png",
@@ -378,13 +381,13 @@
                     0.225
                 ],
                 [
-                    0.2438
+                    0.2437
                 ],
                 [
                     0.2625
                 ],
                 [
-                    0.2813
+                    0.2812
                 ],
                 [
                     0.3
@@ -422,7 +425,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1101_basic_atk.png"
@@ -455,7 +458,10 @@
     "skill_tree": {
         "1101001": {
             "id": "1101001",
+            "name": "",
             "max_level": 6,
+            "desc": "",
+            "params": [],
             "anchor": "Point01",
             "pre_points": [],
             "level_up_skills": [
@@ -467,11 +473,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -490,6 +498,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -508,6 +517,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -526,6 +536,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -544,6 +555,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -565,7 +577,10 @@
         },
         "1101002": {
             "id": "1101002",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point02",
             "pre_points": [],
             "level_up_skills": [
@@ -577,11 +592,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -596,6 +613,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -614,6 +632,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -632,6 +651,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -650,6 +670,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -668,6 +689,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -686,6 +708,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -708,6 +731,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -730,6 +754,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -755,7 +780,10 @@
         },
         "1101003": {
             "id": "1101003",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point03",
             "pre_points": [],
             "level_up_skills": [
@@ -767,11 +795,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -786,6 +816,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -804,6 +835,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -822,6 +854,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -840,6 +873,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -858,6 +892,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -876,6 +911,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -898,6 +934,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -920,6 +957,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -945,7 +983,10 @@
         },
         "1101004": {
             "id": "1101004",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point04",
             "pre_points": [],
             "level_up_skills": [
@@ -957,11 +998,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -976,6 +1019,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -994,6 +1038,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1012,6 +1057,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1030,6 +1076,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1048,6 +1095,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1066,6 +1114,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1088,6 +1137,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1110,6 +1160,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1135,7 +1186,10 @@
         },
         "1101007": {
             "id": "1101007",
+            "name": "",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point05",
             "pre_points": [],
             "level_up_skills": [
@@ -1147,6 +1201,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 }
@@ -1155,13 +1210,17 @@
         },
         "1101101": {
             "id": "1101101",
+            "name": "号令",
             "max_level": 1,
+            "desc": "普攻的暴击率提高至100%。",
+            "params": [],
             "anchor": "Point06",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1183,13 +1242,22 @@
         },
         "1101102": {
             "id": "1101102",
+            "name": "阵地",
             "max_level": 1,
+            "desc": "战斗开始时，我方全体的防御力提高#2[i]%，持续#1[i]回合。",
+            "params": [
+                [
+                    2,
+                    0.2
+                ]
+            ],
             "anchor": "Point07",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1215,13 +1283,21 @@
         },
         "1101103": {
             "id": "1101103",
+            "name": "军势",
             "max_level": 1,
+            "desc": "布洛妮娅在场时，我方全体造成的伤害提高#1[i]%。",
+            "params": [
+                [
+                    0.1
+                ]
+            ],
             "anchor": "Point08",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1247,13 +1323,17 @@
         },
         "1101201": {
             "id": "1101201",
+            "name": "伤害强化•风",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point09",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 1,
                     "properties": [
                         {
                             "type": "WindAddedRatio",
@@ -1276,7 +1356,10 @@
         },
         "1101202": {
             "id": "1101202",
+            "name": "暴击伤害强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point10",
             "pre_points": [
                 "1101101"
@@ -1285,6 +1368,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalDamageBase",
@@ -1311,7 +1395,10 @@
         },
         "1101203": {
             "id": "1101203",
+            "name": "伤害强化•风",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point11",
             "pre_points": [
                 "1101202"
@@ -1320,6 +1407,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "WindAddedRatio",
@@ -1346,7 +1434,10 @@
         },
         "1101204": {
             "id": "1101204",
+            "name": "效果抵抗强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point12",
             "pre_points": [
                 "1101201"
@@ -1355,6 +1446,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusResistanceBase",
@@ -1381,7 +1473,10 @@
         },
         "1101205": {
             "id": "1101205",
+            "name": "伤害强化•风",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point13",
             "pre_points": [
                 "1101102"
@@ -1390,6 +1485,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "WindAddedRatio",
@@ -1416,7 +1512,10 @@
         },
         "1101206": {
             "id": "1101206",
+            "name": "暴击伤害强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point14",
             "pre_points": [
                 "1101205"
@@ -1425,6 +1524,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalDamageBase",
@@ -1451,7 +1551,10 @@
         },
         "1101207": {
             "id": "1101207",
+            "name": "伤害强化•风",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point15",
             "pre_points": [
                 "1101201"
@@ -1460,6 +1563,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "WindAddedRatio",
@@ -1486,7 +1590,10 @@
         },
         "1101208": {
             "id": "1101208",
+            "name": "效果抵抗强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point16",
             "pre_points": [
                 "1101103"
@@ -1495,6 +1602,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "StatusResistanceBase",
@@ -1521,7 +1629,10 @@
         },
         "1101209": {
             "id": "1101209",
+            "name": "暴击伤害强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point17",
             "pre_points": [
                 "1101208"
@@ -1530,6 +1641,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 75,
                     "properties": [
                         {
                             "type": "CriticalDamageBase",
@@ -1556,7 +1668,10 @@
         },
         "1101210": {
             "id": "1101210",
+            "name": "伤害强化•风",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point18",
             "pre_points": [
                 "1101208"
@@ -1565,6 +1680,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 80,
                     "properties": [
                         {
                             "type": "WindAddedRatio",

@@ -8,7 +8,7 @@
     "cncv": "诺亚",
     "allegiance": "翁法罗斯",
     "sp": 240,
-    "affiliation": "/",
+    "affiliation": "星穹列车",
     "factions": "/",
     "baseAttr": {
         "atk": 543.312000017846,
@@ -723,7 +723,7 @@
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量冰属性伤害，并根据【忆质】数量额外造成少量冰属性伤害。",
-            "desc": "该技能自动选择目标施放，优先攻击长夜月上次攻击的敌方目标。对敌方单体造成等同于「长夜」<span class=\"textColor\">25%/30%/35%/40%/45%/50%/55%/60%/65%/70%</span>生命上限的冰属性伤害，长夜月当前每有<span class=\"textColor\">4</span>点【忆质】，则额外造成等同于「长夜」<span class=\"textColor\">5%/6%/7%/8%/9%/10%/11%/12%/13%/14%</span>生命上限的冰属性伤害。施放后，使长夜月获得<span class=\"textColor\">1</span>点【忆质】。",
+            "desc": "该技能自动选择目标施放，优先攻击长夜月上次攻击的敌方目标。对敌方单体造成等同于「长夜」<span class=\"textColor\">25%/30%/35%/40%/45%/50%/55%/60%/65%/70%</span>生命上限的冰属性伤害，长夜月当前每有<span class=\"textColor\">4</span>点【忆质】，则额外造成等同于「长夜」<span class=\"textColor\">5%/6%/7%/8%/9%/10%/11%/12%/13%/14%</span>生命上限的冰属性伤害。施放后获得<span class=\"textColor\">1</span>点【忆质】。",
             "params": [
                 [
                     0.25,

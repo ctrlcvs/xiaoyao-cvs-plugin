@@ -4,8 +4,9 @@
     "rarity": 5,
     "element": "火",
     "path": "丰饶",
-    "jpcv": "前田 佳織里",
+    "jpcv": "前田佳織里",
     "cncv": "饶梓君",
+    "allegiance": "仙舟「罗浮」",
     "sp": 110,
     "affiliation": "仙舟「罗浮」",
     "factions": "/",
@@ -36,6 +37,7 @@
             6
         ]
     },
+    "desc": "仙舟「罗浮」丹鼎司新任司鼎，伶俐秀慧的持明医士。 嗅觉敏锐，常以此识别病症，并以香薰安定他人心神。 善于处理混杂的人际关系，即使心底暴躁如雷，表面上依旧滴水不漏。",
     "skills": [
         "122201",
         "122202",
@@ -61,7 +63,7 @@
             "id": "122203",
             "name": "含芽细炷，浪蕊浓焚",
             "effect": "终结技等级+2，最多不超过15级；天赋等级+2，最多不超过15级。",
-            "icon": "icon/skill/1222_skill.png"
+            "icon": "icon/skill/1222_ultimate.png"
         },
         {
             "id": "122204",
@@ -73,7 +75,7 @@
             "id": "122205",
             "name": "纵横圆转，内常不倾",
             "effect": "战技等级+2，最多不超过15级；普攻等级+1，最多不超过10级。",
-            "icon": "icon/skill/1222_ultimate.png"
+            "icon": "icon/skill/1222_skill.png"
         },
         {
             "id": "122206",
@@ -86,14 +88,14 @@
         "122201": {
             "id": "122201",
             "name": "肃香",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Fire",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量火属性伤害。",
-            "desc": "对指定敌方单体造成等同于灵砂<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的火属性伤害。",
+            "desc": "对指定敌方单体造成等同于灵砂<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的火属性伤害。",
             "params": [
                 [
                     0.5
@@ -121,6 +123,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1222_basic_atk.png"
@@ -544,7 +549,7 @@
             "type_text": "dev_连携",
             "effect": "SingleAttack",
             "effect_text": "单攻",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1222_basic_atk.png"

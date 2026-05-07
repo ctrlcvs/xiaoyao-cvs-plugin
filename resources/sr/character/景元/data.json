@@ -63,7 +63,7 @@
             "id": "120403",
             "name": "移锋惊电冲霄汉",
             "effect": "终结技等级+2，最多不超过15级；普攻等级+1，最多不超过10级。",
-            "icon": "icon/skill/1204_skill.png"
+            "icon": "icon/skill/1204_ultimate.png"
         },
         {
             "id": "120404",
@@ -75,12 +75,12 @@
             "id": "120405",
             "name": "百战弃躯轻死生",
             "effect": "战技等级+2，最多不超过15级；天赋等级+2，最多不超过15级。",
-            "icon": "icon/skill/1204_ultimate.png"
+            "icon": "icon/skill/1204_skill.png"
         },
         {
             "id": "120406",
             "name": "威灵有应破敌雠",
-            "effect": "【神君】每段攻击后会使指定敌方目标额外陷入易伤状态。\\n易伤状态下的敌方目标受到的伤害提高12%，持续至【神君】本次攻击结束，该效果最多叠加3层。",
+            "effect": "【神君】每段攻击后会使指定敌方目标额外陷入易伤状态。\n易伤状态下的敌方目标受到的伤害提高12%，持续至【神君】本次攻击结束，该效果最多叠加3层。",
             "icon": "icon/skill/1204_rank6.png"
         }
     ],
@@ -88,14 +88,14 @@
         "120401": {
             "id": "120401",
             "name": "石火流光",
-            "max_level": 9,
+            "max_level": 10,
             "element": "Thunder",
             "type": "Normal",
             "type_text": "普攻",
             "effect": "SingleAttack",
             "effect_text": "单攻",
             "simple_desc": "对敌方单体造成少量雷属性伤害。",
-            "desc": "对指定敌方单体造成等同于景元<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%</span>攻击力的雷属性伤害。",
+            "desc": "对指定敌方单体造成等同于景元<span class=\"textColor\">50%/60%/70%/80%/90%/100%/110%/120%/130%/140%</span>攻击力的雷属性伤害。",
             "params": [
                 [
                     0.5
@@ -123,6 +123,9 @@
                 ],
                 [
                     1.3
+                ],
+                [
+                    1.4
                 ]
             ],
             "icon": "icon/skill/1204_basic_atk.png",
@@ -298,7 +301,7 @@
             "type_text": "天赋",
             "effect": "Bounce",
             "effect_text": "弹射",
-            "simple_desc": "",
+            "simple_desc": "战斗开始时召唤【神君】，【神君】行动时发动追加攻击，自动对随机敌方单体及其相邻目标造成少量雷属性伤害。",
             "desc": "战斗开始时召唤【神君】。【神君】初始拥有<span class=\"textColor\">60</span>点速度以及<span class=\"textColor\">3</span>段攻击段数，行动时发动追加攻击，每段攻击对随机敌方单体造成等同于景元攻击力<span class=\"textColor\">33%/36%/39%/42%/46%/49%/53%/57%/61%/66%/69%/72%/75%/79%/82%</span>的雷属性伤害，同时对其相邻目标造成等同于主目标<span class=\"textColor\">25%</span>的雷属性伤害。\n【神君】最多累计<span class=\"textColor\">10</span>段攻击段数且每增加1段攻击段数，速度提高<span class=\"textColor\">10</span>点，行动结束后速度和攻击段数恢复至初始状态。\n当景元陷入无法战斗状态时【神君】消失。\n当景元受到控制类负面状态影响时【神君】也无法行动。",
             "params": [
                 [
@@ -438,7 +441,7 @@
             "type_text": "dev_连携",
             "effect": "MazeAttack",
             "effect_text": "",
-            "simple_desc": "",
+            "simple_desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "desc": "攻击敌人，进入战斗后削弱敌方目标对应属性韧性。",
             "params": [],
             "icon": "icon/skill/1204_basic_atk.png"
@@ -452,7 +455,7 @@
             "type_text": "秘技",
             "effect": "Enhance",
             "effect_text": "强化",
-            "simple_desc": "",
+            "simple_desc": "使用秘技，下一次进战时增加【神君】的攻击段数。",
             "desc": "使用秘技后，下一次战斗开始时【神君】第1回合的攻击段数增加<span class=\"textColor\">3</span>段。",
             "params": [
                 [
@@ -469,7 +472,10 @@
     "skill_tree": {
         "1204001": {
             "id": "1204001",
+            "name": "",
             "max_level": 6,
+            "desc": "",
+            "params": [],
             "anchor": "Point01",
             "pre_points": [],
             "level_up_skills": [
@@ -481,11 +487,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -504,6 +512,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -522,6 +531,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -540,6 +550,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -558,6 +569,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -579,7 +591,10 @@
         },
         "1204002": {
             "id": "1204002",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point02",
             "pre_points": [],
             "level_up_skills": [
@@ -591,11 +606,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -610,6 +627,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -628,6 +646,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -646,6 +665,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -664,6 +684,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -682,6 +703,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -700,6 +722,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -722,6 +745,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -744,6 +768,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -769,7 +794,10 @@
         },
         "1204003": {
             "id": "1204003",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point03",
             "pre_points": [],
             "level_up_skills": [
@@ -781,11 +809,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -800,6 +830,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -818,6 +849,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -836,6 +868,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -854,6 +887,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -872,6 +906,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -890,6 +925,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -912,6 +948,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -934,6 +971,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -959,7 +997,10 @@
         },
         "1204004": {
             "id": "1204004",
+            "name": "",
             "max_level": 10,
+            "desc": "",
+            "params": [],
             "anchor": "Point04",
             "pre_points": [],
             "level_up_skills": [
@@ -971,11 +1012,13 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 },
                 {
                     "promotion": 1,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -990,6 +1033,7 @@
                 },
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1008,6 +1052,7 @@
                 },
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1026,6 +1071,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1044,6 +1090,7 @@
                 },
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1062,6 +1109,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1080,6 +1128,7 @@
                 },
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1102,6 +1151,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1124,6 +1174,7 @@
                 },
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1149,7 +1200,10 @@
         },
         "1204007": {
             "id": "1204007",
+            "name": "",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point05",
             "pre_points": [],
             "level_up_skills": [
@@ -1161,6 +1215,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 0,
                     "properties": [],
                     "materials": []
                 }
@@ -1169,13 +1224,22 @@
         },
         "1204101": {
             "id": "1204101",
+            "name": "破阵",
             "max_level": 1,
+            "desc": "若【神君】下回合的攻击段数大于等于#1[i]段，则其下回合的暴击伤害提高#2[i]%。",
+            "params": [
+                [
+                    6,
+                    0.25
+                ]
+            ],
             "anchor": "Point06",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1197,13 +1261,21 @@
         },
         "1204102": {
             "id": "1204102",
+            "name": "绸缪",
             "max_level": 1,
+            "desc": "战斗开始时，立即恢复#1[i]点能量。",
+            "params": [
+                [
+                    15
+                ]
+            ],
             "anchor": "Point07",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1229,13 +1301,22 @@
         },
         "1204103": {
             "id": "1204103",
+            "name": "遣将",
             "max_level": 1,
+            "desc": "施放战技后，暴击率提升#1[i]%，持续#2[i]回合。",
+            "params": [
+                [
+                    0.1,
+                    2
+                ]
+            ],
             "anchor": "Point08",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [],
                     "materials": [
                         {
@@ -1261,13 +1342,17 @@
         },
         "1204201": {
             "id": "1204201",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point09",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 1,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1290,7 +1375,10 @@
         },
         "1204202": {
             "id": "1204202",
+            "name": "暴击率强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point10",
             "pre_points": [
                 "1204101"
@@ -1299,6 +1387,7 @@
             "levels": [
                 {
                     "promotion": 2,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalChanceBase",
@@ -1325,7 +1414,10 @@
         },
         "1204203": {
             "id": "1204203",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point11",
             "pre_points": [
                 "1204202"
@@ -1334,6 +1426,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1360,7 +1453,10 @@
         },
         "1204204": {
             "id": "1204204",
+            "name": "防御强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point12",
             "pre_points": [
                 "1204202"
@@ -1369,6 +1465,7 @@
             "levels": [
                 {
                     "promotion": 3,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "DefenceAddedRatio",
@@ -1395,7 +1492,10 @@
         },
         "1204205": {
             "id": "1204205",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point13",
             "pre_points": [
                 "1204102"
@@ -1404,6 +1504,7 @@
             "levels": [
                 {
                     "promotion": 4,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1430,7 +1531,10 @@
         },
         "1204206": {
             "id": "1204206",
+            "name": "暴击率强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point14",
             "pre_points": [
                 "1204205"
@@ -1439,6 +1543,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "CriticalChanceBase",
@@ -1465,7 +1570,10 @@
         },
         "1204207": {
             "id": "1204207",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point15",
             "pre_points": [
                 "1204205"
@@ -1474,6 +1582,7 @@
             "levels": [
                 {
                     "promotion": 5,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
@@ -1500,7 +1609,10 @@
         },
         "1204208": {
             "id": "1204208",
+            "name": "防御强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point16",
             "pre_points": [
                 "1204103"
@@ -1509,6 +1621,7 @@
             "levels": [
                 {
                     "promotion": 6,
+                    "level": 0,
                     "properties": [
                         {
                             "type": "DefenceAddedRatio",
@@ -1535,7 +1648,10 @@
         },
         "1204209": {
             "id": "1204209",
+            "name": "暴击率强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point17",
             "pre_points": [
                 "1204103"
@@ -1544,6 +1660,7 @@
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 75,
                     "properties": [
                         {
                             "type": "CriticalChanceBase",
@@ -1570,13 +1687,17 @@
         },
         "1204210": {
             "id": "1204210",
+            "name": "攻击强化",
             "max_level": 1,
+            "desc": "",
+            "params": [],
             "anchor": "Point18",
             "pre_points": [],
             "level_up_skills": [],
             "levels": [
                 {
                     "promotion": 0,
+                    "level": 80,
                     "properties": [
                         {
                             "type": "AttackAddedRatio",
