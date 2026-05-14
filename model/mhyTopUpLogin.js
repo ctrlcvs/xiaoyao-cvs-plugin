@@ -58,10 +58,13 @@ export default class mysTopLogin {
             return false
         }
         let raw = JSON.parse(res?.data?.payload?.raw)
-        let UserData = await this.user.getData("getTokenByGameToken", raw,false)
-        let ck = await this.user.getData("getCookieAccountInfoByGameToken", raw,false)
+        let UserData = await this.user.getData("getTokenByGameToken", raw, false)
+        let ltokenData = await this.user.getData("exchange", { token: UserData.data?.token?.token, mid: UserData.data?.user_info?.mid }, false)
+        let cookies = `uid=${UserData.data?.user_info?.aid}&stoken=${UserData.data?.token?.token}`
+        if (UserData?.data?.user_info?.mid) cookies += `&mid=${UserData?.data?.user_info?.mid}`
+        let ck = await this.user.getData("bbsGetCookie", { cookies }, false)
         return {
-            cookie: `ltoken=${UserData.data?.token?.token};ltuid=${UserData.data?.user_info?.aid};cookie_token=${ck.data?.cookie_token}`,
+            cookie: `ltoken=${ltokenData.data?.token?.token};ltuid=${UserData.data?.user_info?.aid};cookie_token=${ck.data?.cookie_token}`,
             stoken: `stoken=${UserData.data?.token?.token};stuid=${UserData.data?.user_info?.aid};mid=${UserData?.data?.user_info.mid}`
         }
     }
