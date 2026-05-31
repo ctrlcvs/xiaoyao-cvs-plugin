@@ -273,19 +273,16 @@ export default class miHoYoApi {
 				types: 'pass'
 			},
 			qrCodeLogin: {
-				url: `${mys.hk4_sdk}/hk4e_cn/combo/panda/qrcode/fetch`,
-				body: {
-					app_id: mys.app_id,
-					device: data.device
-				}
+				url: `${mys.pass_api}/account/ma-cn-passport/app/createQRLogin`,
+				body: {},
+				types: 'pass'
 			},
 			qrCodeQuery: {
-				url: `${mys.hk4_sdk}/hk4e_cn/combo/panda/qrcode/query`,
+				url: `${mys.pass_api}/account/ma-cn-passport/app/queryQRLoginStatus`,
 				body: {
-					app_id: mys.app_id,
-					device: data.device,
 					ticket: data.ticket
-				}
+				},
+				types: 'pass'
 			},
 			getTokenByGameToken: {
 				url: `${mys.pass_api}/account/ma-cn-session/app/getTokenByGameToken`,
