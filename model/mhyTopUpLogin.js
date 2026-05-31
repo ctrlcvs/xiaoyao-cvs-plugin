@@ -58,12 +58,12 @@ export default class mysTopLogin {
             return false
         }
         const uid = res.data.user_info.aid || res.data.user_info.uid || res.data.user_info.account_id
-        if (!(uid && token && mid)) {
+        const mid = res.data.user_info.mid
+        let token = (res.data.tokens.find(i => i.name === "stoken" || i.name === "stoken_v2") || res.data.tokens[0])?.token
+         if (!(uid && token && mid)) {
             await this.e.reply("stoken获取不完整请重新扫码", true);
             return false
         }
-        const mid = res.data.user_info.mid
-        let token = (res.data.tokens.find(i => i.name === "stoken" || i.name === "stoken_v2") || res.data.tokens[0])?.token
         let UserData =  await this.user.getData("bbsGetCookie", {cookies:`stoken=${token}&uid=${uid}&mid=${mid}`},false)
         let stoken =`stoken=${token};stuid=${uid};mid=${mid}`
         return {
