@@ -381,6 +381,9 @@ export default class miHoYoApi {
 				if(board.key === "genshin"){
           header["x-rpc-signgame"]="hk4e"
         }
+				if(board.key === "zzz"){
+          header["x-rpc-signgame"]="zzz"
+        }
 				if (this.isOs) {
 					let os_Header = {
 						app_version: '2.9.0',
