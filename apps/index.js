@@ -46,6 +46,9 @@ import {
 	signTask
 } from "./sign.js"
 import {
+	scheduleTokenRefresh
+} from "./tokenRefresh.js"
+import {
 	rule as topupLoginRule,
 	qrCodeLogin,UserPassMsg,UserPassLogin,payOrder
 } from './mhyTopUpLogin.js'
@@ -154,6 +157,8 @@ async function task() {
 			DailyNoteTask()
 		}
 	});
+	// 米游社 cookie_token 自动刷新（每 8-12 小时随机执行一次）
+	scheduleTokenRefresh();
 }
 
 

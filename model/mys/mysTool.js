@@ -236,12 +236,43 @@ const boards = {
 	},
 	zzz: {
 		forumid: 57,
+		key: 'zzz',
+		biz: 'nap_cn',
+		actid: 'e202406242138391',
 		name: "绝区零",
 		url: "https://bbs.mihoyo.com/zzz/",
-		signUrl(data, type, api) {  //预留方法方便后续迭代
+		signUrl(data, type, api) {
 			let dataUrl = {}
+			switch (type) {
+				case "isSign":
+					dataUrl = {
+						url: `${api}/event/luna/zzz/info`,
+						query: `region=${data.region}&act_id=${this.actid}&uid=${data.game_uid}`
+					}
+					break;
+				case "sign":
+					dataUrl = {
+						url: `${api}/event/luna/zzz/sign`,
+						body: {
+							region: data.region,
+							act_id: this.actid,
+							uid: data.game_uid
+						}
+					}
+					break;
+				case "home":
+					dataUrl = {
+						url: `${api}/event/luna/zzz/home`,
+						query: `act_id=${this.actid}`
+					}
+					break;
+			}
+			dataUrl['types'] = 'sign'
 			return dataUrl
 		},
+		getReferer() {
+			return `https://act.mihoyo.com/bbs/event/signin/zzz/e202406242138391.html?act_id=${this.actid}&bbs_auth_required=true&bbs_presentation_style=fullscreen&utm_source=share&utm_medium=bbs&utm_campaign=app`
+		}
 	}
 }
 export default {

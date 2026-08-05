@@ -421,7 +421,7 @@ export default class user {
         let msg = e?.msg;
         //暂时先这样吧，等有空再优化~
         this.allSign = {
-            findModel: ["崩坏3", "崩坏2", '原神', '未定事件簿', '崩坏星穹铁道'],
+            findModel: ["崩坏3", "崩坏2", '原神', '未定事件簿', '崩坏星穹铁道', '绝区零'],
             "崩坏3": {
                 bindGame: 0,
                 sign: 0,
@@ -447,6 +447,12 @@ export default class user {
                 error: 0,
             },
             "崩坏星穹铁道": {
+                bindGame: 0,
+                sign: 0,
+                isSign: 0,
+                error: 0,
+            },
+            "绝区零": {
                 bindGame: 0,
                 sign: 0,
                 isSign: 0,
