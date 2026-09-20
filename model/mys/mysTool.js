@@ -11,7 +11,8 @@ const web_api = `https://api-takumi.mihoyo.com`
 const os_web_api = `https://api-os-takumi.mihoyo.com`
 const os_hk4_api = `https://hk4e-api-os.hoyoverse.com`;
 const hk4_api = `https://hk4e-api.mihoyo.com`;
-const hk4_sdk = `https://hk4e-sdk.mihoyo.com`;
+const hk4_sdk = `https://topup-api-sdk.mihoyo.com`;
+const pay_api = `https://api-payment.mihoyo.com`;
 const bbs_api = `https://bbs-api.mihoyo.com`;
 const cloud_api = `https://api-cloudgame.mihoyo.com`
 const pass_api = `https://passport-api.mihoyo.com`
@@ -256,7 +257,7 @@ export default {
 	web_api,
 	os_web_api,
 	os_hk4_api, app_id,
-	hk4_api,hk4_sdk,
+	hk4_api,hk4_sdk,pay_api,
 	bbs_api, publicKey,
 	pass_api, passSalt,
 	boards

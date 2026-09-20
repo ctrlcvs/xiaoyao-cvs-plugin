@@ -1,6 +1,7 @@
 import User from "./user.js";
 import utils from './mys/utils.js';
 import Common from "../components/Common.js";
+import localGoods from "./localGoods.js";
 export default class mysTopLogin {
     constructor(e) {
         this.e = e;
@@ -175,6 +176,9 @@ export default class mysTopLogin {
             }
             let goods = (await this.goodsList())[msg[1]]
             if (!this.e.cookie) {
+                await this.user.getCookie(this.e)
+            }
+            if (!this.e.cookie) {
                 this.e.reply('请先 #绑定cookie')
                 return true;
             }
@@ -186,47 +190,100 @@ export default class mysTopLogin {
             let ckData = await utils.getCookieMap(this.e.cookie)
             let device_id = utils.randomString(16)
             let region = utils.getServer(this.e.uid)
-            let order = {
-                "account": ckData?.get('ltuid') || ckData?.get('account_id'),
-                "region": region,
-                "uid": this.e.uid,
-                "delivery_url": "",
+            let account = String(ckData?.get('account_id') || ckData?.get('ltuid') || '')
+            // 2026-09-20 改造：米游社新版充值链路（网关 topup-api-sdk + 收银台 api-payment/plutus）
+            // 第一步：取角色信息，新版下单要求真实 uid / region
+            let roleRes = await this.user.getData('getRoleInfo', { account }, false)
+            let role = roleRes?.data?.roles?.[0]
+            if (!role) {
+                this.e.reply('获取角色信息失败，请稍后再试')
+                return true
+            }
+            let uid = String(role.uid)
+            // 第二步：创建订单（报文必须带 goods_plat，而签名取不含该字段的原始 order）
+            let orderBase = {
+                "account": account,
+                "region": role.region || region,
+                "uid": uid,
+                "delivery_url": role.delivery_url || "",
                 "device": device_id,
                 "channel_id": 1,
                 "client_ip": "",
                 "client_type": 4,
-                "game": this.e.uid[0] * 1 > 5 ? 'hk4e_global' : "hk4e_cn",
-                "amount": goods.price,
+                "game": "hk4e_cn",
+                "amount": Number(goods.price),
                 "goods_num": 1,
                 "goods_id": goods?.goods_id,
                 "goods_title": goods?.goods_name + (Number(goods.goods_unit) > 0 ? "×" + goods.goods_unit : ""),
                 "price_tier": goods?.tier_id,
                 "currency": "CNY",
-                "pay_plat": iswx,
+                "pay_plat": "payment-cn"
             }
-            if (iswx != 'weixin') {
-                order["pay_type"] = iswx
-                order["pay_vendor"] = iswx
-            }
-            let res = await this.user.getData('createOrder', { order, headers: { "x-rpc-device_id": device_id } })
+            let order = Object.assign({}, orderBase, { goods_plat: JSON.stringify({ enabled: true }) })
+            let res = await this.user.getData('createOrder', { order, signOrder: orderBase, headers: { "x-rpc-device_id": device_id } })
             if (!res) return false;
-            if (res?.code != 200 && res?.retcode != 0) {
+            if (res?.retcode != 0) {
                 this.e.reply('生成充值订单失败：' + res.message)
                 return true
             }
+            let orderNo = res.data.order_no
+            let cashierId = ''
+            try {
+                cashierId = JSON.parse(res.data.ext_info || '{}').cashier_id || ''
+            } catch (err) {
+                cashierId = ''
+            }
+            let payHeaders = {
+                "x-rpc-payment_token": res.data.session_cookie || '',
+                "x-rpc-cashier_id": cashierId,
+                "x-rpc-app_id": "cvyu94rfjfgg",
+                "x-rpc-device_id": device_id,
+                "x-rpc-device_fp": device_id,
+                "x-rpc-lifecycle_id": device_id.slice(0, 10),
+                // 微信支付需 trade_type=2（服务端才给 h5_pay 链接），支付宝用 3
+                "x-rpc-trade_type": iswx === 'wechatpay' ? "2" : "3"
+            }
+            // 第三步：取收银台可用的支付方式（不能自造，必须问服务端要）
+            let platsRes = await this.user.getData('cashierPlats', { headers: payHeaders }, false)
+            let plats = platsRes?.data?.pay_plats || []
+            let plat = plats.find(p => p.pay_type === iswx) || plats.find(p => p.pay_type === 'alipay') || plats[0]
+            if (!plat) {
+                this.e.reply('生成充值订单失败：' + (platsRes?.message || '未取到可用支付方式'))
+                return true
+            }
+            // 第四步：换取支付链接（二维码内容）
+            let payRes = await this.user.getData('checkout', {
+                headers: payHeaders,
+                payment: {
+                    pay_plat: plat.pay_plat,
+                    pay_type: plat.pay_type,
+                    market_id: plat.market_id,
+                    real_cashier_id: plat.real_cashier_id,
+                    return_url: "https://pay.mihoyo.com/ys/index.html",
+                    coupon_id: "",
+                    code: "",
+                    open_id: "",
+                    channel_promotion: {}
+                }
+            }, false)
+            let payUrl = payRes?.data?.url || payRes?.data?.qr_code || ''
+            if (!payUrl) {
+                this.e.reply('生成充值订单失败：' + (payRes?.message || '未取到支付链接'))
+                return true
+            }
             //记录操作日志
-            logger.mark(`当前操作用户：${this.e.user_id},操作uid:${this.e.uid},操作商品id:${goods?.goods_id},操作商品：${goods?.goods_name + (Number(goods.goods_unit) > 0 ? "×" + goods.goods_unit : "")}`)
-            logger.mark(`支付链接：${res['data']['encode_order']}\n订单号：${res['data']['order_no']}\n 价格：${(res['data']['amount']) / 100}元`)
+            logger.mark(`当前操作用户：${this.e.user_id},操作uid:${uid},操作商品id:${goods?.goods_id},操作商品：${goods?.goods_name + (Number(goods.goods_unit) > 0 ? "×" + goods.goods_unit : "")}`)
+            logger.mark(`订单号：${orderNo} 价格：${(res['data']['amount']) / 100}元 支付方式：${plat.pay_type}`)
             let r = await Common.render(`pay/index`, {
-                url: res.data.encode_order,
-                data: res.data, uid: this.e.uid,
+                url: payUrl,
+                data: res.data, uid,
                 goods,
             }, {
                 e: this.e,
                 render,
                 scale: 1.2, retMsgId: true
             })
-            await utils.redisSet(this.e.uid, "payOrder", { uid: this.e.uid, oId: res?.data?.order_no, message_id: r.message_id, region }, 300)
+            await utils.redisSet(this.e.uid, "payOrder", { uid, oId: orderNo, message_id: r.message_id, region: orderBase.region }, 300)
             return true
         } catch (error) {
             console.log(error)
@@ -236,12 +293,8 @@ export default class mysTopLogin {
     }
 
     async goodsList() {
-        let goods = await this.user.getData("goodsList")
-        if (goods?.retcode != 0) {
-            this.e.reply(goods.message)
-            return false;
-        }
-        return goods?.data?.goods_list;
+        // 2026-09-20 修改：米游社 shopwindow/shopwindow/fetchGoods 接口已下架（unknown method），改为本地静态配置
+        return localGoods;
     }
 
     async GetPayData(key, value) {

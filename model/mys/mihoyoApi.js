@@ -299,26 +299,48 @@ export default class miHoYoApi {
 			createOrder:{
 				url:`${mys.hk4_sdk}/hk4e_cn/mdk/atropos/api/createOrder`,
 				body: {
+					"cashier_mode": "payment-cn",
 					"special_info": "topup_center",
 					"order": data.order,
-					"sign":  this.gen_sign(data.order)
+					"sign": this.gen_sign(data.signOrder || data.order)
 				},
 				types:'pay'
 			},
 			goodsList:{
-				url:`${mys.hk4_sdk}/hk4e_cn/mdk/shopwindow/shopwindow/fetchGoods`,
+				url:`${mys.hk4_sdk}/hk4e_cn/mdk/atropos/api/fetchGoods`,
 				body:{
 					"released_flag": true,
 					"game": "hk4e_cn",
-					"region": "cn_gf01",
-					"uid": "1",
-					"account": "1"
+					"region": data.region,
+					"uid": String(data.uid),
+					"account": String(data.account),
+					"support_permanent": true
 				},
 				types:'pay'
 			},
 			checkOrder:{
 				url:`${mys.hk4_sdk}/hk4e_cn/mdk/atropos/api/checkOrder`,
 				query:`game=hk4e_cn&region=${utils.getServer(data.uid)}&order_no=${data.order_no}&uid=${data.uid}`,
+				types:'pay'
+			},
+			getRoleInfo:{
+				url:`${mys.hk4_sdk}/hk4e_cn/mdk/tally/tally/getRoleInfo`,
+				body:{
+					"game": "hk4e_cn",
+					"released_flag": true,
+					"account": String(data.account)
+				},
+				types:'pay'
+			},
+			cashierPlats:{
+				url:`${mys.pay_api}/plutus/api/v2/listCashierPayPlats`,
+				types:'pay'
+			},
+			checkout:{
+				url:`${mys.pay_api}/plutus/api/v2/checkout`,
+				body:{
+					"payment": data.payment
+				},
 				types:'pay'
 			}
 		}
@@ -505,8 +527,16 @@ export default class miHoYoApi {
 						"Sec-Fetch-Site": "same-site",
 						"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54",
 						"x-rpc-client_type": "4",
+						"x-rpc-app_id": "cvyu94rfjfgg",
+						"x-rpc-combo_version": "2.56.0",
+						"x-rpc-game_biz": "hk4e_cn",
+						"x-rpc-trade_type": "3",
 						"x-rpc-device_id": "3b401c79-e221-46b9-8ca5-2e072e367333",
 						"x-rpc-language": "zh-cn",
+						"x-rpc-app_version": "2.115.0",
+						"x-rpc-sdk_version": "2.56.0",
+						"x-rpc-payment_version": "2.56.0",
+						"Origin": "https://webstatic.mihoyo.com",
 						Cookie: this.cookie,
 					}
 					break

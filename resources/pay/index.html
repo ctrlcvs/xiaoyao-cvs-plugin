@@ -2,7 +2,7 @@
 {{block 'css'}}
 <style>
     .container {
-        width: 600px !important;
+        width: 720px !important;
         font-size: 1.125rem;
         /* 背景色 渐变 */
         background-image: linear-gradient( rgba(62, 214, 252),rgba(137, 240, 225 ),rgba(192, 240, 238));  
@@ -12,6 +12,15 @@
     .image {
         margin-right: 10px;
     } 
+
+    .topTitle {
+        /* 二维码需要白色静区，且放大以提升可扫描性 */
+        flex: none;
+        background: #ffffff;
+        padding: 20px;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
 
     .topTitle table {
         margin: 0 auto;
@@ -60,11 +69,11 @@
 <script src="{{_res_path}}/qrCode/js/jquery.qrcode.min.js"></script>
 <script>
     var config = {
-        width: 300,//值是number类型, 表示的单位是px 必须传递
-        height: 300,//值是number类型, 表示的单位是px 必须传递
+        width: 640,//值是number类型, 表示的单位是px 必须传递
+        height: 640,//值是number类型, 表示的单位是px 必须传递
         text: "{{url}}".replace(/#38;/g, ''),//text就表示二维码中存储的数据 必须传递
-        correctLevel: 2,//取值为0|1|2|3 表示二维码的纠错级别0:L/1:M/2:Q/3:H ,默认0 可选参数
-        render: "table"//取值:table/canvas , 默认table 可选参数
+        correctLevel: 0,//取值为0|1|2|3 表示二维码的纠错级别0:L/1:M/2:Q/3:H ,默认0 可选参数
+        render: "canvas"//取值:table/canvas , 默认table 可选参数
     };
     $(".topTitle").qrcode(config);
 </script>
