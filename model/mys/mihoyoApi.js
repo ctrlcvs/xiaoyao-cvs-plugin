@@ -17,7 +17,7 @@ const _path = process.cwd();
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
 const yamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
-let HttpsProxyAgent = ''
+let HttpsProxyAgent
 // 米游社的版块
 
 export default class miHoYoApi {
