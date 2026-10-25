@@ -1111,6 +1111,92 @@
     "elem": "物理",
     "weapon": "欢愉"
   },
+  "1507": {
+    "id": 1507,
+    "key": "Qianye Blade",
+    "name": "千冶•刃",
+    "names": [
+      "千冶•刃",
+      "千冶刃",
+      "千冶"
+    ],
+    "star": 5,
+    "elem": "火",
+    "weapon": "虚无"
+  },
+  "1510": {
+    "id": 1510,
+    "key": "Himeko Nova",
+    "name": "姬子•启行",
+    "names": [
+      "姬子•启行",
+      "姬子启行",
+      "启行姬子",
+      "启行"
+    ],
+    "star": 5,
+    "elem": "火",
+    "weapon": "智识"
+  },
+  "1508": {
+    "id": 1508,
+    "key": "Tohsaka Rin",
+    "name": "远坂凛",
+    "names": [
+      "远坂凛",
+      "凛"
+    ],
+    "star": 5,
+    "elem": "量子",
+    "weapon": "智识"
+  },
+  "1509": {
+    "id": 1509,
+    "key": "Gilgamesh",
+    "name": "吉尔伽美什",
+    "names": [
+      "吉尔伽美什",
+      "金闪闪"
+    ],
+    "star": 5,
+    "elem": "雷",
+    "weapon": "毁灭"
+  },
+  "1512": {
+    "id": 1512,
+    "key": "Robin•Qingge",
+    "name": "知更鸟•晴歌",
+    "names": [
+      "晴歌",
+      "泳装鸟"
+    ],
+    "star": 5,
+    "elem": "风",
+    "weapon": "记忆"
+  },
+  "1513": {
+    "id": 1513,
+    "key": "Aventurine•Talang",
+    "name": "砂金•戏浪",
+    "names": [
+      "戏浪",
+      "泳装砂金"
+    ],
+    "star": 5,
+    "elem": "量子",
+    "weapon": "欢愉"
+  },
+  "1503": {
+    "id": 1503,
+    "key": "Pearl",
+    "name": "真珠",
+    "names": [
+      "真珠"
+    ],
+    "star": 5,
+    "elem": "冰",
+    "weapon": "欢愉"
+  },
   "8002": {
     "id": 8002,
     "key": "Trailblazer",
