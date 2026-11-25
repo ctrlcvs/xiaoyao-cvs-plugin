@@ -42,6 +42,11 @@ export default class mysTopLogin {
             res = await this.user.getData("qrCodeQuery", {
                 device: this.device, ticket
             },false)
+            if (res?.retcode && res.retcode != 0) {
+                await utils.redisDel(this.e.user_id, 'GetQrCode')
+                await this.e.reply(res?.message || "二维码已过期", true)
+                return false
+            }
             if (res?.data?.status == "Scanned" && RedisData.GetQrCode == 1) {
                 Bot.logger.mark(JSON.stringify(res))
                 await this.e.reply("二维码已扫描，请确认登录", true)
@@ -53,22 +58,36 @@ export default class mysTopLogin {
             }
         }
         await utils.redisDel(this.e.user_id, 'GetQrCode')
-        if (!res?.data?.tokens&&!res?.data?.user_info) {
+        if ((res?.data?.status || res?.data?.stat) != "Confirmed") {
             await this.e.reply("验证超时", true)
             return false
         }
-        const uid = res.data.user_info.aid || res.data.user_info.uid || res.data.user_info.account_id
-        const mid = res.data.user_info.mid
-        let token = (res.data.tokens.find(i => i.name === "stoken" || i.name === "stoken_v2") || res.data.tokens[0])?.token
-         if (!(uid && token && mid)) {
-            await this.e.reply("stoken获取不完整请重新扫码", true);
+        const uid = res.data?.user_info?.aid || res.data?.user_info?.uid || res.data?.user_info?.account_id
+        const mid = res.data?.user_info?.mid
+        const token = (res.data?.tokens?.find(i => i.name === "stoken" || i.name === "stoken_v2") || res.data?.tokens?.[0])?.token
+        if (!(uid && token && mid)) {
+            await this.e.reply("stoken获取不完整，请重新扫码", true)
             return false
         }
-        let UserData =  await this.user.getData("bbsGetCookie", {cookies:`stoken=${token}&uid=${uid}&mid=${mid}`},false)
-        let stoken =`stoken=${token};stuid=${uid};mid=${mid}`
+        if (!String(token).startsWith("v2_")) {
+            await this.e.reply("扫码返回的 stoken 不是 v2_ 格式，无法换票，请重新扫码", true)
+            return false
+        }
+
+        // 老 getCookieAccountInfoBySToken 已废弃（-464），改用 exchange 换 v2 票据
+        const ex2 = await this.user.getData("exchange", { token, mid, dstTokenType: 2 }, false)
+        const ex4 = await this.user.getData("exchange", { token, mid, dstTokenType: 4 }, false)
+        const ltoken = ex2?.data?.token?.token
+        const cookieToken = ex4?.data?.token?.token
+        if (!ltoken || !cookieToken) {
+            await this.e.reply(`扫码换票失败：${ex2?.message || ex4?.message || "接口返回为空"}`, true)
+            return false
+        }
+
+        // 全 v2 Cookie：ltoken_v2 / cookie_token_v2 / account_mid_v2 / ltmid_v2
         return {
-            cookie: `ltoken=${token};ltuid=${uid};cookie_token=${UserData.data?.cookie_token}`,
-            stoken
+            cookie: `ltuid=${uid};account_mid_v2=${mid};cookie_token_v2=${cookieToken};ltoken_v2=${ltoken};ltmid_v2=${mid};account_id=${uid};`,
+            stoken: `stoken=${token};stuid=${uid};ltoken=${ltoken};mid=${mid};`
         }
     }
 
