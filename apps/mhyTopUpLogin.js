@@ -3,11 +3,11 @@ import {
 } from '../components/Changelog.js'
 import mys from "../model/mhyTopUpLogin.js"
 import Common from "../components/Common.js";
-import { bindStoken } from './user.js'
 import utils from '../model/mys/utils.js';
 import {
 	Cfg,
 } from "../components/index.js";
+import { bindStoken } from './user.js';
 const _path = process.cwd();
 export const rule = {
 	qrCodeLogin: {
@@ -101,10 +101,17 @@ export async function UserPassLogin(e) {
 }
 
 export async function bindSkCK(e, res) {
-	e.msg = res?.stoken, e.raw_message = res?.stoken
+	if (!res?.cookie) {
+		await e.reply("扫码登录失败：未获取到Cookie")
+		return
+	}
 	e.isPrivate = true
-	await bindStoken(e, '1')
-	e.ck = res?.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
+	if (res?.stoken) {
+		// 复用原绑定入口：bindStoken 内部已兼容 v2 exchange，并会走 seachUid 保存 stoken
+		e.msg = res.stoken, e.raw_message = res.stoken
+		await bindStoken(e, '1')
+	}
+	e.ck = res.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
 	if (isV3) {
 		let userck = (await import(`file://${_path}/plugins/genshin/model/user.js`)).default
 		await (new userck(e)).bing()
