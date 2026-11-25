@@ -109,7 +109,7 @@ export async function bindSkCK(e, res) {
 	if (res?.stoken) {
 		// 复用原绑定入口：bindStoken 内部已兼容 v2 exchange，并会走 seachUid 保存 stoken
 		e.msg = res.stoken, e.raw_message = res.stoken
-		await bindStoken(e, '1')
+		await bindStoken(e)
 	}
 	e.ck = res.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
 	if (isV3) {

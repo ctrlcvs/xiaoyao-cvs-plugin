@@ -849,8 +849,8 @@ export default class user {
                 }
                 list.push(...result?.data?.list)
             }
-            if (list.length == 0) return false;
             let uids = []
+            let seenUids = new Set()
             for (let s of list) {
                 let datalist = {}
                 let uid = s.game_uid
@@ -867,6 +867,25 @@ export default class user {
                     region: s.region
                 }
                 await gsCfg.saveBingStoken(this.e.user_id, datalist)
+                seenUids.add(String(uid))
+            }
+            // 补一条当前 cookie 对应 UID 的 stoken，保证 #我的stoken 能命中
+            const currentUid = String(this.e.uid || '')
+            const currentStoken = this.e.sk?.get('stoken') || v2Sk?.data?.token?.token
+            if (currentUid && currentUid !== '1' && currentStoken && !seenUids.has(currentUid)) {
+                await gsCfg.saveBingStoken(this.e.user_id, {
+                    [currentUid]: {
+                        stuid: this.e.sk?.get('stuid') || this.e.stuid,
+                        stoken: currentStoken,
+                        ltoken: this.e.sk?.get('ltoken') || ltoken,
+                        mid: this.e.sk?.get('mid') || v2Sk?.data?.user_info?.mid,
+                        uid: currentUid,
+                        userId: this.e.user_id,
+                        is_sign: true,
+                        region_name: this.e.sk?.get('region_name') || '',
+                        region: this.e.region || ''
+                    }
+                })
             }
             let msg = `${uids.join('\n')}\nstoken绑定成功您可通过下列指令进行操作:`;
             msg += '\n【#米币查询】查询米游币余额'
