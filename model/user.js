@@ -819,18 +819,22 @@ export default class user {
         if (data?.data) {
             let res;
             if (this.e.sk) {
-                if (this.e.sk.get('stoken').includes('v2_')) {
-                    res = await this.getData('getLtoken', { cookies: this.e.raw_message }, false)
-                    ltoken = res?.data?.ltoken
+                const stoken = this.e.sk.get('stoken') || ''
+                const stuid = this.e.sk.get('stuid') || this.e.stuid
+                const mid = this.e.sk.get('mid') || ''
+                if (stoken.startsWith('v2_')) {
+                    ltoken = this.e.sk.get('ltoken') || ''
+                    if (!ltoken && mid) {
+                        const ex2 = await this.getData('exchange', { token: stoken, mid, dstTokenType: 2 }, false)
+                        ltoken = ex2?.data?.token?.token || ''
+                    }
+                    this.e.cookie =
+                        `ltuid=${stuid};account_mid_v2=${mid};cookie_token_v2=${data.data.cookie_token};ltoken_v2=${ltoken};ltmid_v2=${mid};account_id=${stuid};`
                 } else {
                     v2Sk = await this.getData('getByStokenV2', { headers: { Cookie: this.e.raw_message } }, false)
+                    this.e.cookie =
+                        `ltoken=${this.e.sk?.get('ltoken') || ltoken};ltuid=${stuid};cookie_token=${data.data.cookie_token}; account_id=${stuid};`
                 }
-                this.e.cookie =
-                    `ltoken=${this.e.sk?.get('ltoken') || ltoken};ltuid=${this.e.sk?.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk?.get('stuid')};`
-                // if(this.e.sk?.get('mid')){
-                // 	this.e.cookie =
-                // 		`ltoken_v2=${this.e.sk?.get('ltoken')||ltoken};cookie_token_v2=${data.data.cookie_token}; account_mid_v2=${this.e.sk.get('mid')};ltmid_v2=${this.e.sk.get('mid')}`
-                // }
             } else {
                 this.e.cookie = this.e.original_msg //发送的为cookies
                 this.cookies = `stuid=${this.e.stuid};stoken=${data?.data?.list[0].token};ltoken=${data?.data?.list[1].token}`

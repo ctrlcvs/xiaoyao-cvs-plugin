@@ -2,12 +2,13 @@ import {
 	isV3
 } from '../components/Changelog.js'
 import mys from "../model/mhyTopUpLogin.js"
+import User from "../model/user.js"
 import Common from "../components/Common.js";
-import { bindStoken } from './user.js'
 import utils from '../model/mys/utils.js';
 import {
 	Cfg,
 } from "../components/index.js";
+import gsCfg from "../model/gsCfg.js";
 const _path = process.cwd();
 export const rule = {
 	qrCodeLogin: {
@@ -100,11 +101,81 @@ export async function UserPassLogin(e) {
 	return res;
 }
 
+/**
+ * 网页版/App 扫码拿到的 stoken 直接写入 xiaoyao 的 stoken YAML。
+ * #刷新ck 依赖这份数据，不能再走已废弃的 getCookieAccountInfoBySToken。
+ */
+async function saveQrStoken(e, stokenStr, cookieStr) {
+	const map = await utils.getCookieMap(stokenStr)
+	const stuid = map.get("stuid") || map.get("uid")
+	const stoken = map.get("stoken")
+	const mid = map.get("mid")
+	const ltoken = map.get("ltoken") || map.get("ltoken_v2") || ""
+	if (!stuid || !stoken || !mid) return false
+
+	let saved = false
+	try {
+		// 用 v2 Cookie 查一次角色列表，把 stoken 按游戏 UID 落盘，#更新抽卡记录等功能才能按 UID 找到
+		e.sk = map
+		e.cookie = cookieStr
+		const user = new User(e)
+		const datalist = {}
+		for (const game of ["原神", "崩坏星穹铁道"]) {
+			const board = user.getDataList(game)?.[0]
+			if (!board) continue
+			const res = await user.getData("userGameInfo", board, false)
+			if (res?.retcode !== 0) continue
+			for (const item of res.data?.list || []) {
+				const uid = item.game_uid
+				datalist[uid] = {
+					stuid,
+					stoken,
+					ltoken,
+					mid,
+					uid,
+					userId: e.user_id,
+					is_sign: true,
+					region_name: item.region_name,
+					region: item.region
+				}
+				saved = true
+			}
+		}
+		if (saved) gsCfg.saveBingStoken(e.user_id, datalist)
+	} catch (err) {
+		Bot.logger.warn(`[扫码登录] 查询角色列表失败：${err.message}`)
+	}
+
+	// 兜底：没有查到角色时，至少保留一条账号级 stoken，保证 #刷新ck 可用
+	if (!saved) {
+		gsCfg.saveBingStoken(e.user_id, {
+			[stuid]: {
+				stuid,
+				stoken,
+				ltoken,
+				mid,
+				uid: stuid,
+				userId: e.user_id,
+				is_sign: true
+			}
+		})
+	}
+	return true
+}
+
 export async function bindSkCK(e, res) {
-	e.msg = res?.stoken, e.raw_message = res?.stoken
+	if (!res?.cookie) {
+		await e.reply("扫码登录失败：未获取到Cookie")
+		return
+	}
 	e.isPrivate = true
-	await bindStoken(e, '1')
-	e.ck = res?.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
+	if (res?.stoken) {
+		e.msg = res.stoken, e.raw_message = res.stoken
+		if (!(await saveQrStoken(e, res.stoken, res.cookie))) {
+			Bot.logger.warn("[扫码登录] stoken 保存失败，可能影响 #刷新ck")
+		}
+	}
+	e.ck = res.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
 	if (isV3) {
 		let userck = (await import(`file://${_path}/plugins/genshin/model/user.js`)).default
 		await (new userck(e)).bing()
