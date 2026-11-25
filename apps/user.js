@@ -208,6 +208,11 @@ export async function mytoken(e) {
 	if (msg === "stoken") {
 		await user.getCookie(e)
 		ck = await user.getStoken(e.user_id)
+		// QQBot 等适配器下 getCookie 可能取不到 e.uid，只影响 #我的stoken 的展示
+		if (!ck?.stoken) {
+			const all = await gsCfg.getUserStoken(e.user_id)
+			ck = Object.values(all || {}).find(item => item?.stoken) || ck
+		}
 		sendMsg = `stuid=${ck.stuid};stoken=${ck.stoken};ltoken=${ck.ltoken};`;
 		if (ck?.mid) sendMsg += `mid=${ck?.mid};`
 	} else {
@@ -253,20 +258,39 @@ export async function bindStoken(e, uid = '') {
 	let user = new User(e);
 	await user.cookie(e)
 	e.uid = uid || e.uid
+	if (e.uid && typeof e.uid === 'object') {
+		e.uid = e.uid.uid || e.uid.game_uid || e.uid.account_id || ''
+	}
+	e.uid = e.uid ? String(e.uid) : e.uid
 	e.region = getServer(e.uid)
 	e.cks = msg.replace(/;/g, '&').replace(/stuid/, "uid")
 	e.sk = await utils.getCookieMap(msg)
-	let res = await user.getData("bbsGetCookie", { cookies: e.cks }, false)
-	if (!res?.data) {
-		e.uid = "64"
-		e.region = getServer(e.uid)
-		res = await user.getData("bbsGetCookie", { cookies: e.cks, method: 'post' }, false)
+
+	const stoken = e.sk?.get("stoken")
+	const mid = e.sk?.get("mid")
+	let res
+	if (stoken?.startsWith("v2_") && mid) {
+		// v2 stoken 走 exchange，不能用已废弃的 bbsGetCookie
+		const ex2 = await user.getData("exchange", { token: stoken, mid, dstTokenType: 2 }, false)
+		const ex4 = await user.getData("exchange", { token: stoken, mid, dstTokenType: 4 }, false)
+		const ltoken = ex2?.data?.token?.token
+		const cookieToken = ex4?.data?.token?.token
+		if (!ltoken || !cookieToken) {
+			await e.reply(`绑定Stoken失败，异常：${ex2?.message || ex4?.message || "换票返回为空"}`)
+			return true
+		}
+		e.sk.set("ltoken", ltoken)
+		res = { data: { cookie_token: cookieToken } }
+	} else {
+		res = await user.getData("bbsGetCookie", { cookies: e.cks }, false)
 		if (!res?.data) {
-			await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
-			return true;
-		} else {
-			await user.seachUid(res);
-			return true;
+			e.uid = "64"
+			e.region = getServer(e.uid)
+			res = await user.getData("bbsGetCookie", { cookies: e.cks, method: 'post' }, false)
+			if (!res?.data) {
+				await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
+				return true;
+			}
 		}
 	}
 	// await user.getCookie(e)
@@ -333,26 +357,37 @@ export async function updCookie(e) {
 	e.reply = (msg) => {
 		sendMsg.push(msg)
 	}
+	// 同一账号可能有多个游戏 UID 的 stoken 条目，按 stuid 去重，只刷新一次账号级 Cookie
+	const seen = new Set()
 	for (let item of Object.keys(stoken)) {
-		e.region = getServer(stoken[item].uid)
-		e.uid = stoken[item].uid
+		const sk = stoken[item]
+		const accountKey = String(sk.stuid || sk.stoken || "")
+		if (!accountKey || seen.has(accountKey)) continue
+		seen.add(accountKey)
+		e.region = getServer(sk.uid)
+		e.uid = sk.uid
 		if (!e?.uid) {
 			Bot.logger.mark(`[刷新ck][stoken读取]qq:${e?.user_id}；uid:${e?.uid}`)
 			continue; //奇怪的东西
 		}
-		let cookies = `uid=${stoken[item].stuid}&stoken=${stoken[item].stoken}`
-		if (stoken[item]?.mid) cookies += `&mid=${stoken[item]?.mid}`
-		let data = { cookies: cookies }
-		if (e?.uid[0] > 5) data.method = 'post'
-		let res = await user.getData("bbsGetCookie", data, false)
-		if (!res?.data) {
-			e.reply(`uid:${stoken[item].uid},请求异常：${res.message}`)
-			continue;
+		const token = stoken[item].stoken
+		const mid = stoken[item].mid
+		if (!token || !mid) {
+			e.reply(`uid:${sk.uid},stoken缺少stoken或mid，无法刷新，请重新扫码登录`)
+			continue
 		}
-		let ck = res["data"]["cookie_token"];
-		e.msg = `ltoken=${stoken[item].ltoken};ltuid=${stoken[item].stuid};cookie_token=${ck}; account_id=${stoken[item].stuid};`
+		// 老 getCookieAccountInfoBySToken 已废弃（-464），改用 exchange 换 v2 票据
+		const ex2 = await user.getData("exchange", { token, mid, dstTokenType: 2 }, false)
+		const ex4 = await user.getData("exchange", { token, mid, dstTokenType: 4 }, false)
+		const ltoken = ex2?.data?.token?.token
+		const ck = ex4?.data?.token?.token
+		if (!ltoken || !ck) {
+			e.reply(`uid:${sk.uid},换票失败：${ex2?.message || ex4?.message || "接口返回为空"}`)
+			continue
+		}
+		e.msg = `ltuid=${sk.stuid};account_mid_v2=${mid};cookie_token_v2=${ck};ltoken_v2=${ltoken};ltmid_v2=${mid};account_id=${sk.stuid};`
 		if (isGet) {
-			sendMsg = [...sendMsg, ...[`uid:${stoken[item].uid}`, e.msg]]
+			sendMsg = [...sendMsg, ...[`uid:${sk.uid}`, e.msg]]
 		} else {
 			if (isV3) {
 				let userck = (await import(`file://${_path}/plugins/genshin/model/user.js`)).default

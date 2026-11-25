@@ -176,27 +176,23 @@ class GsCfg {
 		let file = `./plugins/${plugin}/data/yaml/${userId}.yaml`
 		if (lodash.isEmpty(data)) {
 			fs.existsSync(file) && fs.unlinkSync(file)
-		} else {
-			fs.exists(file, (exists) => {
-				if (!exists) {
-					fs.writeFileSync(file, "", 'utf8')
-				}
-				let ck = fs.readFileSync(file, 'utf-8')
-				let yaml = YAML.stringify(data)
-				ck = YAML.parse(ck)
-				if (ck?.uid||!ck) {
-					fs.writeFileSync(file, yaml, 'utf8')
-				} else {
-					if(!ck[Object.keys(data)[0]]){
-						ck = YAML.stringify(ck)
-						fs.writeFileSync(file, yaml + ck, 'utf8')
-					}else{
-						ck[Object.keys(data)[0]] = data[Object.keys(data)[0]]
-						fs.writeFileSync(file,YAML.stringify(ck), 'utf8')
-					}
-				}
-			})
+			return
 		}
+
+		let ck = {}
+		try {
+			ck = YAML.parse(fs.readFileSync(file, 'utf-8')) || {}
+		} catch (error) {
+			ck = {}
+		}
+		// 旧版单账号 YAML 以 uid 为顶层字段，先归一化再合并
+		if (ck?.uid) {
+			const legacy = ck
+			ck = { [legacy.uid]: legacy }
+		}
+		// 必须合并全部新条目；只合并第一个 key 会在多 UID 账号下漏掉其它角色
+		Object.assign(ck, data)
+		fs.writeFileSync(file, YAML.stringify(ck), 'utf8')
 	}
 }
 

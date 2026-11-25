@@ -16,6 +16,10 @@ import crypto from "crypto";
 const _path = process.cwd();
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
+// 新版换票接口参数（dst_token_type: 2=ltoken_v2 / 4=cookie_token_v2）
+const EXCHANGE_APP_VERSION = "2.106.2";
+const EXCHANGE_PASSPORT_VERSION = "2.44.0";
+const LIFECYCLE_ID = crypto.randomBytes(5).toString("hex");
 const yamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
 let HttpsProxyAgent = ''
 // 米游社的版块
@@ -284,6 +288,19 @@ export default class miHoYoApi {
 				},
 				types: 'pass'
 			},
+			exchange: {
+				// 用 v2 stoken 换 ltoken_v2 / cookie_token_v2；老的 getCookieAccountInfoBySToken 已废弃
+				url: `${mys.pass_api}/account/ma-cn-session/app/exchange`,
+				body: {
+					dst_token_type: data.dstTokenType || 2,
+					src_token: {
+						token: data.token,
+						token_type: 1
+					},
+					mid: data.mid
+				},
+				types: 'exchange'
+			},
 			getTokenByGameToken: {
 				url: `${mys.pass_api}/account/ma-cn-session/app/getTokenByGameToken`,
 				body: {
@@ -485,6 +502,24 @@ export default class miHoYoApi {
 					"Accept-Encoding": "gzip, deflate, br",
 					"x-rpc-channel": "appstore",
 					Cookie: this.cookies,
+				}
+				break;
+			case "exchange":
+				// 换票接口专属头：DS 用 passSalt 对 body 加签
+				header = {
+					'content-type': 'application/json',
+					DS: this.getDs2('', body, mys.passSalt),
+					'User-Agent': `Mozilla/5.0 (Linux; Android 12; Unspecified Device) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/103.0.5060.129 Mobile Safari/537.36 miHoYoBBS/${EXCHANGE_APP_VERSION}`,
+					'x-rpc-app_version': EXCHANGE_APP_VERSION,
+					'x-rpc-client_type': '2',
+					'x-rpc-app_id': 'bll8iq97cem8',
+					'x-rpc-device_id': DEVICE_ID,
+					'x-rpc-device_name': 'Mihoyo Capture',
+					'x-rpc-device_model': 'Mi 14',
+					'x-rpc-game_biz': 'bbs_cn',
+					'x-rpc-sdk_version': EXCHANGE_PASSPORT_VERSION,
+					'x-rpc-account_version': EXCHANGE_PASSPORT_VERSION,
+					'x-rpc-lifecycle_id': LIFECYCLE_ID,
 				}
 				break;
 				case "pay":

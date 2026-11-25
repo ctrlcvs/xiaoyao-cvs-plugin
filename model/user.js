@@ -756,7 +756,11 @@ export default class user {
         if (!uid) {
             uid = e.runtime?.user?._regUid
         }
-        this.e.uid = uid;
+        // 兼容某些适配器把 uid 包成对象的情况，避免写入 "[object Object]"
+        if (uid && typeof uid === 'object') {
+            uid = uid.uid || uid.game_uid || uid.account_id || ''
+        }
+        this.e.uid = uid ? String(uid) : uid;
         this.e.cookie = cookie;
         return {
             cookie,
@@ -819,18 +823,22 @@ export default class user {
         if (data?.data) {
             let res;
             if (this.e.sk) {
-                if (this.e.sk.get('stoken').includes('v2_')) {
-                    res = await this.getData('getLtoken', { cookies: this.e.raw_message }, false)
-                    ltoken = res?.data?.ltoken
+                const stoken = this.e.sk.get('stoken') || ''
+                const stuid = this.e.sk.get('stuid') || this.e.stuid
+                const mid = this.e.sk.get('mid') || ''
+                if (stoken.startsWith('v2_')) {
+                    ltoken = this.e.sk.get('ltoken') || ''
+                    if (!ltoken && mid) {
+                        const ex2 = await this.getData('exchange', { token: stoken, mid, dstTokenType: 2 }, false)
+                        ltoken = ex2?.data?.token?.token || ''
+                    }
+                    this.e.cookie =
+                        `ltuid=${stuid};account_mid_v2=${mid};cookie_token_v2=${data.data.cookie_token};ltoken_v2=${ltoken};ltmid_v2=${mid};account_id=${stuid};`
                 } else {
                     v2Sk = await this.getData('getByStokenV2', { headers: { Cookie: this.e.raw_message } }, false)
+                    this.e.cookie =
+                        `ltoken=${this.e.sk?.get('ltoken') || ltoken};ltuid=${stuid};cookie_token=${data.data.cookie_token}; account_id=${stuid};`
                 }
-                this.e.cookie =
-                    `ltoken=${this.e.sk?.get('ltoken') || ltoken};ltuid=${this.e.sk?.get('stuid')};cookie_token=${data.data.cookie_token}; account_id=${this.e.sk?.get('stuid')};`
-                // if(this.e.sk?.get('mid')){
-                // 	this.e.cookie =
-                // 		`ltoken_v2=${this.e.sk?.get('ltoken')||ltoken};cookie_token_v2=${data.data.cookie_token}; account_mid_v2=${this.e.sk.get('mid')};ltmid_v2=${this.e.sk.get('mid')}`
-                // }
             } else {
                 this.e.cookie = this.e.original_msg //发送的为cookies
                 this.cookies = `stuid=${this.e.stuid};stoken=${data?.data?.list[0].token};ltoken=${data?.data?.list[1].token}`
@@ -845,8 +853,8 @@ export default class user {
                 }
                 list.push(...result?.data?.list)
             }
-            if (list.length == 0) return false;
             let uids = []
+            let seenUids = new Set()
             for (let s of list) {
                 let datalist = {}
                 let uid = s.game_uid
@@ -863,6 +871,29 @@ export default class user {
                     region: s.region
                 }
                 await gsCfg.saveBingStoken(this.e.user_id, datalist)
+                seenUids.add(String(uid))
+            }
+            // 补一条当前 cookie 对应 UID 的 stoken，保证 #我的stoken 能命中
+            let rawCurrentUid = this.e.uid
+            if (rawCurrentUid && typeof rawCurrentUid === 'object') {
+                rawCurrentUid = rawCurrentUid.uid || rawCurrentUid.game_uid || rawCurrentUid.account_id || ''
+            }
+            const currentUid = String(rawCurrentUid || '')
+            const currentStoken = this.e.sk?.get('stoken') || v2Sk?.data?.token?.token
+            if (currentUid && currentUid !== '1' && currentStoken && !seenUids.has(currentUid)) {
+                await gsCfg.saveBingStoken(this.e.user_id, {
+                    [currentUid]: {
+                        stuid: this.e.sk?.get('stuid') || this.e.stuid,
+                        stoken: currentStoken,
+                        ltoken: this.e.sk?.get('ltoken') || ltoken,
+                        mid: this.e.sk?.get('mid') || v2Sk?.data?.user_info?.mid,
+                        uid: currentUid,
+                        userId: this.e.user_id,
+                        is_sign: true,
+                        region_name: this.e.sk?.get('region_name') || '',
+                        region: this.e.region || ''
+                    }
+                })
             }
             let msg = `${uids.join('\n')}\nstoken绑定成功您可通过下列指令进行操作:`;
             msg += '\n【#米币查询】查询米游币余额'
