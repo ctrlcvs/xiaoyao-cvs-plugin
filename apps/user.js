@@ -256,17 +256,32 @@ export async function bindStoken(e, uid = '') {
 	e.region = getServer(e.uid)
 	e.cks = msg.replace(/;/g, '&').replace(/stuid/, "uid")
 	e.sk = await utils.getCookieMap(msg)
-	let res = await user.getData("bbsGetCookie", { cookies: e.cks }, false)
-	if (!res?.data) {
-		e.uid = "64"
-		e.region = getServer(e.uid)
-		res = await user.getData("bbsGetCookie", { cookies: e.cks, method: 'post' }, false)
+
+	const stoken = e.sk?.get("stoken")
+	const mid = e.sk?.get("mid")
+	let res
+	if (stoken?.startsWith("v2_") && mid) {
+		// v2 stoken 走 exchange，不能用已废弃的 bbsGetCookie
+		const ex2 = await user.getData("exchange", { token: stoken, mid, dstTokenType: 2 }, false)
+		const ex4 = await user.getData("exchange", { token: stoken, mid, dstTokenType: 4 }, false)
+		const ltoken = ex2?.data?.token?.token
+		const cookieToken = ex4?.data?.token?.token
+		if (!ltoken || !cookieToken) {
+			await e.reply(`绑定Stoken失败，异常：${ex2?.message || ex4?.message || "换票返回为空"}`)
+			return true
+		}
+		e.sk.set("ltoken", ltoken)
+		res = { data: { cookie_token: cookieToken } }
+	} else {
+		res = await user.getData("bbsGetCookie", { cookies: e.cks }, false)
 		if (!res?.data) {
-			await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
-			return true;
-		} else {
-			await user.seachUid(res);
-			return true;
+			e.uid = "64"
+			e.region = getServer(e.uid)
+			res = await user.getData("bbsGetCookie", { cookies: e.cks, method: 'post' }, false)
+			if (!res?.data) {
+				await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
+				return true;
+			}
 		}
 	}
 	// await user.getCookie(e)
