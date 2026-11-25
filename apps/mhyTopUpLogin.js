@@ -106,11 +106,6 @@ export async function bindSkCK(e, res) {
 		return
 	}
 	e.isPrivate = true
-	if (res?.stoken) {
-		// 复用原绑定入口：bindStoken 内部已兼容 v2 exchange，并会走 seachUid 保存 stoken
-		e.msg = res.stoken, e.raw_message = res.stoken
-		await bindStoken(e)
-	}
 	e.ck = res.cookie, e.msg = res.cookie, e.raw_message = res.cookie;
 	if (isV3) {
 		let userck = (await import(`file://${_path}/plugins/genshin/model/user.js`)).default
@@ -120,5 +115,11 @@ export async function bindSkCK(e, res) {
 			bingCookie
 		} = (await import(`file://${_path}/lib/app/dailyNote.js`))
 		await bingCookie(e)
+	}
+	if (res?.stoken) {
+		// 先让 genshin 绑定新 cookie，再按新 cookie 的当前 UID 保存 stoken
+		e.msg = res.stoken, e.raw_message = res.stoken
+		const currentUid = e.user?.getUid?.('gs') || e.uid
+		await bindStoken(e, currentUid)
 	}
 }
