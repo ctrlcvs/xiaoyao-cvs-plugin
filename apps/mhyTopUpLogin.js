@@ -119,7 +119,10 @@ export async function bindSkCK(e, res) {
 	if (res?.stoken) {
 		// 先让 genshin 绑定新 cookie，再按新 cookie 的当前 UID 保存 stoken
 		e.msg = res.stoken, e.raw_message = res.stoken
-		const currentUid = e.user?.getUid?.('gs') || e.uid
+		let currentUid = e.user?.getUid?.('gs') || e.uid
+		if (currentUid && typeof currentUid === 'object') {
+			currentUid = currentUid.uid || currentUid.game_uid || currentUid.account_id || ''
+		}
 		await bindStoken(e, currentUid)
 	}
 }

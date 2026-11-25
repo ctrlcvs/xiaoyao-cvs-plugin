@@ -756,7 +756,11 @@ export default class user {
         if (!uid) {
             uid = e.runtime?.user?._regUid
         }
-        this.e.uid = uid;
+        // 兼容某些适配器把 uid 包成对象的情况，避免写入 "[object Object]"
+        if (uid && typeof uid === 'object') {
+            uid = uid.uid || uid.game_uid || uid.account_id || ''
+        }
+        this.e.uid = uid ? String(uid) : uid;
         this.e.cookie = cookie;
         return {
             cookie,
@@ -870,7 +874,11 @@ export default class user {
                 seenUids.add(String(uid))
             }
             // 补一条当前 cookie 对应 UID 的 stoken，保证 #我的stoken 能命中
-            const currentUid = String(this.e.uid || '')
+            let rawCurrentUid = this.e.uid
+            if (rawCurrentUid && typeof rawCurrentUid === 'object') {
+                rawCurrentUid = rawCurrentUid.uid || rawCurrentUid.game_uid || rawCurrentUid.account_id || ''
+            }
+            const currentUid = String(rawCurrentUid || '')
             const currentStoken = this.e.sk?.get('stoken') || v2Sk?.data?.token?.token
             if (currentUid && currentUid !== '1' && currentStoken && !seenUids.has(currentUid)) {
                 await gsCfg.saveBingStoken(this.e.user_id, {

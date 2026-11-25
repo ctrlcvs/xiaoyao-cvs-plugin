@@ -258,6 +258,10 @@ export async function bindStoken(e, uid = '') {
 	let user = new User(e);
 	await user.cookie(e)
 	e.uid = uid || e.uid
+	if (e.uid && typeof e.uid === 'object') {
+		e.uid = e.uid.uid || e.uid.game_uid || e.uid.account_id || ''
+	}
+	e.uid = e.uid ? String(e.uid) : e.uid
 	e.region = getServer(e.uid)
 	e.cks = msg.replace(/;/g, '&').replace(/stuid/, "uid")
 	e.sk = await utils.getCookieMap(msg)
