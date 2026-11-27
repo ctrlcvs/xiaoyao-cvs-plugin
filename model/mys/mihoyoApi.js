@@ -16,6 +16,7 @@ import crypto from "crypto";
 const _path = process.cwd();
 const DEVICE_ID = utils.randomString(32).toUpperCase();
 const DEVICE_NAME = utils.randomString(_.random(1, 10));
+const LIFECYCLE_ID = crypto.randomBytes(5).toString("hex")
 const yamlDataUrl = `${_path}/plugins/xiaoyao-cvs-plugin/data/yaml`;
 let HttpsProxyAgent = ''
 // 米游社的版块
@@ -284,6 +285,18 @@ export default class miHoYoApi {
 				},
 				types: 'pass'
 			},
+			exchange: {
+				url: `${mys.pass_api}/account/ma-cn-session/app/exchange`,
+				body: {
+				dst_token_type: data.dstTokenType,
+				src_token: {
+					token: data.token,
+					token_type: 1,
+				},
+				mid: data.mid,
+				},
+				types: "exchange",
+			},
 			getTokenByGameToken: {
 				url: `${mys.pass_api}/account/ma-cn-session/app/getTokenByGameToken`,
 				body: {
@@ -465,6 +478,23 @@ export default class miHoYoApi {
 					"x-rpc-channel": "appstore",
 				}
 				break;
+			case "exchange":
+				header = {
+				"content-type": "application/json",
+				DS: this.getDs2("", body, mys.passSalt),
+				"User-Agent": "okhttp/4.9.3",
+				"x-rpc-app_version": mys.mhyVersion,
+				"x-rpc-client_type": "2",
+				"x-rpc-app_id": "bll8iq97cem8",
+				"x-rpc-device_id": DEVICE_ID,
+				"x-rpc-device_name": DEVICE_NAME,
+				"x-rpc-device_model": utils.randomString(16),
+				"x-rpc-game_biz": "bbs_cn",
+				"x-rpc-sdk_version": mys.passVersion,
+				"x-rpc-account_version": mys.passVersion,
+				"x-rpc-lifecycle_id": LIFECYCLE_ID,
+				}
+				break
 			case "pass":
 				header = {
 					'x-rpc-device_id': DEVICE_ID,

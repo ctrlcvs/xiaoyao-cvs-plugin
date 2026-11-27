@@ -1,5 +1,6 @@
 const APP_VERSION = "2.70.1";
-const mhyVersion = "2.11.1";
+const mhyVersion = "2.11.1";   
+const passVersion = "2.44.0"; 
 const salt = "S9Hrn38d2b55PamfIR9BNA3Tx9sQTOem"; //k2
 const salt2 = "LyD1rXqMv2GJhnwdvCBjFOKGiKuLY3aO"; //x6
 const saltWeb = "sjdNFJB7XxyDWGIAk0eTV8AOCfMJmyEo";//lk2
@@ -259,5 +260,5 @@ export default {
 	hk4_api,hk4_sdk,
 	bbs_api, publicKey,
 	pass_api, passSalt,
-	boards
+	passVersion,boards
 }

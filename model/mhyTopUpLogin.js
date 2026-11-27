@@ -60,14 +60,25 @@ export default class mysTopLogin {
         const uid = res.data.user_info.aid || res.data.user_info.uid || res.data.user_info.account_id
         const mid = res.data.user_info.mid
         let token = (res.data.tokens.find(i => i.name === "stoken" || i.name === "stoken_v2") || res.data.tokens[0])?.token
-         if (!(uid && token && mid)) {
+        if (!(uid && token && mid)) {
             await this.e.reply("stoken获取不完整请重新扫码", true);
             return false
         }
-        let UserData =  await this.user.getData("bbsGetCookie", {cookies:`stoken=${token}&uid=${uid}&mid=${mid}`},false)
-        let stoken =`stoken=${token};stuid=${uid};mid=${mid}`
+        //目前米游社已经全面替换v2版本sk不需要再兼容v1sk
+        // let UserData =  await this.user.getData("bbsGetCookie", {cookies:`stoken=${token}&uid=${uid}&mid=${mid}`},false)
+        //用 SToken 换取 LToken / CookieToken 2 为 LToken，4 为 CookieToken
+        const ex2 = await this.user.getData("exchange", {token,mid,dstTokenType: 2 }, false)
+        const ex4 = await this.user.getData("exchange", {token,mid,dstTokenType: 4 }, false)
+        const ltoken = ex2?.data?.token?.token
+        const cookieToken = ex4?.data?.token?.token
+        if (!ltoken || !cookieToken) {
+            await this.e.reply(`扫码登录失败,请更新米游社版本后重试。`, true)
+            return false
+        }
+        let stoken =`stoken=${token};stuid=${uid};mid=${mid};ltoken=${ltoken};`
         return {
-            cookie: `ltoken=${token};ltuid=${uid};cookie_token=${UserData.data?.cookie_token}`,
+            //兼容
+            cookie: `cookie_token_v2=${cookieToken};account_mid_v2=${mid}; account_id_v2=${uid}; ltoken_v2=ltoken=${ltoken};ltmid_v2=${mid}; ltuid_v2=${uid}; account_id=${uid};ltuid=${uid};`,
             stoken
         }
     }
